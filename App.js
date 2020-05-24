@@ -6,15 +6,16 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
 import useCachedResources from './Hooks/useCachedResources'
+import 'mobx-react-lite/batchingForReactNative'
 
 //Hooks
 import { AuthContext } from './Hooks/Context'
 //Screens
-import SignIn from './Screens/Auth/SignIn'
-import SignUp from './Screens/Auth/SignUp'
-import Home from './Screens/Main/Home'
-import Profile from './Screens/Main/Profile'
-import Splash from './Screens/Splash'
+import SignIn from './Screens/Auth/SignIn/SignInScreen'
+import SignUp from './Screens/Auth/SignUp/SignUpScreen'
+import Home from './Screens/Main/Home/HomeScreen'
+import Profile from './Screens/Main/Profile/ProfileScreen'
+import Splash from './Screens/Splash/Splash'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {

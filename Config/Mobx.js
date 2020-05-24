@@ -3,10 +3,13 @@ import { AsyncStorage } from 'react-native'
 
 class Store {
   Language = null
+  name = 'hello'
 
   ChangeLanguge = async () => {
     var L = await AsyncStorage.getItem('@Wiseman-events:Language')
     this.Language = L
+
+    return
   }
 }
 

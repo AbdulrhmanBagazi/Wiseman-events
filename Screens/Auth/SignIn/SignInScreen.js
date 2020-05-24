@@ -1,29 +1,17 @@
 import React from 'react'
 import { I18nManager, AsyncStorage, View, TextInput, Button, Text } from 'react-native'
-import { AuthContext } from '../../Hooks/Context'
-
-import * as Localization from 'expo-localization'
-import i18n from 'i18n-js'
-
+import { AuthContext } from '../../../Hooks/Context'
+import { inject, observer } from 'mobx-react'
 import { Restart } from 'fiction-expo-restart'
 
-// const getLanguage = async () => {
-//   var Language = await AsyncStorage.getItem('@Wiseman-events:Language')
+//Strings
+import { SignUpStrings } from '../../../Config/Strings'
+//ColorPalette
+import { BackgroundColor } from '../../../Config/ColorPalette'
+//Layout
+import { width, height } from '../../../Config/Layout'
 
-//   if (Language === null) {
-//     return 'ar'
-//   } else {
-//     return Language
-//   }
-// }
-
-i18n.fallbacks = true
-i18n.translations = {
-  en: { SignIn: 'SignIn', one: '1', two: '2', SignUp: 'SignUp' },
-  ar: { SignIn: 'تسجيل دخول', one: '١', two: '٢', SignUp: 'إنشاء حساب' },
-}
-
-function SignIn({ navigation }) {
+function SignIn({ navigation, store }) {
   const { signIn } = React.useContext(AuthContext)
   const [data, setData] = React.useState({
     UserName: '',
@@ -45,34 +33,37 @@ function SignIn({ navigation }) {
   }
 
   const changeLangAr = async () => {
+    I18nManager.allowRTL(true)
     I18nManager.forceRTL(true)
     await AsyncStorage.setItem('@Wiseman-events:Language', 'ar')
     Restart()
   }
 
   const changeLangEn = async () => {
+    I18nManager.allowRTL(false)
     I18nManager.forceRTL(false)
     await AsyncStorage.setItem('@Wiseman-events:Language', 'en')
     Restart()
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: BackgroundColor }}>
       <TextInput
-        style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1 }}
+        style={{ height: 40, width, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={(text) => UserNameInput(text)}
       />
       <TextInput
-        style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1 }}
+        style={{ height: 40, width, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={(text) => PasswordInput(text)}
       />
 
       <View style={{ justifyContent: 'space-around', width: 300, flexDirection: 'row' }}>
-        <Text>{i18n.t('one')}</Text>
-        <Text>{i18n.t('two')}</Text>
+        <Text>{SignUpStrings.one}</Text>
+        <Text>{SignUpStrings.two}</Text>
       </View>
 
-      <Button title={i18n.t('SignIn')} onPress={() => signIn()}></Button>
+      <Button title={SignUpStrings.login} onPress={() => signIn()}></Button>
       <Button title="SignUp" onPress={() => navigation.push('SignUp')}></Button>
 
       <Button title="عربي" onPress={() => changeLangAr()}></Button>
@@ -81,4 +72,4 @@ function SignIn({ navigation }) {
   )
 }
 
-export default SignIn
+export default inject('store')(observer(SignIn))
