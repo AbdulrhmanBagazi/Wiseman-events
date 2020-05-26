@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../Hooks/Context'

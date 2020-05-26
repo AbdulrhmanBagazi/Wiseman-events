@@ -1,11 +1,10 @@
 import React from 'react'
-import { I18nManager, AsyncStorage, View, TextInput, Button, Text } from 'react-native'
+import { View, TextInput, Button, Text } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
-import { Restart } from 'fiction-expo-restart'
 
 //Strings
-import { SignUpStrings } from '../../../Config/Strings'
+import { SignInStrings } from '../../../Config/Strings'
 //ColorPalette
 import { BackgroundColor } from '../../../Config/ColorPalette'
 //Layout
@@ -32,20 +31,6 @@ function SignIn({ navigation, store }) {
     })
   }
 
-  const changeLangAr = async () => {
-    I18nManager.allowRTL(true)
-    I18nManager.forceRTL(true)
-    await AsyncStorage.setItem('@Wiseman-events:Language', 'ar')
-    Restart()
-  }
-
-  const changeLangEn = async () => {
-    I18nManager.allowRTL(false)
-    I18nManager.forceRTL(false)
-    await AsyncStorage.setItem('@Wiseman-events:Language', 'en')
-    Restart()
-  }
-
   return (
     <View
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: BackgroundColor }}>
@@ -59,15 +44,13 @@ function SignIn({ navigation, store }) {
       />
 
       <View style={{ justifyContent: 'space-around', width: 300, flexDirection: 'row' }}>
-        <Text>{SignUpStrings.one}</Text>
-        <Text>{SignUpStrings.two}</Text>
+        <Text>{SignInStrings.one}</Text>
+        <Text>{SignInStrings.two}</Text>
       </View>
 
-      <Button title={SignUpStrings.login} onPress={() => signIn()}></Button>
-      <Button title="SignUp" onPress={() => navigation.push('SignUp')}></Button>
-
-      <Button title="عربي" onPress={() => changeLangAr()}></Button>
-      <Button title="English" onPress={() => changeLangEn()}></Button>
+      <Button title={SignInStrings.login} onPress={() => signIn()}></Button>
+      <Button title={SignInStrings.register} onPress={() => navigation.push('SignUp')}></Button>
+      <Button title={SignInStrings.Language} onPress={() => navigation.push('Language')}></Button>
     </View>
   )
 }

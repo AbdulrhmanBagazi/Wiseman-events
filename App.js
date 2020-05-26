@@ -5,23 +5,26 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
-import useCachedResources from './Hooks/useCachedResources'
 import 'mobx-react-lite/batchingForReactNative'
 
 //Hooks
 import { AuthContext } from './Hooks/Context'
+import useCachedResources from './Hooks/useCachedResources'
+//Config
+import { HeaderTitles } from './Config/Strings'
 //Screens
 import SignIn from './Screens/Auth/SignIn/SignInScreen'
 import SignUp from './Screens/Auth/SignUp/SignUpScreen'
 import Home from './Screens/Main/Home/HomeScreen'
 import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Splash/Splash'
+import LanguageChange from './Screens/LanguageChange/LanguageChange'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen options={{ title: HeaderTitles.Home }} name="Home" component={Home} />
     </HomeStack.Navigator>
   )
 }
@@ -30,7 +33,7 @@ const ProfileStack = createStackNavigator()
 const ProfileScreens = () => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen options={{ title: HeaderTitles.Profile }} name="Profile" component={Profile} />
     </ProfileStack.Navigator>
   )
 }
@@ -39,8 +42,8 @@ const Tabs = createBottomTabNavigator()
 const TabsScreens = () => {
   return (
     <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={HomeScreens} />
-      <Tabs.Screen name="Profile" component={ProfileScreens} />
+      <Tabs.Screen options={{ title: HeaderTitles.Home }} name="Home" component={HomeScreens} />
+      <Tabs.Screen options={{ title: HeaderTitles.Profile }} name="Profile" component={ProfileScreens} />
     </Tabs.Navigator>
   )
 }
@@ -49,8 +52,13 @@ const AuthStack = createStackNavigator()
 const AuthScreens = () => {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen name="SignIn" component={SignIn} />
-      <AuthStack.Screen name="SignUp" component={SignUp} />
+      <AuthStack.Screen options={{ title: HeaderTitles.SignIn }} name="SignIn" component={SignIn} />
+      <AuthStack.Screen options={{ title: HeaderTitles.SignUp }} name="SignUp" component={SignUp} />
+      <AuthStack.Screen
+        options={{ title: HeaderTitles.Language }}
+        name="Language"
+        component={LanguageChange}
+      />
     </AuthStack.Navigator>
   )
 }
