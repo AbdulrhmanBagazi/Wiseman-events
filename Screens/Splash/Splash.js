@@ -4,14 +4,24 @@ import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../Hooks/Context'
 
 function Splash({ store }) {
-  const { signOut } = React.useContext(AuthContext)
-  React.useEffect(() => {
-    async function CheckLanguage() {
-      await store.ChangeLanguge()
+  const { signOut, selectLanguage } = React.useContext(AuthContext)
 
-      return setTimeout(() => {
-        signOut()
-      }, 1000)
+  React.useEffect(() => {
+    CheckLanguage = async () => {
+      await store.getLanguge()
+
+      if (store.Language === null) {
+        setTimeout(() => {
+          selectLanguage()
+        }, 2000)
+
+        return
+      } else {
+        setTimeout(() => {
+          signOut()
+        }, 2000)
+        return
+      }
     }
 
     CheckLanguage()

@@ -6,7 +6,7 @@ export default function useCachedResources() {
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
-    async function loadResourcesAndDataAsync() {
+    loadResourcesAndDataAsync = async () => {
       try {
         SplashScreen.preventAutoHideAsync()
 
@@ -17,7 +17,7 @@ export default function useCachedResources() {
         // })
       } catch (e) {
         // We might want to provide this error information to an error reporting service
-        console.warn(e)
+        console.log(e)
       } finally {
         setLoadingComplete(true)
         SplashScreen.hideAsync()

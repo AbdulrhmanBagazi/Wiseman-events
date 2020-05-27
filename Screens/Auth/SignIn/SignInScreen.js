@@ -43,10 +43,10 @@ function SignIn({ navigation, store }) {
         onChangeText={(text) => PasswordInput(text)}
       />
 
-      <View style={{ justifyContent: 'space-around', width: 300, flexDirection: 'row' }}>
+      {/* <View style={{ justifyContent: 'space-around', width: 300, flexDirection: 'row' }}>
         <Text>{SignInStrings.one}</Text>
         <Text>{SignInStrings.two}</Text>
-      </View>
+      </View> */}
 
       <Button title={SignInStrings.login} onPress={() => signIn()}></Button>
       <Button title={SignInStrings.register} onPress={() => navigation.push('SignUp')}></Button>

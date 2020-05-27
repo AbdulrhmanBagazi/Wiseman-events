@@ -1,21 +1,19 @@
 import { observable, decorate, action } from 'mobx'
-import { AsyncStorage } from 'react-native'
+import { LanguageGet } from './AsyncStorage'
 
 class Store {
   Language = null
-  name = 'hello'
 
-  ChangeLanguge = async () => {
-    var L = await AsyncStorage.getItem('@Wiseman-events:Language')
-    this.Language = L
-
+  getLanguge = async () => {
+    var getLanguage = await LanguageGet()
+    this.Language = getLanguage
     return
   }
 }
 
 decorate(Store, {
   Language: observable,
-  ChangeLanguge: action,
+  getLanguge: action,
 })
 
 const store = new Store()

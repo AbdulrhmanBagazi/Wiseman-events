@@ -64,13 +64,21 @@ const AuthScreens = () => {
 }
 
 const Root = createStackNavigator()
-const RootScreens = ({ userToken }) => {
+const RootScreens = ({ authenticated, selectLanguage }) => {
   return (
     <Root.Navigator headerMode="none">
-      {userToken ? (
+      {authenticated ? (
         <Root.Screen
           name="Main"
           component={TabsScreens}
+          options={{
+            animationEnabled: false,
+          }}
+        />
+      ) : selectLanguage ? (
+        <Root.Screen
+          name="Auth"
+          component={LanguageChange}
           options={{
             animationEnabled: false,
           }}
@@ -90,19 +98,24 @@ const RootScreens = ({ userToken }) => {
 
 export default () => {
   const isLoadingComplete = useCachedResources()
-
   const [isLoading, setIsLoading] = React.useState(true)
-  const [userToken, setUserToken] = React.useState(null)
+  const [isAuth, setIsAuth] = React.useState(false)
+  const [isNew, setNew] = React.useState(false)
 
   const auth = React.useMemo(() => {
     return {
       signIn: () => {
         setIsLoading(false)
-        setUserToken('Token')
+        setIsAuth(true)
       },
       signOut: () => {
         setIsLoading(false)
-        setUserToken(null)
+        setIsAuth(false)
+      },
+      selectLanguage: () => {
+        setIsLoading(false)
+        setIsAuth(false)
+        setNew(true)
       },
     }
   }, [])
@@ -124,7 +137,7 @@ export default () => {
       <Provider store={Store}>
         <AuthContext.Provider value={auth}>
           <NavigationContainer>
-            <RootScreens userToken={userToken} />
+            <RootScreens authenticated={isAuth} selectLanguage={isNew} />
           </NavigationContainer>
         </AuthContext.Provider>
       </Provider>
