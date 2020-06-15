@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import { AuthContext } from '../../Hooks/Context'
+import { AuthContext } from '../../../Hooks/Context'
 
 function Splash({ store }) {
   const { signOut, selectLanguage } = React.useContext(AuthContext)

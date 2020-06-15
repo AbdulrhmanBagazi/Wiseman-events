@@ -2,13 +2,9 @@ import React from 'react'
 import { View, TextInput, Button, Text } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
-
+import styles from './Style'
 //Strings
 import { SignInStrings } from '../../../Config/Strings'
-//ColorPalette
-import { BackgroundColor } from '../../../Config/ColorPalette'
-//Layout
-import { width, height } from '../../../Config/Layout'
 
 function SignIn({ navigation, store }) {
   const { signIn } = React.useContext(AuthContext)
@@ -32,21 +28,9 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <View
-      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: BackgroundColor }}>
-      <TextInput
-        style={{ height: 40, width, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => UserNameInput(text)}
-      />
-      <TextInput
-        style={{ height: 40, width, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => PasswordInput(text)}
-      />
-
-      {/* <View style={{ justifyContent: 'space-around', width: 300, flexDirection: 'row' }}>
-        <Text>{SignInStrings.one}</Text>
-        <Text>{SignInStrings.two}</Text>
-      </View> */}
+    <View style={styles.container}>
+      <TextInput style={styles.input} onChangeText={(text) => UserNameInput(text)} />
+      <TextInput style={styles.input} onChangeText={(text) => PasswordInput(text)} />
 
       <Button title={SignInStrings.login} onPress={() => signIn()}></Button>
       <Button title={SignInStrings.register} onPress={() => navigation.push('SignUp')}></Button>

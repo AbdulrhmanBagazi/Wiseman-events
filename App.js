@@ -17,8 +17,8 @@ import SignIn from './Screens/Auth/SignIn/SignInScreen'
 import SignUp from './Screens/Auth/SignUp/SignUpScreen'
 import Home from './Screens/Main/Home/HomeScreen'
 import Profile from './Screens/Main/Profile/ProfileScreen'
-import Splash from './Screens/Splash/Splash'
-import LanguageChange from './Screens/LanguageChange/LanguageChange'
+import Splash from './Screens/Redirect/Splash/Splash'
+import LanguageChange from './Screens/Redirect/LanguageChange/LanguageChange'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
@@ -53,9 +53,13 @@ const AuthScreens = () => {
   return (
     <AuthStack.Navigator>
       <AuthStack.Screen options={{ title: HeaderTitles.SignIn }} name="SignIn" component={SignIn} />
-      <AuthStack.Screen options={{ title: HeaderTitles.SignUp }} name="SignUp" component={SignUp} />
       <AuthStack.Screen
-        options={{ title: HeaderTitles.Language }}
+        options={{ title: HeaderTitles.SignUp, headerBackTitleVisible: false }}
+        name="SignUp"
+        component={SignUp}
+      />
+      <AuthStack.Screen
+        options={{ title: HeaderTitles.Language, headerBackTitleVisible: false }}
         name="Language"
         component={LanguageChange}
       />

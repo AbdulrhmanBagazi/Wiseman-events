@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, I18nManager, Text } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { Restart } from 'fiction-expo-restart'
-import { LanguageStore } from '../../Config/AsyncStorage'
+import { LanguageStore } from '../../../Config/AsyncStorage'
 
 LanguageChange = ({ navigation, store }) => {
   const LanguageChangeHandler = async (Language) => {
