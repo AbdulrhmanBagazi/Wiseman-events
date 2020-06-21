@@ -17,13 +17,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
-  Logo: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    backgroundColor: GrayColor,
-    marginVertical: 20,
-  },
   Title: {
     fontSize: 32,
     marginBottom: 10,
@@ -94,7 +87,7 @@ const styles = StyleSheet.create({
   },
   ResendContainer: {
     width,
-    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     marginBottom: 20,
     flexDirection: 'row',
   },
@@ -104,6 +97,16 @@ const styles = StyleSheet.create({
   },
   Resendmessage: {
     color: SecondaryText,
+  },
+  Logo: {
+    width,
+    height: height / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tinyLogo: {
+    height: height / 6,
+    resizeMode: 'contain',
   },
 })
 

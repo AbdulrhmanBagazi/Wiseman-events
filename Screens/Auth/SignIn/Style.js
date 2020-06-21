@@ -9,6 +9,7 @@ import {
   GrayColor,
   LightBorder,
   LightText,
+  PrimaryBorder,
 } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: GrayColor,
     height: 45,
     width,
-    borderColor: PrimaryColor,
+    borderColor: PrimaryBorder,
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
@@ -110,6 +111,16 @@ const styles = StyleSheet.create({
     color: PrimaryColor,
     textDecorationLine: 'underline',
     marginLeft: 5,
+  },
+  Terms: {
+    flexDirection: 'row',
+    bottom: 1,
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+
+  and: {
+    color: SecondaryText,
   },
 })
 

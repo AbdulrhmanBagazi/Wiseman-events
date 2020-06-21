@@ -7,6 +7,8 @@ const SignInStrings = {
   Forgot: I18nManager.isRTL ? 'هل نسيت كلمة المرور؟' : 'Forgot Password?',
   Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Phone Number',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
+  Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
+  Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
 }
 
 const HeaderTitles = {

@@ -1,6 +1,12 @@
 import React from 'react'
 import { View, Animated, Text, TouchableOpacity } from 'react-native'
-import { PrimaryColor, SecondaryColor, GrayColor, LightBorder } from '../../../Config/ColorPalette'
+import {
+  PrimaryColor,
+  SecondaryColor,
+  GrayColor,
+  LightBorder,
+  PrimaryBorder,
+} from '../../../Config/ColorPalette'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 
@@ -19,11 +25,11 @@ AnimatedButton = ({ store }) => {
   })
   const ArBorder = AR.interpolate({
     inputRange: [0, 100],
-    outputRange: [LightBorder, PrimaryColor],
+    outputRange: [LightBorder, PrimaryBorder],
   })
   const EnBorder = EN.interpolate({
     inputRange: [0, 100],
-    outputRange: [LightBorder, PrimaryColor],
+    outputRange: [LightBorder, PrimaryBorder],
   })
 
   const ArCircle = AR.interpolate({

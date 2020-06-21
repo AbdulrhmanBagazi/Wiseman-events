@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
 
@@ -17,7 +17,9 @@ function Reset({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.Logo} />
+      <View style={styles.Logo}>
+        <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />
+      </View>
       <Text style={styles.Title}>{ResetPasswordString.title}</Text>
       <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
 

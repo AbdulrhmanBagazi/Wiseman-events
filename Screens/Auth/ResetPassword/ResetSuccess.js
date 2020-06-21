@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
 
 function ResetSuccess({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.Logo} />
+      <View style={styles.Logo}>
+        <Image style={styles.tinyLogo} source={require('../../../assets/resetsuccessful.png')} />
+      </View>
       <Text style={styles.Title}>{ResetPasswordString.ResetSuccessful}</Text>
       <Text style={styles.Slogan}>{ResetPasswordString.ResetSuccessfulSlogan}</Text>
 

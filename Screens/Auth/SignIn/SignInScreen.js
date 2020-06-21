@@ -69,6 +69,16 @@ function SignIn({ navigation, store }) {
           <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={styles.Terms}>
+        <TouchableOpacity onPress={() => navigation.push('SignUp')}>
+          <Text>{SignInStrings.Terms}</Text>
+        </TouchableOpacity>
+        <Text style={styles.and}> & </Text>
+        <TouchableOpacity onPress={() => navigation.push('SignUp')}>
+          <Text>{SignInStrings.Privacy}</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }
