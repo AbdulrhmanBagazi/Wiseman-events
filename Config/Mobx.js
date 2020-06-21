@@ -3,6 +3,12 @@ import { LanguageGet } from './AsyncStorage'
 
 class Store {
   Language = null
+  SelectLanguage = null
+
+  setLanguge = async (value) => {
+    this.SelectLanguage = value
+    return
+  }
 
   getLanguge = async () => {
     var getLanguage = await LanguageGet()
@@ -13,7 +19,9 @@ class Store {
 
 decorate(Store, {
   Language: observable,
+  SelectLanguage: observable,
   getLanguge: action,
+  setLanguge: action,
 })
 
 const store = new Store()

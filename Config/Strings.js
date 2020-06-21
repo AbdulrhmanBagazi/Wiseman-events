@@ -1,11 +1,12 @@
 import { I18nManager } from 'react-native'
 
 const SignInStrings = {
-  login: I18nManager.isRTL ? 'تسجيل دخول' : 'SignIn',
-  one: I18nManager.isRTL ? '١' : '1',
-  two: I18nManager.isRTL ? '٢' : '2',
-  register: I18nManager.isRTL ? 'إنشاء حساب' : 'SignUp',
-  Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
+  Login: I18nManager.isRTL ? 'تسجيل دخول' : 'Log In',
+  Register: I18nManager.isRTL ? 'تسجيل' : 'Register',
+  Member: I18nManager.isRTL ? 'لست عضوا حتى الآن؟' : 'Not a member yet?',
+  Forgot: I18nManager.isRTL ? 'هل نسيت كلمة المرور؟' : 'Forgot Password?',
+  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Phone Number',
+  Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
 }
 
 const HeaderTitles = {
@@ -16,4 +17,8 @@ const HeaderTitles = {
   Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
 }
 
-export { SignInStrings, HeaderTitles }
+const LanguageChangeStrings = {
+  Select: I18nManager.isRTL ? 'إختيار اللغة' : 'Select Language',
+}
+
+export { SignInStrings, HeaderTitles, LanguageChangeStrings }

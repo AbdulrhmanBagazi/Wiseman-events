@@ -1,8 +1,11 @@
 import React from 'react'
-import { View, Button, I18nManager, Text } from 'react-native'
+import { View, I18nManager, Text, TouchableOpacity } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { Restart } from 'fiction-expo-restart'
 import { LanguageStore } from '../../../Config/AsyncStorage'
+import { LanguageChangeStrings } from '../../../Config/Strings'
+import styles from './Style'
+import AnimatedButton from './AnimatedButton'
 
 LanguageChange = ({ navigation, store }) => {
   const LanguageChangeHandler = async (Language) => {
@@ -22,10 +25,12 @@ LanguageChange = ({ navigation, store }) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="عربي" onPress={() => LanguageChangeHandler('ar')}></Button>
-      <Button title="English" onPress={() => LanguageChangeHandler('en')}></Button>
-      <Text>{store.Language}</Text>
+    <View style={styles.container}>
+      <Text style={styles.PageTitle}>{LanguageChangeStrings.Select}</Text>
+      <AnimatedButton />
+      <TouchableOpacity style={styles.Button} onPress={() => LanguageChangeHandler(store.SelectLanguage)}>
+        <Text style={styles.ButtonText}>Get Started</Text>
+      </TouchableOpacity>
     </View>
   )
 }

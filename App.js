@@ -13,12 +13,19 @@ import useCachedResources from './Hooks/useCachedResources'
 //Config
 import { HeaderTitles } from './Config/Strings'
 //Screens
+import LanguageChange from './Screens/Redirect/LanguageChange/LanguageChange'
 import SignIn from './Screens/Auth/SignIn/SignInScreen'
 import SignUp from './Screens/Auth/SignUp/SignUpScreen'
+import Reset from './Screens/Auth/ResetPassword/Reset'
+import GetCode from './Screens/Auth/ResetPassword/GetCode'
+import ResetSuccess from './Screens/Auth/ResetPassword/ResetSuccess'
+import OTP from './Screens/Auth/OTP/OTP'
+import Notification from './Screens/Auth/Notification/Notification'
+import NotificationSuccess from './Screens/Auth/Notification/NotificationSuccess'
+//
 import Home from './Screens/Main/Home/HomeScreen'
 import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Redirect/Splash/Splash'
-import LanguageChange from './Screens/Redirect/LanguageChange/LanguageChange'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
@@ -52,7 +59,7 @@ const AuthStack = createStackNavigator()
 const AuthScreens = () => {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen options={{ title: HeaderTitles.SignIn }} name="SignIn" component={SignIn} />
+      <AuthStack.Screen options={{ headerShown: false }} name="SignIn" component={SignIn} />
       <AuthStack.Screen
         options={{ title: HeaderTitles.SignUp, headerBackTitleVisible: false }}
         name="SignUp"
