@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    // justifyContent: 'center',
+    alignItems: 'center',
+  },
+  KeyboardAvoidingView: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,6 +27,7 @@ const styles = StyleSheet.create({
     height: 112,
     borderRadius: 56,
     backgroundColor: GrayColor,
+    marginVertical: 20,
   },
   Title: {
     fontSize: 32,

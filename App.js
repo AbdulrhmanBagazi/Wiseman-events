@@ -2,7 +2,7 @@ import * as React from 'react'
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
 import 'mobx-react-lite/batchingForReactNative'
@@ -59,16 +59,65 @@ const AuthStack = createStackNavigator()
 const AuthScreens = () => {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen options={{ headerShown: false }} name="SignIn" component={SignIn} />
       <AuthStack.Screen
-        options={{ title: HeaderTitles.SignUp, headerBackTitleVisible: false }}
+        options={{
+          headerShown: true,
+          title: '',
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="SignIn"
+        component={SignIn}
+      />
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.SignUp,
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
         name="SignUp"
         component={SignUp}
       />
       <AuthStack.Screen
-        options={{ title: HeaderTitles.Language, headerBackTitleVisible: false }}
-        name="Language"
-        component={LanguageChange}
+        options={{
+          title: HeaderTitles.Reset,
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="Reset"
+        component={Reset}
+      />
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.GetCode,
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="GetCode"
+        component={GetCode}
+      />
+      <AuthStack.Screen
+        options={{
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="ResetSuccess"
+        component={ResetSuccess}
+      />
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.OTP,
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="OTP"
+        component={OTP}
       />
     </AuthStack.Navigator>
   )

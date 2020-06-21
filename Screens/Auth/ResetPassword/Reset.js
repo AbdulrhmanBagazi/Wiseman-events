@@ -1,11 +1,35 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Style'
+import { ResetPasswordString } from '../../../Config/Strings'
 
-function Reset() {
+function Reset({ navigation }) {
+  const [data, setData] = React.useState({
+    Phone: '',
+  })
+
+  const PhoneInput = (val) => {
+    setData({
+      ...data,
+      Phone: val,
+    })
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Reset</Text>
+    <View style={styles.container}>
+      <View style={styles.Logo} />
+      <Text style={styles.Title}>{ResetPasswordString.title}</Text>
+      <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
+
+      <TextInput
+        placeholder={ResetPasswordString.Phone}
+        style={styles.input}
+        onChangeText={(text) => PhoneInput(text)}
+      />
+
+      <TouchableOpacity style={styles.Button} onPress={() => navigation.push('GetCode')}>
+        <Text style={styles.ButtonText}>{ResetPasswordString.Continue}</Text>
+      </TouchableOpacity>
     </View>
   )
 }

@@ -1,11 +1,18 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Style'
+import { ResetPasswordString } from '../../../Config/Strings'
 
-function ResetSuccess() {
+function ResetSuccess({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>ResetSuccess</Text>
+    <View style={styles.container}>
+      <View style={styles.Logo} />
+      <Text style={styles.Title}>{ResetPasswordString.ResetSuccessful}</Text>
+      <Text style={styles.Slogan}>{ResetPasswordString.ResetSuccessfulSlogan}</Text>
+
+      <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('SignIn')}>
+        <Text style={styles.ButtonText}>{ResetPasswordString.Log}</Text>
+      </TouchableOpacity>
     </View>
   )
 }

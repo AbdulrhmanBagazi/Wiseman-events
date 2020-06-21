@@ -1,5 +1,15 @@
 import React from 'react'
-import { View, TextInput, TouchableOpacity, Text } from 'react-native'
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  SafeAreaView,
+  Animated,
+} from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
 import styles from './Style'
@@ -10,12 +20,13 @@ import AnimatedIcon from './HidePassword'
 
 function SignIn({ navigation, store }) {
   const { signIn } = React.useContext(AuthContext)
+
   const [data, setData] = React.useState({
     UserName: '',
     Password: '',
   })
 
-  const UserNameInput = (val) => {
+  const PhoneInput = (val) => {
     setData({
       ...data,
       UserName: val,
@@ -30,24 +41,22 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.Logo}></View>
       <Text style={styles.Title}>Welcome to App</Text>
-      <Text style={styles.Slogan}>It's great opportunity to work on part time job and earch extra money</Text>
+      <Text style={styles.Slogan}>It's great opportunity to work on part time job and earn extra money</Text>
       <TextInput
         placeholder={SignInStrings.Phone}
         style={styles.input}
-        onChangeText={(text) => UserNameInput(text)}
+        onChangeText={(text) => PhoneInput(text)}
       />
-
       <AnimatedIcon
         placeholder={SignInStrings.Password}
         style={styles.inputPassword}
         onChangeText={(text) => PasswordInput(text)}
       />
-
       <View style={styles.ForgotContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push('Reset')}>
           <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
         </TouchableOpacity>
       </View>
@@ -56,11 +65,11 @@ function SignIn({ navigation, store }) {
       </TouchableOpacity>
       <View style={styles.Register}>
         <Text style={styles.Member}>{SignInStrings.Member}</Text>
-        <TouchableOpacity onPress={() => navigation.push('Language')}>
+        <TouchableOpacity onPress={() => navigation.push('SignUp')}>
           <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

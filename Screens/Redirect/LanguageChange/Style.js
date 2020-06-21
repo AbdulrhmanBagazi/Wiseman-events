@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BackgroundColor,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   PageTitle: {
-    marginBottom: 103,
+    marginVertical: 103,
     fontSize: 32,
   },
   TouchableOpacityContainer: {
