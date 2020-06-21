@@ -122,6 +122,7 @@ const CreateProfileScreens = () => {
       <CreateProfileStack.Screen
         options={{
           title: HeaderTitles.CreateProfile,
+          headerShown: true,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
           headerTintColor: 'black',
@@ -139,6 +140,7 @@ const VerifyScreens = () => {
     <VerifyStack.Navigator>
       <VerifyStack.Screen
         options={{
+          headerShown: true,
           title: HeaderTitles.OTP,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
@@ -182,7 +184,7 @@ const RootScreens = ({ authenticated, selectLanguage, verify, profile }) => {
       ) : profile ? (
         <Root.Screen
           name="profile"
-          component={CreateProfile}
+          component={CreateProfileScreens}
           options={{
             animationEnabled: false,
           }}
@@ -255,7 +257,12 @@ export default () => {
     return (
       <Provider store={Store}>
         <AuthContext.Provider value={auth}>
-          <NavigationContainer>
+          <NavigationContainer
+            theme={{
+              colors: {
+                background: '#fff',
+              },
+            }}>
             <RootScreens
               authenticated={isAuth}
               selectLanguage={isNew}

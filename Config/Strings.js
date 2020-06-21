@@ -68,4 +68,24 @@ const OTPStrings = {
   Verify: I18nManager.isRTL ? 'تحقق الآن' : 'Verify now',
 }
 
-export { SignInStrings, HeaderTitles, LanguageChangeStrings, Register, ResetPasswordString, OTPStrings }
+const ProfileStrings = {
+  Title: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
+  Done: I18nManager.isRTL ? 'تم' : 'Done',
+  Full: I18nManager.isRTL ? 'الإسم الثلاثي' : 'Full Name',
+  Nationality: I18nManager.isRTL ? 'الجنسية' : 'Nationality',
+  Birth: I18nManager.isRTL ? 'تاريخ الميلاد' : 'Date Of Birth',
+  Male: I18nManager.isRTL ? 'ذكر' : 'Male',
+  Female: I18nManager.isRTL ? 'أنثى' : 'Female',
+  City: I18nManager.isRTL ? 'المدينة' : 'City',
+  location: I18nManager.isRTL ? 'موقع العمل / المنزل' : 'Home/Work location',
+}
+
+export {
+  SignInStrings,
+  HeaderTitles,
+  LanguageChangeStrings,
+  Register,
+  ResetPasswordString,
+  OTPStrings,
+  ProfileStrings,
+}
