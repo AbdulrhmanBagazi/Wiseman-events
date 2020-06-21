@@ -22,6 +22,8 @@ import ResetSuccess from './Screens/Auth/ResetPassword/ResetSuccess'
 import OTP from './Screens/Auth/OTP/OTP'
 import Notification from './Screens/Auth/Notification/Notification'
 import NotificationSuccess from './Screens/Auth/Notification/NotificationSuccess'
+import CreateProfile from './Screens/Auth/CreateProfile/CreateProfile'
+
 //
 import Home from './Screens/Main/Home/HomeScreen'
 import Profile from './Screens/Main/Profile/ProfileScreen'
@@ -109,7 +111,33 @@ const AuthScreens = () => {
         name="ResetSuccess"
         component={ResetSuccess}
       />
-      <AuthStack.Screen
+    </AuthStack.Navigator>
+  )
+}
+
+const CreateProfileStack = createStackNavigator()
+const CreateProfileScreens = () => {
+  return (
+    <CreateProfileStack.Navigator>
+      <CreateProfileStack.Screen
+        options={{
+          title: HeaderTitles.CreateProfile,
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="CreateProfile"
+        component={CreateProfile}
+      />
+    </CreateProfileStack.Navigator>
+  )
+}
+
+const VerifyStack = createStackNavigator()
+const VerifyScreens = () => {
+  return (
+    <VerifyStack.Navigator>
+      <VerifyStack.Screen
         options={{
           title: HeaderTitles.OTP,
           headerBackTitleVisible: false,
@@ -119,12 +147,12 @@ const AuthScreens = () => {
         name="OTP"
         component={OTP}
       />
-    </AuthStack.Navigator>
+    </VerifyStack.Navigator>
   )
 }
 
 const Root = createStackNavigator()
-const RootScreens = ({ authenticated, selectLanguage }) => {
+const RootScreens = ({ authenticated, selectLanguage, verify, profile }) => {
   return (
     <Root.Navigator headerMode="none">
       {authenticated ? (
@@ -137,8 +165,24 @@ const RootScreens = ({ authenticated, selectLanguage }) => {
         />
       ) : selectLanguage ? (
         <Root.Screen
-          name="Auth"
+          name="LanguageChange"
           component={LanguageChange}
+          options={{
+            animationEnabled: false,
+          }}
+        />
+      ) : verify ? (
+        <Root.Screen
+          name="Verify"
+          component={VerifyScreens}
+          options={{
+            animationEnabled: false,
+          }}
+        />
+      ) : profile ? (
+        <Root.Screen
+          name="profile"
+          component={CreateProfile}
           options={{
             animationEnabled: false,
           }}
@@ -161,12 +205,16 @@ export default () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [isAuth, setIsAuth] = React.useState(false)
   const [isNew, setNew] = React.useState(false)
+  const [isVerify, setVerify] = React.useState(false)
+  const [isProfile, setProfile] = React.useState(false)
 
   const auth = React.useMemo(() => {
     return {
       signIn: () => {
         setIsLoading(false)
         setIsAuth(true)
+        setVerify(false)
+        setProfile(false)
       },
       signOut: () => {
         setIsLoading(false)
@@ -176,6 +224,17 @@ export default () => {
         setIsLoading(false)
         setIsAuth(false)
         setNew(true)
+      },
+      Verify: () => {
+        setIsLoading(false)
+        setIsAuth(false)
+        setVerify(true)
+      },
+      Profile: () => {
+        setIsLoading(false)
+        setIsAuth(false)
+        setVerify(false)
+        setProfile(true)
       },
     }
   }, [])
@@ -197,7 +256,12 @@ export default () => {
       <Provider store={Store}>
         <AuthContext.Provider value={auth}>
           <NavigationContainer>
-            <RootScreens authenticated={isAuth} selectLanguage={isNew} />
+            <RootScreens
+              authenticated={isAuth}
+              selectLanguage={isNew}
+              verify={isVerify}
+              profile={isProfile}
+            />
           </NavigationContainer>
         </AuthContext.Provider>
       </Provider>

@@ -3,9 +3,22 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { OTPStrings } from '../../../Config/Strings'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import { width, height } from '../../../Config/Layout'
+import { width } from '../../../Config/Layout'
+import { AuthContext } from '../../../Hooks/Context'
 
-function OTP({ navigation }) {
+function OTP() {
+  const { Profile } = React.useContext(AuthContext)
+  const [isVerify, setVerify] = React.useState(false)
+
+  React.useEffect(() => {
+    if (isVerify) {
+      Profile()
+      return
+    }
+
+    return
+  }, [isVerify])
+
   return (
     <View style={styles.container}>
       <View style={styles.Logo} />
@@ -21,7 +34,7 @@ function OTP({ navigation }) {
         />
       </View>
 
-      <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('SignIn')}>
+      <TouchableOpacity style={styles.Button} onPress={() => setVerify(true)}>
         <Text style={styles.ButtonText}>{OTPStrings.Verify}</Text>
       </TouchableOpacity>
     </View>

@@ -3,8 +3,12 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { Register } from '../../../Config/Strings'
 import Inputpassowrd from './Password'
+import { AuthContext } from '../../../Hooks/Context'
 
 function SignUp({ navigation }) {
+  const { Verify } = React.useContext(AuthContext)
+  const [isRegister, setRegister] = React.useState(false)
+
   const [data, setData] = React.useState({
     Phone: '',
     Password: '',
@@ -32,6 +36,16 @@ function SignUp({ navigation }) {
     })
   }
 
+  React.useEffect(() => {
+    if (isRegister) {
+      Verify()
+
+      return
+    }
+
+    return
+  }, [isRegister])
+
   return (
     <View style={styles.container}>
       <View style={styles.Logo} />
@@ -52,7 +66,7 @@ function SignUp({ navigation }) {
         onChangeText={(text) => RePasswordInput(text)}
       />
 
-      <TouchableOpacity style={styles.Button} onPress={() => navigation.push('OTP')}>
+      <TouchableOpacity style={styles.Button} onPress={() => setRegister(true)}>
         <Text style={styles.ButtonText}>{Register.Continue}</Text>
       </TouchableOpacity>
 

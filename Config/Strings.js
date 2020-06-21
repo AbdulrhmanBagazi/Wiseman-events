@@ -18,6 +18,7 @@ const HeaderTitles = {
   Reset: I18nManager.isRTL ? 'هل نسيت كلمة المرور؟' : 'Forgot Password',
   GetCode: I18nManager.isRTL ? 'استعادة كلمة المرور' : 'Password Recovery',
   OTP: I18nManager.isRTL ? 'التحقق' : 'Verification',
+  CreateProfile: I18nManager.isRTL ? 'إنشاء ملف تعريف' : 'Create Profile',
 }
 
 const LanguageChangeStrings = {
