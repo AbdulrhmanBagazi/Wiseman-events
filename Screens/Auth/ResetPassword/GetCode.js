@@ -11,7 +11,6 @@ import {
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
 import Inputpassowrd from './Password'
-import { SecondaryText } from '../../../Config/ColorPalette'
 
 function GetCode({ navigation }) {
   const [data, setData] = React.useState({
@@ -19,11 +18,10 @@ function GetCode({ navigation }) {
     Password: '',
     RePassword: '',
   })
-  const [isMatch, setMatch] = React.useState(false)
-  const Match = new Animated.Value(0)
+  const [Match] = React.useState(new Animated.Value(0))
   const MatchColor = Match.interpolate({
     inputRange: [0, 100],
-    outputRange: [SecondaryText, '#25AC71'],
+    outputRange: ['#E8505B', '#25AC71'],
   })
 
   const CodeInput = (val) => {
@@ -33,27 +31,8 @@ function GetCode({ navigation }) {
     })
   }
 
-  const PasswordInput = (val) => {
-    setData({
-      ...data,
-      Password: val,
-    })
-  }
-
-  const RePasswordInput = (val) => {
-    setData({
-      ...data,
-      RePassword: val,
-    })
-    if (data.Password === val) {
-      setMatch(true)
-    } else {
-      setMatch(false)
-    }
-  }
-
-  React.useEffect(() => {
-    if (isMatch === false) {
+  const Animate = async (val) => {
+    if (val === false) {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
@@ -64,9 +43,31 @@ function GetCode({ navigation }) {
         duration: 500,
       }).start()
     }
+  }
 
-    return
-  }, [isMatch])
+  const PasswordInput = (val) => {
+    setData({
+      ...data,
+      Password: val,
+    })
+    if (data.RePassword === val) {
+      Animate(true)
+    } else {
+      Animate(false)
+    }
+  }
+
+  const RePasswordInput = (val) => {
+    setData({
+      ...data,
+      RePassword: val,
+    })
+    if (data.Password === val) {
+      Animate(true)
+    } else {
+      Animate(false)
+    }
+  }
 
   return (
     <KeyboardAvoidingView

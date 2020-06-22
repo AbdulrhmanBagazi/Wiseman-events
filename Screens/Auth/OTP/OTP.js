@@ -31,6 +31,7 @@ function OTP() {
           style={{ width: width / 1.5, height: 100 }}
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
+          autoFocusOnLoad={false}
         />
       </View>
 

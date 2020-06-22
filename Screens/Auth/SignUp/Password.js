@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Animated, View, TextInput } from 'react-native'
+import { TouchableOpacity, Animated, View, TextInput, I18nManager, Text } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import styles from './Style'
 import { LightText } from '../../../Config/ColorPalette'
@@ -31,6 +31,22 @@ function AnimatedIcon(props) {
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
           <Icon name={isHide === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
         </TouchableOpacity>
+      </View>
+      <View style={styles.CheckMatch}>
+        {I18nManager.isRTL ? (
+          <Text style={[styles.Resendmessage, { textAlign: 'left' }]}>
+            <Text>يجب ان تتكون كلمة المرور من</Text> <Text style={{ color: '#25AC71' }}>٨ آحرف آو آكثر</Text>{' '}
+            <Text>وتحتوي على</Text> <Text style={{ color: '#25AC71' }}>آحرف كبيرة و صغيرة</Text>{' '}
+            <Text style={{ color: '#E8505B' }}>ورقم</Text>.
+          </Text>
+        ) : (
+          <Text style={styles.Resendmessage}>
+            Your password must be <Text style={{ color: '#25AC71' }}>8 or more characters</Text> long, contain
+            both <Text style={{ color: '#25AC71' }}>uppercase</Text> and{' '}
+            <Text style={{ color: '#E8505B' }}>lowercase</Text> letter &{' '}
+            <Text style={{ color: '#E8505B' }}>number</Text>.
+          </Text>
+        )}
       </View>
 
       <View>

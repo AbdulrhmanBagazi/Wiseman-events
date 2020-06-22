@@ -38,6 +38,7 @@ const Register = {
   Continue: I18nManager.isRTL ? 'إستمرار' : 'Continue',
   HaveAccount: I18nManager.isRTL ? 'لديك حساب؟' : 'Already have an account?',
   Log: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
+  Match: I18nManager.isRTL ? 'تتطابق كلمتا المرور' : 'Both passwords match',
 }
 
 const ResetPasswordString = {
@@ -62,8 +63,8 @@ const ResetPasswordString = {
   Resetbutton: I18nManager.isRTL ? 'إعادة تعيين' : 'Reset',
   Match: I18nManager.isRTL ? 'تتطابق كلمتا المرور' : 'Both passwords match',
   Length: I18nManager.isRTL
-    ? 'يجب أن تتكون كلمة المرور من 8 أحرف أو أكثر ، وتحتوي على أحرف كبيرة وصغيرة ، ورقم.'
-    : 'Your password must be 8 or more characters long, contain both uppercase and lowercase letter, number.',
+    ? 'يجب أن تتكون كلمة المرور من 8 أحرف أو أكثر ، وتحتوي على أحرف كبيرة وصغيرة ورقم.'
+    : 'Your password must be 8 or more characters long, contain both uppercase and lowercase letter & number.',
 }
 
 const OTPStrings = {

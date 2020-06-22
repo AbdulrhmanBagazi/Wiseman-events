@@ -88,6 +88,12 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     marginLeft: 5,
   },
+  CheckMatch: {
+    width,
+    justifyContent: 'flex-start',
+    marginBottom: 20,
+    flexDirection: 'row',
+  },
 })
 
 export default styles
