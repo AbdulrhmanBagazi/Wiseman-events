@@ -4,9 +4,15 @@ import { LanguageGet } from './AsyncStorage'
 class Store {
   Language = null
   SelectLanguage = null
+  SelectGender = null
 
   setLanguge = async (value) => {
     this.SelectLanguage = value
+    return
+  }
+
+  setGender = async (value) => {
+    this.SelectGender = value
     return
   }
 
@@ -20,6 +26,8 @@ class Store {
 decorate(Store, {
   Language: observable,
   SelectLanguage: observable,
+  SelectGender: observable,
+  setGender: action,
   getLanguge: action,
   setLanguge: action,
 })

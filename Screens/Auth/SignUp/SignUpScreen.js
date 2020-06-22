@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { Register } from '../../../Config/Strings'
 import Inputpassowrd from './Password'
@@ -47,36 +47,45 @@ function SignUp({ navigation }) {
   }, [isRegister])
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Logo} />
-      <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={90}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+          <View style={styles.container}>
+            <View style={styles.Logo} />
+            <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
 
-      <TextInput
-        placeholder={Register.Phone}
-        style={styles.input}
-        onChangeText={(text) => PhoneInput(text)}
-      />
+            <TextInput
+              placeholder={Register.Phone}
+              style={styles.input}
+              onChangeText={(text) => PhoneInput(text)}
+            />
 
-      <Inputpassowrd
-        placeholderpassword={Register.Password}
-        passwordstyle={styles.input}
-        change={(text) => PasswordInput(text)}
-        placeholder={Register.RePassword}
-        style={styles.input}
-        onChangeText={(text) => RePasswordInput(text)}
-      />
+            <Inputpassowrd
+              placeholderpassword={Register.Password}
+              passwordstyle={styles.input}
+              change={(text) => PasswordInput(text)}
+              placeholder={Register.RePassword}
+              style={styles.input}
+              onChangeText={(text) => RePasswordInput(text)}
+            />
 
-      <TouchableOpacity style={styles.Button} onPress={() => setRegister(true)}>
-        <Text style={styles.ButtonText}>{Register.Continue}</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.Button} onPress={() => setRegister(true)}>
+              <Text style={styles.ButtonText}>{Register.Continue}</Text>
+            </TouchableOpacity>
 
-      <View style={styles.Register}>
-        <Text style={styles.Member}>{Register.HaveAccount}</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.RegisterText}>{Register.Log}</Text>
-        </TouchableOpacity>
+            <View style={styles.Register}>
+              <Text style={styles.Member}>{Register.HaveAccount}</Text>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={styles.RegisterText}>{Register.Log}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

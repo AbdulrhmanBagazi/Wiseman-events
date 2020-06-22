@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Image,
+} from 'react-native'
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
 
@@ -16,23 +24,32 @@ function Reset({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Logo}>
-        <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={90}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+          <View style={styles.container}>
+            <View style={styles.Logo}>
+              <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />
+            </View>
+            <Text style={styles.Title}>{ResetPasswordString.title}</Text>
+            <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
+
+            <TextInput
+              placeholder={ResetPasswordString.Phone}
+              style={styles.input}
+              onChangeText={(text) => PhoneInput(text)}
+            />
+
+            <TouchableOpacity style={styles.Button} onPress={() => navigation.push('GetCode')}>
+              <Text style={styles.ButtonText}>{ResetPasswordString.Continue}</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
-      <Text style={styles.Title}>{ResetPasswordString.title}</Text>
-      <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
-
-      <TextInput
-        placeholder={ResetPasswordString.Phone}
-        style={styles.input}
-        onChangeText={(text) => PhoneInput(text)}
-      />
-
-      <TouchableOpacity style={styles.Button} onPress={() => navigation.push('GetCode')}>
-        <Text style={styles.ButtonText}>{ResetPasswordString.Continue}</Text>
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

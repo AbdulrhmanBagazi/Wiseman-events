@@ -60,6 +60,10 @@ const ResetPasswordString = {
     ? 'تم إعادة تعيين كلمة المرور الخاصة بك بنجاح.'
     : 'Your password has been reset successfully.',
   Resetbutton: I18nManager.isRTL ? 'إعادة تعيين' : 'Reset',
+  Match: I18nManager.isRTL ? 'تتطابق كلمتا المرور' : 'Both passwords match',
+  Length: I18nManager.isRTL
+    ? 'يجب أن تتكون كلمة المرور من 8 أحرف أو أكثر ، وتحتوي على أحرف كبيرة وصغيرة ، ورقم.'
+    : 'Your password must be 8 or more characters long, contain both uppercase and lowercase letter, number.',
 }
 
 const OTPStrings = {
@@ -82,6 +86,20 @@ const ProfileStrings = {
   location: I18nManager.isRTL ? 'موقع العمل / المنزل' : 'Home/Work location',
 }
 
+const NotificationStrings = {
+  Title: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
+  Allow: I18nManager.isRTL ? 'السماح' : 'Allow',
+  Not: I18nManager.isRTL ? 'ليس الان' : 'Not Now',
+  Slogan: I18nManager.isRTL
+    ? 'السماح لاسم التطبيق بإرسال إشعارات إليك عند التعيين في وظيفة وتحديثات الدفع والوظيفة الجديدة وما إلى ذلك.'
+    : 'Allow app name to send you notifications when you get hired on a job, payment updates,  new job etc.',
+  Congrats: I18nManager.isRTL ? 'تهانينا!' : 'Congratulations!',
+  CongratsSlogan: I18nManager.isRTL
+    ? 'تم تعيين ملف التعريف الخاص بك ، يمكنك الآن تصفح الوظائف في مدينتك والبدء في التقديم ، والتوظيف ، وكسب أموال إضافية عندما تكون حرًا.'
+    : 'Your profile is set, you can now browse the jobs in your city and start applying, get hired, and earn extra money while you are free.',
+  Started: I18nManager.isRTL ? 'البدء' : 'Get Started',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -90,4 +108,5 @@ export {
   ResetPasswordString,
   OTPStrings,
   ProfileStrings,
+  NotificationStrings,
 }

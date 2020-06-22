@@ -153,49 +153,120 @@ const VerifyScreens = () => {
   )
 }
 
+const LanguageChangeStack = createStackNavigator()
+const LanguageChangeScreens = () => {
+  return (
+    <LanguageChangeStack.Navigator>
+      <LanguageChangeStack.Screen
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="LanguageChange"
+        component={LanguageChange}
+      />
+    </LanguageChangeStack.Navigator>
+  )
+}
+
+const NotificationStack = createStackNavigator()
+const NotificationScreens = () => {
+  return (
+    <NotificationStack.Navigator>
+      <NotificationStack.Screen
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="Notification"
+        component={Notification}
+      />
+
+      <NotificationStack.Screen
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+          headerLeft: null,
+        }}
+        name="NotificationSuccess"
+        component={NotificationSuccess}
+      />
+    </NotificationStack.Navigator>
+  )
+}
+
 const Root = createStackNavigator()
-const RootScreens = ({ authenticated, selectLanguage, verify, profile }) => {
+const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification }) => {
   return (
     <Root.Navigator headerMode="none">
       {authenticated ? (
         <Root.Screen
           name="Main"
           component={TabsScreens}
-          options={{
-            animationEnabled: false,
-          }}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
         />
       ) : selectLanguage ? (
         <Root.Screen
           name="LanguageChange"
-          component={LanguageChange}
-          options={{
-            animationEnabled: false,
-          }}
+          component={LanguageChangeScreens}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
         />
       ) : verify ? (
         <Root.Screen
           name="Verify"
           component={VerifyScreens}
-          options={{
-            animationEnabled: false,
-          }}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
         />
       ) : profile ? (
         <Root.Screen
           name="profile"
           component={CreateProfileScreens}
-          options={{
-            animationEnabled: false,
-          }}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
+        />
+      ) : notification ? (
+        <Root.Screen
+          name="notification"
+          component={NotificationScreens}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
         />
       ) : (
         <Root.Screen
           name="Auth"
           component={AuthScreens}
-          options={{
-            animationEnabled: false,
-          }}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
         />
       )}
     </Root.Navigator>
@@ -209,6 +280,7 @@ export default () => {
   const [isNew, setNew] = React.useState(false)
   const [isVerify, setVerify] = React.useState(false)
   const [isProfile, setProfile] = React.useState(false)
+  const [isNotification, setNotification] = React.useState(false)
 
   const auth = React.useMemo(() => {
     return {
@@ -237,6 +309,13 @@ export default () => {
         setIsAuth(false)
         setVerify(false)
         setProfile(true)
+      },
+      Notification: () => {
+        setIsLoading(false)
+        setIsAuth(false)
+        setVerify(false)
+        setProfile(false)
+        setNotification(true)
       },
     }
   }, [])
@@ -268,6 +347,7 @@ export default () => {
               selectLanguage={isNew}
               verify={isVerify}
               profile={isProfile}
+              notification={isNotification}
             />
           </NavigationContainer>
         </AuthContext.Provider>

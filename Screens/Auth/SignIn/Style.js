@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   input: {
-    backgroundColor: GrayColor,
+    backgroundColor: '#fff',
     height: 45,
     width,
     borderColor: PrimaryBorder,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
   inputPassword: {
-    backgroundColor: GrayColor,
+    backgroundColor: '#fff',
     height: 45,
     width,
     borderColor: SecondaryText,
@@ -114,11 +114,10 @@ const styles = StyleSheet.create({
   },
   Terms: {
     flexDirection: 'row',
-    bottom: 1,
-    flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
-
   and: {
     color: SecondaryText,
   },

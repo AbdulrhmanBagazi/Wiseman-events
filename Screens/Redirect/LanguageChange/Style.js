@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   PageTitle: {
-    marginBottom: 103,
+    marginBottom: 80,
     fontSize: 32,
   },
   TouchableOpacityContainer: {

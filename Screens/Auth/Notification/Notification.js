@@ -1,11 +1,25 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from './Style'
+import { NotificationStrings } from '../../../Config/Strings'
 
-function Notification() {
+function Notification({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notification</Text>
+    <View style={styles.container}>
+      <View style={styles.Logo}>
+        <Image style={styles.tinyLogo} source={require('../../../assets/notificationillustration.png')} />
+      </View>
+      <Text style={styles.Title}>{NotificationStrings.Title}</Text>
+      <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text>
+
+      <View style={styles.ButtonView}>
+        <TouchableOpacity style={styles.NotButton}>
+          <Text style={styles.NotButtonText}>{NotificationStrings.Not}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.Button} onPress={() => navigation.push('NotificationSuccess')}>
+          <Text style={styles.ButtonText}>{NotificationStrings.Allow}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

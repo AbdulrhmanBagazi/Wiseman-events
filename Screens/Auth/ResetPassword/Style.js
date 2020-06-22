@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   input: {
-    backgroundColor: GrayColor,
+    backgroundColor: '#fff',
     height: 45,
     width,
     borderColor: SecondaryText,
@@ -107,6 +107,12 @@ const styles = StyleSheet.create({
   tinyLogo: {
     height: height / 6,
     resizeMode: 'contain',
+  },
+  CheckMatch: {
+    width,
+    justifyContent: 'flex-start',
+    marginBottom: 20,
+    flexDirection: 'row',
   },
 })
 

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   KeyboardAvoidingView,
+  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   SafeAreaView,
@@ -41,34 +42,45 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.Logo}></View>
-      <Text style={styles.Title}>Welcome to App</Text>
-      <Text style={styles.Slogan}>It's great opportunity to work on part time job and earn extra money</Text>
-      <TextInput
-        placeholder={SignInStrings.Phone}
-        style={styles.input}
-        onChangeText={(text) => PhoneInput(text)}
-      />
-      <AnimatedIcon
-        placeholder={SignInStrings.Password}
-        style={styles.inputPassword}
-        onChangeText={(text) => PasswordInput(text)}
-      />
-      <View style={styles.ForgotContainer}>
-        <TouchableOpacity onPress={() => navigation.push('Reset')}>
-          <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.Button}>
-        <Text style={styles.ButtonText}>{SignInStrings.Login}</Text>
-      </TouchableOpacity>
-      <View style={styles.Register}>
-        <Text style={styles.Member}>{SignInStrings.Member}</Text>
-        <TouchableOpacity onPress={() => navigation.push('SignUp')}>
-          <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
-        </TouchableOpacity>
-      </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={90}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}>
+        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+          <View style={styles.container}>
+            <View style={styles.Logo}></View>
+            <Text style={styles.Title}>Welcome to App</Text>
+            <Text style={styles.Slogan}>
+              It's great opportunity to work on part time job and earn extra money
+            </Text>
+            <TextInput
+              placeholder={SignInStrings.Phone}
+              style={styles.input}
+              onChangeText={(text) => PhoneInput(text)}
+            />
+            <AnimatedIcon
+              placeholder={SignInStrings.Password}
+              style={styles.inputPassword}
+              onChangeText={(text) => PasswordInput(text)}
+            />
+            <View style={styles.ForgotContainer}>
+              <TouchableOpacity onPress={() => navigation.push('Reset')}>
+                <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.Button}>
+              <Text style={styles.ButtonText}>{SignInStrings.Login}</Text>
+            </TouchableOpacity>
+            <View style={styles.Register}>
+              <Text style={styles.Member}>{SignInStrings.Member}</Text>
+              <TouchableOpacity onPress={() => navigation.push('SignUp')}>
+                <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <View style={styles.Terms}>
         <TouchableOpacity onPress={() => navigation.push('SignUp')}>

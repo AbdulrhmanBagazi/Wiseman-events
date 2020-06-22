@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Animated, View, TextInput } from 'react-native'
+import { TouchableOpacity, Animated, View, TextInput, Text } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import styles from './Style'
 import { LightText } from '../../../Config/ColorPalette'
@@ -31,6 +31,9 @@ function AnimatedIcon(props) {
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
           <Icon name={isHide === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
         </TouchableOpacity>
+      </View>
+      <View style={styles.CheckMatch}>
+        <Text style={styles.Resendmessage}>{props.passwordlength}</Text>
       </View>
 
       <View>
