@@ -25,6 +25,7 @@ const HeaderTitles = {
 
 const LanguageChangeStrings = {
   Select: I18nManager.isRTL ? 'إختيار اللغة' : 'Select Language',
+  Done: I18nManager.isRTL ? 'البدء' : 'Get Started',
 }
 
 const Register = {
@@ -32,7 +33,7 @@ const Register = {
   ResetSlogan: I18nManager.isRTL
     ? 'مرحبًا بك في اسم التطبيق. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
     : 'Welcome to app name. Please provice the information below, set your account.',
-  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Phone Number',
+  Phone: I18nManager.isRTL ? 'رقم الجوال(05XXXXXXXX)' : 'Phone Number (05XXXXXXXX)',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   RePassword: I18nManager.isRTL ? 'اعادة ادخال كلمة السر' : 'Re-enter password',
   Continue: I18nManager.isRTL ? 'إستمرار' : 'Continue',

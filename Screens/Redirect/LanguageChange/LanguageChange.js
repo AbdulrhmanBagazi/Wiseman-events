@@ -41,7 +41,7 @@ LanguageChange = ({ store }) => {
         onPressEnglish={() => ChangeLanguage('en')}
       />
       <TouchableOpacity style={styles.Button} onPress={() => LanguageChangeHandler(isLanguage)}>
-        <Text style={styles.ButtonText}>Get Started</Text>
+        <Text style={styles.ButtonText}>{LanguageChangeStrings.Done}</Text>
       </TouchableOpacity>
     </View>
   )

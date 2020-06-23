@@ -22,6 +22,7 @@ function CreateProfile() {
   const [show, setShow] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [isCreated, setCreated] = React.useState(false)
+  const [Gender, setGender] = React.useState('')
 
   React.useEffect(() => {
     if (isCreated) {
@@ -106,7 +107,13 @@ function CreateProfile() {
             ) : null}
 
             {/* <TextInput style={styles.input} placeholder={ProfileStrings.Male} /> */}
-            <AnimatedButton Male={ProfileStrings.Male} Female={ProfileStrings.Female} />
+            <AnimatedButton
+              GenderValue={Gender}
+              Male={ProfileStrings.Male}
+              Female={ProfileStrings.Female}
+              onPressMale={() => setGender('male')}
+              onPressFemale={() => setGender('female')}
+            />
             <TextInput style={styles.input} placeholder={ProfileStrings.City} />
             <TextInput style={styles.input} placeholder={ProfileStrings.location} />
 

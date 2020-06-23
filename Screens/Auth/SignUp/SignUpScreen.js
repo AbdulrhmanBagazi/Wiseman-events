@@ -4,6 +4,7 @@ import styles from './Style'
 import { Register } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
 import { AuthContext } from '../../../Hooks/Context'
+import axios from 'axios'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
@@ -14,14 +15,12 @@ function SignUp({ navigation }) {
     RePassword: '',
   })
   const [Check, setCheck] = React.useState('')
-
   const PhoneInput = (val) => {
     setData({
       ...data,
       Phone: val,
     })
   }
-
   const PasswordInput = (val) => {
     setData({
       ...data,
@@ -35,7 +34,6 @@ function SignUp({ navigation }) {
       setCheck('Error')
     }
   }
-
   const RePasswordInput = (val) => {
     setData({
       ...data,
@@ -51,15 +49,20 @@ function SignUp({ navigation }) {
     }
   }
 
-  React.useEffect(() => {
-    if (isRegister) {
-      Verify()
+  const RegisterAccount = async (val) => {
+    console.log(val)
+    console.log(isNaN(val.Phone))
+  }
 
-      return
-    }
+  // React.useEffect(() => {
+  //   if (isRegister) {
+  //     Verify()
 
-    return
-  }, [isRegister])
+  //     return
+  //   }
+
+  //   return
+  // }, [isRegister])
 
   return (
     <KeyboardAvoidingView
@@ -76,6 +79,7 @@ function SignUp({ navigation }) {
               placeholder={Register.Phone}
               style={styles.input}
               onChangeText={(text) => PhoneInput(text)}
+              keyboardType={'number-pad'}
             />
 
             <Inputpassowrd
@@ -89,7 +93,7 @@ function SignUp({ navigation }) {
               Check={Check}
             />
 
-            <TouchableOpacity style={styles.Button} onPress={() => setRegister(true)}>
+            <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
               <Text style={styles.ButtonText}>{Register.Continue}</Text>
             </TouchableOpacity>
 

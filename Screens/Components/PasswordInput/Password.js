@@ -50,6 +50,7 @@ function AnimatedIcon(props) {
           style={props.passwordstyle}
           onChangeText={props.change}
           secureTextEntry={isHide}
+          textContentType="password"
         />
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
           <Icon name={isHide === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
@@ -72,7 +73,7 @@ function AnimatedIcon(props) {
         )}
       </View>
       <View>
-        <TextInput {...props} secureTextEntry={isHideRe} />
+        <TextInput {...props} secureTextEntry={isHideRe} textContentType="password" />
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHideRe(isHideRe)}>
           <Icon name={isHideRe === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
         </TouchableOpacity>

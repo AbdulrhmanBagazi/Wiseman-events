@@ -12,10 +12,9 @@ import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { ProfileStrings } from '../../../Config/Strings'
 
-AnimatedButton = ({ store }) => {
+AnimatedButton = (props) => {
   const [M] = React.useState(new Animated.Value(0))
   const [F] = React.useState(new Animated.Value(0))
-  const [isChanged, setChanged] = React.useState('')
 
   const MColor = M.interpolate({
     inputRange: [0, 100],
@@ -55,21 +54,19 @@ AnimatedButton = ({ store }) => {
   React.useEffect(() => {
     Animated.parallel([
       Animated.timing(M, {
-        toValue: isChanged === 'male' ? 100 : 0,
+        toValue: props.GenderValue === 'male' ? 100 : 0,
         duration: 500,
       }),
       Animated.timing(F, {
-        toValue: isChanged === 'female' ? 100 : 0,
+        toValue: props.GenderValue === 'female' ? 100 : 0,
         duration: 500,
       }),
     ]).start()
-
-    store.setGender(isChanged)
-  }, [isChanged])
+  }, [props.GenderValue])
 
   return (
     <View style={styles.Gender}>
-      <TouchableOpacity onPress={() => setChanged('male')} style={styles.TouchableOpacityContainer}>
+      <TouchableOpacity onPress={props.onPressMale} style={styles.TouchableOpacityContainer}>
         <Animated.View
           style={[
             styles.TouchableOpacityFirst,
@@ -85,7 +82,7 @@ AnimatedButton = ({ store }) => {
           <Animated.Text style={{ color: MText }}>{ProfileStrings.Male}</Animated.Text>
         </Animated.View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setChanged('female')} style={styles.TouchableOpacityContainer}>
+      <TouchableOpacity onPress={props.onPressFemale} style={styles.TouchableOpacityContainer}>
         <Animated.View
           style={[
             styles.TouchableOpacity,
