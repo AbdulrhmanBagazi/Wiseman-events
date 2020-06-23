@@ -123,9 +123,12 @@ function AnimatedIcon(props) {
       <View style={styles.CheckMatch}>
         {I18nManager.isRTL ? (
           <Text style={[styles.Resendmessage, { textAlign: 'left' }]}>
-            <Text>يجب ان تتكون كلمة المرور من</Text> <Text style={{ color: '#25AC71' }}>٦ آحرف آو آكثر</Text>{' '}
-            <Text>وتحتوي على</Text> <Text style={{ color: '#25AC71' }}>آحرف كبيرة و صغيرة</Text>{' '}
-            <Text style={{ color: '#E8505B' }}>ورقم</Text>.
+            <Text>يجب ان تتكون كلمة المرور من</Text>{' '}
+            <Animated.Text style={{ color: MatchLengthColor }}>٦ آحرف آو آكثر</Animated.Text>{' '}
+            <Text> وتحتوي على آحرف</Text>{' '}
+            <Animated.Text style={{ color: MatchUpperColor }}>كبيرة</Animated.Text> و
+            <Animated.Text style={{ color: MatchLowerColor }}>صغيرة</Animated.Text> و{' '}
+            <Animated.Text style={{ color: MatchNumberColor }}>رقم</Animated.Text>.
           </Text>
         ) : (
           <Text style={styles.Resendmessage}>

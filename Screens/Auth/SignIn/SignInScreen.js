@@ -44,7 +44,7 @@ function SignIn({ navigation, store }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset={90}
+        keyboardVerticalOffset={100}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}>
         <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
@@ -58,6 +58,7 @@ function SignIn({ navigation, store }) {
               placeholder={SignInStrings.Phone}
               style={styles.input}
               onChangeText={(text) => PhoneInput(text)}
+              keyboardType={'number-pad'}
             />
             <AnimatedIcon
               placeholder={SignInStrings.Password}

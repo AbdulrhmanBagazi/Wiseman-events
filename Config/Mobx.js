@@ -1,9 +1,16 @@
 import { observable, decorate, action } from 'mobx'
 import { LanguageGet } from './AsyncStorage'
+import { UserTokenStore } from './AsyncStorage'
 
 class Store {
   Language = null
-  SelectLanguage = null
+  data = []
+
+  setData = async (userData) => {
+    this.data = userData
+    await UserTokenStore(userData.token)
+    return
+  }
 
   getLanguge = async () => {
     var getLanguage = await LanguageGet()
@@ -15,6 +22,8 @@ class Store {
 decorate(Store, {
   Language: observable,
   getLanguge: action,
+  data: observable.ref,
+  setData: action,
 })
 
 const store = new Store()

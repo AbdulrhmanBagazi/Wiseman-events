@@ -15,11 +15,12 @@ import InputPhone from '../../Components/PhoneInput/Phone'
 import { AuthContext } from '../../../Hooks/Context'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
+import store from '../../../Config/Mobx'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
   const [isRegister, setRegister] = React.useState(false)
-  const [isError, setError] = React.useState('')
+  const [isError, setError] = React.useState(' ')
   //
   const [data, setData] = React.useState({
     Phone: '',
@@ -82,35 +83,49 @@ function SignUp({ navigation }) {
     return
   }
 
+  //Aa123123
   const RegisterAccount = async (val) => {
-    if (val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/)) {
-      console.log(true)
+    if (
+      val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
+      isCheck === 'Success' &&
+      isPhoneCheck === 'Success'
+    ) {
+      axios
+        .post(URL + '/user/signup', {
+          phone: val.Phone,
+          password: val.Password,
+        })
+        .then((response) => {
+          if (response.data.error === 'exist') {
+            setError('Phone number used')
+            return
+          } else if (response.status === 200) {
+            setError(' ')
+
+            console.log(response.data)
+            store.setData(response.data)
+            return
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      // console.log(store.data)
+      return
+    } else {
+      return
+    }
+  }
+
+  React.useEffect(() => {
+    if (isRegister) {
+      Verify()
 
       return
     }
 
-    // axios
-    //   .post(URL + '/user/signin', {
-    //     phone: val.Phone,
-    //     password: val.Password,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
-  }
-
-  // React.useEffect(() => {
-  //   if (isRegister) {
-  //     Verify()
-
-  //     return
-  //   }
-
-  //   return
-  // }, [isRegister])
+    return
+  }, [isRegister])
 
   return (
     <KeyboardAvoidingView
@@ -122,6 +137,8 @@ function SignUp({ navigation }) {
           <View style={styles.container}>
             <View style={styles.Logo} />
             <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
+
+            <Text style={styles.error}>{isError}</Text>
 
             <InputPhone
               placeholder={Register.Phone}

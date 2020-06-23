@@ -35,6 +35,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 29,
     marginBottom: 25,
   },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginBottom: 25,
+  },
   input: {
     textAlign: I18nManager.isRTL ? 'right' : 'left',
     height: 45,
