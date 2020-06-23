@@ -33,9 +33,13 @@ const styles = StyleSheet.create({
     color: LightText,
     fontSize: 16,
     marginHorizontal: 29,
-    marginBottom: 50,
+    marginBottom: 25,
   },
   input: {
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    height: 45,
+  },
+  PasswordInput: {
     backgroundColor: '#fff',
     height: 45,
     width,

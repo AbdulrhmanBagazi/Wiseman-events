@@ -1,25 +1,56 @@
 import React from 'react'
-import { View, Text, TextInput, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Animated,
+} from 'react-native'
 import styles from './Style'
 import { Register } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
+import InputPhone from '../../Components/PhoneInput/Phone'
 import { AuthContext } from '../../../Hooks/Context'
+import { URL } from '../../../Config/Config'
 import axios from 'axios'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
   const [isRegister, setRegister] = React.useState(false)
+  const [isError, setError] = React.useState('')
+  //
   const [data, setData] = React.useState({
     Phone: '',
     Password: '',
     RePassword: '',
   })
-  const [Check, setCheck] = React.useState('')
+  const [isCheck, setCheck] = React.useState('')
+  const [isPhoneCheck, setPhoneCheck] = React.useState('')
+
   const PhoneInput = (val) => {
     setData({
       ...data,
       Phone: val,
     })
+    if (val === '') {
+      setPhoneCheck('')
+      return
+    }
+    if (isNaN(val) === true && val.length < 10) {
+      setPhoneCheck('Error')
+      return
+    }
+    if (val.length > 10 || val.length < 10) {
+      setPhoneCheck('Error')
+      return
+    }
+    if (isNaN(val) === false && val.length === 10) {
+      setPhoneCheck('Success')
+      return
+    }
+    return
   }
   const PasswordInput = (val) => {
     setData({
@@ -33,6 +64,7 @@ function SignUp({ navigation }) {
     } else {
       setCheck('Error')
     }
+    return
   }
   const RePasswordInput = (val) => {
     setData({
@@ -47,11 +79,27 @@ function SignUp({ navigation }) {
     } else {
       setCheck('Error')
     }
+    return
   }
 
   const RegisterAccount = async (val) => {
-    console.log(val)
-    console.log(isNaN(val.Phone))
+    if (val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/)) {
+      console.log(true)
+
+      return
+    }
+
+    // axios
+    //   .post(URL + '/user/signin', {
+    //     phone: val.Phone,
+    //     password: val.Password,
+    //   })
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
   }
 
   // React.useEffect(() => {
@@ -75,22 +123,24 @@ function SignUp({ navigation }) {
             <View style={styles.Logo} />
             <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
 
-            <TextInput
+            <InputPhone
               placeholder={Register.Phone}
               style={styles.input}
               onChangeText={(text) => PhoneInput(text)}
               keyboardType={'number-pad'}
+              CheckPhone={isPhoneCheck}
             />
 
             <Inputpassowrd
               placeholderpassword={Register.Password}
-              passwordstyle={styles.input}
+              passwordstyle={styles.PasswordInput}
               change={(text) => PasswordInput(text)}
               placeholder={Register.RePassword}
-              style={styles.input}
+              style={styles.PasswordInput}
               onChangeText={(text) => RePasswordInput(text)}
               MatchString={Register.Match}
-              Check={Check}
+              Check={isCheck}
+              PasswordValue={data.Password}
             />
 
             <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>

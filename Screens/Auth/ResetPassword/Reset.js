@@ -1,26 +1,37 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Image,
-} from 'react-native'
+import { View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
+import InputPhone from '../../Components/PhoneInput/Phone'
 
 function Reset({ navigation }) {
   const [data, setData] = React.useState({
     Phone: '',
   })
+  const [isPhoneCheck, setPhoneCheck] = React.useState('')
 
   const PhoneInput = (val) => {
     setData({
       ...data,
       Phone: val,
     })
+    if (val === '') {
+      setPhoneCheck('')
+      return
+    }
+    if (isNaN(val) === true && val.length < 10) {
+      setPhoneCheck('Error')
+      return
+    }
+    if (val.length > 10 || val.length < 10) {
+      setPhoneCheck('Error')
+      return
+    }
+    if (isNaN(val) === false && val.length === 10) {
+      setPhoneCheck('Success')
+      return
+    }
+    return
   }
 
   return (
@@ -37,10 +48,12 @@ function Reset({ navigation }) {
             <Text style={styles.Title}>{ResetPasswordString.title}</Text>
             <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
 
-            <TextInput
+            <InputPhone
               placeholder={ResetPasswordString.Phone}
-              style={styles.input}
+              style={styles.PhoneInput}
               onChangeText={(text) => PhoneInput(text)}
+              keyboardType={'number-pad'}
+              CheckPhone={isPhoneCheck}
             />
 
             <TouchableOpacity style={styles.Button} onPress={() => navigation.push('GetCode')}>

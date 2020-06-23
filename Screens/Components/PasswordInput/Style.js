@@ -1,5 +1,5 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
+import { StyleSheet } from 'react-native'
+import { width } from '../../../Config/Layout'
 import { SecondaryText } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({

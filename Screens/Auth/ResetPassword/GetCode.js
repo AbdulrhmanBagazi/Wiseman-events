@@ -89,6 +89,7 @@ function GetCode({ navigation }) {
               passwordlength={ResetPasswordString.Length}
               MatchString={ResetPasswordString.Match}
               Check={Check}
+              PasswordValue={data.Password}
             />
 
             <TouchableOpacity style={styles.Button} onPress={() => navigation.push('ResetSuccess')}>

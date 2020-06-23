@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 29,
     marginVertical: 20,
   },
+  PhoneInput: {
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    height: 45,
+  },
   input: {
     backgroundColor: '#fff',
     height: 45,
