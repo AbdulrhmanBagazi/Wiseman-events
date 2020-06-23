@@ -82,7 +82,7 @@ function SignIn({ navigation, store }) {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <View style={styles.Terms}>
+      {/* <View style={styles.Terms}>
         <TouchableOpacity onPress={() => navigation.push('SignUp')}>
           <Text>{SignInStrings.Terms}</Text>
         </TouchableOpacity>
@@ -90,7 +90,7 @@ function SignIn({ navigation, store }) {
         <TouchableOpacity onPress={() => navigation.push('SignUp')}>
           <Text>{SignInStrings.Privacy}</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaView>
   )
 }

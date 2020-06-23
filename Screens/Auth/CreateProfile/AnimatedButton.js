@@ -13,17 +13,17 @@ import { inject, observer } from 'mobx-react'
 import { ProfileStrings } from '../../../Config/Strings'
 
 AnimatedButton = ({ store }) => {
-  const M = new Animated.Value(0)
-  const F = new Animated.Value(0)
+  const [M] = React.useState(new Animated.Value(0))
+  const [F] = React.useState(new Animated.Value(0))
   const [isChanged, setChanged] = React.useState('')
 
   const MColor = M.interpolate({
     inputRange: [0, 100],
-    outputRange: [GrayColor, SecondaryColor],
+    outputRange: ['#fff', SecondaryColor],
   })
   const FColor = F.interpolate({
     inputRange: [0, 100],
-    outputRange: [GrayColor, SecondaryColor],
+    outputRange: ['#fff', SecondaryColor],
   })
   const MBorder = M.interpolate({
     inputRange: [0, 100],
@@ -56,11 +56,11 @@ AnimatedButton = ({ store }) => {
     Animated.parallel([
       Animated.timing(M, {
         toValue: isChanged === 'male' ? 100 : 0,
-        duration: 1000,
+        duration: 500,
       }),
       Animated.timing(F, {
         toValue: isChanged === 'female' ? 100 : 0,
-        duration: 1000,
+        duration: 500,
       }),
     ]).start()
 

@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString } from '../../../Config/Strings'
-import Inputpassowrd from './Password'
+import Inputpassowrd from '../../Components/PasswordInput/Password'
 
 function GetCode({ navigation }) {
   const [data, setData] = React.useState({
@@ -18,11 +18,7 @@ function GetCode({ navigation }) {
     Password: '',
     RePassword: '',
   })
-  const [Match] = React.useState(new Animated.Value(0))
-  const MatchColor = Match.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
-  })
+  const [Check, setCheck] = React.useState('')
 
   const CodeInput = (val) => {
     setData({
@@ -31,29 +27,17 @@ function GetCode({ navigation }) {
     })
   }
 
-  const Animate = async (val) => {
-    if (val === false) {
-      Animated.timing(Match, {
-        toValue: 0,
-        duration: 500,
-      }).start()
-    } else {
-      Animated.timing(Match, {
-        toValue: 100,
-        duration: 500,
-      }).start()
-    }
-  }
-
   const PasswordInput = (val) => {
     setData({
       ...data,
       Password: val,
     })
-    if (data.RePassword === val) {
-      Animate(true)
+    if (val === '') {
+      setCheck('')
+    } else if (data.RePassword === val) {
+      setCheck('Success')
     } else {
-      Animate(false)
+      setCheck('Error')
     }
   }
 
@@ -62,10 +46,13 @@ function GetCode({ navigation }) {
       ...data,
       RePassword: val,
     })
+    if (val === '') {
+      setCheck('')
+    }
     if (data.Password === val) {
-      Animate(true)
+      setCheck('Success')
     } else {
-      Animate(false)
+      setCheck('Error')
     }
   }
 
@@ -100,10 +87,9 @@ function GetCode({ navigation }) {
               style={styles.input}
               onChangeText={(text) => RePasswordInput(text)}
               passwordlength={ResetPasswordString.Length}
+              MatchString={ResetPasswordString.Match}
+              Check={Check}
             />
-            <View style={styles.CheckMatch}>
-              <Animated.Text style={{ color: MatchColor }}>{ResetPasswordString.Match}</Animated.Text>
-            </View>
 
             <TouchableOpacity style={styles.Button} onPress={() => navigation.push('ResetSuccess')}>
               <Text style={styles.ButtonText}>{ResetPasswordString.Resetbutton}</Text>

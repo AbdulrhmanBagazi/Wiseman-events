@@ -10,10 +10,9 @@ import {
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 
-AnimatedButton = ({ store }) => {
-  const AR = new Animated.Value(0)
-  const EN = new Animated.Value(0)
-  const [isChanged, setChanged] = React.useState('')
+AnimatedButton = (props) => {
+  const [AR] = React.useState(new Animated.Value(0))
+  const [EN] = React.useState(new Animated.Value(0))
 
   const ArColor = AR.interpolate({
     inputRange: [0, 100],
@@ -44,21 +43,19 @@ AnimatedButton = ({ store }) => {
   React.useEffect(() => {
     Animated.parallel([
       Animated.timing(AR, {
-        toValue: isChanged === 'ar' ? 100 : 0,
-        duration: 1000,
+        toValue: props.Language === 'ar' ? 100 : 0,
+        duration: 500,
       }),
       Animated.timing(EN, {
-        toValue: isChanged === 'en' ? 100 : 0,
-        duration: 1000,
+        toValue: props.Language === 'en' ? 100 : 0,
+        duration: 500,
       }),
     ]).start()
-
-    store.setLanguge(isChanged)
-  }, [isChanged])
+  }, [props.Language])
 
   return (
     <View>
-      <TouchableOpacity onPress={() => setChanged('ar')} style={styles.TouchableOpacityContainer}>
+      <TouchableOpacity onPress={props.onPressArabic} style={styles.TouchableOpacityContainer}>
         <Animated.View
           style={[
             styles.TouchableOpacity,
@@ -74,7 +71,7 @@ AnimatedButton = ({ store }) => {
           <Animated.View style={[styles.Circle, { backgroundColor: ArCircle }]} />
         </Animated.View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setChanged('en')} style={styles.TouchableOpacityContainer}>
+      <TouchableOpacity onPress={props.onPressEnglish} style={styles.TouchableOpacityContainer}>
         <Animated.View
           style={[
             styles.TouchableOpacity,

@@ -7,28 +7,40 @@ import { LanguageChangeStrings } from '../../../Config/Strings'
 import styles from './Style'
 import AnimatedButton from './AnimatedButton'
 
-LanguageChange = ({ navigation, store }) => {
-  const LanguageChangeHandler = async (Language) => {
-    if (Language === 'ar' && store.Language !== 'ar') {
+LanguageChange = ({ store }) => {
+  const [isLanguage, setLanguage] = React.useState('')
+
+  const ChangeLanguage = async (val) => {
+    setLanguage(val)
+  }
+
+  const LanguageChangeHandler = async (val) => {
+    if (val === 'ar') {
       I18nManager.allowRTL(true)
       I18nManager.forceRTL(true)
-      await LanguageStore(Language)
+      await LanguageStore(val)
       Restart()
-    } else if (Language === 'en' && store.Language !== 'en') {
+      return
+    } else if (val === 'en') {
       I18nManager.allowRTL(false)
       I18nManager.forceRTL(false)
-      await LanguageStore(Language)
+      await LanguageStore(val)
       Restart()
+      return
     } else {
-      navigation.goBack()
+      return
     }
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.PageTitle}>{LanguageChangeStrings.Select}</Text>
-      <AnimatedButton />
-      <TouchableOpacity style={styles.Button} onPress={() => LanguageChangeHandler(store.SelectLanguage)}>
+      <AnimatedButton
+        Language={isLanguage}
+        onPressArabic={() => ChangeLanguage('ar')}
+        onPressEnglish={() => ChangeLanguage('en')}
+      />
+      <TouchableOpacity style={styles.Button} onPress={() => LanguageChangeHandler(isLanguage)}>
         <Text style={styles.ButtonText}>Get Started</Text>
       </TouchableOpacity>
     </View>

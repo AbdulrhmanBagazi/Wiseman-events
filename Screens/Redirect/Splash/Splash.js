@@ -13,13 +13,13 @@ function Splash({ store }) {
       if (store.Language === null) {
         setTimeout(() => {
           selectLanguage()
-        }, 2000)
+        }, 1000)
 
         return
       } else {
         setTimeout(() => {
           signOut()
-        }, 2000)
+        }, 1000)
         return
       }
     }

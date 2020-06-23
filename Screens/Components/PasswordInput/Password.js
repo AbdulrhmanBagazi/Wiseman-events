@@ -9,6 +9,11 @@ const Icon = Animated.createAnimatedComponent(Entypo)
 function AnimatedIcon(props) {
   const [isHide, setHide] = React.useState(true)
   const [isHideRe, setHideRe] = React.useState(true)
+  const [Match] = React.useState(new Animated.Value(0))
+  const MatchColor = Match.interpolate({
+    inputRange: [0, 50, 100],
+    outputRange: ['#4C4F56', '#E8505B', '#25AC71'],
+  })
 
   const toggleHide = async (value) => {
     setHide(value === false ? true : false)
@@ -17,6 +22,25 @@ function AnimatedIcon(props) {
   const toggleHideRe = async (value) => {
     setHideRe(value === false ? true : false)
   }
+
+  React.useEffect(() => {
+    if (props.Check === 'Success') {
+      Animated.timing(Match, {
+        toValue: 100,
+        duration: 500,
+      }).start()
+    } else if (props.Check === 'Error') {
+      Animated.timing(Match, {
+        toValue: 50,
+        duration: 500,
+      }).start()
+    } else {
+      Animated.timing(Match, {
+        toValue: 0,
+        duration: 500,
+      }).start()
+    }
+  }, [props.Check])
 
   return (
     <View>
@@ -27,7 +51,6 @@ function AnimatedIcon(props) {
           onChangeText={props.change}
           secureTextEntry={isHide}
         />
-
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
           <Icon name={isHide === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
         </TouchableOpacity>
@@ -48,12 +71,14 @@ function AnimatedIcon(props) {
           </Text>
         )}
       </View>
-
       <View>
         <TextInput {...props} secureTextEntry={isHideRe} />
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHideRe(isHideRe)}>
           <Icon name={isHideRe === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
         </TouchableOpacity>
+      </View>
+      <View style={styles.CheckMatch}>
+        <Animated.Text style={{ color: MatchColor }}>{props.MatchString}</Animated.Text>
       </View>
     </View>
   )
