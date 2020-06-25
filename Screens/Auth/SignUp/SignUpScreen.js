@@ -6,10 +6,11 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native'
 import styles from './Style'
-import { Register } from '../../../Config/Strings'
+import { Register, ErrorsStrings } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
 import InputPhone from '../../Components/PhoneInput/Phone'
 import { AuthContext } from '../../../Hooks/Context'
@@ -19,7 +20,7 @@ import store from '../../../Config/Mobx'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
-  const [isRegister, setRegister] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
   const [isError, setError] = React.useState(' ')
   //
   const [data, setData] = React.useState({
@@ -85,6 +86,11 @@ function SignUp({ navigation }) {
 
   //Aa123123
   const RegisterAccount = async (val) => {
+    await Keyboard.dismiss()
+    if (isLoading) {
+      return
+    }
+    await setLoading(true)
     if (
       val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
       isCheck === 'Success' &&
@@ -96,40 +102,43 @@ function SignUp({ navigation }) {
           password: val.Password,
         })
         .then((response) => {
-          if (response.data.error === 'exist') {
-            setError('Phone number used')
+          if (response.data.error === 'exists') {
+            setError(ErrorsStrings.MobileUsed)
+            setLoading(false)
             return
           } else if (response.status === 200) {
             setError(' ')
-
-            console.log(response.data)
-            store.setData(response.data)
+            store.setData(response.data.user)
+            store.setToken(response.data.token)
+            Verify()
             return
           }
         })
         .catch((error) => {
-          console.log(error)
+          setError(ErrorsStrings.ErrorOccurred)
+          setLoading(false)
+          return
         })
-      // console.log(store.data)
-      return
-    } else {
       return
     }
+
+    await setLoading(false)
+    return
   }
 
-  React.useEffect(() => {
-    if (isRegister) {
-      Verify()
+  // React.useEffect(() => {
+  //   if (isRegister) {
+  //     Verify()
 
-      return
-    }
+  //     return
+  //   }
 
-    return
-  }, [isRegister])
+  //   return
+  // }, [isRegister])
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={90}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -161,7 +170,11 @@ function SignUp({ navigation }) {
             />
 
             <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
-              <Text style={styles.ButtonText}>{Register.Continue}</Text>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={styles.ButtonText}>{Register.Continue}</Text>
+              )}
             </TouchableOpacity>
 
             <View style={styles.Register}>

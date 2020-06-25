@@ -5,7 +5,7 @@ const SignInStrings = {
   Register: I18nManager.isRTL ? 'تسجيل' : 'Register',
   Member: I18nManager.isRTL ? 'لست عضوا حتى الآن؟' : 'Not a member yet?',
   Forgot: I18nManager.isRTL ? 'هل نسيت كلمة المرور؟' : 'Forgot Password?',
-  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Phone Number',
+  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Mobile Number',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
   Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
@@ -33,7 +33,7 @@ const Register = {
   ResetSlogan: I18nManager.isRTL
     ? 'مرحبًا بك في اسم التطبيق. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
     : 'Welcome to app name. Please provice the information below, set your account.',
-  Phone: I18nManager.isRTL ? 'رقم الجوال(05XXXXXXXX)' : 'Phone Number (05XXXXXXXX)',
+  Phone: I18nManager.isRTL ? 'رقم الجوال(05XXXXXXXX)' : 'Mobile Number (05XXXXXXXX)',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   RePassword: I18nManager.isRTL ? 'اعادة ادخال كلمة السر' : 'Re-enter password',
   Continue: I18nManager.isRTL ? 'إستمرار' : 'Continue',
@@ -46,8 +46,8 @@ const ResetPasswordString = {
   title: I18nManager.isRTL ? 'إستعادة كلمة المرور' : 'Recover Password',
   ResetSlogan: I18nManager.isRTL
     ? 'قم بإدخل رقم الجوال الخاص بحسابك لإستعادة كلمة المرور الخاصة بك. ستحصل على رمز OTP.'
-    : 'Enter your phone number to recover your password. You will get an OTP code.',
-  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Phone Number',
+    : 'Enter your Mobile number to recover your password. You will get an OTP code.',
+  Phone: I18nManager.isRTL ? 'رقم الجوال' : 'Mobile Number',
   OTP: I18nManager.isRTL ? 'رمز OTP' : 'OTP code',
   Continue: I18nManager.isRTL ? 'إستمرار' : 'Continue',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
@@ -74,6 +74,7 @@ const OTPStrings = {
     ? 'يرجى التحقق من رسائل SMS الخاصة بك. لقد أرسلنا لك كود مكون من 4 أرقام.'
     : 'Please check your SMS messages. We have sent you 4 digits code.',
   Verify: I18nManager.isRTL ? 'تحقق الآن' : 'Verify now',
+  Resend: I18nManager.isRTL ? 'إعادة إرسال' : 'Resend',
 }
 
 const ProfileStrings = {
@@ -102,6 +103,16 @@ const NotificationStrings = {
   Started: I18nManager.isRTL ? 'البدء' : 'Get Started',
 }
 
+const ErrorsStrings = {
+  MobileUsed: I18nManager.isRTL ? 'رقم الجوال مستخدم' : 'The mobile number is used',
+  ErrorOccurred: I18nManager.isRTL ? 'حدث خطأ ، حاول مرة أخرى' : 'an error occurred, try again',
+  OTPCode: I18nManager.isRTL ? 'حدث خطأ أثناء إرسال الرمز' : 'an error occurred while sending code',
+  WrongCode: I18nManager.isRTL ? 'رمز خاطئ' : 'Wrong code',
+  WrongCodeCheck: I18nManager.isRTL
+    ? 'حدث خطأ أثناء التحقق من الرمز'
+    : 'an error occurred while checking code',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -111,4 +122,5 @@ export {
   OTPStrings,
   ProfileStrings,
   NotificationStrings,
+  ErrorsStrings,
 }

@@ -204,14 +204,53 @@ const NotificationScreens = () => {
   )
 }
 
+const LoadingStack = createStackNavigator()
+const LoadingScreens = () => {
+  return (
+    <LoadingStack.Navigator>
+      <LoadingStack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="Loading"
+        component={Splash}
+      />
+    </LoadingStack.Navigator>
+  )
+}
+
+const forFade = ({ current, next }) => {
+  const opacity = Animated.add(current.progress, next ? next.progress : 0).interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: [0, 1, 0],
+  })
+
+  return {
+    leftButtonStyle: { opacity },
+    rightButtonStyle: { opacity },
+    titleStyle: { opacity },
+    backgroundStyle: { opacity },
+  }
+}
+
 const Root = createStackNavigator()
-const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification }) => {
+const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification, loading }) => {
   return (
     <Root.Navigator headerMode="none">
       {authenticated ? (
         <Root.Screen
           name="Main"
           component={TabsScreens}
+          options={
+            {
+              // animationEnabled: false,
+            }
+          }
+        />
+      ) : loading ? (
+        <Root.Screen
+          name="Loading"
+          component={LoadingScreens}
           options={
             {
               // animationEnabled: false,
@@ -285,37 +324,37 @@ export default () => {
   const auth = React.useMemo(() => {
     return {
       signIn: () => {
-        setIsLoading(false)
         setIsAuth(true)
+        setIsLoading(false)
         setVerify(false)
         setProfile(false)
       },
       signOut: () => {
-        setIsLoading(false)
         setIsAuth(false)
+        setIsLoading(false)
       },
       selectLanguage: () => {
+        setNew(true)
         setIsLoading(false)
         setIsAuth(false)
-        setNew(true)
       },
       Verify: () => {
+        setVerify(true)
         setIsLoading(false)
         setIsAuth(false)
-        setVerify(true)
       },
       Profile: () => {
+        setProfile(true)
         setIsLoading(false)
         setIsAuth(false)
         setVerify(false)
-        setProfile(true)
       },
       Notification: () => {
+        setNotification(true)
         setIsLoading(false)
         setIsAuth(false)
         setVerify(false)
         setProfile(false)
-        setNotification(true)
       },
     }
   }, [])
@@ -323,16 +362,6 @@ export default () => {
   if (!isLoadingComplete) {
     return null
   } else {
-    if (isLoading) {
-      return (
-        <Provider store={Store}>
-          <AuthContext.Provider value={auth}>
-            <Splash />
-          </AuthContext.Provider>
-        </Provider>
-      )
-    }
-
     return (
       <Provider store={Store}>
         <AuthContext.Provider value={auth}>
@@ -348,6 +377,7 @@ export default () => {
               verify={isVerify}
               profile={isProfile}
               notification={isNotification}
+              loading={isLoading}
             />
           </NavigationContainer>
         </AuthContext.Provider>

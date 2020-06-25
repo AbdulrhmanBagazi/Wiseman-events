@@ -28,6 +28,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 29,
     marginVertical: 20,
   },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 10,
+  },
   Button: {
     backgroundColor: PrimaryColor,
     flexDirection: 'row',

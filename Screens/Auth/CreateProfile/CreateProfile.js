@@ -56,7 +56,7 @@ function CreateProfile() {
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={90}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>

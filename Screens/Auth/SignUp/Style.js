@@ -33,14 +33,14 @@ const styles = StyleSheet.create({
     color: LightText,
     fontSize: 16,
     marginHorizontal: 29,
-    marginBottom: 25,
+    marginVertical: 10,
   },
   error: {
     textAlign: 'center',
     color: '#E8505B',
     fontSize: 16,
     marginHorizontal: 29,
-    marginBottom: 25,
+    marginVertical: 5,
   },
   input: {
     textAlign: I18nManager.isRTL ? 'right' : 'left',
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   Register: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginVertical: 30,
   },
   Member: {
     color: SecondaryText,

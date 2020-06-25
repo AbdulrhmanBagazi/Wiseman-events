@@ -1,29 +1,102 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
 import styles from './Style'
-import { OTPStrings } from '../../../Config/Strings'
+import { inject, observer } from 'mobx-react'
+import { OTPStrings, ErrorsStrings } from '../../../Config/Strings'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { width } from '../../../Config/Layout'
 import { AuthContext } from '../../../Hooks/Context'
+import axios from 'axios'
+import { URL } from '../../../Config/Config'
+import CountDown from 'react-native-countdown-component'
+import debounce from 'lodash/debounce'
 
-function OTP() {
+function OTP({ store }) {
   const { Profile } = React.useContext(AuthContext)
-  const [isVerify, setVerify] = React.useState(false)
+  const [isResend, setResend] = React.useState(false)
+  const [isError, setError] = React.useState(' ')
+  const [isLoading, setLoading] = React.useState(false)
+  const [isShow, setShow] = React.useState(false)
 
-  React.useEffect(() => {
-    if (isVerify) {
-      Profile()
+  const VeridyCode = async (code) => {
+    await Keyboard.dismiss()
+    if (isLoading) {
       return
     }
+    setLoading(true)
+    axios
+      .post(
+        URL + '/user/VerifyOTP',
+        {
+          code: code,
+        },
+        {
+          headers: { Authorization: store.token },
+        }
+      )
+      .then((response) => {
+        if (response.data === 'success') {
+          Profile()
+          return
+        } else {
+          setError(ErrorsStrings.WrongCode)
+          setLoading(false)
+          return
+        }
+      })
+      .catch((error) => {
+        setError(ErrorsStrings.WrongCodeCheck)
+        setLoading(false)
+        return
+      })
+  }
+
+  React.useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (isShow) {
+      return
+    }
+    axios
+      .get(URL + '/user/SendOTP', {
+        headers: {
+          Authorization: store.token,
+        },
+      })
+      .then((response) => {
+        if (response.data === 'success') {
+          setShow(true)
+          return
+        } else {
+          setError(ErrorsStrings.OTPCode)
+          setShow(true)
+          return
+        }
+      })
+      .catch((error) => {
+        setError(ErrorsStrings.OTPCode)
+        setShow(true)
+        return
+      })
+    return
+  }, [isResend])
+
+  const ChangeState = async () => {
+    setTimeout(() => {
+      setShow(false)
+    }, 1500)
 
     return
-  }, [isVerify])
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.Logo} />
       <Text style={styles.Title}>{OTPStrings.Title}</Text>
       <Text style={styles.Slogan}>{OTPStrings.Slogan}</Text>
+
+      <Text style={styles.error}>{isError}</Text>
 
       <View>
         <OTPInputView
@@ -32,14 +105,35 @@ function OTP() {
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
           autoFocusOnLoad={false}
+          onCodeFilled={(code) => {
+            VeridyCode(code)
+          }}
         />
       </View>
 
-      <TouchableOpacity style={styles.Button} onPress={() => setVerify(true)}>
-        <Text style={styles.ButtonText}>{OTPStrings.Verify}</Text>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={debounce(() => setResend(isResend ? false : true), 250)}>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.ButtonText}>{OTPStrings.Resend}</Text>
+        )}
       </TouchableOpacity>
+
+      {isShow ? (
+        <CountDown
+          until={30}
+          digitStyle={{ backgroundColor: 'transparent' }}
+          digitTxtStyle={{ color: '#AF0029' }}
+          onFinish={() => ChangeState()}
+          timeToShow={['S']}
+          timeLabels={{ s: '' }}
+          size={20}
+        />
+      ) : null}
     </View>
   )
 }
 
-export default OTP
+export default inject('store')(observer(OTP))

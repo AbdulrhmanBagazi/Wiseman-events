@@ -44,7 +44,7 @@ function SignIn({ navigation, store }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset={100}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}>
         <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
