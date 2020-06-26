@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { OTPStrings, ErrorsStrings } from '../../../Config/Strings'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { width } from '../../../Config/Layout'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 import { AuthContext } from '../../../Hooks/Context'
 import axios from 'axios'
 import { URL } from '../../../Config/Config'
@@ -37,7 +38,6 @@ function OTP({ store }) {
       .then((response) => {
         if (response.data === 'success') {
           Profile()
-          store.data.verify = true
           return
         } else {
           setError(ErrorsStrings.WrongCode)
@@ -113,15 +113,19 @@ function OTP({ store }) {
       </View>
 
       {isShow ? (
-        <CountDown
-          until={30}
-          digitStyle={{ backgroundColor: 'transparent' }}
-          digitTxtStyle={{ color: '#AF0029' }}
-          onFinish={() => ChangeState()}
-          timeToShow={['S']}
-          timeLabels={{ s: '' }}
-          size={20}
-        />
+        isLoading ? (
+          <ActivityIndicator size="small" color={PrimaryColor} />
+        ) : (
+          <CountDown
+            until={30}
+            digitStyle={{ backgroundColor: 'transparent' }}
+            digitTxtStyle={{ color: '#AF0029' }}
+            onFinish={() => ChangeState()}
+            timeToShow={['S']}
+            timeLabels={{ s: '' }}
+            size={20}
+          />
+        )
       ) : (
         <TouchableOpacity
           style={styles.Button}

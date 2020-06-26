@@ -2,8 +2,9 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { NotificationStrings } from '../../../Config/Strings'
+import { inject, observer } from 'mobx-react'
 
-function NotificationSuccess() {
+function NotificationSuccess({ store }) {
   return (
     <View style={styles.container}>
       <View style={styles.Logo}>
@@ -19,4 +20,4 @@ function NotificationSuccess() {
   )
 }
 
-export default NotificationSuccess
+export default inject('store')(observer(NotificationSuccess))

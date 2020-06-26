@@ -2,8 +2,11 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from './Style'
 import { NotificationStrings } from '../../../Config/Strings'
+import { inject, observer } from 'mobx-react'
+import { Notifications } from 'expo'
+import * as Permissions from 'expo-permissions'
 
-function Notification({ navigation }) {
+function Notification({ navigation, store }) {
   return (
     <View style={styles.container}>
       <View style={styles.Logo}>
@@ -24,4 +27,4 @@ function Notification({ navigation }) {
   )
 }
 
-export default Notification
+export default inject('store')(observer(Notification))

@@ -1,10 +1,10 @@
 import React from 'react'
 import { TouchableOpacity, Animated, View, Keyboard, TextInput, Text, I18nManager } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import styles from './Style'
 import { LightText } from '../../../Config/ColorPalette'
 
-const Icon = Animated.createAnimatedComponent(Entypo)
+const Icon = Animated.createAnimatedComponent(Feather)
 
 function AnimatedIcon(props) {
   const [isHide, setHide] = React.useState(true)
@@ -117,7 +117,7 @@ function AnimatedIcon(props) {
           secureTextEntry={isHide}
         />
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
-          <Icon name={isHide === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
+          <Icon name={isHide === false ? 'eye' : 'eye-off'} size={24} color={LightText} />
         </TouchableOpacity>
       </View>
       <View style={styles.CheckMatch}>
@@ -143,7 +143,7 @@ function AnimatedIcon(props) {
       <View>
         <TextInput {...props} secureTextEntry={isHideRe} textContentType="password" />
         <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHideRe(isHideRe)}>
-          <Icon name={isHideRe === false ? 'eye' : 'eye-with-line'} size={24} color={LightText} />
+          <Icon name={isHideRe === false ? 'eye' : 'eye-off'} size={24} color={LightText} />
         </TouchableOpacity>
       </View>
       <View style={styles.CheckMatch}>

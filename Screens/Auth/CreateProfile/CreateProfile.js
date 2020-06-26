@@ -25,6 +25,8 @@ import { URL } from '../../../Config/Config'
 import CountryUI from './Country'
 import CitiesModal from './CitiesModal'
 import { Feather } from '@expo/vector-icons'
+import moment from 'moment'
+import { get } from 'mobx'
 
 function CreateProfile({ store }) {
   const { Notification } = React.useContext(AuthContext)
@@ -44,6 +46,7 @@ function CreateProfile({ store }) {
     City: ProfileStrings.City,
     Location: '',
     Birth: '',
+    BirthText: '',
   })
 
   const HandleCreateProfile = async () => {
@@ -102,16 +105,36 @@ function CreateProfile({ store }) {
   }
 
   //modal date picker
-  const onChange = (event, selectedDate) => {
+  const onChange = async (event, selectedDate) => {
     const currentDate = selectedDate || date
+
+    // var year = await moment(currentDate).format('YYYY')
+    // var month = await moment(currentDate).format('M')
+    // var day = await moment(currentDate).format('D')
+    // getAge(new Date(year, month, day))
+
+    var MomentDate = await moment(currentDate).format('YYYY/MM/DD')
+
     setShow(Platform.OS === 'ios')
     setDate(true)
     setDateValue(currentDate)
     setData({
       ...data,
       Birth: currentDate.toString(),
+      BirthText: MomentDate.toString(),
     })
+
+    return
   }
+
+  // const getAge = async (d1) => {
+  //   var d2 = new Date()
+  //   var diff = d2.getTime() - d1.getTime()
+  //   var x = await Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25))
+  //   console.log(x)
+
+  //   return
+  // }
 
   const showDatepickerIOS = () => {
     if (Platform.OS === 'ios') {
@@ -183,11 +206,11 @@ function CreateProfile({ store }) {
 
             <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
               {date ? (
-                <Text>{data.Birth}</Text>
+                <Text>{data.BirthText}</Text>
               ) : (
                 <Text style={styles.inputDateText}>{ProfileStrings.Birth}</Text>
               )}
-              <Feather name="calendar" size={24} color="#ccc" />
+              <Feather name="calendar" size={24} color="#4C4F56" />
             </TouchableOpacity>
 
             {!showModal && show === true ? (

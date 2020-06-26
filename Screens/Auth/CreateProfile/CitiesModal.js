@@ -87,7 +87,7 @@ export default function CitiesModal(props) {
           setModalVisible(true)
         }}>
         {ProfileStrings.City === props.CityValue ? (
-          <Text style={styles.inputDateText}>{ProfileStrings.City}</Text>
+          <Text>{ProfileStrings.City}</Text>
         ) : (
           <Text>{props.CityValue}</Text>
         )}

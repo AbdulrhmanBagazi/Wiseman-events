@@ -26,7 +26,7 @@ function Splash({ store }) {
             },
           })
           .then(async (response) => {
-            // console.log(response)
+            // console.log(response.data.user)
             if (response.status === 200) {
               await store.setData(response.data.user)
               await store.setToken(Token)
@@ -42,11 +42,13 @@ function Splash({ store }) {
               }
             }
           })
-          .catch((error) => {
+          .catch(async (error) => {
             if (error.response.status === 401) {
+              await UserTokenRemove()
               signOut()
               return
             } else {
+              await UserTokenRemove()
               signOut()
               // console.log(error)
             }
@@ -54,6 +56,7 @@ function Splash({ store }) {
 
         return
       } else if (!Token) {
+        await UserTokenRemove()
         signOut()
         return
       }
