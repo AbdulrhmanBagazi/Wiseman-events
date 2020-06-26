@@ -1,13 +1,9 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../Config/Layout'
 import {
-  BackgroundColor,
   PrimaryColor,
-  SecondaryColor,
-  PrimaryText,
   SecondaryText,
   GrayColor,
-  LightBorder,
   LightText,
   PrimaryBorder,
 } from '../../../Config/ColorPalette'

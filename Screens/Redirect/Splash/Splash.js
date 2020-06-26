@@ -15,9 +15,7 @@ function Splash({ store }) {
       var Token = await UserTokenGet()
 
       if (store.Language === null) {
-        setTimeout(() => {
-          selectLanguage()
-        }, 1000)
+        selectLanguage()
 
         return
       } else if (Token) {
@@ -28,17 +26,20 @@ function Splash({ store }) {
             },
           })
           .then(async (response) => {
+            console.log(response)
             if (response.status === 200) {
               await store.setData(response.data.user)
               await store.setToken(Token)
               if (!response.data.user.verify) {
                 Verify()
+                return
               } else if (!response.data.user.profile) {
                 Profile()
+                return
               } else {
                 signIn()
+                return
               }
-              return
             }
           })
           .catch((error) => {
@@ -47,10 +48,13 @@ function Splash({ store }) {
               return
             } else {
               signOut()
-              console.log(error)
+              // console.log(error)
             }
           })
 
+        return
+      } else if (!Token) {
+        signOut()
         return
       }
     }

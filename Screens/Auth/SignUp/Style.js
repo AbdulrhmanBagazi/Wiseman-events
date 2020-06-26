@@ -1,15 +1,6 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import {
-  BackgroundColor,
-  PrimaryColor,
-  SecondaryColor,
-  PrimaryText,
-  SecondaryText,
-  GrayColor,
-  LightBorder,
-  LightText,
-} from '../../../Config/ColorPalette'
+import { PrimaryColor, SecondaryText, GrayColor, LightText } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   container: {

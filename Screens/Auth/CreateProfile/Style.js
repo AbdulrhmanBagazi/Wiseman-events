@@ -1,15 +1,6 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import {
-  BackgroundColor,
-  PrimaryColor,
-  SecondaryColor,
-  PrimaryText,
-  SecondaryText,
-  GrayColor,
-  LightBorder,
-  LightText,
-} from '../../../Config/ColorPalette'
+import { PrimaryColor, SecondaryText } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +23,14 @@ const styles = StyleSheet.create({
   },
   Title: {
     fontSize: 32,
-    marginBottom: 40,
+    marginVertical: 10,
+  },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 10,
   },
   Button: {
     backgroundColor: PrimaryColor,
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     borderColor: SecondaryText,
     borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 15,
+    marginBottom: 10,
     padding: 5,
     textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
@@ -80,6 +78,18 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: I18nManager.isRTL ? 'right' : 'left',
     justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  inputNat: {
+    backgroundColor: '#fff',
+    width,
+    borderColor: SecondaryText,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    padding: 5,
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    alignItems: 'flex-start',
   },
   inputDateText: {
     color: '#C7C7CD',
@@ -147,6 +157,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
+  },
+  CitiesView: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  CitiesModalView: {
+    flex: 1,
   },
 })
 

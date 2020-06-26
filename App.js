@@ -300,7 +300,7 @@ const RootScreens = ({ authenticated, selectLanguage, verify, profile, notificat
       ) : (
         <Root.Screen
           name="Auth"
-          component={AuthScreens}
+          component={CreateProfileScreens}
           options={
             {
               // animationEnabled: false,

@@ -111,6 +111,7 @@ const ErrorsStrings = {
   WrongCodeCheck: I18nManager.isRTL
     ? 'حدث خطأ أثناء التحقق من الرمز'
     : 'an error occurred while checking code',
+  Required: I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'all fields required!',
 }
 
 export {
