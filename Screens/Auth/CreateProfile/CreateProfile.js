@@ -24,10 +24,11 @@ import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import CountryUI from './Country'
 import CitiesModal from './CitiesModal'
+import { Feather } from '@expo/vector-icons'
 
 function CreateProfile({ store }) {
   const { Notification } = React.useContext(AuthContext)
-  const [countryCode, setCountryCode] = React.useState('SA')
+  const [countryCode, setCountryCode] = React.useState('')
   const [country, setCountry] = React.useState('null')
   const [show, setShow] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
@@ -39,7 +40,7 @@ function CreateProfile({ store }) {
   const [DateValue, setDateValue] = React.useState(new Date())
   const [data, setData] = React.useState({
     Fullname: '',
-    Nationality: 'Saudi Arabia',
+    Nationality: '',
     City: ProfileStrings.City,
     Location: '',
     Birth: '',
@@ -148,6 +149,10 @@ function CreateProfile({ store }) {
     })
   }
 
+  // React.useEffect(() => {
+  //   console.log(store.data)
+  // })
+
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 50}
@@ -174,10 +179,7 @@ function CreateProfile({ store }) {
               }
             />
 
-            <View style={styles.inputNat} onPress={showDatepickerIOS}>
-              <Text style={styles.inputDateText}>{ProfileStrings.Nationality} </Text>
-              <CountryUI style={styles.input} onSelect={(val) => onSelect(val)} countryCode={countryCode} />
-            </View>
+            <CountryUI style={styles.country} onSelect={(val) => onSelect(val)} countryCode={countryCode} />
 
             <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
               {date ? (
@@ -185,6 +187,7 @@ function CreateProfile({ store }) {
               ) : (
                 <Text style={styles.inputDateText}>{ProfileStrings.Birth}</Text>
               )}
+              <Feather name="calendar" size={24} color="#ccc" />
             </TouchableOpacity>
 
             {!showModal && show === true ? (
@@ -248,6 +251,7 @@ function CreateProfile({ store }) {
                 </TouchableOpacity>
               )}
             />
+
             <TextInput
               style={styles.input}
               placeholder={ProfileStrings.location}

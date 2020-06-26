@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Modal, TouchableOpacity, Text, SafeAreaView, TextInput, FlatList } from 'react-native'
 import styles from './Style'
 import { ProfileStrings } from '../../../Config/Strings'
-import Profile from '../../Main/Profile/ProfileScreen'
+import { Entypo } from '@expo/vector-icons'
 
 export default function CitiesModal(props) {
   const [modalVisible, setModalVisible] = React.useState(false)
@@ -91,6 +91,7 @@ export default function CitiesModal(props) {
         ) : (
           <Text>{props.CityValue}</Text>
         )}
+        <Entypo name="chevron-down" size={24} />
       </TouchableOpacity>
     </View>
   )

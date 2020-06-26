@@ -13,7 +13,7 @@ function Splash({ store }) {
     CheckLanguage = async () => {
       await store.getLanguge()
       var Token = await UserTokenGet()
-
+      // console.log(store.data)
       if (store.Language === null) {
         selectLanguage()
 
@@ -26,7 +26,7 @@ function Splash({ store }) {
             },
           })
           .then(async (response) => {
-            console.log(response)
+            // console.log(response)
             if (response.status === 200) {
               await store.setData(response.data.user)
               await store.setToken(Token)

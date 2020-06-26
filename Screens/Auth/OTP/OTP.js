@@ -37,6 +37,7 @@ function OTP({ store }) {
       .then((response) => {
         if (response.data === 'success') {
           Profile()
+          store.data.verify = true
           return
         } else {
           setError(ErrorsStrings.WrongCode)
@@ -111,16 +112,6 @@ function OTP({ store }) {
         />
       </View>
 
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={debounce(() => setResend(isResend ? false : true), 250)}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color="#fff" />
-        ) : (
-          <Text style={styles.ButtonText}>{OTPStrings.Resend}</Text>
-        )}
-      </TouchableOpacity>
-
       {isShow ? (
         <CountDown
           until={30}
@@ -131,7 +122,17 @@ function OTP({ store }) {
           timeLabels={{ s: '' }}
           size={20}
         />
-      ) : null}
+      ) : (
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={debounce(() => setResend(isResend ? false : true), 200)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{OTPStrings.Resend}</Text>
+          )}
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
