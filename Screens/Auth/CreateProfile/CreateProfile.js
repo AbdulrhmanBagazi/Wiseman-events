@@ -39,7 +39,7 @@ function CreateProfile({ store }) {
   const [DateValue, setDateValue] = React.useState(new Date())
   const [data, setData] = React.useState({
     Fullname: '',
-    Nationality: '',
+    Nationality: 'Saudi Arabia',
     City: ProfileStrings.City,
     Location: '',
     Birth: '',
@@ -48,7 +48,6 @@ function CreateProfile({ store }) {
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
     setError(' ')
-
     if (isLoading) {
       return
     }
@@ -135,6 +134,17 @@ function CreateProfile({ store }) {
     setData({
       ...data,
       Nationality: country.name,
+    })
+  }
+  //City
+  const onSelectCity = async (city) => {
+    await setData({
+      ...data,
+      City: ProfileStrings.City,
+    })
+    setData({
+      ...data,
+      City: city.title,
     })
   }
 
@@ -227,7 +237,17 @@ function CreateProfile({ store }) {
               }
             /> */}
 
-            <CitiesModal CityValue={data.City} />
+            <CitiesModal
+              CityValue={data.City}
+              ViewCity={({ item }) => (
+                <TouchableOpacity
+                  style={styles.citiesFlatlistItems}
+                  Value={item}
+                  onPress={() => onSelectCity(item)}>
+                  <Text style={{ fontSize: 16 }}>{item.title}</Text>
+                </TouchableOpacity>
+              )}
+            />
             <TextInput
               style={styles.input}
               placeholder={ProfileStrings.location}

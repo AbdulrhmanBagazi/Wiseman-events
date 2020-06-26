@@ -1,6 +1,6 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText } from '../../../Config/ColorPalette'
+import { PrimaryColor, SecondaryText, GrayColor } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   container: {
@@ -164,6 +164,12 @@ const styles = StyleSheet.create({
   },
   CitiesModalView: {
     flex: 1,
+  },
+  citiesFlatlistItems: {
+    padding: 15,
+    paddingHorizontal: 50,
+    borderBottomWidth: 0.25,
+    borderColor: '#ccc',
   },
 })
 

@@ -87,6 +87,7 @@ const ProfileStrings = {
   Female: I18nManager.isRTL ? 'أنثى' : 'Female',
   City: I18nManager.isRTL ? 'المدينة' : 'City',
   location: I18nManager.isRTL ? 'موقع العمل / المنزل' : 'Home/Work location',
+  Search: I18nManager.isRTL ? 'بحث' : 'Search',
 }
 
 const NotificationStrings = {

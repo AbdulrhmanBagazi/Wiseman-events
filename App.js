@@ -219,20 +219,6 @@ const LoadingScreens = () => {
   )
 }
 
-const forFade = ({ current, next }) => {
-  const opacity = Animated.add(current.progress, next ? next.progress : 0).interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [0, 1, 0],
-  })
-
-  return {
-    leftButtonStyle: { opacity },
-    rightButtonStyle: { opacity },
-    titleStyle: { opacity },
-    backgroundStyle: { opacity },
-  }
-}
-
 const Root = createStackNavigator()
 const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification, loading }) => {
   return (
@@ -300,7 +286,7 @@ const RootScreens = ({ authenticated, selectLanguage, verify, profile, notificat
       ) : (
         <Root.Screen
           name="Auth"
-          component={CreateProfileScreens}
+          component={AuthScreens} //AuthScreens CreateProfileScreens
           options={
             {
               // animationEnabled: false,
