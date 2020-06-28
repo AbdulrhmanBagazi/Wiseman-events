@@ -350,6 +350,14 @@ export default () => {
         setVerify(false)
         setProfile(false)
       },
+      Load: () => {
+        setIsLoading(true)
+        setNew(false)
+        setIsAuth(false)
+        setVerify(false)
+        setProfile(false)
+        setNotification(false)
+      },
     }
   }, [])
 

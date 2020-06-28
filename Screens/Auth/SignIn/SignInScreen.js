@@ -1,15 +1,12 @@
 import React from 'react'
 import {
   View,
-  TextInput,
   TouchableOpacity,
   Text,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableWithoutFeedback,
   Keyboard,
   SafeAreaView,
-  Animated,
   ActivityIndicator,
 } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'

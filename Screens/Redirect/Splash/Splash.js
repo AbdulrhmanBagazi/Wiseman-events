@@ -7,7 +7,7 @@ import { URL } from '../../../Config/Config'
 import axios from 'axios'
 
 function Splash({ store }) {
-  const { signOut, selectLanguage, Verify, Profile, signIn } = React.useContext(AuthContext)
+  const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
 
   React.useEffect(() => {
     CheckLanguage = async () => {
@@ -36,6 +36,9 @@ function Splash({ store }) {
                 return
               } else if (!response.data.user.profile) {
                 Profile()
+                return
+              } else if (response.data.user.notification.notificationsID === 'false') {
+                Notification()
                 return
               } else {
                 signIn()

@@ -104,6 +104,11 @@ const NotificationStrings = {
     ? 'تم تعيين ملف التعريف الخاص بك ، يمكنك الآن تصفح الوظائف في مدينتك والبدء في التقديم ، والتوظيف ، وكسب أموال إضافية عندما تكون حرًا.'
     : 'Your profile is set, you can now browse the jobs in your city and start applying, get hired, and earn extra money while you are free.',
   Started: I18nManager.isRTL ? 'البدء' : 'Get Started',
+  Done: I18nManager.isRTL ? 'تم' : 'Done',
+  Setting: I18nManager.isRTL ? 'إعدادات الإشعار' : 'Notification settings',
+  SettingSlogan: I18nManager.isRTL
+    ? 'يمكنك تغيير هذا الإعداد لاحقًا في ملف الشخصي - إعدادات - الإشعارات - السماح بالإشعارات.'
+    : 'You can change this setting later at profile-settings-notification-allow notification.',
 }
 
 const ErrorsStrings = {
