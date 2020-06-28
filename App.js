@@ -104,6 +104,7 @@ const AuthScreens = () => {
       <AuthStack.Screen
         options={{
           title: '',
+          headerLeft: null,
           headerBackTitleVisible: false,
           headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
           headerTintColor: 'black',
@@ -223,20 +224,20 @@ const Root = createStackNavigator()
 const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification, loading }) => {
   return (
     <Root.Navigator headerMode="none">
-      {authenticated ? (
+      {loading ? (
         <Root.Screen
-          name="Main"
-          component={TabsScreens}
+          name="Loading"
+          component={LoadingScreens}
           options={
             {
               // animationEnabled: false,
             }
           }
         />
-      ) : loading ? (
+      ) : authenticated ? (
         <Root.Screen
-          name="Loading"
-          component={LoadingScreens}
+          name="Main"
+          component={TabsScreens} //TabsScreens
           options={
             {
               // animationEnabled: false,
@@ -286,7 +287,7 @@ const RootScreens = ({ authenticated, selectLanguage, verify, profile, notificat
       ) : (
         <Root.Screen
           name="Auth"
-          component={AuthScreens} //AuthScreens CreateProfileScreens
+          component={AuthScreens} //AuthScreens NotificationScreens
           options={
             {
               // animationEnabled: false,
@@ -314,15 +315,22 @@ export default () => {
         setIsLoading(false)
         setVerify(false)
         setProfile(false)
+        setNotification(false)
       },
       signOut: () => {
         setIsAuth(false)
         setIsLoading(false)
+        setVerify(false)
+        setProfile(false)
+        setNotification(false)
       },
       selectLanguage: () => {
         setNew(true)
-        setIsLoading(false)
         setIsAuth(false)
+        setIsLoading(false)
+        setVerify(false)
+        setProfile(false)
+        setNotification(false)
       },
       Verify: () => {
         setVerify(true)

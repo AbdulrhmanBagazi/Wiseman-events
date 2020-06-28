@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "72734728413",
+    "firebase_url": "https://wiseman-test.firebaseio.com",
+    "project_id": "wiseman-test",
+    "storage_bucket": "wiseman-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72734728413:android:7854498e34db3241983b34",
+        "android_client_info": {
+          "package_name": "com.wiseman.wisemantest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72734728413-al600gjiolcivapemrch177q13f1hjr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByagBKGqRwa3R0aac9a0o_iEj42GWzbH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72734728413-al600gjiolcivapemrch177q13f1hjr5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

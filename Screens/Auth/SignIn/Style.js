@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     height: 112,
     borderRadius: 56,
     backgroundColor: GrayColor,
-    marginBottom: 5,
+    marginVertical: 5,
   },
   Title: {
     fontSize: 32,
@@ -35,7 +35,18 @@ const styles = StyleSheet.create({
     color: LightText,
     fontSize: 16,
     marginHorizontal: 29,
-    marginBottom: 50,
+    marginVertical: 15,
+  },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 15,
+  },
+  inputPhone: {
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    height: 45,
   },
   input: {
     backgroundColor: '#fff',

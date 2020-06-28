@@ -26,7 +26,6 @@ import CountryUI from './Country'
 import CitiesModal from './CitiesModal'
 import { Feather } from '@expo/vector-icons'
 import moment from 'moment'
-import { get } from 'mobx'
 
 function CreateProfile({ store }) {
   const { Notification } = React.useContext(AuthContext)

@@ -17,6 +17,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.wiseman.wisemantest",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

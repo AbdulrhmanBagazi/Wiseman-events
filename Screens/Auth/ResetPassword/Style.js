@@ -21,7 +21,14 @@ const styles = StyleSheet.create({
     color: LightText,
     fontSize: 16,
     marginHorizontal: 29,
-    marginVertical: 20,
+    marginVertical: 15,
+  },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 15,
   },
   PhoneInput: {
     textAlign: I18nManager.isRTL ? 'right' : 'left',
@@ -108,6 +115,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 20,
     flexDirection: 'row',
+  },
+  getCode: {
+    flexDirection: 'row',
+    marginTop: 30,
+  },
+  gotTheCode: {
+    color: SecondaryText,
+  },
+  getCodeText: {
+    color: PrimaryColor,
+    textDecorationLine: 'underline',
+    marginLeft: 5,
   },
 })
 

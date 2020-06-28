@@ -31,24 +31,31 @@ function SignUp({ navigation }) {
   const [isCheck, setCheck] = React.useState('')
   const [isPhoneCheck, setPhoneCheck] = React.useState('')
 
-  const PhoneInput = (val) => {
+  const convertToArabicNumber = async (string) => {
+    return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
+      return d.charCodeAt(0) - 1632
+    })
+  }
+
+  const PhoneInput = async (val) => {
+    var phone = await convertToArabicNumber(val)
     setData({
       ...data,
-      Phone: val,
+      Phone: phone.trim(),
     })
-    if (val === '') {
+    if (phone === '') {
       setPhoneCheck('')
       return
     }
-    if (isNaN(val) === true && val.length < 10) {
+    if (isNaN(phone) === true && phone.length < 10) {
       setPhoneCheck('Error')
       return
     }
-    if (val.length > 10 || val.length < 10) {
+    if (phone.length > 10 || phone.length < 10) {
       setPhoneCheck('Error')
       return
     }
-    if (isNaN(val) === false && val.length === 10) {
+    if (isNaN(phone) === false && phone.length === 10) {
       setPhoneCheck('Success')
       return
     }
@@ -103,6 +110,7 @@ function SignUp({ navigation }) {
         })
         .then((response) => {
           if (response.data.error === 'exists') {
+            console.log(response.data.error)
             setError(ErrorsStrings.MobileUsed)
             setLoading(false)
             return

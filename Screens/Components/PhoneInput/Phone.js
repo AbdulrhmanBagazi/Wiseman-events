@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Animated, View, TextInput, Text, I18nManager } from 'react-native'
 import { width } from '../../../Config/Layout'
 
-function AnimatedIcon(props) {
+function AnimatedPhone(props) {
   const [Match] = React.useState(new Animated.Value(0))
   const PhoneCheck = Match.interpolate({
     inputRange: [0, 50, 100],
@@ -46,4 +46,4 @@ function AnimatedIcon(props) {
   )
 }
 
-export default AnimatedIcon
+export default AnimatedPhone

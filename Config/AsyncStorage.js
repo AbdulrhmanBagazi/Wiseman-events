@@ -25,4 +25,21 @@ const UserTokenRemove = async () => {
   return
 }
 
-export { LanguageStore, LanguageGet, UserTokenStore, UserTokenGet, UserTokenRemove }
+const UserPhoneOTP = async (phone) => {
+  await AsyncStorage.setItem('@Wiseman-events:OTP', phone)
+  return
+}
+const UserPhoneOTPGet = async () => {
+  var value = await AsyncStorage.getItem('@Wiseman-events:OTP')
+  return value
+}
+
+export {
+  LanguageStore,
+  LanguageGet,
+  UserTokenStore,
+  UserTokenGet,
+  UserTokenRemove,
+  UserPhoneOTP,
+  UserPhoneOTPGet,
+}
