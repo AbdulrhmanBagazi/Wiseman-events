@@ -128,6 +128,9 @@ const styles = StyleSheet.create({
   and: {
     color: SecondaryText,
   },
+  Scroll: {
+    flex: 1,
+  },
 })
 
 export default styles

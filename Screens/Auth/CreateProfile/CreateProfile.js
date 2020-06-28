@@ -26,6 +26,7 @@ import CountryUI from './Country'
 import CitiesModal from './CitiesModal'
 import { Feather } from '@expo/vector-icons'
 import moment from 'moment'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function CreateProfile({ store }) {
   const { Notification } = React.useContext(AuthContext)
@@ -176,82 +177,77 @@ function CreateProfile({ store }) {
   // })
 
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 50}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
-          <View style={styles.container}>
-            <View style={styles.Logo}>
-              <Image style={styles.tinyLogo} source={require('../../../assets/profileinformation.png')} />
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <View style={styles.container}>
+        <View style={styles.Logo}>
+          <Image style={styles.tinyLogo} source={require('../../../assets/profileinformation.png')} />
+        </View>
+        <Text style={styles.Title}>{ProfileStrings.Title}</Text>
+
+        <Text style={styles.error}>{isError}</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder={ProfileStrings.Full}
+          onChangeText={(text) =>
+            setData({
+              ...data,
+              Fullname: text.trim(),
+            })
+          }
+        />
+
+        <CountryUI style={styles.country} onSelect={(val) => onSelect(val)} countryCode={countryCode} />
+
+        <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
+          {date ? (
+            <Text>{data.BirthText}</Text>
+          ) : (
+            <Text style={styles.inputDateText}>{ProfileStrings.Birth}</Text>
+          )}
+          <Feather name="calendar" size={24} color="#4C4F56" />
+        </TouchableOpacity>
+
+        {!showModal && show === true ? (
+          <DateTimePicker
+            style={styles.picker}
+            testID="dateTimePicker"
+            value={date}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        ) : show === true ? (
+          <Modal animationType="fade" transparent={true} visible={show}>
+            <View style={styles.modal}>
+              <View style={styles.modalContainer}>
+                <DateTimePicker
+                  style={styles.picker}
+                  testID="dateTimePicker"
+                  value={DateValue}
+                  mode="date"
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChange}
+                />
+
+                <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
+                  <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <Text style={styles.Title}>{ProfileStrings.Title}</Text>
+          </Modal>
+        ) : null}
 
-            <Text style={styles.error}>{isError}</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder={ProfileStrings.Full}
-              onChangeText={(text) =>
-                setData({
-                  ...data,
-                  Fullname: text.trim(),
-                })
-              }
-            />
-
-            <CountryUI style={styles.country} onSelect={(val) => onSelect(val)} countryCode={countryCode} />
-
-            <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
-              {date ? (
-                <Text>{data.BirthText}</Text>
-              ) : (
-                <Text style={styles.inputDateText}>{ProfileStrings.Birth}</Text>
-              )}
-              <Feather name="calendar" size={24} color="#4C4F56" />
-            </TouchableOpacity>
-
-            {!showModal && show === true ? (
-              <DateTimePicker
-                style={styles.picker}
-                testID="dateTimePicker"
-                value={date}
-                mode="date"
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
-            ) : show === true ? (
-              <Modal animationType="fade" transparent={true} visible={show}>
-                <View style={styles.modal}>
-                  <View style={styles.modalContainer}>
-                    <DateTimePicker
-                      style={styles.picker}
-                      testID="dateTimePicker"
-                      value={DateValue}
-                      mode="date"
-                      is24Hour={true}
-                      display="default"
-                      onChange={onChange}
-                    />
-
-                    <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
-                      <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </Modal>
-            ) : null}
-
-            <AnimatedButton
-              GenderValue={Gender}
-              Male={ProfileStrings.Male}
-              Female={ProfileStrings.Female}
-              onPressMale={() => setGender('male')}
-              onPressFemale={() => setGender('female')}
-            />
-            {/* <TextInput
+        <AnimatedButton
+          GenderValue={Gender}
+          Male={ProfileStrings.Male}
+          Female={ProfileStrings.Female}
+          onPressMale={() => setGender('male')}
+          onPressFemale={() => setGender('female')}
+        />
+        {/* <TextInput
               style={styles.input}
               placeholder={ProfileStrings.City}
               onChangeText={(text) =>
@@ -262,40 +258,38 @@ function CreateProfile({ store }) {
               }
             /> */}
 
-            <CitiesModal
-              CityValue={data.City}
-              ViewCity={({ item }) => (
-                <TouchableOpacity
-                  style={styles.citiesFlatlistItems}
-                  Value={item}
-                  onPress={() => onSelectCity(item)}>
-                  <Text style={{ fontSize: 16 }}>{item.title}</Text>
-                </TouchableOpacity>
-              )}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder={ProfileStrings.location}
-              onChangeText={(text) =>
-                setData({
-                  ...data,
-                  Location: text.trim(),
-                })
-              }
-            />
-
-            <TouchableOpacity style={styles.Button} onPress={debounce(() => HandleCreateProfile(), 250)}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>
-              )}
+        <CitiesModal
+          CityValue={data.City}
+          ViewCity={({ item }) => (
+            <TouchableOpacity
+              style={styles.citiesFlatlistItems}
+              Value={item}
+              onPress={() => onSelectCity(item)}>
+              <Text style={{ fontSize: 16 }}>{item.title}</Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+          )}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder={ProfileStrings.location}
+          onChangeText={(text) =>
+            setData({
+              ...data,
+              Location: text.trim(),
+            })
+          }
+        />
+
+        <TouchableOpacity style={styles.Button} onPress={debounce(() => HandleCreateProfile(), 250)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </KeyboardAwareScrollView>
   )
 }
 

@@ -79,38 +79,37 @@ function Notification({ navigation, store }) {
   }
 
   const notNow = async () => {
-    setShow(true)
-    // if (isLoading) {
-    //   return
-    // }
-    // setLoading(true)
-    // axios
-    //   .post(
-    //     URL + '/user/addnotifications',
-    //     {
-    //       notificationsID: 'false',
-    //       allow: false,
-    //       userId: store.data.id,
-    //     },
-    //     {
-    //       headers: { Authorization: store.token },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     if (response.data === 'success') {
-    //       setShow(true)
-    //       return
-    //     } else {
-    //       setError(ErrorsStrings.ErrorOccurred)
-    //       setLoading(false)
-    //       return
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setError(ErrorsStrings.ErrorOccurred)
-    //     setLoading(false)
-    //     return
-    //   })
+    if (isLoading) {
+      return
+    }
+    setLoading(true)
+    axios
+      .post(
+        URL + '/user/addnotifications',
+        {
+          notificationsID: 'false',
+          allow: false,
+          userId: store.data.id,
+        },
+        {
+          headers: { Authorization: store.token },
+        }
+      )
+      .then((response) => {
+        if (response.data === 'success') {
+          setShow(true)
+          return
+        } else {
+          setError(ErrorsStrings.ErrorOccurred)
+          setLoading(false)
+          return
+        }
+      })
+      .catch((error) => {
+        setError(ErrorsStrings.ErrorOccurred)
+        setLoading(false)
+        return
+      })
   }
 
   const NotificationDone = () => {

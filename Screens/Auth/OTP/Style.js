@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
   underlineStyleHighLighted: {
     borderColor: PrimaryColor,
   },
+  Scroll: {
+    flex: 1,
+  },
 })
 
 export default styles

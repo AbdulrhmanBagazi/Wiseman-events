@@ -18,6 +18,7 @@ import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import InputPhone from '../../Components/PhoneInput/Phone'
 import debounce from 'lodash/debounce'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function SignIn({ navigation, store }) {
   const { signIn } = React.useContext(AuthContext)
@@ -89,8 +90,11 @@ function SignIn({ navigation, store }) {
         if (response.status === 200) {
           await store.setData(response.data.user)
           await store.setToken(response.data.token)
-          setLoading(false)
-          signIn()
+
+          setTimeout(() => {
+            setLoading(false)
+            signIn()
+          }, 1000)
 
           return
         }
@@ -116,59 +120,52 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
-          <View style={styles.container}>
-            <View style={styles.Logo}></View>
-            <Text style={styles.Title}>Welcome to App</Text>
-            <Text style={styles.Slogan}>
-              It's great opportunity to work on part time job and earn extra money
-            </Text>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <View style={styles.container}>
+        <View style={styles.Logo}></View>
+        <Text style={styles.Title}>Welcome to App</Text>
+        <Text style={styles.Slogan}>
+          It's great opportunity to work on part time job and earn extra money
+        </Text>
 
-            <Text style={styles.error}>{isError}</Text>
+        <Text style={styles.error}>{isError}</Text>
 
-            <InputPhone
-              placeholder={SignInStrings.Phone}
-              style={styles.inputPhone}
-              onChangeText={(text) => PhoneInput(text)}
-              keyboardType={'number-pad'}
-              CheckPhone={isPhoneCheck}
-            />
-            <AnimatedIcon
-              placeholder={SignInStrings.Password}
-              style={styles.inputPassword}
-              onChangeText={(text) => PasswordInput(text)}
-            />
+        <InputPhone
+          placeholder={SignInStrings.Phone}
+          style={styles.inputPhone}
+          onChangeText={(text) => PhoneInput(text)}
+          keyboardType={'number-pad'}
+          CheckPhone={isPhoneCheck}
+        />
+        <AnimatedIcon
+          placeholder={SignInStrings.Password}
+          style={styles.inputPassword}
+          onChangeText={(text) => PasswordInput(text)}
+        />
 
-            <View style={styles.ForgotContainer}>
-              <TouchableOpacity onPress={() => (!isLoading ? navigation.push('Reset') : null)}>
-                <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.ForgotContainer}>
+          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('Reset') : null), 200)}>
+            <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
+          </TouchableOpacity>
+        </View>
 
-            <TouchableOpacity
-              style={styles.Button}
-              onPress={debounce(() => (!isLoading ? Login(data) : null), 200)}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={styles.ButtonText}>{SignInStrings.Login}</Text>
-              )}
-            </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={debounce(() => (!isLoading ? Login(data) : null), 200)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{SignInStrings.Login}</Text>
+          )}
+        </TouchableOpacity>
 
-            <View style={styles.Register}>
-              <Text style={styles.Member}>{SignInStrings.Member}</Text>
-              <TouchableOpacity onPress={() => (!isLoading ? navigation.push('SignUp') : null)}>
-                <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        <View style={styles.Register}>
+          <Text style={styles.Member}>{SignInStrings.Member}</Text>
+          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('SignUp') : null), 200)}>
+            <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
       {/* <View style={styles.Terms}>
         <TouchableOpacity onPress={() => navigation.push('SignUp')}>
@@ -179,7 +176,7 @@ function SignIn({ navigation, store }) {
           <Text>{SignInStrings.Privacy}</Text>
         </TouchableOpacity>
       </View> */}
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
 

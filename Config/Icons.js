@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Entypo } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 
 function Icons(props) {
-  return <Entypo name={props.IconName} size={props.IconSize} color="black" />
+  return <Feather name={props.name} size={props.size} color={props.color} />
 }
 
 export default Icons

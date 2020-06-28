@@ -14,6 +14,8 @@ const SignInStrings = {
 const HeaderTitles = {
   Home: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
+  History: I18nManager.isRTL ? 'السجل' : 'Job History',
+  Notifications: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
   SignIn: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
   SignUp: I18nManager.isRTL ? 'إنشاء حساب' : 'Register',
   Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
@@ -53,7 +55,7 @@ const ResetPasswordString = {
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   RePassword: I18nManager.isRTL ? 'اعادة ادخال كلمة السر' : 'Re-enter password',
   CodeTitle: I18nManager.isRTL ? 'إعادة تعيين كلمة المرور' : 'Reset Password',
-  CodeSlogan: I18nManager.isRTL ? 'تم إرسال رمز OTP إلى' : 'An OTP code has been sent to',
+  CodeSlogan: I18nManager.isRTL ? 'تم إرسال رمز OTP' : 'An OTP code has been sent',
   Resend: I18nManager.isRTL ? 'إعادة إرسال الرمز' : 'Resend code',
   Resendmessage: I18nManager.isRTL ? 'لم تحصل على الرمز؟' : "Didn't get the code?",
   Log: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',

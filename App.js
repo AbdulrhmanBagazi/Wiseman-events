@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
 import 'mobx-react-lite/batchingForReactNative'
-
+import ICONS from './Config/Icons'
+import { PrimaryColor, SecondaryText } from './Config/ColorPalette'
 //Hooks
 import { AuthContext } from './Hooks/Context'
 import useCachedResources from './Hooks/useCachedResources'
@@ -26,6 +27,8 @@ import CreateProfile from './Screens/Auth/CreateProfile/CreateProfile'
 
 //
 import Home from './Screens/Main/Home/HomeScreen'
+import History from './Screens/Main/History/History'
+import NotificationMain from './Screens/Main/NotificationMain/NotificationMain'
 import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Redirect/Splash/Splash'
 
@@ -33,7 +36,7 @@ const HomeStack = createStackNavigator()
 const HomeScreens = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen options={{ title: HeaderTitles.Home }} name="Home" component={Home} />
+      <HomeStack.Screen options={{ title: 'App Name' }} name="Home" component={Home} />
     </HomeStack.Navigator>
   )
 }
@@ -47,11 +50,66 @@ const ProfileScreens = () => {
   )
 }
 
+const NotificationMaintack = createStackNavigator()
+const NotificationMainScreens = () => {
+  return (
+    <NotificationMaintack.Navigator>
+      <NotificationMaintack.Screen
+        options={{ title: HeaderTitles.Notifications }}
+        name="NotificationMain"
+        component={NotificationMain}
+      />
+    </NotificationMaintack.Navigator>
+  )
+}
+
+const HistoryStack = createStackNavigator()
+const HistoryScreens = () => {
+  return (
+    <HistoryStack.Navigator>
+      <HistoryStack.Screen options={{ title: HeaderTitles.History }} name="History" component={History} />
+    </HistoryStack.Navigator>
+  )
+}
+
 const Tabs = createBottomTabNavigator()
 const TabsScreens = () => {
   return (
-    <Tabs.Navigator>
+    <Tabs.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, size }) => {
+          let iconName
+          let color
+
+          if (route.name === 'Home') {
+            iconName = 'home'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'History') {
+            iconName = 'clipboard'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'NotificationMain') {
+            iconName = 'bell'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'Profile') {
+            iconName = 'user'
+            color = focused ? PrimaryColor : SecondaryText
+          }
+
+          // You can return any component that you like here!
+          return <ICONS name={iconName} size={size} color={color} />
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: PrimaryColor,
+        inactiveTintColor: SecondaryText,
+      }}>
       <Tabs.Screen options={{ title: HeaderTitles.Home }} name="Home" component={HomeScreens} />
+      <Tabs.Screen options={{ title: HeaderTitles.History }} name="History" component={HistoryScreens} />
+      <Tabs.Screen
+        options={{ title: HeaderTitles.Notifications }}
+        name="NotificationMain"
+        component={NotificationMainScreens}
+      />
       <Tabs.Screen options={{ title: HeaderTitles.Profile }} name="Profile" component={ProfileScreens} />
     </Tabs.Navigator>
   )

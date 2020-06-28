@@ -16,6 +16,7 @@ import debounce from 'lodash/debounce'
 import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import { UserPhoneOTP } from '../../../Config/AsyncStorage'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function Reset({ navigation }) {
   const [data, setData] = React.useState({
@@ -117,48 +118,41 @@ function Reset({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
-          <View style={styles.container}>
-            <View style={styles.Logo}>
-              <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />
-            </View>
-            <Text style={styles.Title}>{ResetPasswordString.title}</Text>
-            <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
-            <Text style={styles.error}>{isError}</Text>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <View style={styles.container}>
+        <View style={styles.Logo}>
+          <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />
+        </View>
+        <Text style={styles.Title}>{ResetPasswordString.title}</Text>
+        <Text style={styles.Slogan}>{ResetPasswordString.ResetSlogan}</Text>
+        <Text style={styles.error}>{isError}</Text>
 
-            <InputPhone
-              placeholder={ResetPasswordString.Phone}
-              style={styles.PhoneInput}
-              onChangeText={(text) => PhoneInput(text)}
-              keyboardType={'number-pad'}
-              CheckPhone={isPhoneCheck}
-            />
+        <InputPhone
+          placeholder={ResetPasswordString.Phone}
+          style={styles.PhoneInput}
+          onChangeText={(text) => PhoneInput(text)}
+          keyboardType={'number-pad'}
+          CheckPhone={isPhoneCheck}
+        />
 
-            <TouchableOpacity
-              style={styles.Button}
-              onPress={debounce(() => (!isLoading ? SendOTP() : null), 200)}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={styles.ButtonText}>{ResetPasswordString.Continue}</Text>
-              )}
-            </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={debounce(() => (!isLoading ? SendOTP() : null), 200)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{ResetPasswordString.Continue}</Text>
+          )}
+        </TouchableOpacity>
 
-            <View style={styles.getCode}>
-              <Text style={styles.gotTheCode}>{ResetPasswordString.GotTheCodeMe}</Text>
-              <TouchableOpacity onPress={() => (!isLoading ? navigation.push('GetCode') : null)}>
-                <Text style={styles.getCodeText}>{ResetPasswordString.GotTheCode}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
+        <View style={styles.getCode}>
+          <Text style={styles.gotTheCode}>{ResetPasswordString.GotTheCodeMe}</Text>
+          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('GetCode') : null), 200)}>
+            <Text style={styles.getCodeText}>{ResetPasswordString.GotTheCode}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }
 

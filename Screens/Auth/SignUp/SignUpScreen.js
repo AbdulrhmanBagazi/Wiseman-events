@@ -17,6 +17,7 @@ import { AuthContext } from '../../../Hooks/Context'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
 import store from '../../../Config/Mobx'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
@@ -145,56 +146,49 @@ function SignUp({ navigation }) {
   // }, [isRegister])
 
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
-          <View style={styles.container}>
-            <View style={styles.Logo} />
-            <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <View style={styles.Logo} />
+        <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
 
-            <Text style={styles.error}>{isError}</Text>
+        <Text style={styles.error}>{isError}</Text>
 
-            <InputPhone
-              placeholder={Register.Phone}
-              style={styles.input}
-              onChangeText={(text) => PhoneInput(text)}
-              keyboardType={'number-pad'}
-              CheckPhone={isPhoneCheck}
-            />
+        <InputPhone
+          placeholder={Register.Phone}
+          style={styles.input}
+          onChangeText={(text) => PhoneInput(text)}
+          keyboardType={'number-pad'}
+          CheckPhone={isPhoneCheck}
+        />
 
-            <Inputpassowrd
-              placeholderpassword={Register.Password}
-              passwordstyle={styles.PasswordInput}
-              change={(text) => PasswordInput(text)}
-              placeholder={Register.RePassword}
-              style={styles.PasswordInput}
-              onChangeText={(text) => RePasswordInput(text)}
-              MatchString={Register.Match}
-              Check={isCheck}
-              PasswordValue={data.Password}
-            />
+        <Inputpassowrd
+          placeholderpassword={Register.Password}
+          passwordstyle={styles.PasswordInput}
+          change={(text) => PasswordInput(text)}
+          placeholder={Register.RePassword}
+          style={styles.PasswordInput}
+          onChangeText={(text) => RePasswordInput(text)}
+          MatchString={Register.Match}
+          Check={isCheck}
+          PasswordValue={data.Password}
+        />
 
-            <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={styles.ButtonText}>{Register.Continue}</Text>
-              )}
-            </TouchableOpacity>
+        <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{Register.Continue}</Text>
+          )}
+        </TouchableOpacity>
 
-            <View style={styles.Register}>
-              <Text style={styles.Member}>{Register.HaveAccount}</Text>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.RegisterText}>{Register.Log}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
+        <View style={styles.Register}>
+          <Text style={styles.Member}>{Register.HaveAccount}</Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.RegisterText}>{Register.Log}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }
 

@@ -16,6 +16,7 @@ import axios from 'axios'
 import debounce from 'lodash/debounce'
 import { URL } from '../../../Config/Config'
 import { UserPhoneOTPGet } from '../../../Config/AsyncStorage'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function GetCode({ navigation }) {
   const [data, setData] = React.useState({
@@ -108,56 +109,49 @@ function GetCode({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
-          <View style={styles.container}>
-            <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
-            <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>
-            <Text style={styles.error}>{isError}</Text>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+      <View style={styles.container}>
+        <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
+        <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>
+        <Text style={styles.error}>{isError}</Text>
 
-            <TextInput
-              placeholder={ResetPasswordString.OTP}
-              style={styles.input}
-              onChangeText={(text) => CodeInput(text)}
-              keyboardType={'number-pad'}
-            />
-            {/* <View style={styles.ResendContainer}>
+        <TextInput
+          placeholder={ResetPasswordString.OTP}
+          style={styles.input}
+          onChangeText={(text) => CodeInput(text)}
+          keyboardType={'number-pad'}
+        />
+        {/* <View style={styles.ResendContainer}>
               <Text style={styles.Resendmessage}>{ResetPasswordString.Resendmessage + ' '}</Text>
               <TouchableOpacity>
                 <Text style={styles.ResendText}>{ResetPasswordString.Resend}</Text>
               </TouchableOpacity>
             </View> */}
 
-            <Inputpassowrd
-              placeholderpassword={ResetPasswordString.Password}
-              passwordstyle={styles.input}
-              change={(text) => PasswordInput(text)}
-              placeholder={ResetPasswordString.RePassword}
-              style={styles.input}
-              onChangeText={(text) => RePasswordInput(text)}
-              passwordlength={ResetPasswordString.Length}
-              MatchString={ResetPasswordString.Match}
-              Check={isCheck}
-              PasswordValue={data.Password}
-            />
+        <Inputpassowrd
+          placeholderpassword={ResetPasswordString.Password}
+          passwordstyle={styles.input}
+          change={(text) => PasswordInput(text)}
+          placeholder={ResetPasswordString.RePassword}
+          style={styles.input}
+          onChangeText={(text) => RePasswordInput(text)}
+          passwordlength={ResetPasswordString.Length}
+          MatchString={ResetPasswordString.Match}
+          Check={isCheck}
+          PasswordValue={data.Password}
+        />
 
-            <TouchableOpacity
-              style={styles.Button}
-              onPress={debounce(() => (!isLoading ? ResetPassword(data) : null), 200)}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={styles.ButtonText}>{ResetPasswordString.Resetbutton}</Text>
-              )}
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={debounce(() => (!isLoading ? ResetPassword(data) : null), 200)}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.ButtonText}>{ResetPasswordString.Resetbutton}</Text>
+          )}
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   )
 }
 

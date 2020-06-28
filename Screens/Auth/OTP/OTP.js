@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { OTPStrings, ErrorsStrings } from '../../../Config/Strings'
@@ -92,52 +100,59 @@ function OTP({ store }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Logo} />
-      <Text style={styles.Title}>{OTPStrings.Title}</Text>
-      <Text style={styles.Slogan}>{OTPStrings.Slogan}</Text>
+    <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.Logo} />
+          <Text style={styles.Title}>{OTPStrings.Title}</Text>
+          <Text style={styles.Slogan}>{OTPStrings.Slogan}</Text>
 
-      <Text style={styles.error}>{isError}</Text>
+          <Text style={styles.error}>{isError}</Text>
 
-      <View>
-        <OTPInputView
-          pinCount={4}
-          style={{ width: width / 1.5, height: 100 }}
-          codeInputFieldStyle={styles.underlineStyleBase}
-          codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          autoFocusOnLoad={false}
-          onCodeFilled={(code) => {
-            VeridyCode(code)
-          }}
-        />
-      </View>
+          <View>
+            <OTPInputView
+              pinCount={4}
+              style={{ width: width / 1.5, height: 100 }}
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              autoFocusOnLoad={false}
+              onCodeFilled={(code) => {
+                VeridyCode(code)
+              }}
+            />
+          </View>
 
-      {isShow ? (
-        isLoading ? (
-          <ActivityIndicator size="small" color={PrimaryColor} />
-        ) : (
-          <CountDown
-            until={30}
-            digitStyle={{ backgroundColor: 'transparent' }}
-            digitTxtStyle={{ color: '#AF0029' }}
-            onFinish={() => ChangeState()}
-            timeToShow={['S']}
-            timeLabels={{ s: '' }}
-            size={20}
-          />
-        )
-      ) : (
-        <TouchableOpacity
-          style={styles.Button}
-          onPress={debounce(() => setResend(isResend ? false : true), 200)}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#fff" />
+          {isShow ? (
+            isLoading ? (
+              <ActivityIndicator size="small" color={PrimaryColor} />
+            ) : (
+              <CountDown
+                until={30}
+                digitStyle={{ backgroundColor: 'transparent' }}
+                digitTxtStyle={{ color: '#AF0029' }}
+                onFinish={() => ChangeState()}
+                timeToShow={['S']}
+                timeLabels={{ s: '' }}
+                size={20}
+              />
+            )
           ) : (
-            <Text style={styles.ButtonText}>{OTPStrings.Resend}</Text>
+            <TouchableOpacity
+              style={styles.Button}
+              onPress={debounce(() => setResend(isResend ? false : true), 200)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={styles.ButtonText}>{OTPStrings.Resend}</Text>
+              )}
+            </TouchableOpacity>
           )}
-        </TouchableOpacity>
-      )}
-    </View>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 

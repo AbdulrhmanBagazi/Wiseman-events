@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableHighlight, ScrollView, Image } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { AuthContext } from '../../../Hooks/Context'
+import styles from './Style'
+import TopCard from './TopCard'
 
 function Home({ store }) {
   const { signOut } = React.useContext(AuthContext)
@@ -19,11 +21,14 @@ function Home({ store }) {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <ScrollView>
+      <View style={styles.Container}>
+        <TopCard />
+      </View>
       <TouchableHighlight onPress={() => Logout()}>
         <Text>Home</Text>
       </TouchableHighlight>
-    </View>
+    </ScrollView>
   )
 }
 

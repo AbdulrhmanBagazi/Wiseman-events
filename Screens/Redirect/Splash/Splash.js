@@ -37,7 +37,7 @@ function Splash({ store }) {
               } else if (!response.data.user.profile) {
                 Profile()
                 return
-              } else if (response.data.user.notification.notificationsID === 'false') {
+              } else if (!response.data.user.notification) {
                 Notification()
                 return
               } else {
@@ -55,12 +55,12 @@ function Splash({ store }) {
               } else {
                 await UserTokenRemove()
                 signOut()
-                // console.log(error)
+                return
               }
             } else {
               await UserTokenRemove()
               signOut()
-              // console.log(error)
+              return
             }
           })
 
