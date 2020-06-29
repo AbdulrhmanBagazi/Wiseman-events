@@ -5,13 +5,14 @@ import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { AuthContext } from '../../../Hooks/Context'
 import styles from './Style'
 import TopCard from './TopCard'
+import JobCard from './JobCard'
 
-function Home({ store }) {
+function Home({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
 
-  React.useEffect(() => {
-    console.log(store.data)
-  })
+  // React.useEffect(() => {
+  //   console.log(store.data)
+  // })
 
   const Logout = async () => {
     await UserTokenRemove()
@@ -24,10 +25,9 @@ function Home({ store }) {
     <ScrollView>
       <View style={styles.Container}>
         <TopCard />
+        <JobCard More={() => navigation.push('AllJobs')} />
+        <JobCard />
       </View>
-      <TouchableHighlight onPress={() => Logout()}>
-        <Text>Home</Text>
-      </TouchableHighlight>
     </ScrollView>
   )
 }

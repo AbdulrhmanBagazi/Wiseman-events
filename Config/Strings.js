@@ -13,6 +13,7 @@ const SignInStrings = {
 
 const HeaderTitles = {
   Home: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
+  AllJobs: I18nManager.isRTL ? 'جميع الوظائف' : 'All Jobs',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
   History: I18nManager.isRTL ? 'السجل' : 'Job History',
   Notifications: I18nManager.isRTL ? 'إشعارات' : 'Notifications',

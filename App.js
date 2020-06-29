@@ -24,9 +24,9 @@ import OTP from './Screens/Auth/OTP/OTP'
 import Notification from './Screens/Auth/Notification/Notification'
 import NotificationSuccess from './Screens/Auth/Notification/NotificationSuccess'
 import CreateProfile from './Screens/Auth/CreateProfile/CreateProfile'
-
 //
 import Home from './Screens/Main/Home/HomeScreen'
+import AllJobs from './Screens/Main/Home/AllJobs/AllJobs'
 import History from './Screens/Main/History/History'
 import NotificationMain from './Screens/Main/NotificationMain/NotificationMain'
 import Profile from './Screens/Main/Profile/ProfileScreen'
@@ -37,6 +37,15 @@ const HomeScreens = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen options={{ title: 'App Name' }} name="Home" component={Home} />
+      <HomeStack.Screen
+        options={{
+          title: HeaderTitles.AllJobs,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+        }}
+        name="AllJobs"
+        component={AllJobs}
+      />
     </HomeStack.Navigator>
   )
 }
