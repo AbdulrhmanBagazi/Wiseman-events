@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Image, Text, ImageBackground, FlatList, TouchableOpacity, I18nManager } from 'react-native'
-import styles from './Style'
-import Icon from '../../../Config/Icons'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import styles from '../Style'
+import Icon from '../../../../Config/Icons'
+import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad'
 
 const DATA = [
   {
@@ -20,35 +19,17 @@ const DATA = [
   },
 ]
 
-function JobCard(props) {
+function Card(props) {
   return (
-    <View style={styles.JobCard}>
-      <View style={styles.space} />
-      <View style={styles.Section}>
-        <View style={styles.SectionTtitle}>
-          <Text style={styles.SectionTitle}>Jobs at Riyadh</Text>
-          <Text style={styles.NumberOfJobs}>25 jobs</Text>
-        </View>
-        <View style={styles.SectionMore}>
-          <TouchableOpacity style={styles.SectionMore} onPress={props.More}>
-            <Text style={styles.JobsMore}>More</Text>
-            <Icon
-              name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
-              size={14}
-              color={PrimaryColor}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View style={styles.AllJobCard}>
       <FlatList
         data={DATA}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.SingleJob}>
+        showsVerticalScrollIndicator={false}
+        style={styles.AllJobFlatlist}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity style={styles.SingleAllJob}>
             <AnimatedCardImageLoad />
-            <View style={styles.SingleJobDetails}>
+            <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 Event date: <Text style={{ color: '#000' }}>20 May - 30 May</Text>
               </Text>
@@ -76,9 +57,10 @@ function JobCard(props) {
             </View>
           </TouchableOpacity>
         )}
+        keyExtractor={(item) => item.id}
       />
     </View>
   )
 }
 
-export default JobCard
+export default Card

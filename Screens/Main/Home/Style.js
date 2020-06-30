@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   TopCard: {
     width,
     flex: 1,
-    marginVertical: 10,
+    // marginVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(175, 0, 41, 0.4)',
     width: '100%',
     height: '100%',
+    borderRadius: 5,
+    alignItems: 'flex-start',
   },
   TopCardTitle: {
     color: '#fff',
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 5,
-    overflow: 'hidden',
+    position: 'absolute',
   },
   JobCard: {
     width,
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
   },
   Section: {
     width,
-    marginTop: 30,
+    // marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -73,7 +75,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: PrimaryColor,
   },
-  SectionTtitle: {},
+  SectionTtitle: {
+    alignItems: 'flex-start',
+  },
   SectionMore: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -89,10 +93,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
-    marginHorizontal: 4,
+    marginHorizontal: 5,
     marginVertical: 2,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
+    borderRadius: 5,
   },
   SingleJobTitleView: {
     // backgroundColor: 'rgba(175, 0, 41, 0.4)',
@@ -121,6 +126,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
     flex: 1,
     padding: 5,
+    alignItems: 'flex-start',
   },
   SingleJobDetailsTime: {
     fontWeight: '600',
@@ -162,6 +168,74 @@ const styles = StyleSheet.create({
   DataSections: {
     flex: 1,
     marginHorizontal: 15,
+    alignItems: 'flex-start',
+  },
+  space: {
+    height: 20,
+    width,
+  },
+  AllJobCard: {
+    width,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  SingleAllJob: {
+    backgroundColor: '#fff',
+    width,
+    flex: 1,
+    width,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+    marginVertical: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    borderRadius: 5,
+    alignSelf: 'center',
+  },
+  AllJobsContainer: {
+    width: width + 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  AllSingleJobTitleView: {
+    // backgroundColor: 'rgba(175, 0, 41, 0.4)',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    position: 'absolute',
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
+  },
+  AllSingleJobLayer: {
+    backgroundColor: 'rgba(70, 14, 28, 0.5)',
+    width: '100%',
+    height: 103,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    overflow: 'hidden',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    position: 'absolute',
+  },
+  AllSSingleJobDetails: {
+    // backgroundColor: '#fff',
+    flex: 1,
+    padding: 5,
+    alignItems: 'flex-start',
+  },
+  AllJobFlatlist: {
+    width: width + 10,
+    flex: 1,
+  },
+  Hour: {
+    color: LightText,
   },
 })
 

@@ -6,6 +6,7 @@ import { AuthContext } from '../../../Hooks/Context'
 import styles from './Style'
 import TopCard from './TopCard'
 import JobCard from './JobCard'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 function Home({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
@@ -26,8 +27,10 @@ function Home({ store, navigation }) {
       <View style={styles.Container}>
         <TopCard />
         <JobCard More={() => navigation.push('AllJobs')} />
-        <JobCard />
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate('LanguageChange')}>
+        <Text>x</Text>
+      </TouchableOpacity>
     </ScrollView>
   )
 }

@@ -46,6 +46,17 @@ const HomeScreens = () => {
         name="AllJobs"
         component={AllJobs}
       />
+      <HomeStack.Screen
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="LanguageChange"
+        component={LanguageChange}
+      />
     </HomeStack.Navigator>
   )
 }
@@ -111,6 +122,18 @@ const TabsScreens = () => {
       tabBarOptions={{
         activeTintColor: PrimaryColor,
         inactiveTintColor: SecondaryText,
+        style: {
+          backgroundColor: '#fff',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 12,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 16.0,
+          elevation: 12,
+          borderColor: '#fff',
+        },
       }}>
       <Tabs.Screen options={{ title: HeaderTitles.Home }} name="Home" component={HomeScreens} />
       <Tabs.Screen options={{ title: HeaderTitles.History }} name="History" component={HistoryScreens} />
