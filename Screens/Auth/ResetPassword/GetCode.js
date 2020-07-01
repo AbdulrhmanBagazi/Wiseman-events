@@ -88,7 +88,7 @@ function GetCode({ navigation }) {
         .then((response) => {
           if (response.data === 'success') {
             setLoading(false)
-            navigation.push('ResetSuccess')
+            navigation.navigate('ResetSuccess')
             return
           } else {
             setError(ErrorsStrings.WrongCode)

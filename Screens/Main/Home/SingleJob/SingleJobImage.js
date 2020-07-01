@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, Animated, ImageBackground, Image } from 'react-native'
-import styles from '../Style'
+import { View, Text, Animated, SafeAreaView, Image } from 'react-native'
+import styles from './Style'
 
-function AnimatedCardImageLoad(props) {
+function SingleJobImage(props) {
   const [ImageLoad] = React.useState(new Animated.Value(0))
 
   const Start = async () => {
@@ -29,4 +29,4 @@ function AnimatedCardImageLoad(props) {
   )
 }
 
-export default AnimatedCardImageLoad
+export default SingleJobImage

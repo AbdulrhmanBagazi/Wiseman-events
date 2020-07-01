@@ -114,7 +114,7 @@ function Notification({ navigation, store }) {
 
   const NotificationDone = () => {
     setShow(false)
-    navigation.push('NotificationSuccess')
+    navigation.navigate('NotificationSuccess')
     return
   }
 

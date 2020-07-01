@@ -10,6 +10,8 @@ import {
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 
+const TO = Animated.createAnimatedComponent(TouchableOpacity)
+
 AnimatedButton = (props) => {
   const [AR] = React.useState(new Animated.Value(0))
   const [EN] = React.useState(new Animated.Value(0))
@@ -55,38 +57,36 @@ AnimatedButton = (props) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={props.onPressArabic} style={styles.TouchableOpacityContainer}>
-        <Animated.View
-          style={[
-            styles.TouchableOpacity,
-            {
-              backgroundColor: ArColor,
-              borderColor: ArBorder,
-              shadowOpacity: 0.25,
-              shadowRadius: 2,
-              elevation: 2,
-            },
-          ]}>
-          <Text style={styles.TouchableOpacityText}>عربي</Text>
-          <Animated.View style={[styles.Circle, { backgroundColor: ArCircle }]} />
-        </Animated.View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={props.onPressEnglish} style={styles.TouchableOpacityContainer}>
-        <Animated.View
-          style={[
-            styles.TouchableOpacity,
-            {
-              backgroundColor: EnColor,
-              borderColor: EnBorder,
-              shadowOpacity: 0.25,
-              shadowRadius: 2,
-              elevation: 2,
-            },
-          ]}>
-          <Text style={styles.TouchableOpacityText}>English</Text>
-          <Animated.View style={[styles.Circle, { backgroundColor: EnCircle }]} />
-        </Animated.View>
-      </TouchableOpacity>
+      <TO
+        onPress={props.onPressArabic}
+        style={[
+          styles.TouchableOpacity,
+          {
+            backgroundColor: ArColor,
+            borderColor: ArBorder,
+            shadowOpacity: 0.25,
+            shadowRadius: 2,
+            elevation: 2,
+          },
+        ]}>
+        <Text style={styles.TouchableOpacityText}>عربي</Text>
+        <Animated.View style={[styles.Circle, { backgroundColor: ArCircle }]} />
+      </TO>
+      <TO
+        onPress={props.onPressEnglish}
+        style={[
+          styles.TouchableOpacity,
+          {
+            backgroundColor: EnColor,
+            borderColor: EnBorder,
+            shadowOpacity: 0.25,
+            shadowRadius: 2,
+            elevation: 2,
+          },
+        ]}>
+        <Text style={styles.TouchableOpacityText}>English</Text>
+        <Animated.View style={[styles.Circle, { backgroundColor: EnCircle }]} />
+      </TO>
     </View>
   )
 }

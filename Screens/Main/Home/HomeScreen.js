@@ -1,12 +1,11 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { AuthContext } from '../../../Hooks/Context'
 import styles from './Style'
 import TopCard from './TopCard'
 import JobCard from './JobCard'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 function Home({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
@@ -26,9 +25,12 @@ function Home({ store, navigation }) {
     <ScrollView>
       <View style={styles.Container}>
         <TopCard />
-        <JobCard More={() => navigation.push('AllJobs')} />
+        <JobCard
+          PushJob={() => navigation.navigate('SingleJob')}
+          More={() => navigation.navigate('AllJobs')}
+        />
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('LanguageChange')}>
+      <TouchableOpacity onPress={() => Logout()}>
         <Text>x</Text>
       </TouchableOpacity>
     </ScrollView>

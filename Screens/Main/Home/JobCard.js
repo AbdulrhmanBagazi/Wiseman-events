@@ -8,15 +8,19 @@ import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad'
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: 'https://i.ibb.co/72xDcxj/two.png',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-asdasd12312',
+    title: 'https://i.ibb.co/RyJHcdm/Rectangle.png',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'https://i.ibb.co/72xDcxj/two.png',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'https://i.ibb.co/RyJHcdm/Rectangle.png',
   },
 ]
 
@@ -26,12 +30,12 @@ function JobCard(props) {
       <View style={styles.space} />
       <View style={styles.Section}>
         <View style={styles.SectionTtitle}>
-          <Text style={styles.SectionTitle}>Jobs at Riyadh</Text>
-          <Text style={styles.NumberOfJobs}>25 jobs</Text>
+          <Text style={styles.SectionTitle}>{I18nManager.isRTL ? 'وظائف فى الرياض' : 'Jobs at Riyadh'}</Text>
+          <Text style={styles.NumberOfJobs}>25{I18nManager.isRTL ? 'وظيفة' : 'Jobs'}</Text>
         </View>
         <View style={styles.SectionMore}>
           <TouchableOpacity style={styles.SectionMore} onPress={props.More}>
-            <Text style={styles.JobsMore}>More</Text>
+            <Text style={styles.JobsMore}>{I18nManager.isRTL ? 'المزيد' : 'More'}</Text>
             <Icon
               name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
               size={14}
@@ -46,28 +50,43 @@ function JobCard(props) {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.SingleJob}>
-            <AnimatedCardImageLoad />
+          <TouchableOpacity style={styles.SingleJob} onPress={props.PushJob}>
+            <AnimatedCardImageLoad
+              source={{
+                uri: item.title,
+              }}
+            />
             <View style={styles.SingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
-                Event date: <Text style={{ color: '#000' }}>20 May - 30 May</Text>
+                {I18nManager.isRTL ? 'تاريخ الحدث' : 'Event date'}
+                <Text style={{ color: '#000' }}> 20 May - 30 May</Text>
               </Text>
-              <Text style={styles.SingleJobDetailsTitle}>WWE is hiring volunteer boys </Text>
+              <Text style={styles.SingleJobDetailsTitle}>
+                {I18nManager.isRTL ? 'التنظيم في الحدث' : 'Organizing at the event'}
+              </Text>
               <View style={styles.SingleJobDetailsLocationView}>
                 <Icon name="map-pin" size={14} color="#000" />
-                <Text style={styles.SingleJobDetailsLocation}>Olaya District, Riyad, Saudi Arabia</Text>
+                <Text style={styles.SingleJobDetailsLocation}>
+                  {I18nManager.isRTL
+                    ? 'حي العليا ، الرياض ، المملكة العربية السعودية'
+                    : 'Olaya District, Riyad, Saudi Arabia'}
+                </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Vacancy</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {I18nManager.isRTL ? 'شاغر' : 'Vacancy'}
+                  </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>30/Shift</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Shifts</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {I18nManager.isRTL ? 'المناوبات' : 'Shifts'}
+                  </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>2 Shifts</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Salary</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{I18nManager.isRTL ? 'راتب' : 'Salary'}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     10sar<Text style={styles.Hour}>/H</Text>
                   </Text>

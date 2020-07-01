@@ -87,7 +87,7 @@ function Reset({ navigation }) {
           return
         } else if (response.data === 'success') {
           setTimeout(() => {
-            navigation.push('GetCode')
+            navigation.navigate('GetCode')
             setLoading(false)
           }, 1000)
           return
@@ -147,7 +147,7 @@ function Reset({ navigation }) {
 
         <View style={styles.getCode}>
           <Text style={styles.gotTheCode}>{ResetPasswordString.GotTheCodeMe}</Text>
-          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('GetCode') : null), 200)}>
+          <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('GetCode') : null)}>
             <Text style={styles.getCodeText}>{ResetPasswordString.GotTheCode}</Text>
           </TouchableOpacity>
         </View>

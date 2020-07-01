@@ -111,7 +111,7 @@ function SignUp({ navigation }) {
         })
         .then((response) => {
           if (response.data.error === 'exists') {
-            console.log(response.data.error)
+            // console.log(response.data.error)
             setError(ErrorsStrings.MobileUsed)
             setLoading(false)
             return

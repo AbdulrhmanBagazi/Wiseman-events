@@ -100,7 +100,7 @@ function SignIn({ navigation, store }) {
         }
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
         if (error.response.status) {
           if (error.response.status === 401) {
             setError(ErrorsStrings.LoginError)
@@ -144,7 +144,7 @@ function SignIn({ navigation, store }) {
         />
 
         <View style={styles.ForgotContainer}>
-          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('Reset') : null), 200)}>
+          <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('Reset') : null)}>
             <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
           </TouchableOpacity>
         </View>
@@ -161,7 +161,7 @@ function SignIn({ navigation, store }) {
 
         <View style={styles.Register}>
           <Text style={styles.Member}>{SignInStrings.Member}</Text>
-          <TouchableOpacity onPress={debounce(() => (!isLoading ? navigation.push('SignUp') : null), 200)}>
+          <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('SignUp') : null)}>
             <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
           </TouchableOpacity>
         </View>

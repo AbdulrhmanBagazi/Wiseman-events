@@ -4,8 +4,8 @@ import { inject, observer } from 'mobx-react'
 import Card from './Card'
 import styles from '../Style'
 
-function AllJobs({ store }) {
-  const [isLoading, setLoading] = React.useState(false)
+function AllJobs({ store, navigation }) {
+  const [isLoading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -17,7 +17,7 @@ function AllJobs({ store }) {
     <View style={styles.AllJobsContainer}>
       {/* <Card /> */}
       {isLoading ? (
-        <Card />
+        <Card PushJob={() => navigation.navigate('SingleJob')} />
       ) : (
         <ActivityIndicator size="large" color="#AF0029" style={{ alignSelf: 'center' }} />
       )}

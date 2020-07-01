@@ -14,6 +14,7 @@ const SignInStrings = {
 const HeaderTitles = {
   Home: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
   AllJobs: I18nManager.isRTL ? 'جميع الوظائف' : 'All Jobs',
+  SingleJobs: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
   History: I18nManager.isRTL ? 'السجل' : 'Job History',
   Notifications: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
@@ -134,6 +135,10 @@ const ErrorsStrings = {
     : 'You can request a password reset every 24 hours, an OTP code has been sent to this number',
 }
 
+const SingleJobStrings = {
+  Application: I18nManager.isRTL ? 'قدم الطلب' : 'Submit Application',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -144,4 +149,5 @@ export {
   ProfileStrings,
   NotificationStrings,
   ErrorsStrings,
+  SingleJobStrings,
 }
