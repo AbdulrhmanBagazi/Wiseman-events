@@ -32,6 +32,7 @@ import NotificationMain from './Screens/Main/NotificationMain/NotificationMain'
 import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Redirect/Splash/Splash'
 import SingleJob from './Screens/Main/Home/SingleJob/SingleJob'
+import Application from './Screens/Main/Home/Application/Application'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
@@ -113,6 +114,32 @@ const MainScreens = () => {
         name="SingleJob"
         component={SingleJob}
       />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Application,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Application"
+        component={Application}
+      />
+      <MainStack.Screen
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
+          headerTintColor: 'black',
+        }}
+        name="LanguageChange"
+        component={LanguageChange}
+      />
     </MainStack.Navigator>
   )
 }
@@ -160,7 +187,11 @@ const TabsScreens = () => {
           borderColor: '#fff',
         },
       }}>
-      <Tabs.Screen name="Home" component={HomeScreens} />
+      <Tabs.Screen
+        options={{ title: HeaderTitles.Home, headerBackTitleVisible: false }}
+        name="Home"
+        component={HomeScreens}
+      />
       <Tabs.Screen
         options={{ title: HeaderTitles.History, headerBackTitleVisible: false }}
         name="History"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Animated, Text, ImageBackground } from 'react-native'
+import { View, Animated, Text, ImageBackground, I18nManager } from 'react-native'
 import styles from './Style'
 
 function TopCard({ props }) {
@@ -25,7 +25,9 @@ function TopCard({ props }) {
         style={[styles.TopCardImage, { opacity: ImageLoad }]}
       />
       <View style={styles.TopCardLayer}>
-        <Text style={styles.TopCardTitle}>Riyadh Season Ongoing</Text>
+        <Text style={styles.TopCardTitle}>
+          {I18nManager.isRTL ? 'موسم الرياض مستمر' : 'Riyadh Season Ongoing'}
+        </Text>
         <Text style={styles.TopCardTime}>23 November to 6 March</Text>
       </View>
     </View>

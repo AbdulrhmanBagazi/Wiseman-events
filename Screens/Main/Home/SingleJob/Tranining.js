@@ -3,7 +3,7 @@ import { View, Text, I18nManager } from 'react-native'
 import styles from './Style'
 import { SingleJobStrings } from '../../../../Config/Strings'
 
-function Rules(props) {
+function Tranining(props) {
   return (
     <View style={styles.Pager}>
       <View style={styles.TextSelectView}>
@@ -17,7 +17,7 @@ function Rules(props) {
       </View>
 
       <View style={styles.PointsView}>
-        <Text style={styles.TitleSelect}>{SingleJobStrings.CompanyRules}</Text>
+        <Text style={styles.TitleSelect}>{SingleJobStrings.TraniningRules}</Text>
         {I18nManager.isRTL ? (
           <View style={styles.TextPointsView}>
             <Text style={styles.TextSelectPoint}>
@@ -28,7 +28,10 @@ function Rules(props) {
         ) : (
           <View style={styles.TextPointsView}>
             <Text style={styles.TextSelectPoint}>
-              {'\u2022' + ' '} Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
+              {'\u2022' + ' '} Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooedVinyl
+              next level heirloom snackwave banh mi kombucha brooklyn tattooedVinyl next level heirloom
+              snackwave banh mi kombucha brooklyn tattooedVinyl next level heirloom snackwave banh mi kombucha
+              brooklyn tattooedVinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
             </Text>
           </View>
         )}
@@ -53,4 +56,4 @@ function Rules(props) {
   )
 }
 
-export default Rules
+export default Tranining

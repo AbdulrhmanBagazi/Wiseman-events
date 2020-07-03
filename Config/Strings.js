@@ -25,6 +25,7 @@ const HeaderTitles = {
   GetCode: I18nManager.isRTL ? 'استعادة كلمة المرور' : 'Password Recovery',
   OTP: I18nManager.isRTL ? 'التحقق' : 'Verification',
   CreateProfile: I18nManager.isRTL ? 'إنشاء ملف تعريف' : 'Create Profile',
+  Application: I18nManager.isRTL ? 'تقديم' : 'Apply',
 }
 
 const LanguageChangeStrings = {
@@ -137,6 +138,26 @@ const ErrorsStrings = {
 
 const SingleJobStrings = {
   Application: I18nManager.isRTL ? 'قدم الطلب' : 'Submit Application',
+  Description: I18nManager.isRTL ? 'الوصف' : 'Description',
+  Rules: I18nManager.isRTL ? 'شروط' : 'Rules',
+  Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
+  date: I18nManager.isRTL ? 'تاريخ الحدث: ' : 'Event Date: ',
+  Vacancy: I18nManager.isRTL ? 'العدد' : 'Vacancy',
+  Salary: I18nManager.isRTL ? 'راتب' : 'Salary',
+  Shifts: I18nManager.isRTL ? 'المناوبات' : 'Shifts',
+  About: I18nManager.isRTL ? 'عن العمل' : 'About the job',
+  Responsibility: I18nManager.isRTL ? 'مسؤوليات العمل' : 'Job responsibilities ',
+  CompanyRules: I18nManager.isRTL ? 'شروط العمل' : 'Job Rules',
+  TraniningRules: I18nManager.isRTL ? 'شروط التريب' : 'Training Rules',
+  ShiftSelect: I18nManager.isRTL ? 'تحديد المناوبة' : 'Select Shift',
+  ShiftTime: I18nManager.isRTL ? 'وقت المناوبة: ' : 'Shift Time: ',
+  ShiftAtta: I18nManager.isRTL ? 'وقت الحضور: ' : 'Attendance Time: ',
+  Impor: I18nManager.isRTL ? 'مهم' : 'Important',
+  successful: I18nManager.isRTL ? 'تم التقديم بنجاح' : 'submission successful',
+  submitted: I18nManager.isRTL
+    ? 'تم تقديم طلبك إلى العميل. سوف تحصل على إشعار لمزيد من المعلومات. شكرا.'
+    : 'Your request has been submitted to the customer. You will get a notification for more information. Thank you.',
+  Done: I18nManager.isRTL ? 'تم' : 'Done',
 }
 
 export {

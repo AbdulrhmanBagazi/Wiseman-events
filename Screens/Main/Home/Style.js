@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 42,
     marginVertical: 15,
     marginHorizontal: 18,
+    textAlign: 'left',
   },
   TopCardTime: {
     color: '#fff',

@@ -29,10 +29,14 @@ function Home({ store, navigation }) {
           PushJob={() => navigation.navigate('SingleJob')}
           More={() => navigation.navigate('AllJobs')}
         />
+        <JobCard
+          PushJob={() => navigation.navigate('SingleJob')}
+          More={() => navigation.navigate('AllJobs')}
+        />
       </View>
-      <TouchableOpacity onPress={() => Logout()}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('LanguageChange')}>
         <Text>x</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScrollView>
   )
 }

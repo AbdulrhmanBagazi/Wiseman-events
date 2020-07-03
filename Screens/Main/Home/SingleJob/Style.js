@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   SingleJobDetailsTitle: {
     fontWeight: '500',
     fontSize: 24,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
+    textAlign: 'center',
   },
   SingleJobDetailsLocation: {
     fontWeight: '500',
@@ -68,8 +69,9 @@ const styles = StyleSheet.create({
   },
   SingleJobDetailsLocationView: {
     flexDirection: 'row',
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     marginVertical: 20,
+    textAlign: 'center',
   },
   SingleJobDetailsDataView: {
     // backgroundColor: 'red',
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   ButtonText: {
     color: '#fff',
@@ -152,27 +154,48 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 10,
   },
+  TextSelectView: {
+    width: width - 40,
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
   TextSelect: {
     fontSize: 14,
     fontWeight: '500',
-    marginHorizontal: 16,
-    marginVertical: 5,
     color: SecondaryText,
+    textAlign: 'justify',
   },
   Rules: {
     backgroundColor: '#F8F8F9',
     marginHorizontal: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     padding: 5,
     borderRadius: 5,
+    alignItems: 'flex-start',
   },
   PointsView: {
-    marginBottom: 20,
-    padding: 5,
+    width: width - 20,
+    alignSelf: 'center',
+    backgroundColor: '#F8F8F9',
     borderRadius: 5,
+    marginVertical: 20,
+    alignItems: 'flex-start',
   },
   Pager: {
     width,
+    alignItems: 'flex-start',
+  },
+  TextPointsView: {
+    flexDirection: 'row',
+    marginVertical: 8,
+    width: '95%',
+    alignSelf: 'center',
+  },
+  TextSelectPoint: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: SecondaryText,
+    textAlign: 'left',
   },
 })
 

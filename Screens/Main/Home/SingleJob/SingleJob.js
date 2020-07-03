@@ -7,6 +7,7 @@ import Icon from '../../../../Config/Icons'
 import { SingleJobStrings } from '../../../../Config/Strings'
 import Description from './Description'
 import Rules from './Rules'
+import Tranining from './Tranining'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
 import { width, height } from '../../../../Config/Layout'
 
@@ -63,33 +64,33 @@ function SingleJob({ route, store, navigation }) {
         </View>
         <View style={styles.DataContainer}>
           <Text style={styles.SingleJobDetailsTime}>
-            {I18nManager.isRTL ? 'تاريخ الحدث' : 'Event date'}
+            {SingleJobStrings.date}
             <Text style={{ color: '#000' }}> 20 May - 30 May</Text>
           </Text>
           <Text style={styles.SingleJobDetailsTitle}>
-            {I18nManager.isRTL ? 'التنظيم في الحدث' : 'Organizing at the event'}
+            {I18nManager.isRTL
+              ? 'التنظيم في الحدثالتنظيم في الحدثالتنظيم في الحدث'
+              : 'Organizing at the eventOrganizing at the eventOrganizing at the eventOrganizing at the event'}
           </Text>
           <View style={styles.SingleJobDetailsLocationView}>
             <Icon name="map-pin" size={14} color="#000" />
-            <Text style={styles.SingleJobDetailsLocation}>
+            <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
               {I18nManager.isRTL
-                ? 'حي العليا ، الرياض ، المملكة العربية السعودية'
-                : 'Olaya District, Riyad, Saudi Arabia'}
+                ? 'حي العليا ، الرياض ، المملكة العربية السعوديةحي العليا ، الرياض ، المملكة العربية السعوديةحي العليا ، الرياض ، المملكة العربية السعودية'
+                : 'Olaya District, Riyad, Saudi ArabiaOlaya District, Riyad, Saudi Arabia'}
             </Text>
           </View>
           <View style={styles.SingleJobDetailsDataView}>
             <View style={styles.DataSections}>
-              <Text style={styles.SingleJobDetailsSections}>{I18nManager.isRTL ? 'شاغر' : 'Vacancy'}</Text>
+              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
               <Text style={styles.SingleJobDetailsSectionsValue}>30/Shift</Text>
             </View>
             <View style={styles.DataSections}>
-              <Text style={styles.SingleJobDetailsSections}>
-                {I18nManager.isRTL ? 'المناوبات' : 'Shifts'}
-              </Text>
+              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
               <Text style={styles.SingleJobDetailsSectionsValue}>2 Shifts</Text>
             </View>
             <View style={styles.DataSections}>
-              <Text style={styles.SingleJobDetailsSections}>{I18nManager.isRTL ? 'راتب' : 'Salary'}</Text>
+              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
               <Text style={styles.SingleJobDetailsSectionsValue}>
                 10sar<Text style={styles.Hour}>/H</Text>
               </Text>
@@ -100,19 +101,19 @@ function SingleJob({ route, store, navigation }) {
               <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(0)}>
                 <Animated.Text
                   style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
-                  Description
+                  {SingleJobStrings.Description}
                 </Animated.Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(1)}>
                 <Animated.Text
                   style={[styles.SelectText, { color: isSelected === 1 ? PrimaryColor : '#000' }]}>
-                  Rules
+                  {SingleJobStrings.Rules}
                 </Animated.Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
                 <Animated.Text
                   style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
-                  Training
+                  {SingleJobStrings.Tranining}
                 </Animated.Text>
               </TouchableOpacity>
             </View>
@@ -124,14 +125,14 @@ function SingleJob({ route, store, navigation }) {
               ref={Scroll}>
               <Description />
               <Rules />
-              <Description />
+              <Tranining />
             </ScrollView>
             {/* {isSelected === 0 ? <Description /> : isSelected === 1 ? <Rules /> : null} */}
           </View>
         </View>
       </ScrollView>
       <View style={styles.ButtonView}>
-        <TouchableOpacity style={styles.Button}>
+        <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Application')}>
           <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
         </TouchableOpacity>
       </View>

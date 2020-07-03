@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager } from 'react-native'
 import styles from '../Style'
 import Icon from '../../../../Config/Icons'
 import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad'
+import { SingleJobStrings } from '../../../../Config/Strings'
 
 const DATA = [
   {
@@ -39,24 +40,31 @@ function Card(props) {
             />
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
-                Event date: <Text style={{ color: '#000' }}>20 May - 30 May</Text>
+                {SingleJobStrings.date}
+                <Text style={{ color: '#000' }}>20 May - 30 May</Text>
               </Text>
-              <Text style={styles.SingleJobDetailsTitle}>WWE is hiring volunteer boys </Text>
+              <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
+                {I18nManager.isRTL ? 'التنظيم في الحدث' : 'Organizing at the event'}
+              </Text>
               <View style={styles.SingleJobDetailsLocationView}>
                 <Icon name="map-pin" size={14} color="#000" />
-                <Text style={styles.SingleJobDetailsLocation}>Olaya District, Riyad, Saudi Arabia</Text>
+                <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
+                  {I18nManager.isRTL
+                    ? 'حي العليا ، الرياض ، المملكة العربية السعودية'
+                    : 'Olaya District, Riyad, Saudi Arabia'}
+                </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Vacancy</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>30/Shift</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Shifts</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>2 Shifts</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>Salary</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     10sar<Text style={styles.Hour}>/H</Text>
                   </Text>
