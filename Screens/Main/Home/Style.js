@@ -16,11 +16,13 @@ const styles = StyleSheet.create({
   },
   TopCard: {
     width,
+    // height: 200,
     flex: 1,
     // marginVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
+    marginHorizontal: 5,
   },
   TopCardLayer: {
     backgroundColor: 'rgba(175, 0, 41, 0.4)',
@@ -33,7 +35,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '600',
     fontSize: 42,
-    marginVertical: 15,
+    marginTop: 20,
+    marginHorizontal: 18,
+    textAlign: 'left',
+  },
+  TopCardTitleStatus: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 42,
     marginHorizontal: 18,
     textAlign: 'left',
   },
@@ -41,8 +50,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '500',
     fontSize: 18,
-    marginVertical: 20,
+    marginTop: 30,
+    marginBottom: 20,
     marginHorizontal: 18,
+    // position: 'absolute',
+    // bottom: 10,
   },
   TopCardImage: {
     resizeMode: 'cover',
@@ -237,6 +249,12 @@ const styles = StyleSheet.create({
   },
   Hour: {
     color: LightText,
+  },
+  Loading: {
+    width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 50,
   },
 })
 

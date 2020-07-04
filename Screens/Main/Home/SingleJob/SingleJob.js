@@ -122,7 +122,8 @@ function SingleJob({ route, store, navigation }) {
               scrollEventThrottle={16}
               horizontal={true}
               onScroll={(e) => check(e)}
-              ref={Scroll}>
+              ref={Scroll}
+              showsHorizontalScrollIndicator={false}>
               <Description />
               <Rules />
               <Tranining />

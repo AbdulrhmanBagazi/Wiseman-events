@@ -88,7 +88,7 @@ function SignIn({ navigation, store }) {
       })
       .then(async (response) => {
         if (response.status === 200) {
-          await store.setData(response.data.user)
+          await store.setData(response.data)
           await store.setToken(response.data.token)
 
           setTimeout(() => {

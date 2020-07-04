@@ -5,10 +5,15 @@ import { UserTokenStore } from './AsyncStorage'
 class Store {
   Language = null
   data = []
+  banner = []
+  section = []
+  fewevents = []
   token = null
 
-  setData = async (userData) => {
-    this.data = userData
+  setData = async (Data) => {
+    this.data = Data.user
+    this.banner = Data.banner
+    this.section = Data.section
     return
   }
 
@@ -32,6 +37,9 @@ decorate(Store, {
   setData: action,
   token: observable,
   setToken: action,
+  banner: observable.ref,
+  section: observable.ref,
+  fewevents: observable.ref,
 })
 
 const store = new Store()

@@ -58,7 +58,7 @@ function Application(props) {
   }
 
   return (
-    <ScrollView style={styles.Container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.ContainerMain}>
         <Text style={styles.title}>{SingleJobStrings.ShiftSelect}</Text>
         <View style={styles.SelectView}>

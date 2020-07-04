@@ -5,6 +5,7 @@ import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenGet, UserTokenRemove } from '../../../Config/AsyncStorage'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function Splash({ store }) {
   const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
@@ -25,9 +26,9 @@ function Splash({ store }) {
             },
           })
           .then(async (response) => {
-            // console.log(response.data.user)
+            // console.log(response.data)
             if (response.status === 200) {
-              await store.setData(response.data.user)
+              await store.setData(response.data)
               await store.setToken(Token)
               // await UserTokenRemove()
 
@@ -77,7 +78,7 @@ function Splash({ store }) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <ActivityIndicator size="large" color="orange" />
+      <ActivityIndicator size="large" color={PrimaryColor} />
     </View>
   )
 }

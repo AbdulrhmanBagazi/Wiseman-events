@@ -100,7 +100,7 @@ function OTP({ store }) {
   }
 
   return (
-    <ScrollView style={styles.Scroll} keyboardShouldPersistTaps="always">
+    <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView
         keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 30}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}

@@ -6,33 +6,16 @@ import { PrimaryColor } from '../../../Config/ColorPalette'
 import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'https://i.ibb.co/72xDcxj/two.png',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-asdasd12312',
-    title: 'https://i.ibb.co/RyJHcdm/Rectangle.png',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'https://i.ibb.co/72xDcxj/two.png',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'https://i.ibb.co/RyJHcdm/Rectangle.png',
-  },
-]
-
 function JobCard(props) {
   return (
     <View style={styles.JobCard}>
       <View style={styles.space} />
       <View style={styles.Section}>
         <View style={styles.SectionTtitle}>
-          <Text style={styles.SectionTitle}>{I18nManager.isRTL ? 'وظائف فى الرياض' : 'Jobs at Riyadh'}</Text>
-          <Text style={styles.NumberOfJobs}>25{I18nManager.isRTL ? 'وظيفة' : 'Jobs'}</Text>
+          <Text style={styles.SectionTitle}>
+            {I18nManager.isRTL ? 'وظائف فى' + ' ' + props.TitleAr : 'Jobs at' + ' ' + props.Title}
+          </Text>
+          <Text style={styles.NumberOfJobs}>{I18nManager.isRTL ? 'وظيفة' : 'Jobs'}</Text>
         </View>
         <View style={styles.SectionMore}>
           <TouchableOpacity style={styles.SectionMore} onPress={props.More}>
@@ -46,7 +29,7 @@ function JobCard(props) {
         </View>
       </View>
       <FlatList
-        data={DATA}
+        data={props.data}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
