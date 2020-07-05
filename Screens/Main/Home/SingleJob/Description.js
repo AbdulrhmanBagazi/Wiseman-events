@@ -8,45 +8,26 @@ function Description(props) {
     <View style={styles.Pager}>
       {/* <Text style={styles.TitleSelect}>{SingleJobStrings.About}</Text> */}
       <View style={styles.TextSelectView}>
-        <Text style={styles.TextSelect}>
-          {I18nManager.isRTL
-            ? 'يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي يتبع له) ليتمكن من الإلتحاق بالكلية التي يرغب بها. يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي يتبع له) ليتمكن من الإلتحاق بالكلية التي يرغب بها. يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي يتبع له) ليتمكن من الإلتحاق بالكلية التي يرغب بها.'
-            : 'Tattooed cliche wayfarers jianbing letterpress jean shorts. Vice tumeric enamel pin lumbersexual lomo. Before they sold out pour-over affogato kogi vice, sustainable man bun aesthetic bushwick chicharrones selfies health goth williamsburg.'}
-        </Text>
+        <Text style={styles.TextSelect}>{props.Description}</Text>
       </View>
 
       <View style={styles.PointsView}>
         <Text style={styles.TitleSelect}>{SingleJobStrings.Responsibility}</Text>
-        {I18nManager.isRTL ? (
-          <View style={styles.TextPointsView}>
-            <Text style={styles.TextSelectPoint}>
-              {'\u2022' + ' '} يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي
-              يتبع له) ليتمكن من
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.TextPointsView}>
-            <Text style={styles.TextSelectPoint}>
-              {'\u2022' + ' '} Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
-            </Text>
-          </View>
-        )}
-        {I18nManager.isRTL ? (
-          <View style={styles.TextPointsView}>
-            <Text style={styles.TextSelectPoint}>
-              {'\u2022' + ' '} يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي
-              يتبع له) ليتمكن من يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي
-              يتبع له) ليتمكن من يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي
-              يتبع له) ليتمكن من
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.TextPointsView}>
-            <Text style={styles.TextSelectPoint}>
-              {'\u2022' + ' '} Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
-            </Text>
-          </View>
-        )}
+        {I18nManager.isRTL
+          ? props.Data.map((data, index) => {
+              return (
+                <View style={styles.TextPointsView} key={index}>
+                  <Text style={styles.TextSelectPoint}>{'\u2022' + ' ' + data}</Text>
+                </View>
+              )
+            })
+          : props.Data.map((data, index) => {
+              return (
+                <View style={styles.TextPointsView} key={index}>
+                  <Text style={styles.TextSelectPoint}>{'\u2022' + ' ' + data}</Text>
+                </View>
+              )
+            })}
       </View>
     </View>
   )

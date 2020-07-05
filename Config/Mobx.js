@@ -17,6 +17,12 @@ class Store {
     return
   }
 
+  setfewevents = async (Data) => {
+    this.fewevents = Data
+
+    return
+  }
+
   setToken = async (token) => {
     this.token = token
     await UserTokenStore(token)
@@ -40,6 +46,7 @@ decorate(Store, {
   banner: observable.ref,
   section: observable.ref,
   fewevents: observable.ref,
+  setfewevents: action,
 })
 
 const store = new Store()

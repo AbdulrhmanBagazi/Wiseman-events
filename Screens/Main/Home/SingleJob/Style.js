@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: SecondaryText,
-    textAlign: 'justify',
+    textAlign: 'left',
   },
   Rules: {
     backgroundColor: '#F8F8F9',

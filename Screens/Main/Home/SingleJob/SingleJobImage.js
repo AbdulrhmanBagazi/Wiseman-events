@@ -23,7 +23,7 @@ function SingleJobImage(props) {
         style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
       />
       <View style={styles.AllSingleJobLayer}>
-        <Text style={styles.SingleTitle}>WWE Event</Text>
+        <Text style={styles.SingleTitle}>{props.Name}</Text>
       </View>
     </View>
   )
