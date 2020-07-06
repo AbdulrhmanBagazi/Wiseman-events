@@ -6,14 +6,12 @@ class Store {
   Language = null
   data = []
   banner = []
-  section = []
   fewevents = []
   token = null
 
   setData = async (Data) => {
     this.data = Data.user
     this.banner = Data.banner
-    this.section = Data.section
     return
   }
 
@@ -44,7 +42,6 @@ decorate(Store, {
   token: observable,
   setToken: action,
   banner: observable.ref,
-  section: observable.ref,
   fewevents: observable.ref,
   setfewevents: action,
 })

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Animated,
   ActivityIndicator,
+  Linking,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import styles from './Style'
@@ -30,19 +31,18 @@ function SingleJob({ route, store, navigation }) {
   //   console.log(item)
 
   React.useEffect(() => {
-    if (isLoading) {
-      var Dpoints = I18nManager.isRTL ? item.DescriptionPointsAr : item.DescriptionPoints
-      var Rpoints = I18nManager.isRTL ? item.RulesPointsAr : item.RulesPoints
-      var Tpoints = I18nManager.isRTL ? item.TrainingPointsAr : item.TrainingPoints
-      var D = Dpoints.split(',')
-      var R = Rpoints.split(',')
-      var T = Tpoints.split(',')
+    var Dpoints = I18nManager.isRTL ? item.DescriptionPointsAr : item.DescriptionPoints
+    var Rpoints = I18nManager.isRTL ? item.RulesPointsAr : item.RulesPoints
+    var Tpoints = I18nManager.isRTL ? item.TrainingPointsAr : item.TrainingPoints
+    var D = Dpoints.split(',')
+    var R = Rpoints.split(',')
+    var T = Tpoints.split(',')
 
-      setPoints({ D: D, R: R, T: T })
+    setPoints({ D: D, R: R, T: T })
 
-      setLoading(false)
-    }
-  })
+    setLoading(false)
+    return
+  }, [])
 
   const check = async (event) => {
     const xOffset = event.nativeEvent.contentOffset.x + 10
@@ -83,7 +83,7 @@ function SingleJob({ route, store, navigation }) {
         <View style={styles.TitleImage}>
           <SingleJobImage
             source={{
-              uri: 'https://i.ibb.co/RyJHcdm/Rectangle.png',
+              uri: item.ImageURL,
             }}
             Name={I18nManager.isRTL ? item.NameAr : item.Name}
           />
@@ -94,12 +94,14 @@ function SingleJob({ route, store, navigation }) {
             <Text style={{ color: '#000' }}>{item.Date}</Text>
           </Text>
           <Text style={styles.SingleJobDetailsTitle}>{I18nManager.isRTL ? item.TitleAr : item.Title}</Text>
-          <View style={styles.SingleJobDetailsLocationView}>
+          <TouchableOpacity
+            style={styles.SingleJobDetailsLocationView}
+            onPress={() => Linking.openURL(item.LocationURL)}>
             <Icon name="map-pin" size={14} color="#000" />
             <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
               {I18nManager.isRTL ? item.LocationAr : item.Location}
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.SingleJobDetailsDataView}>
             <View style={styles.DataSections}>
               <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
@@ -164,7 +166,7 @@ function SingleJob({ route, store, navigation }) {
         </View>
       </ScrollView>
       <View style={styles.ButtonView}>
-        <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Application')}>
+        <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Application', { item })}>
           <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
         </TouchableOpacity>
       </View>

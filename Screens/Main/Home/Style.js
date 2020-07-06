@@ -256,6 +256,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 50,
   },
+  error: {
+    textAlign: 'center',
+    color: '#E8505B',
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 15,
+  },
 })
 
 export default styles

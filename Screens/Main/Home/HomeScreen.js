@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, SectionLis
 import { inject, observer } from 'mobx-react'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { PrimaryColor } from '../../../Config/ColorPalette'
+import { HomePageStrings } from '../../../Config/Strings'
 import { URL } from '../../../Config/Config'
 import { AuthContext } from '../../../Hooks/Context'
 import styles from './Style'
@@ -11,59 +12,64 @@ import JobCard from './JobCard'
 import axios from 'axios'
 
 function Home({ store, navigation }) {
-  const { signOut } = React.useContext(AuthContext)
   const [isLoading, setLoading] = React.useState(true)
+  const [isError, setError] = React.useState(true)
 
   React.useEffect(() => {
-    if (isLoading) {
-      axios
-        .get(URL + '/user/mainPageJobs', {
-          headers: {
-            Authorization: store.token,
-          },
-        })
-        .then(async (response) => {
-          // console.log(response)
-          if (response.status === 200) {
-            if (response.data.check === 'success') {
-              await store.setfewevents(response.data.data)
-              setTimeout(() => {
-                setLoading(false)
-              }, 2000)
-              return
-            } else if (response.data.check === 'fail') {
-              return
-            }
+    axios
+      .get(URL + '/user/mainPageJobs', {
+        headers: {
+          Authorization: store.token,
+        },
+      })
+      .then(async (response) => {
+        if (response.status === 200) {
+          if (response.data.check === 'success') {
+            await store.setfewevents(response.data.data)
+            setLoading(false)
+            return
+          } else if (response.data.check === 'fail') {
+            setError(false)
+            return
           }
-        })
-        .catch(async (error) => {
-          console.log(error)
-        })
-    }
+        }
+      })
+      .catch(async (error) => {
+        // console.log(error)
+        setError(false)
+
+        return
+      })
+
     return
-  })
+  }, [])
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <TopCard Data={store.banner} />
 
-        {isLoading ? (
+        {!isError ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
+            <Text style={styles.error}>{HomePageStrings.Error}</Text>
+          </View>
+        ) : isLoading ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
             <ActivityIndicator size="small" color={PrimaryColor} />
           </View>
         ) : (
-          store.section.map((data) => {
+          store.fewevents.map((data) => {
             return (
               <JobCard
                 click={navigation.navigate}
-                More={() => navigation.navigate('AllJobs')}
+                More={navigation.navigate}
+                ID={data.id}
                 key={data.id}
                 Title={data.Title}
                 TitleAr={data.TitleAr}
-                fewdata={store.fewdata}
+                Total={data.Total}
+                data={data.events}
                 Loading={store.feweventsloading}
-                data={store.fewevents}
                 FadeIn={isLoading}
               />
             )

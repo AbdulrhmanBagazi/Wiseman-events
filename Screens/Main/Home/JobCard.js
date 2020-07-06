@@ -5,8 +5,7 @@ import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
-
-function JobCard(props, { navigation }) {
+function JobCard(props) {
   const [isFade, setFade] = React.useState(true)
   const [Fade] = React.useState(new Animated.Value(0))
 
@@ -32,10 +31,14 @@ function JobCard(props, { navigation }) {
           <Text style={styles.SectionTitle}>
             {I18nManager.isRTL ? 'وظائف فى' + ' ' + props.TitleAr : 'Jobs at' + ' ' + props.Title}
           </Text>
-          <Text style={styles.NumberOfJobs}>{I18nManager.isRTL ? 'وظيفة' : 'Jobs'}</Text>
+          <Text style={styles.NumberOfJobs}>
+            {I18nManager.isRTL ? 'وظيفة ' + props.Total : 'Jobs  ' + props.Total}
+          </Text>
         </View>
         <View style={styles.SectionMore}>
-          <TouchableOpacity style={styles.SectionMore} onPress={props.More}>
+          <TouchableOpacity
+            style={styles.SectionMore}
+            onPress={() => props.More('AllJobs', { id: props.ID })}>
             <Text style={styles.JobsMore}>{I18nManager.isRTL ? 'المزيد' : 'More'}</Text>
             <Icon
               name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}

@@ -7,11 +7,12 @@ import ModalApplication from './ModalApplication'
 
 const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity)
 
-function Application(props) {
+function Application({ route }) {
   const [First] = React.useState(new Animated.Value(0))
   const [Second] = React.useState(new Animated.Value(0))
   const [Third] = React.useState(new Animated.Value(0))
   const [isShow, setShow] = React.useState(false)
+  const { item } = route.params
 
   const FirstColor = First.interpolate({
     inputRange: [0, 100],
@@ -63,21 +64,29 @@ function Application(props) {
         <Text style={styles.title}>{SingleJobStrings.ShiftSelect}</Text>
         <View style={styles.SelectView}>
           <View style={styles.ShiftView}>
-            <AnimatedButton
-              onPress={() => SelectShift(1)}
-              style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
-              <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>1st Shift</Animated.Text>
-            </AnimatedButton>
-            <AnimatedButton
-              onPress={() => SelectShift(2)}
-              style={[styles.ShiftButton, { borderColor: SecondDarkColor, backgroundColor: SecondColor }]}>
-              <Animated.Text style={[styles.shift, { color: SecondDarkColor }]}>2nd Shift</Animated.Text>
-            </AnimatedButton>
-            <AnimatedButton
-              onPress={() => SelectShift(3)}
-              style={[styles.ShiftButton, { borderColor: ThirdDarkColor, backgroundColor: ThirdColor }]}>
-              <Animated.Text style={[styles.shift, { color: ThirdDarkColor }]}>3rd Shift</Animated.Text>
-            </AnimatedButton>
+            {item.Shifts >= 1 ? (
+              <AnimatedButton
+                onPress={() => SelectShift(1)}
+                style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
+                <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>1st Shift</Animated.Text>
+              </AnimatedButton>
+            ) : null}
+
+            {item.Shifts >= 2 ? (
+              <AnimatedButton
+                onPress={() => SelectShift(2)}
+                style={[styles.ShiftButton, { borderColor: SecondDarkColor, backgroundColor: SecondColor }]}>
+                <Animated.Text style={[styles.shift, { color: SecondDarkColor }]}>2nd Shift</Animated.Text>
+              </AnimatedButton>
+            ) : null}
+
+            {item.Shifts >= 3 ? (
+              <AnimatedButton
+                onPress={() => SelectShift(3)}
+                style={[styles.ShiftButton, { borderColor: ThirdDarkColor, backgroundColor: ThirdColor }]}>
+                <Animated.Text style={[styles.shift, { color: ThirdDarkColor }]}>3rd Shift</Animated.Text>
+              </AnimatedButton>
+            ) : null}
           </View>
 
           <Text style={styles.TimeandA}>
@@ -113,7 +122,7 @@ function Application(props) {
         </View>
 
         <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
-          <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
+          <Text style={styles.ButtonText}>{SingleJobStrings.Apply}</Text>
         </TouchableOpacity>
       </View>
 

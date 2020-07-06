@@ -158,6 +158,11 @@ const SingleJobStrings = {
     ? 'تم تقديم طلبك إلى العميل. سوف تحصل على إشعار لمزيد من المعلومات. شكرا.'
     : 'Your request has been submitted to the customer. You will get a notification for more information. Thank you.',
   Done: I18nManager.isRTL ? 'تم' : 'Done',
+  Apply: I18nManager.isRTL ? 'تقديم' : 'Apply',
+}
+
+const HomePageStrings = {
+  Error: I18nManager.isRTL ? 'حدث خطأ أثناء تحميل المهام!' : 'An error occurred while loading jobs!',
 }
 
 export {
@@ -171,4 +176,5 @@ export {
   NotificationStrings,
   ErrorsStrings,
   SingleJobStrings,
+  HomePageStrings,
 }
