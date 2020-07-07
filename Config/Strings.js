@@ -9,13 +9,6 @@ const SignInStrings = {
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
   Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
-  status: I18nManager.isRTL ? 'الحالة' : 'Job status',
-  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
-  Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
-  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
-  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
-  Support: I18nManager.isRTL ? 'الدعم' : 'Support',
-  Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
 }
 
 const HeaderTitles = {
@@ -36,6 +29,13 @@ const HeaderTitles = {
   NotificationSettings: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
   LanguageSettings: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
   Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
+  status: I18nManager.isRTL ? 'الحالة' : 'Job status',
+  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
+  Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
+  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
+  Support: I18nManager.isRTL ? 'الدعم' : 'Support',
+  Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
 }
 
 const LanguageChangeStrings = {
@@ -193,6 +193,30 @@ const SettingsPageStrings = {
   Logout: I18nManager.isRTL ? 'تسجيل خروج' : 'Logout',
 }
 
+const LevelsPageStrings = {
+  Title: I18nManager.isRTL ? 'كيف تعمل المستويات؟' : 'How do Levels work?',
+  About: I18nManager.isRTL
+    ? 'للحصول على المستوى وتصبح موظفًا أعلى ، تحتاج إلى الحفاظ على معايير معينة لكل مستوى ، للترقية على المستوى التالي. سيؤدي ذلك إلى زيادة فرصتك في الحصول على مزيد من الوظائف.'
+    : 'To gain the level and become a top employee you need to maintain certain criteria for each level, to upgrade on next level. This will increase your chance to be hired on more job.',
+  LevelText: I18nManager.isRTL
+    ? 'ستحصل على المستوى الأول عند التسجيل.'
+    : 'You will get level one when you register.',
+}
+
+const SupportPageStrings = {
+  Title: I18nManager.isRTL ? 'الدعم' : 'Help & Support',
+  About: I18nManager.isRTL
+    ? 'أخبرنا بمشكلتك ، وسوف نتصل بك في أقرب وقت ممكن. نحن دائما سعداء للمساعدة.'
+    : 'Tell us your problem, we will contact you as soon as possible. We are always happy to help.',
+  Message: I18nManager.isRTL ? 'رسالة' : 'Message',
+  PlaceHolder: I18nManager.isRTL ? 'أخبرنا عن مشكلتك ...' : 'Tell us about your problem...',
+  Send: I18nManager.isRTL ? 'إرسال' : 'Send',
+  Done: I18nManager.isRTL ? 'تم' : 'Ok',
+  ModalAbout: I18nManager.isRTL
+    ? 'وصلتنا شكواك. سنعود إليك قريبًا ، شكرًا.'
+    : 'We got your complaint. We will come back to you very soon, thank you for your patients.',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -207,4 +231,6 @@ export {
   HomePageStrings,
   ProfilePageStrings,
   SettingsPageStrings,
+  LevelsPageStrings,
+  SupportPageStrings,
 }
