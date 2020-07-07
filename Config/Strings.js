@@ -9,6 +9,13 @@ const SignInStrings = {
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
   Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
+  status: I18nManager.isRTL ? 'الحالة' : 'Job status',
+  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
+  Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
+  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
+  Support: I18nManager.isRTL ? 'الدعم' : 'Support',
+  Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
 }
 
 const HeaderTitles = {
@@ -26,6 +33,9 @@ const HeaderTitles = {
   OTP: I18nManager.isRTL ? 'التحقق' : 'Verification',
   CreateProfile: I18nManager.isRTL ? 'إنشاء ملف تعريف' : 'Create Profile',
   Application: I18nManager.isRTL ? 'تقديم' : 'Apply',
+  NotificationSettings: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
+  LanguageSettings: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
+  Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
 }
 
 const LanguageChangeStrings = {
@@ -165,6 +175,24 @@ const HomePageStrings = {
   Error: I18nManager.isRTL ? 'حدث خطأ أثناء تحميل المهام!' : 'An error occurred while loading jobs!',
 }
 
+const ProfilePageStrings = {
+  status: I18nManager.isRTL ? 'الحالة' : 'Job status',
+  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
+  Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
+  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
+  Support: I18nManager.isRTL ? 'الدعم' : 'Support',
+}
+
+const SettingsPageStrings = {
+  Notifications: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
+  PrivacyPolicy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
+  Terms: I18nManager.isRTL ? 'أحكام وشروط' : 'Terms & Condition',
+  Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
+  Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
+  Logout: I18nManager.isRTL ? 'تسجيل خروج' : 'Logout',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -177,4 +205,6 @@ export {
   ErrorsStrings,
   SingleJobStrings,
   HomePageStrings,
+  ProfilePageStrings,
+  SettingsPageStrings,
 }

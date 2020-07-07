@@ -3,14 +3,15 @@ import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Im
 import Icon from '../../../Config/Icons'
 import styles from './Style'
 import { Rating } from 'react-native-ratings'
-import { FontAwesome5, Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons'
+import { ProfilePageStrings } from '../../../Config/Strings'
 
-function Profile() {
+function Profile({ navigation }) {
   return (
     <View style={styles.Container}>
       <View style={styles.header}>
         <SafeAreaView style={styles.safe}>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Settings')}>
             <Icon style={styles.icon} name="settings" size={25} color="black" />
           </TouchableOpacity>
           <View style={styles.Image}>
@@ -37,10 +38,10 @@ function Profile() {
             <Text style={styles.aboutT}>{I18nManager.isRTL ? 'معلومات الشخصية' : 'Profile information'}</Text>
           </View>
           <View style={styles.aboutB}>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Status')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'الحالة' : 'Job status'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.status}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
@@ -52,10 +53,10 @@ function Profile() {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Earnings')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'أرباح' : 'Earnings'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.Earnings}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
@@ -67,10 +68,10 @@ function Profile() {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Levels')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'مستوى' : 'Levels'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.Levels}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
@@ -84,10 +85,10 @@ function Profile() {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('IBAN')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.IBAN}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
@@ -98,10 +99,10 @@ function Profile() {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Invite')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'ادعو أصدقاء' : 'Invite friends'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.Invite}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
@@ -112,10 +113,10 @@ function Profile() {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftText}>{I18nManager.isRTL ? 'الدعم' : 'Support'}</Text>
+                <Text style={styles.leftText}>{ProfilePageStrings.Support}</Text>
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>

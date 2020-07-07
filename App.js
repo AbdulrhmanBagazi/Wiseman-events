@@ -33,6 +33,17 @@ import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Redirect/Splash/Splash'
 import SingleJob from './Screens/Main/Home/SingleJob/SingleJob'
 import Application from './Screens/Main/Home/Application/Application'
+//
+import Status from './Screens/Main/Profile/Status/Status'
+import Earnings from './Screens/Main/Profile/Earnings/Earnings'
+import Levels from './Screens/Main/Profile/Levels/Levels'
+import IBAN from './Screens/Main/Profile/IBAN/IBAN'
+import Invite from './Screens/Main/Profile/Invite/Invite'
+import Support from './Screens/Main/Profile/Support/Support'
+import Settings from './Screens/Main/Profile/Settings/Settings'
+//
+import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings'
+import Rateus from './Screens/Main/Profile/Settings/Rateus'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
@@ -139,6 +150,147 @@ const MainScreens = () => {
         }}
         name="LanguageChange"
         component={LanguageChange}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.status,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Status"
+        component={Status}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Earnings,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Earnings"
+        component={Earnings}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Levels,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Levels"
+        component={Levels}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.IBAN,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="IBAN"
+        component={IBAN}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Invite,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Invite"
+        component={Invite}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Support,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Support"
+        component={Support}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Settings,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Settings"
+        component={Settings}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.LanguageSettings,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="LanguageSettings"
+        component={LanguageSettings}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Rateus,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Rateus"
+        component={Rateus}
       />
     </MainStack.Navigator>
   )

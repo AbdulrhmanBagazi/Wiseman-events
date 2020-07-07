@@ -12,6 +12,7 @@ import {
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
+    alignItems: 'center',
   },
   ContainerMain: {
     flex: 1,
@@ -80,6 +81,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     textAlign: 'justify',
   },
+  ButtonView: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width,
+  },
   Button: {
     backgroundColor: PrimaryColor,
     flexDirection: 'row',
@@ -96,8 +103,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
-    alignSelf: 'center',
-    marginVertical: 50,
+    marginBottom: 30,
   },
   ButtonText: {
     color: '#fff',

@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#DFE0E3',
     width: width + 20,
+    alignItems: 'flex-start',
   },
   aboutT: {
     fontSize: 18,
