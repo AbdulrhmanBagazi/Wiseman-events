@@ -24,7 +24,7 @@ const HeaderTitles = {
   SingleJobs: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
   History: I18nManager.isRTL ? 'السجل' : 'Job History',
-  Notifications: I18nManager.isRTL ? 'إشعارات' : 'Notifications',
+  Notifications: I18nManager.isRTL ? 'التنبيهات' : 'Alerts',
   SignIn: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
   SignUp: I18nManager.isRTL ? 'إنشاء حساب' : 'Register',
   Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',

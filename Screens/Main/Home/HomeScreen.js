@@ -5,7 +5,6 @@ import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import { HomePageStrings } from '../../../Config/Strings'
 import { URL } from '../../../Config/Config'
-import { AuthContext } from '../../../Hooks/Context'
 import styles from './Style'
 import TopCard from './TopCard'
 import JobCard from './JobCard'
@@ -43,12 +42,10 @@ function Home({ store, navigation }) {
 
     return
   }, [])
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <TopCard Data={store.banner} />
-
         {!isError ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
             <Text style={styles.error}>{HomePageStrings.Error}</Text>

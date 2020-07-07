@@ -1,19 +1,39 @@
 import React from 'react'
-import { View, Text, ScrollView, Switch, TouchableOpacity, I18nManager, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, I18nManager, Alert, Linking } from 'react-native'
 import styles from './Style'
 import { SettingsPageStrings } from '../../../../Config/Strings'
+import { AuthContext } from '../../../../Hooks/Context'
+import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import { Entypo } from '@expo/vector-icons'
+import { inject, observer } from 'mobx-react'
+// import * as StoreReview from 'expo-store-review'
 
-function Settings({ navigation }) {
-  const [isEnabled, setIsEnabled] = React.useState(false)
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
+function Settings({ store, navigation }) {
+  const { signOut } = React.useContext(AuthContext)
+
+  // const Rate = async () => {
+  //   // StoreReview.requestReview()
+  //   var check = await StoreReview.isAvailableAsync()
+
+  //   console.log(check)
+  //   return
+  // }
+
+  const Logout = async () => {
+    await UserTokenRemove()
+    signOut()
+
+    return
+  }
 
   return (
     <ScrollView>
       <View style={styles.about}>
         <View style={styles.aboutE}></View>
         <View style={styles.aboutB}>
-          <View style={styles.aboutButton}>
+          <TouchableOpacity
+            style={styles.aboutButton}
+            onPress={() => navigation.navigate('NotificationSettings')}>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.Notifications}</Text>
@@ -21,17 +41,17 @@ function Settings({ navigation }) {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                <Switch
-                  trackColor={{ false: '#767577', true: '#AF0029' }}
-                  thumbColor={isEnabled ? '#FEF3F6' : '#f4f3f4'}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
+                <Entypo
+                  name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
+                  size={18}
+                  color="#C6C9CD"
                 />
               </View>
             </View>
-          </View>
-          <TouchableOpacity style={styles.aboutButton}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.aboutButton}
+            onPress={() => Linking.openURL('https://wisemanksa.com/')}>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.PrivacyPolicy}</Text>
@@ -40,7 +60,9 @@ function Settings({ navigation }) {
               <Entypo name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'} size={18} color="#C6C9CD" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.aboutButton}>
+          <TouchableOpacity
+            style={styles.aboutButton}
+            onPress={() => Linking.openURL('https://wisemanksa.com/')}>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.Terms}</Text>
@@ -61,7 +83,7 @@ function Settings({ navigation }) {
               <Entypo name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'} size={18} color="#C6C9CD" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Rateus')}>
+          {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Rateus')}>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.Rateus}</Text>
@@ -69,8 +91,25 @@ function Settings({ navigation }) {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
               <Entypo name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'} size={18} color="#C6C9CD" />
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.aboutButtonLog}>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            style={styles.aboutButtonLog}
+            onPress={() =>
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'هل أنت متأكد أنك تريد تسجيل الخروج؟'
+                  : 'Are you sure you want to Logout?',
+                [
+                  {
+                    text: I18nManager.isRTL ? 'لا' : 'No',
+                    style: 'cancel',
+                  },
+                  { text: I18nManager.isRTL ? 'نعم' : 'Yes', onPress: () => Logout() },
+                ],
+                { cancelable: false }
+              )
+            }>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftTextLog}>{SettingsPageStrings.Logout}</Text>
@@ -82,4 +121,4 @@ function Settings({ navigation }) {
   )
 }
 
-export default Settings
+export default inject('store')(observer(Settings))

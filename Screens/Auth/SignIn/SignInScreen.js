@@ -101,15 +101,17 @@ function SignIn({ navigation, store }) {
       })
       .catch((error) => {
         // console.log(error)
-        if (error.response.status) {
-          if (error.response.status === 401) {
-            setError(ErrorsStrings.LoginError)
-            setLoading(false)
-            return
-          } else {
-            setError(ErrorsStrings.ErrorOccurred)
-            setLoading(false)
-            return
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              setError(ErrorsStrings.LoginError)
+              setLoading(false)
+              return
+            } else {
+              setError(ErrorsStrings.ErrorOccurred)
+              setLoading(false)
+              return
+            }
           }
         } else {
           setError(ErrorsStrings.ErrorOccurred)

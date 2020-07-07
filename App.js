@@ -44,6 +44,7 @@ import Settings from './Screens/Main/Profile/Settings/Settings'
 //
 import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings'
 import Rateus from './Screens/Main/Profile/Settings/Rateus'
+import NotificationSettings from './Screens/Main/Profile/Settings/NotificationSettings'
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
@@ -276,6 +277,21 @@ const MainScreens = () => {
         }}
         name="LanguageSettings"
         component={LanguageSettings}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.NotificationSettings,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="NotificationSettings"
+        component={NotificationSettings}
       />
       <MainStack.Screen
         options={{
