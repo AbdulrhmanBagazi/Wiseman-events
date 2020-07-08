@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   Button: {
     backgroundColor: PrimaryColor,
     flexDirection: 'row',
-    width,
+    width: width - 20,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: PrimaryColor,
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     marginBottom: 30,
+    alignSelf: 'center',
   },
   ButtonText: {
     color: '#fff',
@@ -60,12 +61,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   TextInput: {
-    width,
+    width: width - 20,
     alignSelf: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#4C4F56',
-    marginHorizontal: 20,
+    marginHorizontal: 16,
     marginVertical: 16,
     padding: 5,
     height: 100,

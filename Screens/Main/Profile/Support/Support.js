@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native'
 import styles from './Style'
 import { SupportPageStrings } from '../../../../Config/Strings'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
@@ -15,7 +15,7 @@ function Support() {
   }
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <Text style={styles.Title}>{SupportPageStrings.Title}</Text>
         <Text style={styles.About}>{SupportPageStrings.About}</Text>

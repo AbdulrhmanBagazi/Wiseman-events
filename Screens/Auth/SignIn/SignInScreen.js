@@ -122,7 +122,7 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.Logo}></View>
         <Text style={styles.Title}>Welcome to App</Text>

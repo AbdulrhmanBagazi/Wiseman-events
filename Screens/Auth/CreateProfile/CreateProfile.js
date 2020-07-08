@@ -212,7 +212,7 @@ function CreateProfile({ store }) {
           <DateTimePicker
             style={styles.picker}
             testID="dateTimePicker"
-            value={date}
+            value={DateValue}
             mode="date"
             is24Hour={true}
             display="default"

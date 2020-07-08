@@ -217,6 +217,19 @@ const SupportPageStrings = {
     : 'We got your complaint. We will come back to you very soon, thank you for your patients.',
 }
 
+const IBANPageStrings = {
+  Title: I18nManager.isRTL ? 'معلومات IBAN' : 'IBAN Info',
+  About: I18nManager.isRTL
+    ? 'لم تقم بإضافة أي رقم IBAN حتى الآن. أضف حسابك البنكي لتتلقى دفعات مباشرة إلى حسابك.'
+    : "You haven't added any IBAN yet. Add your BANK account to get paid directly to your account.",
+  Button: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  IBAN: I18nManager.isRTL ? 'IBAN' : 'IBAN',
+  AccountName: I18nManager.isRTL ? 'اسم صاحب الحساب' : 'Name of the account holder',
+  Save: I18nManager.isRTL ? 'حفظ' : 'Save',
+  New: I18nManager.isRTL ? '+ تعديل IBAN' : '+Edit IBAN',
+  Cancel: I18nManager.isRTL ? 'إلغاء' : 'Cancel',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -233,4 +246,5 @@ export {
   SettingsPageStrings,
   LevelsPageStrings,
   SupportPageStrings,
+  IBANPageStrings,
 }

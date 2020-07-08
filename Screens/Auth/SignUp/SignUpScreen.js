@@ -146,7 +146,7 @@ function SignUp({ navigation }) {
   // }, [isRegister])
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.Logo} />
         <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>

@@ -28,7 +28,7 @@ function LanguageSettings({ navigation }) {
 
   return (
     <View style={styles.Container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.about}>
           <View style={styles.aboutE}>
             <Text style={styles.aboutT}>{I18nManager.isRTL ? 'اختيار اللغة' : 'Select Language'}</Text>

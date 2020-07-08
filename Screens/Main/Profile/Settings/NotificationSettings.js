@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, Switch, Modal, I18nManager, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, Switch, Modal, I18nManager, ActivityIndicator, Alert } from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import axios from 'axios'
@@ -39,12 +39,18 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabled((previousState) => !previousState)
+            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+              cancelable: false,
+            })
             setTimeout(() => {
               setShow(false)
             }, 2000)
             return
           } else {
             setIsEnabled((previousState) => !previousState)
+            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+              cancelable: false,
+            })
             setTimeout(() => {
               setShow(false)
             }, 2000)
@@ -55,6 +61,9 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabled((previousState) => !previousState)
+        Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+          cancelable: false,
+        })
         setTimeout(() => {
           setShow(false)
         }, 2000)
@@ -91,12 +100,18 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabledTwo((previousState) => !previousState)
+            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+              cancelable: false,
+            })
             setTimeout(() => {
               setShow(false)
             }, 2000)
             return
           } else {
             setIsEnabledTwo((previousState) => !previousState)
+            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+              cancelable: false,
+            })
             setTimeout(() => {
               setShow(false)
             }, 2000)
@@ -107,6 +122,9 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabledTwo((previousState) => !previousState)
+        Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+          cancelable: false,
+        })
         setTimeout(() => {
           setShow(false)
         }, 2000)
@@ -122,7 +140,7 @@ function NotificationSettings({ store }) {
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.about}>
         <View style={styles.aboutE}></View>
         <View style={styles.aboutB}>

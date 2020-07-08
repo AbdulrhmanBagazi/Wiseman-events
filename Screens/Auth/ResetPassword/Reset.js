@@ -118,7 +118,7 @@ function Reset({ navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />

@@ -109,7 +109,7 @@ function GetCode({ navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
         <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>

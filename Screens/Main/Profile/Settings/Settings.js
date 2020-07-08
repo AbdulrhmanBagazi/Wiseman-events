@@ -27,7 +27,7 @@ function Settings({ store, navigation }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.about}>
         <View style={styles.aboutE}></View>
         <View style={styles.aboutB}>

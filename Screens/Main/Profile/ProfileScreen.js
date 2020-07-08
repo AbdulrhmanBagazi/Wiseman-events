@@ -24,7 +24,10 @@ function Profile({ navigation }) {
           {I18nManager.isRTL ? 'عبدالرحمن سعيد باقاري' : 'Abdulrhman saeed bagazi'}
         </Text>
         <Text style={styles.balance}>
-          {I18nManager.isRTL ? 'رصيد:' : 'Balance: '} <Text style={{ color: 'black' }}> 2000/sar</Text>
+          {I18nManager.isRTL ? 'رصيد:' : 'Balance:'}{' '}
+          <Text style={{ color: 'black' }}>
+            2000<Text style={styles.balance}>sar</Text>
+          </Text>
         </Text>
       </View>
       <View style={styles.rating}>
@@ -32,7 +35,7 @@ function Profile({ navigation }) {
         <Text style={styles.ratingText}>4.7</Text>
         <Text style={styles.ratingTextNumber}>(12)</Text>
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.about}>
           <View style={styles.aboutE}>
             <Text style={styles.aboutT}>{I18nManager.isRTL ? 'معلومات الشخصية' : 'Profile information'}</Text>

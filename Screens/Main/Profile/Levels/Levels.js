@@ -4,7 +4,7 @@ import styles from './Style'
 import { LevelsPageStrings } from '../../../../Config/Strings'
 function Levels() {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <Text style={styles.Title}>{LevelsPageStrings.Title}</Text>
         <Text style={styles.About}>{LevelsPageStrings.About}</Text>
