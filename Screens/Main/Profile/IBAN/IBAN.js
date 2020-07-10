@@ -22,7 +22,14 @@ import { width } from '../../../../Config/Layout'
 function IBAN({ store }) {
   const [one] = React.useState(new Animated.Value(0))
   const [two] = React.useState(new Animated.Value(0))
+  const [Match] = React.useState(new Animated.Value(0))
+  const [Show, setShow] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
 
+  const MatchColor = Match.interpolate({
+    inputRange: [0, 100],
+    outputRange: ['#E8505B', '#25AC71'],
+  })
   const IBANColor = one.interpolate({
     inputRange: [0, 100],
     outputRange: ['#4C4F56', '#E8505B'],
@@ -34,11 +41,10 @@ function IBAN({ store }) {
   })
 
   const [Data, setData] = React.useState({
-    IBAN: '',
-    AcountName: '',
+    IBAN: 'SA3805000068201182178000',
+    ReIBAN: '',
+    AcountName: 'عبدالرحمن سعيد باقازي',
   })
-  const [Show, setShow] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
 
   const IBAMInput = (val) => {
     setData({
@@ -54,8 +60,38 @@ function IBAN({ store }) {
     })
   }
 
+  const ReIBANInput = (val) => {
+    setData({
+      ...Data,
+      ReIBAN: val.trim(),
+    })
+    if (Data.IBAN === val) {
+      Animated.timing(Match, {
+        toValue: 100,
+        duration: 500,
+      }).start()
+    } else {
+      Animated.timing(Match, {
+        toValue: 0,
+        duration: 500,
+      }).start()
+    }
+  }
+
   const Add = async () => {
     if (Data.IBAN.length < 24 || Data.IBAN.length > 24) {
+      Animated.timing(one, {
+        toValue: 100,
+        duration: 500,
+      }).start()
+    } else {
+      Animated.timing(one, {
+        toValue: 0,
+        duration: 500,
+      }).start()
+    }
+
+    if (Data.IBAN !== Data.ReIBAN) {
       Animated.timing(one, {
         toValue: 100,
         duration: 500,
@@ -79,7 +115,7 @@ function IBAN({ store }) {
       }).start()
     }
 
-    if (Data.IBAN.length === 24 && Data.AcountName.length > 1) {
+    if (Data.IBAN.length === 24 && Data.AcountName.length > 1 && Data.IBAN === Data.ReIBAN) {
       setLoading(true)
       axios
         .post(
@@ -172,8 +208,34 @@ function IBAN({ store }) {
                 placeholder={IBANPageStrings.IBAN}
                 style={styles.input}
                 onChangeText={(text) => IBAMInput(text)}
+                value={Data.IBAN}
               />
             </Animated.View>
+
+            <Animated.View
+              style={{
+                backgroundColor: '#fff',
+                height: 45,
+                width: width - 20,
+                borderColor: IBANColor,
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 5,
+                marginBottom: 10,
+                justifyContent: 'center',
+                alignSelf: 'center',
+              }}>
+              <TextInput
+                contextMenuHidden={true}
+                placeholder={IBANPageStrings.RepeatIBAN}
+                style={styles.input}
+                onChangeText={(text) => ReIBANInput(text)}
+                value={Data.ReIBAN}
+              />
+            </Animated.View>
+            <View style={styles.CheckMatch}>
+              <Animated.Text style={{ color: MatchColor }}>{IBANPageStrings.Match}</Animated.Text>
+            </View>
 
             <Animated.View
               style={{
@@ -192,6 +254,7 @@ function IBAN({ store }) {
                 placeholder={IBANPageStrings.AccountName}
                 style={styles.input}
                 onChangeText={(text) => AcountNameInput(text)}
+                value={Data.AcountName}
               />
             </Animated.View>
 
@@ -232,8 +295,33 @@ function IBAN({ store }) {
               placeholder={IBANPageStrings.IBAN}
               style={styles.input}
               onChangeText={(text) => IBAMInput(text)}
+              value={Data.IBAN}
             />
           </Animated.View>
+          <Animated.View
+            style={{
+              backgroundColor: '#fff',
+              height: 45,
+              width: width - 20,
+              borderColor: IBANColor,
+              borderWidth: 1,
+              borderRadius: 5,
+              padding: 5,
+              marginBottom: 10,
+              justifyContent: 'center',
+              alignSelf: 'center',
+            }}>
+            <TextInput
+              contextMenuHidden={true}
+              placeholder={IBANPageStrings.RepeatIBAN}
+              style={styles.input}
+              onChangeText={(text) => ReIBANInput(text)}
+              value={Data.ReIBAN}
+            />
+          </Animated.View>
+          <View style={styles.CheckMatch}>
+            <Animated.Text style={{ color: MatchColor }}>{IBANPageStrings.Match}</Animated.Text>
+          </View>
 
           <Animated.View
             style={{
@@ -247,12 +335,12 @@ function IBAN({ store }) {
               marginBottom: 10,
               justifyContent: 'center',
               alignSelf: 'center',
-              marginTop: 10,
             }}>
             <TextInput
               placeholder={IBANPageStrings.AccountName}
               style={styles.input}
               onChangeText={(text) => AcountNameInput(text)}
+              value={Data.AcountName}
             />
           </Animated.View>
 

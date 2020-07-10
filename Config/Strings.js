@@ -55,6 +55,11 @@ const Register = {
   HaveAccount: I18nManager.isRTL ? 'لديك حساب؟' : 'Already have an account?',
   Log: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
   Match: I18nManager.isRTL ? 'تتطابق كلمتا المرور' : 'Both passwords match',
+  Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
+  Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
+  Iagreeto: I18nManager.isRTL
+    ? 'تحقق هنا للإشارة إلى أنك قرأت ووافقت على'
+    : 'Check here to indicate that you have read and agree to',
 }
 
 const ResetPasswordString = {
@@ -224,10 +229,12 @@ const IBANPageStrings = {
     : "You haven't added any IBAN yet. Add your BANK account to get paid directly to your account.",
   Button: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
   IBAN: I18nManager.isRTL ? 'IBAN' : 'IBAN',
+  RepeatIBAN: I18nManager.isRTL ? 'كرر IBAN' : 'Repeat IBAN',
   AccountName: I18nManager.isRTL ? 'اسم صاحب الحساب' : 'Name of the account holder',
   Save: I18nManager.isRTL ? 'حفظ' : 'Save',
   New: I18nManager.isRTL ? '+ تعديل IBAN' : '+Edit IBAN',
   Cancel: I18nManager.isRTL ? 'إلغاء' : 'Cancel',
+  Match: I18nManager.isRTL ? 'تتطابق' : 'Matched',
 }
 
 export {

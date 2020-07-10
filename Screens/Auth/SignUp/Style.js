@@ -96,6 +96,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
   },
+  Terms: {
+    width,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  and: {
+    color: SecondaryText,
+  },
 })
 
 export default styles

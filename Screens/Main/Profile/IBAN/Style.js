@@ -138,6 +138,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  CheckMatch: {
+    width,
+    justifyContent: 'flex-start',
+    marginBottom: 15,
+    flexDirection: 'row',
+    marginHorizontal: 16,
+  },
 })
 
 export default styles

@@ -29,8 +29,9 @@ function NotificationSettings({ store }) {
         // console.log(response.data)
         if (response.status === 200) {
           if (response.data === 'success') {
-            // store.setNotification(!isEnabled)
             if (store.data.notification.allow) {
+              store.data.notification.allow = !isEnabled
+            } else if (!store.data.notification.allow) {
               store.data.notification.allow = !isEnabled
             }
             setTimeout(() => {
@@ -90,8 +91,9 @@ function NotificationSettings({ store }) {
         // console.log(response.data)
         if (response.status === 200) {
           if (response.data === 'success') {
-            // store.setNotification(!isEnabled)
             if (store.data.notification.alerts) {
+              store.data.notification.alerts = !isEnabledTwo
+            } else if (!store.data.notification.alerts) {
               store.data.notification.alerts = !isEnabledTwo
             }
             setTimeout(() => {
@@ -133,7 +135,7 @@ function NotificationSettings({ store }) {
   }
 
   React.useEffect(() => {
-    if (store.data.notification.allow) {
+    if (store.data.notification) {
       setIsEnabled(store.data.notification.allow)
       setIsEnabledTwo(store.data.notification.alerts)
     }
@@ -167,7 +169,7 @@ function NotificationSettings({ store }) {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
               <Switch
                 trackColor={{ false: '#767577', true: '#AF0029' }}
-                thumbColor={isEnabled ? '#FEF3F6' : '#f4f3f4'}
+                thumbColor={isEnabledTwo ? '#FEF3F6' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitchTwo}
                 value={isEnabledTwo}

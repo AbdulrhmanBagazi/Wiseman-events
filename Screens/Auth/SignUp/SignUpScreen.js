@@ -4,10 +4,11 @@ import {
   Text,
   TextInput,
   ScrollView,
-  KeyboardAvoidingView,
+  Animated,
   TouchableOpacity,
   ActivityIndicator,
   Keyboard,
+  I18nManager,
 } from 'react-native'
 import styles from './Style'
 import { Register, ErrorsStrings } from '../../../Config/Strings'
@@ -18,6 +19,8 @@ import { URL } from '../../../Config/Config'
 import axios from 'axios'
 import store from '../../../Config/Mobx'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { Entypo } from '@expo/vector-icons'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
@@ -31,6 +34,38 @@ function SignUp({ navigation }) {
   })
   const [isCheck, setCheck] = React.useState('')
   const [isPhoneCheck, setPhoneCheck] = React.useState('')
+  const [isAgreeCheck, setAgreeCheck] = React.useState(false)
+  const [Agree] = React.useState(new Animated.Value(0))
+  const [AgreeText] = React.useState(new Animated.Value(0))
+  const AgreeColor = Agree.interpolate({
+    inputRange: [0, 100],
+    outputRange: ['#F8F8F9', PrimaryColor],
+  })
+  const AgreeColorText = AgreeText.interpolate({
+    inputRange: [0, 100],
+    outputRange: ['#E8505B', '#25AC71'],
+  })
+
+  const AgreeHandler = async () => {
+    Animated.parallel([
+      Animated.timing(Agree, {
+        toValue: !isAgreeCheck === false ? 0 : 100,
+        duration: 500,
+      }),
+      Animated.timing(AgreeText, {
+        toValue: !isAgreeCheck === false ? 0 : 100,
+        duration: 500,
+      }),
+    ]).start()
+
+    if (isAgreeCheck === true) {
+      setAgreeCheck(false)
+    } else {
+      setAgreeCheck(true)
+    }
+
+    return
+  }
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
@@ -102,7 +137,8 @@ function SignUp({ navigation }) {
     if (
       val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
       isCheck === 'Success' &&
-      isPhoneCheck === 'Success'
+      isPhoneCheck === 'Success' &&
+      isAgreeCheck === true
     ) {
       axios
         .post(URL + '/user/signup', {
@@ -146,7 +182,7 @@ function SignUp({ navigation }) {
   // }, [isRegister])
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <View style={styles.Logo} />
         <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
@@ -172,6 +208,38 @@ function SignUp({ navigation }) {
           Check={isCheck}
           PasswordValue={data.Password}
         />
+
+        <View style={styles.Terms}>
+          <View>
+            <TouchableOpacity onPress={() => AgreeHandler()}>
+              <Animated.View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  flexDirection: 'row',
+                  alignSelf: 'flex-start',
+                  padding: 2,
+                  borderRadius: 2,
+                  borderWidth: 1,
+                  // borderColor: AgreeColor,
+                  backgroundColor: AgreeColor,
+                  marginHorizontal: 5,
+                }}>
+                <Entypo name="check" size={14} color="#F8F8F9" />
+              </Animated.View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1, textAlign: 'left' }}>
+            <Text>{Register.Iagreeto}</Text>
+            <TouchableOpacity>
+              <Animated.Text style={{ color: AgreeColorText }}>{Register.Terms}</Animated.Text>
+            </TouchableOpacity>
+            <Text style={styles.and}> & </Text>
+            <TouchableOpacity>
+              <Animated.Text style={{ color: AgreeColorText }}>{Register.Privacy}</Animated.Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
           {isLoading ? (
