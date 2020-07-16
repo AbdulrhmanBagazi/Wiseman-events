@@ -111,6 +111,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginHorizontal: 15,
   },
+  rightTextNull: {
+    fontWeight: '500',
+    fontSize: 16,
+    marginHorizontal: 15,
+    color: '#E8505B',
+  },
   leftText: {
     fontWeight: '500',
     fontSize: 16,

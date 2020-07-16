@@ -41,9 +41,9 @@ function IBAN({ store }) {
   })
 
   const [Data, setData] = React.useState({
-    IBAN: 'SA3805000068201182178000',
+    IBAN: '',
     ReIBAN: '',
-    AcountName: 'عبدالرحمن سعيد باقازي',
+    AcountName: '',
   })
 
   const IBAMInput = (val) => {
@@ -173,6 +173,15 @@ function IBAN({ store }) {
       return
     }
   }
+
+  React.useEffect(() => {
+    if (store.data.iban !== null) {
+      setData({
+        IBAN: store.data.iban.IBAN,
+        AcountName: store.data.iban.AccountName,
+      })
+    }
+  }, [])
 
   // console.log(store.data)
 

@@ -181,12 +181,13 @@ const HomePageStrings = {
 }
 
 const ProfilePageStrings = {
-  status: I18nManager.isRTL ? 'الحالة' : 'Job status',
+  status: I18nManager.isRTL ? 'الحالة' : 'Status',
   Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
   IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
   Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
+  notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
 }
 
 const SettingsPageStrings = {
@@ -237,6 +238,15 @@ const IBANPageStrings = {
   Match: I18nManager.isRTL ? 'تتطابق' : 'Matched',
 }
 
+const StatusPageStrings = {
+  Status: I18nManager.isRTL ? 'حالة المرشح' : 'Candidate status',
+  notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
+  Cancel: I18nManager.isRTL ? 'إلغاء' : 'Cancel',
+  New: I18nManager.isRTL ? '+ تعديل الحالة' : '+Edit Status',
+  Save: I18nManager.isRTL ? 'حفظ' : 'Save',
+  Done: I18nManager.isRTL ? 'تم' : 'Done',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -254,4 +264,5 @@ export {
   LevelsPageStrings,
   SupportPageStrings,
   IBANPageStrings,
+  StatusPageStrings,
 }

@@ -5,8 +5,9 @@ import styles from './Style'
 import { Rating } from 'react-native-ratings'
 import { Entypo } from '@expo/vector-icons'
 import { ProfilePageStrings } from '../../../Config/Strings'
+import { inject, observer } from 'mobx-react'
 
-function Profile({ navigation }) {
+function Profile({ store, navigation }) {
   return (
     <View style={styles.Container}>
       <View style={styles.header}>
@@ -21,7 +22,7 @@ function Profile({ navigation }) {
       </View>
       <View style={styles.info}>
         <Text style={styles.name} numberOfLines={2}>
-          {I18nManager.isRTL ? 'عبدالرحمن سعيد باقاري' : 'Abdulrhman saeed bagazi'}
+          {store.data.profile.name}
         </Text>
         <Text style={styles.balance}>
           {I18nManager.isRTL ? 'رصيد:' : 'Balance:'}{' '}
@@ -48,7 +49,11 @@ function Profile({ navigation }) {
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                <Text style={styles.rightText}>Employed</Text>
+                {store.data.status === null ? (
+                  <Text style={styles.rightTextNull}>{ProfilePageStrings.notspecifiedyet}</Text>
+                ) : (
+                  <Text style={styles.rightText}>2</Text>
+                )}
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -137,4 +142,4 @@ function Profile({ navigation }) {
   )
 }
 
-export default Profile
+export default inject('store')(observer(Profile))

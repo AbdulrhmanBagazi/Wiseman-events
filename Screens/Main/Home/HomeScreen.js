@@ -13,7 +13,6 @@ import axios from 'axios'
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
   const [isError, setError] = React.useState(true)
-
   React.useEffect(() => {
     axios
       .get(URL + '/user/mainPageJobs', {

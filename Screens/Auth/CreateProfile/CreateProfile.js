@@ -105,24 +105,40 @@ function CreateProfile({ store }) {
   }
 
   //modal date picker
+  // var year = await moment(currentDate).format('YYYY')
+  // var month = await moment(currentDate).format('M')
+  // var day = await moment(currentDate).format('D')
+  // getAge(new Date(year, month, day))
   const onChange = async (event, selectedDate) => {
     const currentDate = selectedDate || date
-
-    // var year = await moment(currentDate).format('YYYY')
-    // var month = await moment(currentDate).format('M')
-    // var day = await moment(currentDate).format('D')
-    // getAge(new Date(year, month, day))
-
     var MomentDate = await moment(currentDate).format('YYYY/MM/DD')
 
-    setShow(Platform.OS === 'ios')
-    setDate(true)
-    setDateValue(currentDate)
-    setData({
-      ...data,
-      Birth: currentDate.toString(),
-      BirthText: MomentDate.toString(),
-    })
+    if (Platform.OS === 'ios') {
+      setShow(Platform.OS === 'ios')
+      setDate(true)
+      setDateValue(currentDate)
+      setData({
+        ...data,
+        Birth: currentDate.toString(),
+        BirthText: MomentDate.toString(),
+      })
+    } else {
+      if (event.type === 'dismissed') {
+        setShow(false)
+        setShowModal(false)
+      } else if (event.type === 'set') {
+        setShow(false)
+        setShowModal(false)
+        setShow(Platform.OS === 'ios')
+        setDate(true)
+        setDateValue(currentDate)
+        setData({
+          ...data,
+          Birth: currentDate.toString(),
+          BirthText: MomentDate.toString(),
+        })
+      }
+    }
 
     return
   }
@@ -146,9 +162,18 @@ function CreateProfile({ store }) {
     }
   }
 
-  const ClosePicker = () => {
+  const ClosePicker = async () => {
+    const currentDate = DateValue
+    var MomentDate = await moment(currentDate).format('YYYY/MM/DD')
     setShow(false)
     setShowModal(false)
+    setDate(true)
+    setDateValue(currentDate)
+    setData({
+      ...data,
+      Birth: currentDate.toString(),
+      BirthText: MomentDate.toString(),
+    })
   }
 
   //Country
@@ -177,7 +202,7 @@ function CreateProfile({ store }) {
   // })
 
   return (
-    <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/profileinformation.png')} />
@@ -289,6 +314,8 @@ function CreateProfile({ store }) {
           )}
         </TouchableOpacity>
       </View>
+
+      <View style={{ height: 25 }}></View>
     </KeyboardAwareScrollView>
   )
 }
