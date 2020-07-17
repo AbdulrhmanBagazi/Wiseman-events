@@ -1,18 +1,179 @@
 import React from 'react'
-import { View, Text, ScrollView, I18nManager, TouchableOpacity, Modal, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  I18nManager,
+  TouchableOpacity,
+  Modal,
+  ActivityIndicator,
+  Alert,
+} from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { StatusPageStrings } from '../../../../Config/Strings'
 import { width } from '../../../../Config/Layout'
 import StatusPicker from './StatusPicker'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
+import { URL } from '../../../../Config/Config'
+import axios from 'axios'
 
 function Status({ store }) {
   const [Show, setShow] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
+  const [TimeStart, setTimeStart] = React.useState(null)
+  const [TimeEnd, setTimeEnd] = React.useState(null)
+
+  const [Day, setDay] = React.useState({
+    Start: null,
+    End: null,
+  })
+  const [Stat, setStat] = React.useState(null)
+  const SetStatus = async () => {
+    setLoading(true)
+    if (Stat === 'Full-Time') {
+      axios
+        .post(
+          URL + '/user/AddUpdateStatus',
+          {
+            status: Stat,
+            time: null,
+            days: null,
+          },
+          {
+            headers: {
+              Authorization: store.token,
+            },
+          }
+        )
+        .then(async (response) => {
+          if (response.status === 200) {
+            if (response.data.check === 'success') {
+              if (response.data.status[0] === 1) {
+                store.data.status = {
+                  status: Stat,
+                  time: null,
+                  days: null,
+                }
+              } else {
+                store.data.status = response.data.status
+              }
+              setTimeout(() => {
+                setLoading(false)
+                setShow(false)
+              }, 2000)
+              return
+            } else if (response.data.check === 'fail') {
+              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+                cancelable: false,
+              })
+              setTimeout(() => {
+                setLoading(false)
+              }, 2000)
+              return
+            } else {
+              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+                cancelable: false,
+              })
+              setTimeout(() => {
+                setLoading(false)
+              }, 2000)
+
+              return
+            }
+          }
+        })
+        .catch(async (error) => {
+          Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+            cancelable: false,
+          })
+          setTimeout(() => {
+            setLoading(false)
+          }, 2000)
+
+          return
+        })
+    } else if (Day.Start === null || Day.End === null || TimeStart === null || TimeEnd === null) {
+      Alert.alert('', I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'All fields required!', [{ text: 'OK' }], {
+        cancelable: false,
+      })
+      setLoading(false)
+
+      return
+    } else if (
+      Stat !== null &&
+      Day.Start !== null &&
+      Day.End !== null &&
+      TimeStart !== null &&
+      TimeEnd !== null
+    ) {
+      axios
+        .post(
+          URL + '/user/AddUpdateStatus',
+          {
+            status: Stat,
+            time: TimeStart + ' - ' + TimeEnd,
+            days: Day.Start + ' - ' + Day.End,
+          },
+          {
+            headers: {
+              Authorization: store.token,
+            },
+          }
+        )
+        .then(async (response) => {
+          if (response.status === 200) {
+            if (response.data.check === 'success') {
+              if (response.data.status[0] === 1) {
+                store.data.status = {
+                  status: Stat,
+                  time: TimeStart + ' - ' + TimeEnd,
+                  days: Day.Start + ' - ' + Day.End,
+                }
+              } else {
+                store.data.status = response.data.status
+              }
+              setTimeout(() => {
+                setLoading(false)
+                setShow(false)
+              }, 2000)
+              return
+            } else if (response.data.check === 'fail') {
+              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+                cancelable: false,
+              })
+              setTimeout(() => {
+                setLoading(false)
+              }, 2000)
+              return
+            } else {
+              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+                cancelable: false,
+              })
+              setTimeout(() => {
+                setLoading(false)
+              }, 2000)
+
+              return
+            }
+          }
+        })
+        .catch(async (error) => {
+          Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
+            cancelable: false,
+          })
+          setTimeout(() => {
+            setLoading(false)
+          }, 2000)
+
+          return
+        })
+      return
+    }
+  }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View
         style={{
           flexDirection: 'row',
@@ -33,7 +194,14 @@ function Status({ store }) {
       <View style={styles.Container}>
         {Show ? (
           <View style={styles.View}>
-            <StatusPicker />
+            <StatusPicker
+              onValueChangeStat={(value) => setStat(value)}
+              onValueChangeDayFrom={(value) => setDay({ ...Day, Start: value })}
+              onValueChangeDayTo={(value) => setDay({ ...Day, End: value })}
+              getTimeStart={setTimeStart}
+              getTimeEnd={setTimeEnd}
+              ShowMore={Stat === null || Stat === 'Full-Time' ? false : true}
+            />
           </View>
         ) : (
           <View style={styles.View}>
@@ -41,10 +209,36 @@ function Status({ store }) {
               <View style={{ flex: 0.5, alignItems: 'flex-start', justifyContent: 'center' }}>
                 <Text style={styles.ViewText}>{I18nManager.isRTL ? 'الحالة' : 'Status'}</Text>
               </View>
-              <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'right', color: '#E8505B' }}>
-                  {store.data.status === null ? StatusPageStrings.notspecifiedyet : ''}
-                </Text>
+              <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+                {I18nManager.isRTL ? (
+                  <Text
+                    style={{
+                      textAlign: 'right',
+                      fontSize: 16,
+                      fontWeight: '500',
+                      color: store.data.status === null ? '#E8505B' : '#000',
+                    }}>
+                    {store.data.status === null
+                      ? StatusPageStrings.notspecifiedyet
+                      : store.data.status.status === 'Full-Time'
+                      ? 'متفرغ'
+                      : store.data.status.status === 'Student'
+                      ? 'طالب'
+                      : 'موظف'}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: 'right',
+                      fontSize: 16,
+                      fontWeight: '500',
+                      color: store.data.status === null ? '#E8505B' : '#000',
+                    }}>
+                    {store.data.status === null
+                      ? StatusPageStrings.notspecifiedyet
+                      : store.data.status.status}
+                  </Text>
+                )}
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -52,8 +246,14 @@ function Status({ store }) {
                 <Text style={styles.ViewText}>{I18nManager.isRTL ? 'أيام العمل' : 'Work days'}</Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'right', color: '#E8505B' }}>
-                  {store.data.status === null ? '' : ''}
+                <Text
+                  style={{
+                    textAlign: 'right',
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: store.data.status === null ? '#E8505B' : '#000',
+                  }}>
+                  {store.data.status === null ? '' : store.data.status.days}
                 </Text>
               </View>
             </View>
@@ -62,8 +262,14 @@ function Status({ store }) {
                 <Text style={styles.ViewText}>{I18nManager.isRTL ? 'وقت العمل' : 'Work time'}</Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'right', color: '#E8505B' }}>
-                  {store.data.status === null ? '' : ''}
+                <Text
+                  style={{
+                    textAlign: 'right',
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: store.data.status === null ? '#E8505B' : '#000',
+                  }}>
+                  {store.data.status === null ? '' : store.data.status.time}
                 </Text>
               </View>
             </View>
@@ -71,7 +277,7 @@ function Status({ store }) {
         )}
 
         {Show ? (
-          <TouchableOpacity style={styles.ButtonAdd} onPress={() => setLoading(true)}>
+          <TouchableOpacity style={styles.ButtonAdd} onPress={() => SetStatus()}>
             <Text style={styles.ButtonText}>{StatusPageStrings.Save}</Text>
           </TouchableOpacity>
         ) : (

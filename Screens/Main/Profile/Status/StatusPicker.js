@@ -59,7 +59,7 @@ const Stat = I18nManager.isRTL
       { label: 'Employed', value: 'Employed' },
     ]
 
-function StatusPicker() {
+function StatusPicker(props) {
   const [show, setShow] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [DateValue] = React.useState(new Date())
@@ -143,11 +143,14 @@ function StatusPicker() {
       var Time = await moment(TimeFrom).format('hh:mm a')
       setTimeFrom(TimeFrom)
       setFrom(Time)
+      props.getTimeStart(Time)
       return
     } else {
       var Time = await moment(TimeTo).format('hh:mm a')
       setTimeTo(TimeTo)
       setTo(Time)
+      props.getTimeEnd(Time)
+
       return
     }
   }
@@ -172,7 +175,7 @@ function StatusPicker() {
           <Text style={styles.ViewTextPickerFirst}>{I18nManager.isRTL ? 'الحالة' : 'Status'}</Text>
         </View>
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
+          onValueChange={props.onValueChangeStat}
           style={{
             ...pickerSelectStyles,
           }}
@@ -184,155 +187,160 @@ function StatusPicker() {
           Icon={() => null}
         />
       </View>
-      <View
-        style={{
-          width,
-          marginVertical: 5,
-        }}>
-        <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'أيام العمل' : 'Work days'}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomWidth: 1,
-              borderColor: '#868991',
-              marginHorizontal: 16,
-            }}>
-            <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
+
+      {props.ShowMore === false ? null : (
+        <View
+          style={{
+            width,
+            marginVertical: 5,
+          }}>
+          <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
+            <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'أيام العمل' : 'Work days'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View
               style={{
-                ...pickerSelectStyles,
-              }}
-              placeholder={{
-                label: I18nManager.isRTL ? 'من...' : 'From...',
-                value: null,
-              }}
-              items={Days}
-              Icon={() => null}
-            />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomWidth: 1,
-              borderColor: '#868991',
-              marginHorizontal: 16,
-            }}>
-            <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              style={{
-                ...pickerSelectStyles,
-              }}
-              placeholder={{
-                label: I18nManager.isRTL ? 'إلى...' : 'To...',
-                value: null,
-              }}
-              items={Days}
-              Icon={() => null}
-            />
-          </View>
-        </View>
-      </View>
-
-      <View
-        style={{
-          width,
-          marginVertical: 5,
-        }}>
-        <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'وقت العمل' : 'Work time'}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOS}>
-              <Text
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomWidth: 1,
+                borderColor: '#868991',
+                marginHorizontal: 16,
+              }}>
+              <RNPickerSelect
+                onValueChange={props.onValueChangeDayFrom}
                 style={{
-                  fontWeight: '600',
-                  fontSize: 16,
-                  color: From === '' ? '#c7c7cd' : PrimaryColor,
-                }}>
-                {From !== '' ? From : I18nManager.isRTL ? 'من...' : 'From...'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOSTWO}>
-              <Text
-                style={{
-                  fontWeight: '600',
-                  fontSize: 16,
-                  color: To === '' ? '#c7c7cd' : PrimaryColor,
-                }}>
-                {To !== '' ? To : I18nManager.isRTL ? 'إلى...' : 'To...'}
-              </Text>
-              {/* {Platform.OS === 'ios' ? null : <FontAwesome name="caret-down" size={15} color="#747474" />} */}
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {!showModal && show === true ? (
-          Check === 1 ? (
-            <DateTimePicker
-              style={styles.picker}
-              testID="dateTimePicker"
-              value={TimeFrom}
-              mode="time"
-              is24Hour={false}
-              display="default"
-              onChange={onChange}
-            />
-          ) : Check === 2 ? (
-            <DateTimePicker
-              style={styles.picker}
-              testID="dateTimePicker"
-              value={TimeTo}
-              mode="time"
-              is24Hour={false}
-              display="default"
-              onChange={onChange}
-            />
-          ) : null
-        ) : show === true ? (
-          <Modal animationType="fade" transparent={true} visible={show}>
-            <View style={styles.Modal}>
-              <View style={styles.modalContainer}>
-                {Check === 1 ? (
-                  <DateTimePicker
-                    style={styles.picker}
-                    testID="dateTimePicker"
-                    value={TimeFrom}
-                    mode="time"
-                    is24Hour={false}
-                    display="default"
-                    onChange={onChange}
-                  />
-                ) : (
-                  <DateTimePicker
-                    style={styles.picker}
-                    testID="dateTimePicker"
-                    value={TimeTo}
-                    mode="time"
-                    is24Hour={false}
-                    display="default"
-                    onChange={onChange}
-                  />
-                )}
-
-                <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
-                  <Text style={styles.ButtonText}>{StatusPageStrings.Done}</Text>
-                </TouchableOpacity>
-              </View>
+                  ...pickerSelectStyles,
+                }}
+                placeholder={{
+                  label: I18nManager.isRTL ? 'من...' : 'From...',
+                  value: null,
+                }}
+                items={Days}
+                Icon={() => null}
+              />
             </View>
-          </Modal>
-        ) : null}
-      </View>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomWidth: 1,
+                borderColor: '#868991',
+                marginHorizontal: 16,
+              }}>
+              <RNPickerSelect
+                onValueChange={props.onValueChangeDayTo}
+                style={{
+                  ...pickerSelectStyles,
+                }}
+                placeholder={{
+                  label: I18nManager.isRTL ? 'إلى...' : 'To...',
+                  value: null,
+                }}
+                items={Days}
+                Icon={() => null}
+              />
+            </View>
+          </View>
+        </View>
+      )}
+
+      {props.ShowMore === false ? null : (
+        <View
+          style={{
+            width,
+            marginVertical: 5,
+          }}>
+          <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
+            <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'وقت العمل' : 'Work time'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOS}>
+                <Text
+                  style={{
+                    fontWeight: '600',
+                    fontSize: 16,
+                    color: From === '' ? '#c7c7cd' : PrimaryColor,
+                  }}>
+                  {From !== '' ? From : I18nManager.isRTL ? 'من...' : 'From...'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOSTWO}>
+                <Text
+                  style={{
+                    fontWeight: '600',
+                    fontSize: 16,
+                    color: To === '' ? '#c7c7cd' : PrimaryColor,
+                  }}>
+                  {To !== '' ? To : I18nManager.isRTL ? 'إلى...' : 'To...'}
+                </Text>
+                {/* {Platform.OS === 'ios' ? null : <FontAwesome name="caret-down" size={15} color="#747474" />} */}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {!showModal && show === true ? (
+            Check === 1 ? (
+              <DateTimePicker
+                style={styles.picker}
+                testID="dateTimePicker"
+                value={TimeFrom}
+                mode="time"
+                is24Hour={false}
+                display="default"
+                onChange={onChange}
+              />
+            ) : Check === 2 ? (
+              <DateTimePicker
+                style={styles.picker}
+                testID="dateTimePicker"
+                value={TimeTo}
+                mode="time"
+                is24Hour={false}
+                display="default"
+                onChange={onChange}
+              />
+            ) : null
+          ) : show === true ? (
+            <Modal animationType="fade" transparent={true} visible={show}>
+              <View style={styles.Modal}>
+                <View style={styles.modalContainer}>
+                  {Check === 1 ? (
+                    <DateTimePicker
+                      style={styles.picker}
+                      testID="dateTimePicker"
+                      value={TimeFrom}
+                      mode="time"
+                      is24Hour={false}
+                      display="default"
+                      onChange={onChange}
+                    />
+                  ) : (
+                    <DateTimePicker
+                      style={styles.picker}
+                      testID="dateTimePicker"
+                      value={TimeTo}
+                      mode="time"
+                      is24Hour={false}
+                      display="default"
+                      onChange={onChange}
+                    />
+                  )}
+
+                  <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
+                    <Text style={styles.ButtonText}>{StatusPageStrings.Done}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          ) : null}
+        </View>
+      )}
     </View>
   )
 }
