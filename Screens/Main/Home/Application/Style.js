@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     padding: 10,
-    marginHorizontal: 9,
+    marginHorizontal: 8,
     marginVertical: 10,
   },
   SelectViewPoints: {
@@ -163,6 +163,12 @@ const styles = StyleSheet.create({
   tinyLogo: {
     height: height / 8,
     resizeMode: 'contain',
+  },
+  LoadingModal: {
+    backgroundColor: 'rgba(	15	,20	,50, 0.5)',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 

@@ -174,6 +174,7 @@ const SingleJobStrings = {
     : 'Your request has been submitted to the customer. You will get a notification for more information. Thank you.',
   Done: I18nManager.isRTL ? 'تم' : 'Done',
   Apply: I18nManager.isRTL ? 'تقديم' : 'Apply',
+  Full: I18nManager.isRTL ? 'مكتمل' : 'Full',
 }
 
 const HomePageStrings = {

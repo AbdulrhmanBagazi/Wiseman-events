@@ -64,40 +64,50 @@ function Status({ store }) {
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
-              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-                cancelable: false,
-              })
-              setTimeout(() => {
-                setLoading(false)
-              }, 2000)
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
               return
             } else {
-              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-                cancelable: false,
-              })
-              setTimeout(() => {
-                setLoading(false)
-              }, 2000)
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
 
               return
             }
           }
         })
         .catch(async (error) => {
-          Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-            cancelable: false,
-          })
-          setTimeout(() => {
-            setLoading(false)
-          }, 2000)
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
 
           return
         })
     } else if (Day.Start === null || Day.End === null || TimeStart === null || TimeEnd === null) {
-      Alert.alert('', I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'All fields required!', [{ text: 'OK' }], {
-        cancelable: false,
-      })
-      setLoading(false)
+      Alert.alert(
+        '',
+        I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'All fields required!',
+        [{ text: 'OK', onPress: () => setLoading(false) }],
+        {
+          cancelable: false,
+        }
+      )
 
       return
     } else if (
@@ -139,32 +149,38 @@ function Status({ store }) {
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
-              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-                cancelable: false,
-              })
-              setTimeout(() => {
-                setLoading(false)
-              }, 2000)
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
               return
             } else {
-              Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-                cancelable: false,
-              })
-              setTimeout(() => {
-                setLoading(false)
-              }, 2000)
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
 
               return
             }
           }
         })
         .catch(async (error) => {
-          Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-            cancelable: false,
-          })
-          setTimeout(() => {
-            setLoading(false)
-          }, 2000)
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
 
           return
         })

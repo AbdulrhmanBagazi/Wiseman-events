@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, TouchableOpacity, I18nManager } from 'react-native'
+import { View, Animated, TouchableOpacity, I18nManager } from 'react-native'
 import styles from './Style'
 import { PrimaryColor, SecondaryColor } from '../../../../Config/ColorPalette'
 
@@ -49,15 +49,25 @@ function AnimatedButton(props) {
   }, [props.Shift])
 
   return (
-    <AnimatedTouchableOpacity
-      onPress={props.onPress}
-      style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
-      <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>
-        {I18nManager.isRTL ? 'الوردية' + ' ' : null}
-        {I18nManager.isRTL ? ArabicNumbers[props.itemIndex] : EnglishNumbers[props.itemIndex]}
-        {I18nManager.isRTL ? null : ' ' + 'Shift'}
-      </Animated.Text>
-    </AnimatedTouchableOpacity>
+    <View>
+      {!props.Disabled ? (
+        <AnimatedTouchableOpacity
+          disabled={true}
+          style={[styles.ShiftButton, { borderColor: '#cccccc', backgroundColor: '#cccccc' }]}>
+          <Animated.Text style={[styles.shift, { color: '#666666' }]}>{props.FullText}</Animated.Text>
+        </AnimatedTouchableOpacity>
+      ) : (
+        <AnimatedTouchableOpacity
+          onPress={props.onPress}
+          style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
+          <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>
+            {I18nManager.isRTL ? 'الوردية' + ' ' : null}
+            {I18nManager.isRTL ? ArabicNumbers[props.itemIndex] : EnglishNumbers[props.itemIndex]}
+            {I18nManager.isRTL ? null : ' ' + 'Shift'}
+          </Animated.Text>
+        </AnimatedTouchableOpacity>
+      )}
+    </View>
   )
 }
 

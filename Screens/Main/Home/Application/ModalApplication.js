@@ -13,7 +13,7 @@ function ModalApplication(props) {
           <Text style={styles.Title}>{SingleJobStrings.successful}</Text>
           <Text style={styles.Slogan}>{SingleJobStrings.submitted}</Text>
 
-          <TouchableOpacity style={styles.ModalButton}>
+          <TouchableOpacity style={styles.ModalButton} onPress={props.onPress}>
             <Text style={styles.ButtonText}>{SingleJobStrings.Done}</Text>
           </TouchableOpacity>
         </View>

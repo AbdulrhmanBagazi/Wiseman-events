@@ -40,21 +40,27 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabled((previousState) => !previousState)
-            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-              cancelable: false,
-            })
-            setTimeout(() => {
-              setShow(false)
-            }, 2000)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setShow(false) }],
+              {
+                cancelable: false,
+              }
+            )
             return
           } else {
             setIsEnabled((previousState) => !previousState)
-            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-              cancelable: false,
-            })
-            setTimeout(() => {
-              setShow(false)
-            }, 2000)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setShow(false) }],
+              {
+                cancelable: false,
+              }
+            )
             return
           }
         }
@@ -62,12 +68,15 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabled((previousState) => !previousState)
-        Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-          cancelable: false,
-        })
-        setTimeout(() => {
-          setShow(false)
-        }, 2000)
+
+        Alert.alert(
+          '',
+          I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+          [{ text: 'OK', onPress: () => setShow(false) }],
+          {
+            cancelable: false,
+          }
+        )
         return
       })
   }
@@ -102,21 +111,27 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabledTwo((previousState) => !previousState)
-            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-              cancelable: false,
-            })
-            setTimeout(() => {
-              setShow(false)
-            }, 2000)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setShow(false) }],
+              {
+                cancelable: false,
+              }
+            )
             return
           } else {
             setIsEnabledTwo((previousState) => !previousState)
-            Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-              cancelable: false,
-            })
-            setTimeout(() => {
-              setShow(false)
-            }, 2000)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setShow(false) }],
+              {
+                cancelable: false,
+              }
+            )
             return
           }
         }
@@ -124,12 +139,15 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabledTwo((previousState) => !previousState)
-        Alert.alert('', I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!', [{ text: 'OK' }], {
-          cancelable: false,
-        })
-        setTimeout(() => {
-          setShow(false)
-        }, 2000)
+
+        Alert.alert(
+          '',
+          I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+          [{ text: 'OK', onPress: () => setShow(false) }],
+          {
+            cancelable: false,
+          }
+        )
         return
       })
   }
