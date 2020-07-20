@@ -21,6 +21,7 @@ function Home({ store, navigation }) {
         },
       })
       .then(async (response) => {
+        // console.log(response)
         if (response.status === 200) {
           if (response.data.check === 'success') {
             await store.setfewevents(response.data.data)
@@ -33,7 +34,7 @@ function Home({ store, navigation }) {
         }
       })
       .catch(async (error) => {
-        // console.log(error)
+        // console.log(error.response)
         setError(false)
 
         return

@@ -1,61 +1,23 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, ScrollView, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import styles from './Style'
 import { SingleJobStrings } from '../../../../Config/Strings'
-import { PrimaryColor, SecondaryColor } from '../../../../Config/ColorPalette'
 import ModalApplication from './ModalApplication'
-
-const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity)
+import AnimatedButton from './AnimatedButton'
 
 function Application({ route }) {
-  const [First] = React.useState(new Animated.Value(0))
-  const [Second] = React.useState(new Animated.Value(0))
-  const [Third] = React.useState(new Animated.Value(0))
   const [isShow, setShow] = React.useState(false)
+  const [selectedShift, setselectedShift] = React.useState(null)
+  const [isTime, setTime] = React.useState(null)
+  const [isAttendance, setAttendance] = React.useState(null)
   const { item } = route.params
 
-  const FirstColor = First.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#fff', SecondaryColor],
-  })
-  const FirstDarkColor = First.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#ccc', PrimaryColor],
-  })
+  const Select = async (val) => {
+    setselectedShift(val)
+    setTime(item.eventshifts[val].time)
+    setAttendance(item.eventshifts[val].attendance)
 
-  const SecondColor = Second.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#fff', SecondaryColor],
-  })
-  const SecondDarkColor = Second.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#ccc', PrimaryColor],
-  })
-
-  const ThirdColor = Third.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#fff', SecondaryColor],
-  })
-  const ThirdDarkColor = Third.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#ccc', PrimaryColor],
-  })
-
-  const SelectShift = async (val) => {
-    Animated.parallel([
-      Animated.timing(First, {
-        toValue: val === 1 ? 100 : 0,
-        duration: 500,
-      }),
-      Animated.timing(Second, {
-        toValue: val === 2 ? 100 : 0,
-        duration: 500,
-      }),
-      Animated.timing(Third, {
-        toValue: val === 3 ? 100 : 0,
-        duration: 500,
-      }),
-    ]).start()
+    return
   }
 
   return (
@@ -65,42 +27,25 @@ function Application({ route }) {
           <Text style={styles.title}>{SingleJobStrings.ShiftSelect}</Text>
           <View style={styles.SelectView}>
             <View style={styles.ShiftView}>
-              {item.Shifts >= 1 ? (
-                <AnimatedButton
-                  onPress={() => SelectShift(1)}
-                  style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
-                  <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>1st Shift</Animated.Text>
-                </AnimatedButton>
-              ) : null}
-
-              {item.Shifts >= 2 ? (
-                <AnimatedButton
-                  onPress={() => SelectShift(2)}
-                  style={[
-                    styles.ShiftButton,
-                    { borderColor: SecondDarkColor, backgroundColor: SecondColor },
-                  ]}>
-                  <Animated.Text style={[styles.shift, { color: SecondDarkColor }]}>2nd Shift</Animated.Text>
-                </AnimatedButton>
-              ) : null}
-
-              {item.Shifts >= 3 ? (
-                <AnimatedButton
-                  onPress={() => SelectShift(3)}
-                  style={[styles.ShiftButton, { borderColor: ThirdDarkColor, backgroundColor: ThirdColor }]}>
-                  <Animated.Text style={[styles.shift, { color: ThirdDarkColor }]}>3rd Shift</Animated.Text>
-                </AnimatedButton>
-              ) : null}
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={item.eventshifts}
+                horizontal={true}
+                renderItem={({ item, index }) => (
+                  <AnimatedButton Shift={selectedShift} itemIndex={index} onPress={() => Select(index)} />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
             </View>
 
             <Text style={styles.TimeandA}>
-              {SingleJobStrings.ShiftTime} <Text style={{ color: 'black' }}>10am - 2pm</Text>
+              {SingleJobStrings.ShiftTime} <Text style={{ color: 'black' }}>{isTime}</Text>
             </Text>
             <Text style={styles.TimeandA}>
-              {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>9:30am</Text>
+              {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>{isAttendance}</Text>
             </Text>
           </View>
-          <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
+          {/* <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>
             <View style={styles.TextPointsView}>
               <Text style={styles.TextSelect}>
@@ -123,7 +68,7 @@ function Application({ route }) {
                 Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
 
         <ModalApplication ShowModal={isShow} />
