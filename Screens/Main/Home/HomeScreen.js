@@ -42,6 +42,7 @@ function Home({ store, navigation }) {
 
     return
   }, [])
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
