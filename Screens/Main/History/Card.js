@@ -36,24 +36,21 @@ function Card(props) {
               </View>
               <View style={styles.SingleJobDetailsDataView}>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.event.Employees}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.shift}</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.event.Shifts}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.time}</Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {item.eventshift.event.Salary}
-                    <Text style={styles.Hour}>{'/' + item.eventshift.event.SalaryType}</Text>
-                  </Text>
+                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Attendance}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.attendance}</Text>
                 </View>
               </View>
               <View style={styles.StatusView}>
                 <View style={styles.StatusBox}>
-                  <Text style={styles.StatuText}>Pendding</Text>
+                  <Text style={styles.StatuText}>{I18nManager.isRTL ? 'قيد الإنتظار' : 'Pending'}</Text>
                 </View>
               </View>
             </View>

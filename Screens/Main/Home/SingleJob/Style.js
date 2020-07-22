@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   SingleJobDetailsLocationView: {
     flexDirection: 'row',
-    marginHorizontal: 20,
+    marginHorizontal: 40,
     marginVertical: 20,
     textAlign: 'center',
   },

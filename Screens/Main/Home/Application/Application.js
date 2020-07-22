@@ -49,7 +49,7 @@ function Application({ route, store }) {
           if (response.data.check === 'exists') {
             Alert.alert(
               '',
-              I18nManager.isRTL ? '!' : '!',
+              I18nManager.isRTL ? 'لا يمكنك التقديم على نفس الوردية' : 'You cannot apply to the same shift',
               [{ text: 'OK', onPress: () => setLoading(false) }],
               {
                 cancelable: false,

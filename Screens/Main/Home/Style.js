@@ -263,6 +263,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 29,
     marginVertical: 15,
   },
+  soon: {
+    textAlign: 'center',
+    color: PrimaryColor,
+    fontSize: 16,
+    marginHorizontal: 29,
+    marginVertical: 15,
+  },
 })
 
 export default styles

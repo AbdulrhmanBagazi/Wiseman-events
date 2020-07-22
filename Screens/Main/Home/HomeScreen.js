@@ -13,6 +13,8 @@ import axios from 'axios'
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
   const [isError, setError] = React.useState(true)
+  const [isSoon, setSoon] = React.useState(false)
+
   React.useEffect(() => {
     axios
       .get(URL + '/user/mainPageJobs', {
@@ -21,9 +23,12 @@ function Home({ store, navigation }) {
         },
       })
       .then(async (response) => {
-        // console.log(response)
         if (response.status === 200) {
           if (response.data.check === 'success') {
+            if (response.data.data.length === 0) {
+              setError(false)
+              setSoon(true)
+            }
             await store.setfewevents(response.data.data)
             setLoading(false)
             return
@@ -49,7 +54,11 @@ function Home({ store, navigation }) {
         <TopCard Data={store.banner} />
         {!isError ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
-            <Text style={styles.error}>{HomePageStrings.Error}</Text>
+            {isSoon ? (
+              <Text style={styles.soon}>{HomePageStrings.Soon}</Text>
+            ) : (
+              <Text style={styles.error}>{HomePageStrings.Error}</Text>
+            )}
           </View>
         ) : isLoading ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>

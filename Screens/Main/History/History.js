@@ -10,7 +10,7 @@ const Data = []
 
 function History({ store }) {
   const Scroll = React.useRef(null)
-  const [isSelected, setSelected] = React.useState(4)
+  const [isSelected, setSelected] = React.useState(null)
 
   const check = async (event) => {
     const xOffset = event.nativeEvent.contentOffset.x + 10
@@ -20,7 +20,6 @@ function History({ store }) {
       return
     }
     if (currentPage !== isSelected) {
-      // console.log(currentPage)
       setSelected(currentPage)
       return
     }
@@ -48,7 +47,6 @@ function History({ store }) {
   React.useEffect(() => {
     ScrollTo(1)
   }, [])
-
   return (
     <View style={{ flex: 1 }}>
       <AnimatedTopTab

@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 10,
     marginVertical: 10,
+    alignItems: 'flex-start',
   },
   SingleJobDetailsSections: {
     fontWeight: '600',

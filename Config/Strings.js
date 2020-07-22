@@ -175,10 +175,14 @@ const SingleJobStrings = {
   Done: I18nManager.isRTL ? 'تم' : 'Done',
   Apply: I18nManager.isRTL ? 'تقديم' : 'Apply',
   Full: I18nManager.isRTL ? 'مكتمل' : 'Full',
+  Shift: I18nManager.isRTL ? 'الوردية' : 'Shift',
+  Attendance: I18nManager.isRTL ? 'الحضور' : 'Attendance',
+  Time: I18nManager.isRTL ? 'وقت الوردية' : 'Shift Time',
 }
 
 const HomePageStrings = {
   Error: I18nManager.isRTL ? 'حدث خطأ أثناء تحميل المهام!' : 'An error occurred while loading jobs!',
+  Soon: I18nManager.isRTL ? 'قريبا' : 'Coming soon',
 }
 
 const ProfilePageStrings = {

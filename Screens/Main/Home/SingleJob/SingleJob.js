@@ -101,6 +101,7 @@ function SingleJob({ route, store, navigation }) {
             <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
               {I18nManager.isRTL ? item.LocationAr : item.Location}
             </Text>
+            <Icon name="external-link" size={14} color={PrimaryColor} />
           </TouchableOpacity>
           <View style={styles.SingleJobDetailsDataView}>
             <View style={styles.DataSections}>

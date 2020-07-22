@@ -1,14 +1,14 @@
 import React from 'react'
-import { Animated, TouchableOpacity, View, Text } from 'react-native'
+import { Animated, TouchableOpacity, View, I18nManager } from 'react-native'
 import styles from './Style'
 import { PrimaryColor, SecondaryColor } from '../../../Config/ColorPalette'
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 function DisabledButton(props) {
-  const [First] = React.useState(new Animated.Value(0))
-  const [Second] = React.useState(new Animated.Value(0))
-  const [Third] = React.useState(new Animated.Value(0))
+  const [First] = React.useState(new Animated.Value(100))
+  const [Second] = React.useState(new Animated.Value(100))
+  const [Third] = React.useState(new Animated.Value(100))
 
   const FirstBorder = First.interpolate({
     inputRange: [0, 100],
@@ -59,20 +59,22 @@ function DisabledButton(props) {
       <AnimatedTouchableOpacity
         onPress={props.onPressOne}
         style={[styles.TouchableOpacityButton, { borderColor: FirstBorder }]}>
-        <Animated.Text style={[styles.TouchableOpacityText, { color: FirstTextColor }]}>Active</Animated.Text>
+        <Animated.Text style={[styles.TouchableOpacityText, { color: FirstTextColor }]}>
+          {I18nManager.isRTL ? 'نشطة' : 'Active'}
+        </Animated.Text>
       </AnimatedTouchableOpacity>
       <AnimatedTouchableOpacity
         onPress={props.onPressTwo}
         style={[styles.TouchableOpacityButton, { borderColor: SecondBorder }]}>
         <Animated.Text style={[styles.TouchableOpacityText, { color: SecondTextColor }]}>
-          Applied
+          {I18nManager.isRTL ? 'قيد الإنتظار' : 'Pending'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
       <AnimatedTouchableOpacity
         onPress={props.onPressThird}
         style={[styles.TouchableOpacityButton, { borderColor: ThirdBorder }]}>
         <Animated.Text style={[styles.TouchableOpacityText, { color: ThirdTextColor }]}>
-          Completed
+          {I18nManager.isRTL ? 'مكتملة' : 'Completed'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
     </View>
