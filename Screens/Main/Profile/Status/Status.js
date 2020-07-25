@@ -64,6 +64,8 @@ function Status({ store }) {
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
+              setLoading(false)
+
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -74,6 +76,8 @@ function Status({ store }) {
               )
               return
             } else {
+              setLoading(false)
+
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -88,6 +92,7 @@ function Status({ store }) {
           }
         })
         .catch(async (error) => {
+          setLoading(false)
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -100,6 +105,8 @@ function Status({ store }) {
           return
         })
     } else if (Day.Start === null || Day.End === null || TimeStart === null || TimeEnd === null) {
+      // console.log(Day.Start, Day.End, TimeStart, TimeEnd)
+      setLoading(false)
       Alert.alert(
         '',
         I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'All fields required!',
@@ -149,6 +156,7 @@ function Status({ store }) {
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
+              setLoading(false)
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -159,6 +167,7 @@ function Status({ store }) {
               )
               return
             } else {
+              setLoading(false)
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -173,6 +182,7 @@ function Status({ store }) {
           }
         })
         .catch(async (error) => {
+          setLoading(false)
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',

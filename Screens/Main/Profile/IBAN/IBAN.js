@@ -140,6 +140,8 @@ function IBAN({ store }) {
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
+              setLoading(false)
+
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -150,6 +152,8 @@ function IBAN({ store }) {
               )
               return
             } else {
+              setLoading(false)
+
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -164,6 +168,8 @@ function IBAN({ store }) {
           }
         })
         .catch(async (error) => {
+          setLoading(false)
+
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',

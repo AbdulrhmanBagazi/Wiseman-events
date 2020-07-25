@@ -47,6 +47,7 @@ function Application({ route, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'exists') {
+            setLoading(false)
             Alert.alert(
               '',
               I18nManager.isRTL ? 'لا يمكنك التقديم على نفس الوردية' : 'You cannot apply to the same shift',
@@ -62,6 +63,7 @@ function Application({ route, store }) {
             }, 1000)
             return
           } else if (response.data.check === 'fail') {
+            setLoading(false)
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -73,6 +75,7 @@ function Application({ route, store }) {
 
             return
           } else {
+            setLoading(false)
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -87,6 +90,7 @@ function Application({ route, store }) {
         }
       })
       .catch(async (error) => {
+        setLoading(false)
         Alert.alert(
           '',
           I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',

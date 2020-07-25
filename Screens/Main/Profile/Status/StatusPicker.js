@@ -68,7 +68,6 @@ function StatusPicker(props) {
   const [Check, setCheck] = React.useState(null)
   const [From, setFrom] = React.useState('')
   const [To, setTo] = React.useState('')
-  const [selectedValue, setSelectedValue] = React.useState('java')
 
   const showDatepickerIOS = () => {
     if (Platform.OS === 'ios') {
@@ -104,10 +103,14 @@ function StatusPicker(props) {
       if (Check === 1) {
         setTimeFrom(selectedTime)
         setFrom(Time)
+        props.getTimeStart(Time)
+
         return
       } else {
         setTimeTo(selectedTime)
         setTo(Time)
+        props.getTimeEnd(Time)
+
         return
       }
     } else {
@@ -123,11 +126,13 @@ function StatusPicker(props) {
         if (Check === 1) {
           setTimeFrom(selectedTime)
           setFrom(Time)
+          props.getTimeStart(Time)
 
           return
         } else {
           setTimeTo(selectedTime)
           setTo(Time)
+          props.getTimeEnd(Time)
 
           return
         }

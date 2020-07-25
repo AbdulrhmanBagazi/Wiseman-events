@@ -48,7 +48,6 @@ function CreateProfile({ store }) {
     Birth: '',
     BirthText: '',
   })
-
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
     setError(' ')
@@ -111,7 +110,7 @@ function CreateProfile({ store }) {
   // getAge(new Date(year, month, day))
   const onChange = async (event, selectedDate) => {
     const currentDate = selectedDate || date
-    var MomentDate = await moment(currentDate).format('YYYY/MM/DD')
+    var MomentDate = await moment(currentDate).format('YYYY-MM-DD')
 
     if (Platform.OS === 'ios') {
       setShow(Platform.OS === 'ios')
@@ -119,7 +118,7 @@ function CreateProfile({ store }) {
       setDateValue(currentDate)
       setData({
         ...data,
-        Birth: currentDate.toString(),
+        Birth: MomentDate.toString(),
         BirthText: MomentDate.toString(),
       })
     } else {
@@ -134,7 +133,7 @@ function CreateProfile({ store }) {
         setDateValue(currentDate)
         setData({
           ...data,
-          Birth: currentDate.toString(),
+          Birth: MomentDate.toString(),
           BirthText: MomentDate.toString(),
         })
       }
@@ -164,14 +163,14 @@ function CreateProfile({ store }) {
 
   const ClosePicker = async () => {
     const currentDate = DateValue
-    var MomentDate = await moment(currentDate).format('YYYY/MM/DD')
+    var MomentDate = await moment(currentDate).format('YYYY-MM-DD')
     setShow(false)
     setShowModal(false)
     setDate(true)
     setDateValue(currentDate)
     setData({
       ...data,
-      Birth: currentDate.toString(),
+      Birth: MomentDate.toString(),
       BirthText: MomentDate.toString(),
     })
   }

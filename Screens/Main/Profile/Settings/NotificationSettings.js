@@ -40,6 +40,7 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabled((previousState) => !previousState)
+            setShow(false)
 
             Alert.alert(
               '',
@@ -52,6 +53,7 @@ function NotificationSettings({ store }) {
             return
           } else {
             setIsEnabled((previousState) => !previousState)
+            setShow(false)
 
             Alert.alert(
               '',
@@ -68,6 +70,7 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabled((previousState) => !previousState)
+        setShow(false)
 
         Alert.alert(
           '',
@@ -111,6 +114,7 @@ function NotificationSettings({ store }) {
             return
           } else if (response.data === 'fail') {
             setIsEnabledTwo((previousState) => !previousState)
+            setShow(false)
 
             Alert.alert(
               '',
@@ -123,6 +127,7 @@ function NotificationSettings({ store }) {
             return
           } else {
             setIsEnabledTwo((previousState) => !previousState)
+            setShow(false)
 
             Alert.alert(
               '',
@@ -139,6 +144,7 @@ function NotificationSettings({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setIsEnabledTwo((previousState) => !previousState)
+        setShow(false)
 
         Alert.alert(
           '',
