@@ -8,6 +8,7 @@ import {
   Animated,
   ActivityIndicator,
   Linking,
+  Platform,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import styles from './Style'
@@ -127,26 +128,49 @@ function SingleJob({ route, store, navigation }) {
             </View>
           ) : (
             <View style={styles.Desctiption}>
-              <View style={styles.SelectView}>
-                <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(0)}>
-                  <Animated.Text
-                    style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
-                    {SingleJobStrings.Description}
-                  </Animated.Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(1)}>
-                  <Animated.Text
-                    style={[styles.SelectText, { color: isSelected === 1 ? PrimaryColor : '#000' }]}>
-                    {SingleJobStrings.Rules}
-                  </Animated.Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
-                  <Animated.Text
-                    style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
-                    {SingleJobStrings.Tranining}
-                  </Animated.Text>
-                </TouchableOpacity>
-              </View>
+              {I18nManager.isRTL && Platform.OS !== 'ios' ? (
+                <View style={styles.SelectView}>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(0)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Description}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(1)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 1 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Rules}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Tranining}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.SelectView}>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(0)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Description}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(1)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 1 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Rules}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
+                    <Animated.Text
+                      style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
+                      {SingleJobStrings.Tranining}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                </View>
+              )}
               <ScrollView
                 pagingEnabled={true}
                 scrollEventThrottle={16}

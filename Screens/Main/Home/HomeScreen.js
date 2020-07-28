@@ -9,13 +9,18 @@ import styles from './Style'
 import TopCard from './TopCard'
 import JobCard from './JobCard'
 import axios from 'axios'
+import RefreshButton from '../../Components/RefreshButton/RefreshButton'
 
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
   const [isError, setError] = React.useState(true)
   const [isSoon, setSoon] = React.useState(false)
+  const [isRefresh, setRefresh] = React.useState(false)
 
   React.useEffect(() => {
+    setLoading(true)
+    setError(true)
+    setSoon(false)
     axios
       .get(URL + '/user/mainPageJobs', {
         headers: {
@@ -28,9 +33,12 @@ function Home({ store, navigation }) {
             if (response.data.data.length === 0) {
               setError(false)
               setSoon(true)
+              setLoading(false)
+            } else {
+              await store.setfewevents(response.data.data)
+              setLoading(false)
             }
-            await store.setfewevents(response.data.data)
-            setLoading(false)
+
             return
           } else if (response.data.check === 'fail') {
             setError(false)
@@ -39,30 +47,36 @@ function Home({ store, navigation }) {
         }
       })
       .catch(async (error) => {
-        // console.log(error.response)
+        // console.log(error)
         setError(false)
 
         return
       })
 
     return
-  }, [])
+  }, [isRefresh])
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <TopCard Data={store.banner} />
-        {!isError ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
-            {isSoon ? (
-              <Text style={styles.soon}>{HomePageStrings.Soon}</Text>
-            ) : (
-              <Text style={styles.error}>{HomePageStrings.Error}</Text>
-            )}
-          </View>
-        ) : isLoading ? (
+        {isLoading ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
             <ActivityIndicator size="small" color={PrimaryColor} />
+          </View>
+        ) : !isError ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
+            {isSoon ? (
+              <View>
+                <Text style={styles.soon}>{HomePageStrings.Soon}</Text>
+                <RefreshButton onPress={() => setRefresh(!isRefresh)} />
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.error}>{HomePageStrings.Error}</Text>
+                <RefreshButton onPress={() => setRefresh(!isRefresh)} />
+              </View>
+            )}
           </View>
         ) : (
           store.fewevents.map((data) => {
