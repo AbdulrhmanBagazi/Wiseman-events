@@ -23,7 +23,7 @@ import { width, height } from '../../../../Config/Layout'
 
 function SingleJob({ route, store, navigation }) {
   const [isSelected, setSelected] = React.useState(0)
-  const [isPoints, setPoints] = React.useState(['asdas', 'asdas'])
+  const [isPoints, setPoints] = React.useState([])
   const [isLoading, setLoading] = React.useState(true)
 
   const Scroll = React.useRef(null)

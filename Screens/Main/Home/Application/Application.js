@@ -37,6 +37,7 @@ function Application({ route, store }) {
         URL + '/user/ApplyToJob',
         {
           eventshiftId: isShiftId,
+          eventId: item.id,
         },
         {
           headers: {
