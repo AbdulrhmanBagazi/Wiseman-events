@@ -76,7 +76,6 @@ function CreateProfile({ store }) {
           gender: Gender,
           city: data.City,
           location: data.Location,
-          userId: store.data.id,
         },
         {
           headers: { Authorization: store.token },

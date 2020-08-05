@@ -52,7 +52,6 @@ function Notification({ navigation, store }) {
             notificationsID: token,
             allow: true,
             alerts: true,
-            userId: store.data.id,
           },
           {
             headers: { Authorization: store.token },
@@ -91,7 +90,6 @@ function Notification({ navigation, store }) {
           notificationsID: 'false',
           allow: false,
           alerts: false,
-          userId: store.data.id,
         },
         {
           headers: { Authorization: store.token },

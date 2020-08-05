@@ -270,6 +270,29 @@ const styles = StyleSheet.create({
     marginHorizontal: 29,
     marginVertical: 15,
   },
+  Notify: {
+    backgroundColor: PrimaryColor,
+    justifyContent: 'space-between',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  NotifyText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  NotifyTextButton: {
+    color: PrimaryColor,
+    fontSize: 16,
+  },
+  NotifyButton: {
+    backgroundColor: '#fff',
+    padding: 5,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
 })
 
 export default styles

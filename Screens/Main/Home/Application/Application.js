@@ -58,6 +58,7 @@ function Application({ route, store }) {
               }
             )
           } else if (response.data.check === 'success') {
+            await store.ReloadData()
             setTimeout(() => {
               setLoading(false)
               setShow(true)

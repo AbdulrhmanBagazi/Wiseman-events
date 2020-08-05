@@ -21,7 +21,7 @@ import debounce from 'lodash/debounce'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 function SignIn({ navigation, store }) {
-  const { signIn } = React.useContext(AuthContext)
+  const { Load } = React.useContext(AuthContext)
   const [isLoading, setLoading] = React.useState(false)
   const [isError, setError] = React.useState(' ')
   const [isPhoneCheck, setPhoneCheck] = React.useState('')
@@ -93,7 +93,7 @@ function SignIn({ navigation, store }) {
 
           setTimeout(() => {
             setLoading(false)
-            signIn()
+            Load()
           }, 1000)
 
           return

@@ -12,7 +12,7 @@ const SignInStrings = {
 }
 
 const HeaderTitles = {
-  Home: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
+  Home: I18nManager.isRTL ? 'الرئيسية' : 'Home',
   AllJobs: I18nManager.isRTL ? 'جميع الوظائف' : 'All Jobs',
   SingleJobs: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
@@ -183,6 +183,9 @@ const SingleJobStrings = {
 const HomePageStrings = {
   Error: I18nManager.isRTL ? 'حدث خطأ أثناء تحميل المهام!' : 'An error occurred while loading jobs!',
   Soon: I18nManager.isRTL ? 'قريبا' : 'Coming soon',
+  Status: I18nManager.isRTL
+    ? 'قم بتحديث حالتك لزيادة فرصتك في القبول'
+    : 'Update your status to increase your chance to get accepted',
 }
 
 const ProfilePageStrings = {

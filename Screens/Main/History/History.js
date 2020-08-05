@@ -43,7 +43,6 @@ function History({ store }) {
 
     return
   }
-
   React.useEffect(() => {
     ScrollTo(1)
   }, [])
@@ -66,7 +65,7 @@ function History({ store }) {
           <Text>1</Text>
         </View>
         <View style={styles.Container}>
-          <Card Data={store.data.applications} />
+          <Card Data={store.history} />
         </View>
         <View style={styles.Container}>
           <Text>3</Text>
