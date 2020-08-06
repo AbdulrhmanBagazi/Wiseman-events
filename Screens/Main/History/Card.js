@@ -6,11 +6,62 @@ import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCar
 import { SingleJobStrings } from '../../../Config/Strings'
 
 function Card(props) {
+  const getColor = (status) => {
+    switch (status) {
+      case 'approved':
+        return 'rgba(46, 184, 92, 0.25)'
+      case 'wait-list':
+        return 'rgba(50, 31, 219, 0.25)'
+      case 'pending':
+        return 'rgba(249, 177, 21, 0.25)'
+      case 'inactive':
+        return 'rgba(229, 83, 83, 0.25)'
+      case 'canceled':
+        return 'rgba(229, 83, 83, 0.25)'
+    }
+  }
+
+  const getColorBorder = (status) => {
+    switch (status) {
+      case 'approved':
+        return '#2eb85c'
+      case 'wait-list':
+        return '#321fdb'
+      case 'pending':
+        return '#f9b115'
+      case 'inactive':
+        return '#e55353'
+      case 'canceled':
+        return '#e55353'
+    }
+  }
+
+  const getArabic = (status) => {
+    switch (status) {
+      case 'approved':
+        return 'تمت الموافقة'
+      case 'wait-list':
+        return 'قائمة الإنتظار'
+      case 'pending':
+        return 'قيد الانتظار'
+      case 'inactive':
+        return 'غير نشط'
+      case 'canceled':
+        return 'ألغيت'
+    }
+  }
+
+  //#2eb85c  (46, 184, 92)
+  //#321fdb (50, 31, 219)
+  //#f9b115 (249, 177, 21)
+  //#e55353  (229, 83, 83)
+
   return (
     <View style={styles.AllJobCard}>
       <FlatList
         data={props.Data}
         showsVerticalScrollIndicator={false}
+        refreshControl={props.refreshControl}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
           <TouchableOpacity style={styles.SingleAllJob} disabled={true}>
@@ -49,8 +100,14 @@ function Card(props) {
                 </View>
               </View>
               <View style={styles.StatusView}>
-                <View style={styles.StatusBox}>
-                  <Text style={styles.StatuText}>{I18nManager.isRTL ? 'قيد الإنتظار' : 'Pending'}</Text>
+                <View
+                  style={[
+                    styles.StatusBox,
+                    { backgroundColor: getColor(item.Status), borderColor: getColorBorder(item.Status) },
+                  ]}>
+                  <Text style={[styles.StatuText, { color: getColorBorder(item.Status) }]}>
+                    {I18nManager.isRTL ? getArabic(item.Status) : item.Status}
+                  </Text>
                 </View>
               </View>
             </View>

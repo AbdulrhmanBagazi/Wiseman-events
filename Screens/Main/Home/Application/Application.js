@@ -9,6 +9,9 @@ import DisabledButton from '../../../Components/DisabledButton/DisabledButton'
 import { URL } from '../../../../Config/Config'
 import axios from 'axios'
 import { inject, observer } from 'mobx-react'
+//
+import { AuthContext } from '../../../../Hooks/Context'
+import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 
 function Application({ route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
@@ -18,6 +21,8 @@ function Application({ route, store }) {
   const [canApply, setCanApply] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const [isShow, setShow] = React.useState(false)
+  //
+  const { signOut } = React.useContext(AuthContext)
 
   const { item } = route.params
 
@@ -93,16 +98,45 @@ function Application({ route, store }) {
       })
       .catch(async (error) => {
         setLoading(false)
-        Alert.alert(
-          '',
-          I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-          [{ text: 'OK', onPress: () => setLoading(false) }],
-          {
-            cancelable: false,
-          }
-        )
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
 
-        return
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
       })
   }
 

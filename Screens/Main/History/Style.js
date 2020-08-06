@@ -196,18 +196,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 8,
-    backgroundColor: '#FFF4F5',
+    // backgroundColor: '#FFF4F5',
     marginHorizontal: 12,
     marginVertical: 20,
     width: 115,
     borderWidth: 1,
-    borderColor: '#E8505B',
+    // borderColor: '#E8505B',
     borderRadius: 5,
   },
   StatuText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#E8505B',
+    // color: '#fff',
   },
 })
 

@@ -17,12 +17,17 @@ import StatusPicker from './StatusPicker'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
 import { URL } from '../../../../Config/Config'
 import axios from 'axios'
+//
+import { AuthContext } from '../../../../Hooks/Context'
+import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 
 function Status({ store }) {
   const [Show, setShow] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const [TimeStart, setTimeStart] = React.useState(null)
   const [TimeEnd, setTimeEnd] = React.useState(null)
+  //
+  const { signOut } = React.useContext(AuthContext)
 
   const [Day, setDay] = React.useState({
     Start: null,
@@ -93,16 +98,45 @@ function Status({ store }) {
         })
         .catch(async (error) => {
           setLoading(false)
-          Alert.alert(
-            '',
-            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-            [{ text: 'OK', onPress: () => setLoading(false) }],
-            {
-              cancelable: false,
-            }
-          )
+          if (error.response) {
+            if (error.response.status) {
+              if (error.response.status === 401) {
+                await UserTokenRemove()
+                Alert.alert(
+                  '',
+                  I18nManager.isRTL
+                    ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                    : 'the session ended, please re-login',
+                  [{ text: 'OK', onPress: () => signOut() }],
+                  {
+                    cancelable: false,
+                  }
+                )
 
-          return
+                return
+              } else {
+                Alert.alert(
+                  '',
+                  I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                  [{ text: 'OK', onPress: () => setLoading(false) }],
+                  {
+                    cancelable: false,
+                  }
+                )
+                return
+              }
+            }
+          } else {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoading(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
         })
     } else if (Day.Start === null || Day.End === null || TimeStart === null || TimeEnd === null) {
       // console.log(Day.Start, Day.End, TimeStart, TimeEnd)
@@ -183,16 +217,45 @@ function Status({ store }) {
         })
         .catch(async (error) => {
           setLoading(false)
-          Alert.alert(
-            '',
-            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-            [{ text: 'OK', onPress: () => setLoading(false) }],
-            {
-              cancelable: false,
-            }
-          )
+          if (error.response) {
+            if (error.response.status) {
+              if (error.response.status === 401) {
+                await UserTokenRemove()
+                Alert.alert(
+                  '',
+                  I18nManager.isRTL
+                    ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                    : 'the session ended, please re-login',
+                  [{ text: 'OK', onPress: () => signOut() }],
+                  {
+                    cancelable: false,
+                  }
+                )
 
-          return
+                return
+              } else {
+                Alert.alert(
+                  '',
+                  I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                  [{ text: 'OK', onPress: () => setLoading(false) }],
+                  {
+                    cancelable: false,
+                  }
+                )
+                return
+              }
+            }
+          } else {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoading(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
         })
       return
     }

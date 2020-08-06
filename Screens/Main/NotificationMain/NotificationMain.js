@@ -49,6 +49,7 @@ function NotificationMain({ navigation }) {
     <ScrollView>
       <View>
         <View style={styles.NotificationBoxFirst}>
+          {/** styles.NotificationBox   <Icon name="bell" size={30} color="#9CA2B0" />*/}
           <View style={styles.IconView}>
             <FontAwesome name="dollar" size={30} color="#9CA2B0" />
           </View>
@@ -63,28 +64,9 @@ function NotificationMain({ navigation }) {
             </View>
             <View style={styles.BodyTextView}>
               <Text style={styles.bodyText}>
-                Company name share the location and date where you can have your payment.Company name share
-                the location and date where you can have your payment.
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.NotificationBox}>
-          <View style={styles.IconView}>
-            <Icon name="bell" size={30} color="#9CA2B0" />
-          </View>
-          <View style={styles.CenterView}>
-            <View style={styles.TimeView}>
-              <Text style={styles.title}>Event schedule update</Text>
-              {isLoading ? (
-                <Text style={styles.TimeText}>{moment('2020-07-18T18:26:56.943Z').fromNow()}</Text>
-              ) : (
-                <ActivityIndicator size="small" color={PrimaryColor} />
-              )}
-            </View>
-            <View style={styles.BodyTextView}>
-              <Text style={styles.bodyText}>
-                Company name share the location and date where you can have your payment.
+                {I18nManager.isRTL
+                  ? 'هو ببساطة نص وهمي لصناعة الطباعة والتنضيد. كان لوريم إيبسوم هو النص الوهمي القياسي للصناعة منذ القرن الخامس عشر ، عندما أخذت طابعة غير معروفة مجموعة من الأنواع وخلطتها لعمل كتاب من نوع العينة. لقد نجا ليس فقط خمسة قرون ، ولكن أيضًا قفزة في التنضيد الإلكتروني ، وبقي دون تغيير بشكل أساسي. تم تعميمه في الستينيات مع إصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum.'
+                  : 'Company name share the location and date where you can have your payment.Company name share the location and date where you can have your payment.'}
               </Text>
             </View>
           </View>

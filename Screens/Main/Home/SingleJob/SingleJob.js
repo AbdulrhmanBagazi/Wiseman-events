@@ -92,7 +92,7 @@ function SingleJob({ route, store, navigation }) {
         <View style={styles.DataContainer}>
           <Text style={styles.SingleJobDetailsTime}>
             {SingleJobStrings.date}
-            <Text style={{ color: '#000' }}>{item.Date}</Text>
+            <Text style={{ color: '#000' }}>{I18nManager.isRTL ? item.DateAr : item.Date}</Text>
           </Text>
           <Text style={styles.SingleJobDetailsTitle}>{I18nManager.isRTL ? item.TitleAr : item.Title}</Text>
           <TouchableOpacity

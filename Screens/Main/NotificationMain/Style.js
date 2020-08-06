@@ -44,18 +44,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
     fontWeight: '500',
     color: '#0E1118',
     marginVertical: 10,
   },
   bodyText: {
-    fontSize: 16,
     fontWeight: '500',
     color: '#868991',
+    textAlign: 'justify',
   },
   TimeText: {
-    fontSize: 14,
     fontWeight: '500',
     color: '#868991',
   },

@@ -65,7 +65,7 @@ function JobCard(props) {
             <View style={styles.SingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={{ color: '#000' }}>{item.Date}</Text>
+                <Text style={{ color: '#000' }}>{I18nManager.isRTL ? item.DateAr : item.Date}</Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.TitleAr : item.Title}

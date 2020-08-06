@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, I18nManager } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, I18nManager, Alert } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import { HomePageStrings } from '../../../Config/Strings'
@@ -10,6 +10,9 @@ import JobCard from './JobCard'
 import axios from 'axios'
 import RefreshButton from '../../Components/RefreshButton/RefreshButton'
 import Icon from '../../../Config/Icons'
+//
+import { AuthContext } from '../../../Hooks/Context'
+import { UserTokenRemove } from '../../../Config/AsyncStorage'
 
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
@@ -17,6 +20,8 @@ function Home({ store, navigation }) {
   const [isSoon, setSoon] = React.useState(false)
   const [isRefresh, setRefresh] = React.useState(false)
   const [isStatus, setStatus] = React.useState(false)
+  //
+  const { signOut } = React.useContext(AuthContext)
 
   React.useEffect(() => {
     setLoading(true)
@@ -59,8 +64,45 @@ function Home({ store, navigation }) {
       .catch(async (error) => {
         // console.log(error)
         setError(false)
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
 
-        return
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setError(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setError(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
       })
 
     return unsubscribe

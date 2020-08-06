@@ -40,23 +40,45 @@ class Store {
 
   ReloadData = async () => {
     var Token = await UserTokenGet()
+
     axios
-      .get(URL + '/user/authhenticate', {
+      .get(URL + '/user/getApplication', {
         headers: {
-          Authorization: Token,
+          Authorization: store.token,
         },
       })
       .then(async (response) => {
         // console.log(response)
         if (response.status === 200) {
-          this.history = response.data.user.applications
+          if (response.data.check === 'success') {
+            this.history = response.data.application
+
+            return
+          } else if (response.data.check === 'fail') {
+            return
+          }
         } else {
           return
         }
       })
       .catch(async (error) => {
-        return
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              return
+            } else {
+              return
+            }
+          }
+        } else {
+          return
+        }
       })
+  }
+
+  setHistoryData = async (data) => {
+    this.history = data
+    return
   }
 }
 
@@ -72,6 +94,7 @@ decorate(Store, {
   setfewevents: action,
   history: observable.ref,
   ReloadData: action,
+  setHistoryData: action,
 })
 
 const store = new Store()

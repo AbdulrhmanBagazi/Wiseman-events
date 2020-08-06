@@ -1,16 +1,23 @@
 import React from 'react'
-import { View, Text, ScrollView, TouchableOpacity, Animated } from 'react-native'
+import { View, Text, ScrollView, RefreshControl, Alert, I18nManager } from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { width } from '../../../Config/Layout'
 import AnimatedTopTab from './AnimatedTopTab'
 import Card from './Card'
-
-const Data = []
+import { PrimaryColor } from '../../../Config/ColorPalette'
+import axios from 'axios'
+import { URL } from '../../../Config/Config'
+//
+import { AuthContext } from '../../../Hooks/Context'
+import { UserTokenRemove } from '../../../Config/AsyncStorage'
 
 function History({ store }) {
   const Scroll = React.useRef(null)
   const [isSelected, setSelected] = React.useState(null)
+  const [refreshing, setrefreshing] = React.useState(false)
+  //
+  const { signOut } = React.useContext(AuthContext)
 
   const check = async (event) => {
     const xOffset = event.nativeEvent.contentOffset.x + 10
@@ -46,6 +53,93 @@ function History({ store }) {
   React.useEffect(() => {
     ScrollTo(1)
   }, [])
+
+  //getApplication
+  const RefreshMiddle = async () => {
+    setrefreshing(true)
+    axios
+      .get(URL + '/user/getApplication', {
+        headers: {
+          Authorization: store.token,
+        },
+      })
+      .then(async (response) => {
+        // console.log(response)
+        if (response.status === 200) {
+          if (response.data.check === 'success') {
+            await store.setHistoryData(response.data.application)
+            setrefreshing(false)
+            return
+          } else if (response.data.check === 'fail') {
+            setrefreshing(false)
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setrefreshing(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
+        } else {
+          setrefreshing(false)
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setrefreshing(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        // console.log(error)
+        setrefreshing(false)
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setrefreshing(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setrefreshing(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <AnimatedTopTab
@@ -65,7 +159,12 @@ function History({ store }) {
           <Text>1</Text>
         </View>
         <View style={styles.Container}>
-          <Card Data={store.history} />
+          <Card
+            Data={store.history}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+          />
         </View>
         <View style={styles.Container}>
           <Text>3</Text>

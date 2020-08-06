@@ -6,12 +6,17 @@ import styles from '../Style'
 import axios from 'axios'
 import { URL } from '../../../../Config/Config'
 import RefreshButton from '../../../Components/RefreshButton/RefreshButton'
+//
+import { AuthContext } from '../../../../Hooks/Context'
+import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 
 function AllJobs({ route, store, navigation }) {
   const [isLoading, setLoading] = React.useState(false)
   const [isData, setData] = React.useState([])
   const [isError, setError] = React.useState(false)
   const [isRefresh, setRefresh] = React.useState(false)
+  //
+  const { signOut } = React.useContext(AuthContext)
 
   const { id } = route.params
 
@@ -42,8 +47,45 @@ function AllJobs({ route, store, navigation }) {
         // console.log(error)
         setError(true)
         setLoading(false)
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
 
-        return
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
       })
 
     return

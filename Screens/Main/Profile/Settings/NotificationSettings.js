@@ -5,11 +5,16 @@ import { inject, observer } from 'mobx-react'
 import axios from 'axios'
 import { URL } from '../../../../Config/Config'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
+import { AuthContext } from '../../../../Hooks/Context'
+import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 
 function NotificationSettings({ store }) {
   const [isEnabled, setIsEnabled] = React.useState(false)
   const [isEnabledTwo, setIsEnabledTwo] = React.useState(false)
   const [isShow, setShow] = React.useState(false)
+  //
+  const { signOut } = React.useContext(AuthContext)
+
   const toggleSwitch = async () => {
     await setIsEnabled((previousState) => !previousState)
     setShow(true)
@@ -71,16 +76,45 @@ function NotificationSettings({ store }) {
         // console.log(error)
         setIsEnabled((previousState) => !previousState)
         setShow(false)
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
 
-        Alert.alert(
-          '',
-          I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-          [{ text: 'OK', onPress: () => setShow(false) }],
-          {
-            cancelable: false,
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setShow(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
           }
-        )
-        return
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setShow(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
       })
   }
 
@@ -145,16 +179,45 @@ function NotificationSettings({ store }) {
         // console.log(error)
         setIsEnabledTwo((previousState) => !previousState)
         setShow(false)
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
 
-        Alert.alert(
-          '',
-          I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-          [{ text: 'OK', onPress: () => setShow(false) }],
-          {
-            cancelable: false,
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setShow(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
           }
-        )
-        return
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setShow(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
       })
   }
 
