@@ -18,6 +18,10 @@ function Card(props) {
         return 'rgba(229, 83, 83, 0.25)'
       case 'canceled':
         return 'rgba(229, 83, 83, 0.25)'
+      case 'terminated':
+        return 'rgba(229, 83, 83, 0.25)'
+      case 'completed':
+        return 'rgba(46, 184, 92, 0.25)'
     }
   }
 
@@ -31,8 +35,12 @@ function Card(props) {
         return '#f9b115'
       case 'inactive':
         return '#e55353'
+      case 'terminated':
+        return '#e55353'
       case 'canceled':
         return '#e55353'
+      case 'completed':
+        return '#2eb85c'
     }
   }
 
@@ -48,6 +56,10 @@ function Card(props) {
         return 'غير نشط'
       case 'canceled':
         return 'ألغيت'
+      case 'completed':
+        return 'منجز'
+      case 'terminated':
+        return 'منتهية'
     }
   }
 

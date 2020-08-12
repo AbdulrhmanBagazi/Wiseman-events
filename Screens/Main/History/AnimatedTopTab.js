@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, TouchableOpacity, View, I18nManager } from 'react-native'
+import { Animated, TouchableOpacity, View, I18nManager, Platform } from 'react-native'
 import styles from './Style'
 import { PrimaryColor, SecondaryColor } from '../../../Config/ColorPalette'
 
@@ -38,20 +38,54 @@ function DisabledButton(props) {
   })
 
   React.useEffect(() => {
-    Animated.parallel([
-      Animated.timing(First, {
-        toValue: props.Value === 0 ? 100 : 0,
-        duration: 500,
-      }),
-      Animated.timing(Second, {
-        toValue: props.Value === 1 ? 100 : 0,
-        duration: 500,
-      }),
-      Animated.timing(Third, {
-        toValue: props.Value === 2 ? 100 : 0,
-        duration: 500,
-      }),
-    ]).start()
+    if (Platform.OS === 'android') {
+      if (I18nManager.isRTL) {
+        Animated.parallel([
+          Animated.timing(First, {
+            toValue: props.Value === 2 ? 100 : 0,
+            duration: 500,
+          }),
+          Animated.timing(Second, {
+            toValue: props.Value === 1 ? 100 : 0,
+            duration: 500,
+          }),
+          Animated.timing(Third, {
+            toValue: props.Value === 0 ? 100 : 0,
+            duration: 500,
+          }),
+        ]).start()
+      } else {
+        Animated.parallel([
+          Animated.timing(First, {
+            toValue: props.Value === 0 ? 100 : 0,
+            duration: 500,
+          }),
+          Animated.timing(Second, {
+            toValue: props.Value === 1 ? 100 : 0,
+            duration: 500,
+          }),
+          Animated.timing(Third, {
+            toValue: props.Value === 2 ? 100 : 0,
+            duration: 500,
+          }),
+        ]).start()
+      }
+    } else {
+      Animated.parallel([
+        Animated.timing(First, {
+          toValue: props.Value === 0 ? 100 : 0,
+          duration: 500,
+        }),
+        Animated.timing(Second, {
+          toValue: props.Value === 1 ? 100 : 0,
+          duration: 500,
+        }),
+        Animated.timing(Third, {
+          toValue: props.Value === 2 ? 100 : 0,
+          duration: 500,
+        }),
+      ]).start()
+    }
   }, [props.Value])
 
   return (

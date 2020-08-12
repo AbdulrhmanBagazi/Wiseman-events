@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, RefreshControl, Alert, I18nManager } from 'react-native'
+import { View, Text, ScrollView, RefreshControl, Alert, I18nManager, Image } from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { width } from '../../../Config/Layout'
@@ -139,7 +139,6 @@ function History({ store }) {
         }
       })
   }
-
   return (
     <View style={{ flex: 1 }}>
       <AnimatedTopTab
@@ -156,18 +155,28 @@ function History({ store }) {
         ref={Scroll}
         showsHorizontalScrollIndicator={false}>
         <View style={styles.Container}>
-          <Text>1</Text>
+          <View style={styles.Logo}>
+            <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
+          </View>
         </View>
         <View style={styles.Container}>
-          <Card
-            Data={store.history}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-            }
-          />
+          {store.history.length < 1 ? (
+            <View style={styles.Logo}>
+              <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
+            </View>
+          ) : (
+            <Card
+              Data={store.history}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              }
+            />
+          )}
         </View>
         <View style={styles.Container}>
-          <Text>3</Text>
+          <View style={styles.Logo}>
+            <Image style={styles.tinyLogo} source={require('../../../assets/completedjobillustration.png')} />
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -175,3 +184,7 @@ function History({ store }) {
 }
 
 export default inject('store')(observer(History))
+
+//completedjobillustration.png
+//appliedjobillustration.png
+//activejobillustrations.png

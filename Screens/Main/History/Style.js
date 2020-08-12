@@ -1,4 +1,4 @@
-import { StyleSheet, I18nManager } from 'react-native'
+import { StyleSheet, I18nManager, Platform } from 'react-native'
 import { width, height } from '../../../Config/Layout'
 import {
   PrimaryColor,
@@ -208,6 +208,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     // color: '#fff',
+  },
+  Logo: {
+    width,
+    height: height / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tinyLogo: {
+    height: height / 6,
+    resizeMode: 'contain',
   },
 })
 
