@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   Logo: {
     width,
-    height: height / 4,
+    height: height / 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   Title: {
     fontSize: 32,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   error: {
     textAlign: 'center',

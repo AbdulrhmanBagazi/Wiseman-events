@@ -108,8 +108,10 @@ const ProfileStrings = {
   Male: I18nManager.isRTL ? 'ذكر' : 'Male',
   Female: I18nManager.isRTL ? 'أنثى' : 'Female',
   City: I18nManager.isRTL ? 'المدينة' : 'City',
-  location: I18nManager.isRTL ? 'موقع العمل / المنزل' : 'Home/Work location',
+  location: I18nManager.isRTL ? 'تعيين موقع المنزل/العمل' : 'set Home/Work location',
+  locationset: I18nManager.isRTL ? 'تم تحديد الموقع' : 'The location has been determined',
   Search: I18nManager.isRTL ? 'بحث' : 'Search',
+  Save: I18nManager.isRTL ? 'حفظ' : 'Save',
 }
 
 const NotificationStrings = {

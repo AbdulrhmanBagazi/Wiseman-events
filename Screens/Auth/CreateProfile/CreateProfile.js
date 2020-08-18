@@ -4,15 +4,13 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
   Modal,
   Platform,
   Image,
   ActivityIndicator,
   Keyboard,
-  SafeAreaView,
   I18nManager,
+  StyleSheet,
 } from 'react-native'
 import styles from './Style'
 import { ProfileStrings, ErrorsStrings } from '../../../Config/Strings'
@@ -28,6 +26,58 @@ import CitiesModal from './CitiesModal'
 import { Feather } from '@expo/vector-icons'
 import moment from 'moment'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import MapUI from './map'
+import { width, height } from '../../../Config/Layout'
+import RNPickerSelect from 'react-native-picker-select'
+import { SecondaryText, PrimaryColor } from '../../../Config/ColorPalette'
+
+const ASPECT_RATIO = width / height
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    backgroundColor: '#fff',
+    height: 45,
+    width,
+    borderColor: SecondaryText,
+    borderWidth: 1,
+    borderRadius: 5,
+    // marginBottom: 10,
+    padding: 5,
+    alignSelf: 'center',
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    color: '#000',
+  },
+  viewContainer: {
+    backgroundColor: '#fff',
+    height: 45,
+    width,
+    borderColor: SecondaryText,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    // padding: 5,
+    alignSelf: 'center',
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    justifyContent: 'center',
+  },
+  inputAndroid: {
+    color: '#000',
+  },
+})
+
+const Stat = I18nManager.isRTL
+  ? [
+      { label: 'مبتدئ', value: 'Beginner' },
+      { label: 'متوسط', value: 'Intermediate' },
+      { label: 'فصيح', value: 'Fluent' },
+    ]
+  : [
+      { label: 'Beginner', value: 'Beginner' },
+      { label: 'Intermediate', value: 'Intermediate' },
+      { label: 'Fluent', value: 'Fluent' },
+    ]
+
+//beginner, intermediate,  fluent
 
 function CreateProfile({ store }) {
   const { Notification } = React.useContext(AuthContext)
@@ -37,6 +87,7 @@ function CreateProfile({ store }) {
   const [showModal, setShowModal] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const [isError, setError] = React.useState(' ')
+  const [isShowMap, setShowMap] = React.useState(false)
   //values
   const [Gender, setGender] = React.useState('')
   const [date, setDate] = React.useState(false)
@@ -48,8 +99,46 @@ function CreateProfile({ store }) {
     Location: '',
     Birth: '',
     BirthText: '',
+    English: '',
+    Latitude: '',
+    Longitude: '',
   })
   const [CityDataEn, setCityDataEn] = React.useState('')
+  //Map
+  const [isSelectMapValue, setSelectMapValue] = React.useState(false)
+  const [region, setregion] = React.useState({
+    latitude: 24.774265,
+    longitude: 46.738586,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0922 * ASPECT_RATIO,
+  })
+  const [Cord, setCord] = React.useState({
+    latitude: 24.774265,
+    longitude: 46.738586,
+  })
+  const onDragMapPress = (e) => {
+    setCord({
+      latitude: e.latitude,
+      longitude: e.longitude,
+    })
+    setData({
+      ...data,
+      Latitude: e.latitude,
+      Longitude: e.longitude,
+    })
+    setregion({
+      latitude: e.latitude,
+      longitude: e.longitude,
+      latitudeDelta: e.latitudeDelta,
+      longitudeDelta: e.longitudeDelta,
+    })
+  }
+  const DoneButton = () => {
+    setSelectMapValue(true)
+    setShowMap(false)
+    return
+  }
+  //
 
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
@@ -61,9 +150,10 @@ function CreateProfile({ store }) {
       data.Fullname.length < 1 ||
       data.Nationality.length < 1 ||
       data.City.length < 1 ||
-      data.Location.length < 1 ||
       data.Birth.length < 1 ||
-      Gender.length < 1
+      Gender.length < 1 ||
+      data.English.length < 1 ||
+      isSelectMapValue === false
     ) {
       setError(ErrorsStrings.Required)
       return
@@ -78,7 +168,8 @@ function CreateProfile({ store }) {
           birthdate: data.Birth,
           gender: Gender,
           city: CityDataEn,
-          location: data.Location,
+          location: data.Latitude + ',' + data.Longitude,
+          english: data.English,
         },
         {
           headers: { Authorization: store.token },
@@ -305,7 +396,7 @@ function CreateProfile({ store }) {
           )}
         />
 
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder={ProfileStrings.location}
           onChangeText={(text) =>
@@ -314,6 +405,29 @@ function CreateProfile({ store }) {
               Location: text.trim(),
             })
           }
+        /> */}
+
+        <TouchableOpacity style={styles.inputDate} onPress={() => setShowMap(true)}>
+          <Text>{isSelectMapValue ? ProfileStrings.locationset : ProfileStrings.location}</Text>
+          <Feather name="map" size={24} color={isSelectMapValue ? PrimaryColor : '#000'} />
+        </TouchableOpacity>
+
+        <RNPickerSelect
+          onValueChange={(text) =>
+            setData({
+              ...data,
+              English: text,
+            })
+          }
+          style={{
+            ...pickerSelectStyles,
+          }}
+          placeholder={{
+            label: I18nManager.isRTL ? 'حدد مستواك في اللغة الإنجليزية' : 'Select your english level',
+            value: '',
+          }}
+          items={Stat}
+          Icon={() => null}
         />
 
         <TouchableOpacity style={styles.Button} onPress={debounce(() => HandleCreateProfile(), 250)}>
@@ -324,6 +438,15 @@ function CreateProfile({ store }) {
           )}
         </TouchableOpacity>
       </View>
+
+      <MapUI
+        onRegionChange={(e) => onDragMapPress(e)}
+        region={region}
+        coordinate={Cord}
+        MapmodalVisible={isShowMap}
+        Close={() => setShowMap(false)}
+        DoneButton={() => DoneButton()}
+      />
 
       <View style={{ height: 25 }}></View>
     </KeyboardAwareScrollView>
