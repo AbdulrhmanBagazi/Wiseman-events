@@ -120,6 +120,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },
+  DataSectionsTime: {
+    flex: 2,
+    marginHorizontal: 15,
+    alignItems: 'flex-start',
+  },
   space: {
     height: 20,
     width,

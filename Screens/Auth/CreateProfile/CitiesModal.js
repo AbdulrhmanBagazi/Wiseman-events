@@ -1,27 +1,24 @@
 import React from 'react'
-import { View, Modal, TouchableOpacity, Text, SafeAreaView, TextInput, FlatList } from 'react-native'
+import {
+  View,
+  Modal,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+  TextInput,
+  FlatList,
+  I18nManager,
+} from 'react-native'
 import styles from './Style'
 import { ProfileStrings } from '../../../Config/Strings'
 import { Entypo } from '@expo/vector-icons'
+import CitiesData from './cities.json'
 
 export default function CitiesModal(props) {
   const [modalVisible, setModalVisible] = React.useState(false)
   const [isDATA, setData] = React.useState(false)
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ]
+  const DATA = CitiesData
 
   React.useEffect(() => {
     setData(DATA)
@@ -33,14 +30,23 @@ export default function CitiesModal(props) {
   const onChangeText = async (text) => {
     var trim = await text.trim()
 
-    const newData = DATA.filter((item) => {
-      const itemData = `${item.title.toUpperCase()}`
-      const textData = trim.toUpperCase()
+    if (I18nManager.isRTL) {
+      const newData = DATA.filter((item) => {
+        const itemData = `${item.name_ar.toUpperCase()}`
+        const textData = trim.toUpperCase()
 
-      return itemData.indexOf(textData) > -1
-    })
+        return itemData.indexOf(textData) > -1
+      })
+      setData(newData)
+    } else {
+      const newData = DATA.filter((item) => {
+        const itemData = `${item.name_en.toUpperCase()}`
+        const textData = trim.toUpperCase()
 
-    setData(newData)
+        return itemData.indexOf(textData) > -1
+      })
+      setData(newData)
+    }
 
     return
   }
@@ -75,7 +81,7 @@ export default function CitiesModal(props) {
               keyboardShouldPersistTaps="always"
               data={isDATA}
               renderItem={props.ViewCity}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.city_id.toString()}
             />
           </View>
         </SafeAreaView>

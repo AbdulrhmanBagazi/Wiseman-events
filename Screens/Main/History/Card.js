@@ -102,7 +102,7 @@ function Card(props) {
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.shift}</Text>
                 </View>
-                <View style={styles.DataSections}>
+                <View style={styles.DataSectionsTime}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.time}</Text>
                 </View>

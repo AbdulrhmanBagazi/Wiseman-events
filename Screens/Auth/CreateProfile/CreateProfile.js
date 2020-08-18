@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   Keyboard,
   SafeAreaView,
+  I18nManager,
 } from 'react-native'
 import styles from './Style'
 import { ProfileStrings, ErrorsStrings } from '../../../Config/Strings'
@@ -48,6 +49,8 @@ function CreateProfile({ store }) {
     Birth: '',
     BirthText: '',
   })
+  const [CityDataEn, setCityDataEn] = React.useState('')
+
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
     setError(' ')
@@ -74,7 +77,7 @@ function CreateProfile({ store }) {
           nationality: data.Nationality,
           birthdate: data.Birth,
           gender: Gender,
-          city: data.City,
+          city: CityDataEn,
           location: data.Location,
         },
         {
@@ -185,14 +188,23 @@ function CreateProfile({ store }) {
   }
   //City
   const onSelectCity = async (city) => {
-    await setData({
-      ...data,
-      City: ProfileStrings.City,
-    })
-    setData({
-      ...data,
-      City: city.title,
-    })
+    // await setData({
+    //   ...data,
+    //   City: ProfileStrings.City,
+    // })
+    if (I18nManager.isRTL) {
+      setData({
+        ...data,
+        City: city.name_ar,
+      })
+      setCityDataEn(city.name_en)
+    } else {
+      setData({
+        ...data,
+        City: city.name_en,
+      })
+      setCityDataEn(city.name_en)
+    }
   }
 
   // React.useEffect(() => {
@@ -288,7 +300,7 @@ function CreateProfile({ store }) {
               style={styles.citiesFlatlistItems}
               Value={item}
               onPress={() => onSelectCity(item)}>
-              <Text style={{ fontSize: 16 }}>{item.title}</Text>
+              <Text style={{ fontSize: 16 }}>{I18nManager.isRTL ? item.name_ar : item.name_en}</Text>
             </TouchableOpacity>
           )}
         />
