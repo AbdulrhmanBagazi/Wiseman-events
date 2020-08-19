@@ -11,6 +11,7 @@ import {
   Keyboard,
   I18nManager,
   StyleSheet,
+  Alert,
 } from 'react-native'
 import styles from './Style'
 import { ProfileStrings, ErrorsStrings } from '../../../Config/Strings'
@@ -112,26 +113,24 @@ function CreateProfile({ store }) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0922 * ASPECT_RATIO,
   })
-  const [Cord, setCord] = React.useState({
-    latitude: 24.774265,
-    longitude: 46.738586,
-  })
-  const onDragMapPress = (e) => {
+  const [Cord, setCord] = React.useState(null)
+
+  const onDragMapPress = async (e) => {
     setCord({
-      latitude: e.latitude,
-      longitude: e.longitude,
+      latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
     })
     setData({
       ...data,
-      Latitude: e.latitude,
-      Longitude: e.longitude,
+      Latitude: e.nativeEvent.coordinate.latitude,
+      Longitude: e.nativeEvent.coordinate.longitude,
     })
-    setregion({
-      latitude: e.latitude,
-      longitude: e.longitude,
-      latitudeDelta: e.latitudeDelta,
-      longitudeDelta: e.longitudeDelta,
-    })
+    // setregion({
+    //   latitude: e.nativeEvent.position.latitude,
+    //   longitude: e.nativeEvent.position.longitude,
+    //   latitudeDelta: e.nativeEvent.position.latitudeDelta,
+    //   longitudeDelta: e.nativeEvent.position.longitudeDelta,
+    // })
   }
   const DoneButton = () => {
     setSelectMapValue(true)

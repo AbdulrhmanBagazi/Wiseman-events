@@ -9,6 +9,7 @@ class Store {
   Language = null
   data = []
   history = []
+  alerts = []
   banner = []
   fewevents = []
   token = null
@@ -16,6 +17,7 @@ class Store {
   setData = async (Data) => {
     this.data = Data.user
     this.history = Data.user.applications
+    this.alerts = Data.user.alerts
     this.banner = Data.banner
     return
   }
@@ -80,6 +82,11 @@ class Store {
     this.history = data
     return
   }
+
+  setAlertsData = async (data) => {
+    this.alerts = data
+    return
+  }
 }
 
 decorate(Store, {
@@ -95,6 +102,8 @@ decorate(Store, {
   history: observable.ref,
   ReloadData: action,
   setHistoryData: action,
+  alerts: observable.ref,
+  setAlertsData: action,
 })
 
 const store = new Store()

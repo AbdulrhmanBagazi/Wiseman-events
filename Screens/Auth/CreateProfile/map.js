@@ -21,8 +21,10 @@ export default function MapUI(props) {
               style={styles.mapStyle}
               provider={PROVIDER_GOOGLE}
               initialRegion={props.region}
-              onRegionChange={props.onRegionChange}>
-              <Marker key={1} coordinate={props.coordinate} pinColor={PrimaryColor}></Marker>
+              onPress={props.onRegionChange}>
+              {props.coordinate === null ? null : (
+                <Marker key={1} coordinate={props.coordinate} pinColor={PrimaryColor}></Marker>
+              )}
             </MapView>
             <TouchableOpacity style={styles.Button} onPress={props.DoneButton}>
               <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>

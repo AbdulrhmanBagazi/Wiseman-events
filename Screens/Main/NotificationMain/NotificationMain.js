@@ -1,13 +1,31 @@
 import React from 'react'
-import { View, Text, ScrollView, ActivityIndicator, I18nManager } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  I18nManager,
+  FlatList,
+  RefreshControl,
+  Alert,
+} from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import { FontAwesome } from '@expo/vector-icons'
 import moment from 'moment'
 import { PrimaryColor } from '../../../Config/ColorPalette'
+import { inject, observer } from 'mobx-react'
+import { width } from '../../../Config/Layout'
+import axios from 'axios'
+import { URL } from '../../../Config/Config'
+import { AuthContext } from '../../../Hooks/Context'
+import { UserTokenRemove } from '../../../Config/AsyncStorage'
 
-function NotificationMain({ navigation }) {
+function NotificationMain({ navigation, store }) {
   const [isLoading, setLoading] = React.useState(false)
+  const [refreshing, setrefreshing] = React.useState(false)
+  const { signOut } = React.useContext(AuthContext)
+
   moment.updateLocale('en', {
     relativeTime: {
       future: 'in %s',
@@ -45,35 +63,139 @@ function NotificationMain({ navigation }) {
     return
   }
 
+  const RefreshMiddle = async () => {
+    setrefreshing(true)
+    setLoading(false)
+    axios
+      .get(URL + '/user/getAlerts', {
+        headers: {
+          Authorization: store.token,
+        },
+      })
+      .then(async (response) => {
+        // console.log(response)
+        if (response.status === 200) {
+          if (response.data.check === 'success') {
+            await store.setAlertsData(response.data.alerts)
+            setrefreshing(false)
+            setLoading(true)
+            return
+          } else if (response.data.check === 'fail') {
+            setrefreshing(false)
+            setLoading(true)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setrefreshing(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
+        } else {
+          setrefreshing(false)
+          setLoading(true)
+
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setrefreshing(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        // console.log(error)
+        setrefreshing(false)
+        setLoading(true)
+
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setrefreshing(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setrefreshing(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
-    <ScrollView>
-      <View>
-        <View style={styles.NotificationBoxFirst}>
-          {/** styles.NotificationBox   <Icon name="bell" size={30} color="#9CA2B0" />*/}
-          <View style={styles.IconView}>
-            <FontAwesome name="dollar" size={30} color="#9CA2B0" />
-          </View>
-          <View style={styles.CenterView}>
-            <View style={styles.TimeView}>
-              <Text style={styles.title}>{I18nManager.isRTL ? 'تحديث الدفع' : 'Payment update'}</Text>
-              {isLoading ? (
-                <Text style={styles.TimeText}>{moment('2020-07-18T18:07:16.149Z').fromNow()}</Text>
+    <View>
+      <FlatList
+        data={store.alerts}
+        showsVerticalScrollIndicator={false}
+        srtyle={{
+          width: width + 10,
+          flex: 1,
+        }}
+        keyExtractor={(item) => item.id.toString()}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+        }
+        renderItem={({ item, index }) => (
+          <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+            <View style={styles.IconView}>
+              {item.type === 'payment' ? (
+                <FontAwesome name="dollar" size={30} color="#9CA2B0" />
               ) : (
-                <ActivityIndicator size="small" color={PrimaryColor} />
+                <Icon name="bell" size={30} color="#9CA2B0" />
               )}
             </View>
-            <View style={styles.BodyTextView}>
-              <Text style={styles.bodyText}>
-                {I18nManager.isRTL
-                  ? 'هو ببساطة نص وهمي لصناعة الطباعة والتنضيد. كان لوريم إيبسوم هو النص الوهمي القياسي للصناعة منذ القرن الخامس عشر ، عندما أخذت طابعة غير معروفة مجموعة من الأنواع وخلطتها لعمل كتاب من نوع العينة. لقد نجا ليس فقط خمسة قرون ، ولكن أيضًا قفزة في التنضيد الإلكتروني ، وبقي دون تغيير بشكل أساسي. تم تعميمه في الستينيات مع إصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum.'
-                  : 'Company name share the location and date where you can have your payment.Company name share the location and date where you can have your payment.'}
-              </Text>
+            <View style={styles.CenterView}>
+              <View style={styles.TimeView}>
+                <Text style={styles.title}>{I18nManager.isRTL ? item.titleAr : item.title}</Text>
+                {isLoading ? (
+                  <Text style={styles.TimeText}>{moment(item.createdAt).fromNow()}</Text>
+                ) : (
+                  <ActivityIndicator size="small" color={PrimaryColor} />
+                )}
+              </View>
+              <View style={styles.BodyTextView}>
+                <Text style={styles.bodyText}>{I18nManager.isRTL ? item.messageAr : item.message}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      </View>
-    </ScrollView>
+        )}
+      />
+    </View>
   )
 }
 
-export default NotificationMain
+export default inject('store')(observer(NotificationMain))
