@@ -17,7 +17,7 @@ class Store {
   setData = async (Data) => {
     this.data = Data.user
     this.history = Data.user.applications
-    this.alerts = Data.user.alerts
+    this.alerts = Data.user.alerts.reverse()
     this.banner = Data.banner
     return
   }
@@ -84,7 +84,7 @@ class Store {
   }
 
   setAlertsData = async (data) => {
-    this.alerts = data
+    this.alerts = data.reverse()
     return
   }
 }
