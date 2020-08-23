@@ -18,7 +18,13 @@ class Store {
     this.data = Data.user
     this.history = Data.user.applications
     this.alerts = Data.user.alerts.reverse()
+
     this.banner = Data.banner
+    return
+  }
+
+  setDataSignup = async (Data) => {
+    this.data = Data.user
     return
   }
 
@@ -104,6 +110,7 @@ decorate(Store, {
   setHistoryData: action,
   alerts: observable.ref,
   setAlertsData: action,
+  setDataSignup: action,
 })
 
 const store = new Store()

@@ -153,7 +153,7 @@ function SignUp({ navigation }) {
             return
           } else if (response.status === 200) {
             setError(' ')
-            store.setData(response.data.user)
+            store.setDataSignup(response.data.user)
             store.setToken(response.data.token)
             Verify()
             return

@@ -157,12 +157,11 @@ function NotificationMain({ navigation, store }) {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={store.alerts}
         showsVerticalScrollIndicator={false}
         srtyle={{
-          width: width + 10,
           flex: 1,
         }}
         keyExtractor={(item) => item.id.toString()}

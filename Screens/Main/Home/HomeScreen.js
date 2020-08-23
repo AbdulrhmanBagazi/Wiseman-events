@@ -35,7 +35,6 @@ function Home({ store, navigation }) {
       }
       return
     })
-
     axios
       .get(URL + '/user/mainPageJobs', {
         headers: {
