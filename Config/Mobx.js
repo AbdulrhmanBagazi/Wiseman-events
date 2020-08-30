@@ -16,7 +16,7 @@ class Store {
 
   setData = async (Data) => {
     this.data = Data.user
-    this.history = Data.user.applications
+    // this.history = Data.user.applications
     this.alerts = Data.user.alerts.reverse()
 
     this.banner = Data.banner

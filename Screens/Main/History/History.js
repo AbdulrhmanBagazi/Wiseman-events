@@ -1,5 +1,14 @@
 import React from 'react'
-import { View, Text, ScrollView, RefreshControl, Alert, I18nManager, Image } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  RefreshControl,
+  Alert,
+  I18nManager,
+  Image,
+  ActivityIndicator,
+} from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { width } from '../../../Config/Layout'
@@ -11,11 +20,15 @@ import { URL } from '../../../Config/Config'
 //
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
+//
+import Activejob from './Activejob'
 
-function History({ store }) {
+function History({ store, navigation }) {
   const Scroll = React.useRef(null)
-  const [isSelected, setSelected] = React.useState(null)
+  const [isSelected, setSelected] = React.useState(0)
   const [refreshing, setrefreshing] = React.useState(false)
+  const [Firstrefreshing, setFirstrefreshing] = React.useState(true)
+
   //
   const { signOut } = React.useContext(AuthContext)
 
@@ -51,8 +64,12 @@ function History({ store }) {
     return
   }
   React.useEffect(() => {
-    ScrollTo(1)
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {})
+
+    RefreshMiddle()
+
+    return unsubscribe
+  }, [navigation])
 
   //getApplication
   const RefreshMiddle = async () => {
@@ -69,9 +86,17 @@ function History({ store }) {
           if (response.data.check === 'success') {
             await store.setHistoryData(response.data.application)
             setrefreshing(false)
+
+            if (Firstrefreshing) {
+              setFirstrefreshing(false)
+            }
+
             return
           } else if (response.data.check === 'fail') {
             setrefreshing(false)
+            if (Firstrefreshing) {
+              setFirstrefreshing(false)
+            }
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -84,6 +109,9 @@ function History({ store }) {
           }
         } else {
           setrefreshing(false)
+          if (Firstrefreshing) {
+            setFirstrefreshing(false)
+          }
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -98,6 +126,9 @@ function History({ store }) {
       .catch(async (error) => {
         // console.log(error)
         setrefreshing(false)
+        if (Firstrefreshing) {
+          setFirstrefreshing(false)
+        }
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
@@ -147,6 +178,11 @@ function History({ store }) {
         onPressTwo={() => ScrollTo(1)}
         onPressThird={() => ScrollTo(2)}
       />
+      {Firstrefreshing ? (
+        <View style={{ padding: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={PrimaryColor} />
+        </View>
+      ) : null}
       <ScrollView
         pagingEnabled={true}
         scrollEventThrottle={16}
@@ -155,9 +191,12 @@ function History({ store }) {
         ref={Scroll}
         showsHorizontalScrollIndicator={false}>
         <View style={styles.Container}>
-          <View style={styles.Logo}>
-            <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
-          </View>
+          <Activejob
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+            Data={store.history}
+          />
         </View>
         <View style={styles.Container}>
           {store.history.length < 1 ? (

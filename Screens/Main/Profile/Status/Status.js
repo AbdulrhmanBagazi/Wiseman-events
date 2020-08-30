@@ -26,6 +26,8 @@ function Status({ store }) {
   const [isLoading, setLoading] = React.useState(false)
   const [TimeStart, setTimeStart] = React.useState(null)
   const [TimeEnd, setTimeEnd] = React.useState(null)
+  const [textAr, setTextAr] = React.useState('')
+
   //
   const { signOut } = React.useContext(AuthContext)
 
@@ -163,8 +165,8 @@ function Status({ store }) {
           URL + '/user/AddUpdateStatus',
           {
             status: Stat,
-            time: TimeStart + ' - ' + TimeEnd,
-            days: Day.Start + ' - ' + Day.End,
+            time: TimeStart + ' to ' + TimeEnd,
+            days: Day.Start + ' to ' + Day.End,
           },
           {
             headers: {
@@ -261,6 +263,39 @@ function Status({ store }) {
     }
   }
 
+  React.useEffect(() => {
+    if (store.data.status.days !== null && I18nManager.isRTL) {
+      var str = store.data.status.days
+      var res = str.split('to')
+      var arone = getArabic(res[0].trim())
+      var artwo = getArabic(res[1].trim())
+      setTextAr(arone + ' إلى ' + artwo)
+      return
+    } else {
+      setTextAr(store.data.status.days)
+      return
+    }
+  }, [])
+
+  const getArabic = (day) => {
+    switch (day) {
+      case 'Saturday':
+        return 'السبت'
+      case 'Sunday':
+        return 'الآحد'
+      case 'Monday':
+        return 'الإثنين'
+      case 'Tuesday':
+        return 'الثلاثاء'
+      case 'Wednesday':
+        return 'الآربعاء'
+      case 'Thursday':
+        return 'الخميس'
+      default:
+        return 'الجمعة'
+    }
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View
@@ -342,7 +377,7 @@ function Status({ store }) {
                     fontWeight: '500',
                     color: store.data.status === null ? '#E8505B' : '#000',
                   }}>
-                  {store.data.status === null ? '' : store.data.status.days}
+                  {store.data.status === null ? '' : textAr}
                 </Text>
               </View>
             </View>

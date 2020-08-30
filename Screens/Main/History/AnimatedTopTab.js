@@ -101,7 +101,7 @@ function DisabledButton(props) {
         onPress={props.onPressTwo}
         style={[styles.TouchableOpacityButton, { borderColor: SecondBorder }]}>
         <Animated.Text style={[styles.TouchableOpacityText, { color: SecondTextColor }]}>
-          {I18nManager.isRTL ? 'قيد الإنتظار' : 'Pending'}
+          {I18nManager.isRTL ? 'طلبات العمل' : 'Job requests'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
       <AnimatedTouchableOpacity

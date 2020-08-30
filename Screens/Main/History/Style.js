@@ -6,6 +6,7 @@ import {
   GrayColor,
   LightText,
   PrimaryBorder,
+  SecondaryColor,
 } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
@@ -125,6 +126,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },
+  DataSectionsAta: {
+    flex: 2,
+    marginHorizontal: 15,
+    alignItems: 'flex-start',
+  },
   space: {
     height: 20,
     width,
@@ -223,6 +229,143 @@ const styles = StyleSheet.create({
   tinyLogo: {
     height: height / 6,
     resizeMode: 'contain',
+  },
+  ActivejobView: {
+    // backgroundColor: '#F1FFF9',
+    width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+  ActivejobHeader: {
+    width: width - 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    padding: 5,
+  },
+  ImageActive: {
+    backgroundColor: '#11865B',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Image: {
+    backgroundColor: PrimaryColor,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spaceActive: {
+    marginHorizontal: 5,
+  },
+  ActivejobHeaderText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  ActivejobHeaderTextLight: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: SecondaryText,
+  },
+  ActivejobBody: {
+    width: width - 10,
+    padding: 5,
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+  },
+  SplitBodyHOne: {
+    flex: 3,
+  },
+  SplitBodyH: {
+    flex: 1,
+  },
+  ActivejobBodyText: {
+    fontSize: 20,
+    fontWeight: '600',
+    textAlign: 'left',
+  },
+  ActivejobBodyTextLight: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: SecondaryText,
+  },
+  SingleJobDetailsLocationView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginVertical: 10,
+  },
+  SingleJobDetailsLocation: {
+    fontWeight: '500',
+    fontSize: 14,
+    marginHorizontal: 10,
+    color: LightText,
+  },
+  ActivejobBoxContainer: {
+    width: width - 10,
+    borderColor: '#DFE0E3',
+    // borderColor: '#11865B',
+    borderRadius: 5,
+    borderWidth: 1,
+    padding: 5,
+    alignSelf: 'center',
+  },
+  ActivejobBox: {
+    backgroundColor: GrayColor,
+    // backgroundColor: '#F1FFF9',
+  },
+  ActivejobBoxTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 25,
+  },
+  ActivejobBoxBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+    marginBottom: 25,
+  },
+  dataTextActive: {
+    marginTop: 10,
+  },
+  GrayColorText: {
+    color: SecondaryText,
+  },
+  Activejobsplit: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Button: {
+    backgroundColor: 'transparent',
+    padding: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+  },
+  ButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  ActiveSoon: {
+    width: width - 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: PrimaryColor,
+    borderBottomWidth: 1,
+    marginVertical: 5,
+    padding: 5,
+  },
+  ActiveSoonText: {
+    fontWeight: '500',
+    fontSize: 14,
+    color: PrimaryColor,
   },
 })
 
