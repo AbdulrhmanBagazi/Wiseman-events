@@ -1,13 +1,6 @@
-import { StyleSheet, I18nManager, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-  SecondaryColor,
-} from '../../../Config/ColorPalette'
+import { PrimaryColor, SecondaryText, GrayColor, LightText } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   Container: {
@@ -366,6 +359,26 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     color: PrimaryColor,
+  },
+  modal: {
+    backgroundColor: 'rgba(	15	,20	,50, 0.5)',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    margin: 10,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
   },
 })
 

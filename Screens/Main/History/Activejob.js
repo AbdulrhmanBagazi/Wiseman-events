@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Linking, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager, Linking, Image, Modal } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import moment from 'moment'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import QrcodeGen from './QrcodeGen'
 
 function Activejob(props) {
   const [isData, setData] = React.useState([])
+  const [isShow, setShow] = React.useState(false)
 
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
@@ -17,7 +19,7 @@ function Activejob(props) {
 
     setData(newArray)
   }, [props.Data])
-  //   console.log(isData)
+  // console.log(isShow)
   return (
     <View>
       {isData.length < 1 ? (
@@ -62,7 +64,7 @@ function Activejob(props) {
                   </View>
                   <View style={styles.SplitBodyH}>
                     {index === 0 ? (
-                      <TouchableOpacity style={styles.Button}>
+                      <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
                         <MaterialCommunityIcons name="qrcode-scan" size={40} color={PrimaryColor} />
                       </TouchableOpacity>
                     ) : null}
@@ -70,6 +72,19 @@ function Activejob(props) {
                 </View>
                 <View style={styles.ActivejobBoxContainer}>
                   <View style={styles.ActivejobBox}>
+                    <View style={styles.ActivejobBoxTop}>
+                      <View style={styles.Activejobsplit}>
+                        <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'الوردية' : 'Shift'}</Text>
+                        <Text style={styles.dataTextActive}>{item.eventshift.shift}</Text>
+                      </View>
+
+                      <View style={styles.Activejobsplit}>
+                        <Text style={styles.GrayColorText}>
+                          {I18nManager.isRTL ? 'وقت الحضور' : 'Attendance Time'}
+                        </Text>
+                        <Text style={styles.dataTextActive}>{item.eventshift.attendance}</Text>
+                      </View>
+                    </View>
                     <View style={styles.ActivejobBoxTop}>
                       <View style={styles.Activejobsplit}>
                         <Text style={styles.GrayColorText}>
@@ -106,12 +121,22 @@ function Activejob(props) {
                     </View>
                   </View>
                 </View>
-                {isData.length > 1 && index === 0 ? (
+                {/* {isData.length > 1 && index === 0 ? (
                   <View style={styles.ActiveSoon}>
                     <Text style={styles.ActiveSoonText}>
                       {I18nManager.isRTL ? 'وظائفك القادمة' : 'Your upcoming jobs'}
                     </Text>
                   </View>
+                ) : null} */}
+
+                {index === 0 ? (
+                  <Modal animationType="fade" transparent={true} key={index} visible={isShow}>
+                    <TouchableOpacity style={styles.modal} onPress={() => setShow(false)} activeOpacity={0.5}>
+                      <View style={styles.modalContainer}>
+                        <QrcodeGen value={item.userId + ',' + item.eventId + ',' + item.eventshiftId} />
+                      </View>
+                    </TouchableOpacity>
+                  </Modal>
                 ) : null}
               </View>
             )}

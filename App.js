@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
-import 'mobx-react-lite/batchingForReactNative'
 import ICONS from './Config/Icons'
 import { PrimaryColor, SecondaryText } from './Config/ColorPalette'
 //Hooks
