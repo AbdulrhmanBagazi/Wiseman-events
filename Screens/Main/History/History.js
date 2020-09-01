@@ -199,18 +199,12 @@ function History({ store, navigation }) {
           />
         </View>
         <View style={styles.Container}>
-          {store.history.length < 1 ? (
-            <View style={styles.Logo}>
-              <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
-            </View>
-          ) : (
-            <Card
-              Data={store.history}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-              }
-            />
-          )}
+          <Card
+            Data={store.history}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+          />
         </View>
         <View style={styles.Container}>
           <View style={styles.Logo}>

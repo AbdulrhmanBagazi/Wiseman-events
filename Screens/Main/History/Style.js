@@ -218,6 +218,8 @@ const styles = StyleSheet.create({
     height: height / 4,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    zIndex: -99,
   },
   tinyLogo: {
     height: height / 6,

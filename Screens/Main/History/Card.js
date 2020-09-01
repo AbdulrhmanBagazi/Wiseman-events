@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager, Image } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
@@ -70,6 +70,9 @@ function Card(props) {
 
   return (
     <View style={styles.AllJobCard}>
+      <View style={styles.Logo}>
+        <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
+      </View>
       <FlatList
         data={props.Data}
         showsVerticalScrollIndicator={false}
