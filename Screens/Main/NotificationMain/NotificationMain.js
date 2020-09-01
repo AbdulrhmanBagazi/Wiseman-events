@@ -173,8 +173,10 @@ function NotificationMain({ navigation, store }) {
             <View style={styles.IconView}>
               {item.type === 'payment' ? (
                 <FontAwesome name="dollar" size={30} color="#9CA2B0" />
-              ) : (
+              ) : item.type === 'alert' ? (
                 <Icon name="bell" size={30} color="#9CA2B0" />
+              ) : (
+                <Icon name="alert-triangle" size={30} color="#9CA2B0" />
               )}
             </View>
             <View style={styles.CenterView}>

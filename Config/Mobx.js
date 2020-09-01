@@ -52,7 +52,7 @@ class Store {
     axios
       .get(URL + '/user/getApplication', {
         headers: {
-          Authorization: store.token,
+          Authorization: Token,
         },
       })
       .then(async (response) => {

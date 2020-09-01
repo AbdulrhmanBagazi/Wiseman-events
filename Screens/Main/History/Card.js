@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager, Image, ActivityIndicator } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function Card(props) {
   const getColor = (status) => {
@@ -22,6 +23,8 @@ function Card(props) {
         return 'rgba(229, 83, 83, 0.25)'
       case 'completed':
         return 'rgba(46, 184, 92, 0.25)'
+      case 'withdrawal':
+        return 'rgba(229, 83, 83, 0.25)'
     }
   }
 
@@ -35,12 +38,16 @@ function Card(props) {
         return '#f9b115'
       case 'inactive':
         return '#e55353'
-      case 'terminated':
+      case 'declined':
         return '#e55353'
       case 'canceled':
         return '#e55353'
       case 'completed':
         return '#2eb85c'
+      case 'terminated':
+        return '#e55353'
+      case 'withdrawal':
+        return '#e55353'
     }
   }
 
@@ -58,15 +65,14 @@ function Card(props) {
         return 'ألغيت'
       case 'completed':
         return 'منجز'
+      case 'declined':
+        return 'مرفوض'
       case 'terminated':
-        return 'منتهية'
+        return 'ألغيت'
+      case 'withdrawal':
+        return 'إنسحاب'
     }
   }
-
-  //#2eb85c  (46, 184, 92)
-  //#321fdb (50, 31, 219)
-  //#f9b115 (249, 177, 21)
-  //#e55353  (229, 83, 83)
 
   return (
     <View style={styles.AllJobCard}>
@@ -116,17 +122,35 @@ function Card(props) {
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.attendance}</Text>
                 </View>
               </View>
-              <View style={styles.StatusView}>
-                <View
-                  style={[
-                    styles.StatusBox,
-                    { backgroundColor: getColor(item.Status), borderColor: getColorBorder(item.Status) },
-                  ]}>
-                  <Text style={[styles.StatuText, { color: getColorBorder(item.Status) }]}>
-                    {I18nManager.isRTL ? getArabic(item.Status) : item.Status}
-                  </Text>
+              {props.LoadButton ? (
+                <View style={styles.StatusView}>
+                  <ActivityIndicator size="large" color={PrimaryColor} />
                 </View>
-              </View>
+              ) : (
+                <View style={styles.StatusView}>
+                  <View
+                    style={[
+                      styles.StatusBox,
+                      { backgroundColor: getColor(item.Status), borderColor: getColorBorder(item.Status) },
+                    ]}>
+                    <Text style={[styles.StatuText, { color: getColorBorder(item.Status) }]}>
+                      {I18nManager.isRTL ? getArabic(item.Status) : item.Status}
+                    </Text>
+                  </View>
+                  {item.Status === 'inactive' ||
+                  item.Status === 'declined' ||
+                  item.Status === 'canceled' ||
+                  item.Status === 'completed' ||
+                  item.Status === 'terminated' ||
+                  item.Status === 'withdrawal' ? null : (
+                    <TouchableOpacity
+                      onPress={() => props.Withdrawalapply(item.id, item.userId, item.eventId)}
+                      style={[styles.StatusBox, { backgroundColor: '#e55353', borderColor: PrimaryColor }]}>
+                      <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.withdrawal}</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
             </View>
           </TouchableOpacity>
         )}

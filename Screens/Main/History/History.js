@@ -28,6 +28,7 @@ function History({ store, navigation }) {
   const [isSelected, setSelected] = React.useState(0)
   const [refreshing, setrefreshing] = React.useState(false)
   const [Firstrefreshing, setFirstrefreshing] = React.useState(true)
+  const [isLoadButton, setLoadButton] = React.useState(false)
 
   //
   const { signOut } = React.useContext(AuthContext)
@@ -106,6 +107,20 @@ function History({ store, navigation }) {
               }
             )
             return
+          } else {
+            setrefreshing(false)
+            if (Firstrefreshing) {
+              setFirstrefreshing(false)
+            }
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setrefreshing(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
           }
         } else {
           setrefreshing(false)
@@ -170,6 +185,106 @@ function History({ store, navigation }) {
         }
       })
   }
+
+  const Withdrawalapply = async (id, userId, eventId) => {
+    setLoadButton(true)
+    axios
+      .post(
+        URL + '/user/Withdrawalappli',
+        {
+          id,
+          userId,
+          eventId,
+        },
+        {
+          headers: {
+            Authorization: store.token,
+          },
+        }
+      )
+      .then(async (response) => {
+        if (response.status === 200) {
+          if (response.data.check === 'success') {
+            setLoadButton(false)
+
+            RefreshMiddle()
+            return
+          } else if (response.data.check === 'fail') {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoadButton(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          } else {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoadButton(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadButton(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoadButton(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadButton(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <AnimatedTopTab
@@ -201,6 +316,8 @@ function History({ store, navigation }) {
         <View style={styles.Container}>
           <Card
             Data={store.history}
+            Withdrawalapply={Withdrawalapply}
+            LoadButton={isLoadButton}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
             }

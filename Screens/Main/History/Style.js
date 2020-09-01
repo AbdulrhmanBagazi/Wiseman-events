@@ -193,8 +193,9 @@ const styles = StyleSheet.create({
   },
   StatusView: {
     width,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   StatusBox: {
     justifyContent: 'center',

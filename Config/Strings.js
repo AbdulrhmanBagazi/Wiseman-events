@@ -180,6 +180,7 @@ const SingleJobStrings = {
   Shift: I18nManager.isRTL ? 'الوردية' : 'Shift',
   Attendance: I18nManager.isRTL ? 'الحضور' : 'Attendance',
   Time: I18nManager.isRTL ? 'وقت الوردية' : 'Shift Time',
+  withdrawal: I18nManager.isRTL ? 'إنسحاب' : 'withdrawal',
 }
 
 const HomePageStrings = {
