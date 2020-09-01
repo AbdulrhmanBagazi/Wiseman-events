@@ -110,17 +110,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   DataSections: {
-    flex: 1,
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },
   DataSectionsTime: {
-    flex: 2,
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },
   DataSectionsAta: {
-    flex: 2,
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },

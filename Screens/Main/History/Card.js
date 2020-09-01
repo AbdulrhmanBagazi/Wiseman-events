@@ -115,11 +115,15 @@ function Card(props) {
                 </View>
                 <View style={styles.DataSectionsTime}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.time}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>
+                    {I18nManager.isRTL ? item.eventshift.timeAr : item.eventshift.time}
+                  </Text>
                 </View>
                 <View style={styles.DataSectionsAta}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Attendance}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.attendance}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>
+                    {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
+                  </Text>
                 </View>
               </View>
               {props.LoadButton ? (

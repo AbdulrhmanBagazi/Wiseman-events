@@ -7,6 +7,7 @@ import moment from 'moment'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import QrcodeGen from './QrcodeGen'
 import CalHours from './CalHours'
+import CalSalary from './CalSalay'
 
 function Activejob(props) {
   const [isData, setData] = React.useState([])
@@ -80,7 +81,9 @@ function Activejob(props) {
                     <Text style={styles.GrayColorText}>
                       {I18nManager.isRTL ? 'وقت الحضور' : 'Attendance Time'}
                     </Text>
-                    <Text style={styles.dataTextActive}>{item.eventshift.attendance}</Text>
+                    <Text style={styles.dataTextActive}>
+                      {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.ActivejobBoxTop}>
@@ -96,7 +99,8 @@ function Activejob(props) {
                     <Text style={styles.GrayColorText}>
                       {I18nManager.isRTL ? 'إجمالي الأرباح' : 'Total Earning'}
                     </Text>
-                    <Text style={styles.dataTextActive}>0 sar</Text>
+                    {/* <Text style={styles.dataTextActive}>0 sar</Text> */}
+                    <CalSalary Values={item.attendances} />
                   </View>
                 </View>
                 <View style={styles.ActivejobBoxBottom}>

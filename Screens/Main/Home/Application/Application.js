@@ -28,8 +28,8 @@ function Application({ route, store }) {
 
   const Select = async (val) => {
     setselectedShift(val)
-    setTime(item.eventshifts[val].time)
-    setAttendance(item.eventshifts[val].attendance)
+    setTime(I18nManager.isRTL ? item.eventshifts[val].timeAr : item.eventshifts[val].time)
+    setAttendance(I18nManager.isRTL ? item.eventshifts[val].attendanceAr : item.eventshifts[val].attendance)
     setShiftId(item.eventshifts[val].id)
     setCanApply(true)
     return
