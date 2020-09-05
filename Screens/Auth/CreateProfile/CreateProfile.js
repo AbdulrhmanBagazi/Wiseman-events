@@ -103,6 +103,7 @@ function CreateProfile({ store }) {
     English: '',
     Latitude: '',
     Longitude: '',
+    height: '',
   })
   const [CityDataEn, setCityDataEn] = React.useState('')
   //Map
@@ -152,6 +153,7 @@ function CreateProfile({ store }) {
       data.Birth.length < 1 ||
       Gender.length < 1 ||
       data.English.length < 1 ||
+      data.height.length < 1 ||
       isSelectMapValue === false
     ) {
       setError(ErrorsStrings.Required)
@@ -169,6 +171,7 @@ function CreateProfile({ store }) {
           city: CityDataEn,
           location: data.Latitude + ',' + data.Longitude,
           english: data.English,
+          height: data.height,
         },
         {
           headers: { Authorization: store.token },
@@ -410,6 +413,17 @@ function CreateProfile({ store }) {
           <Text>{isSelectMapValue ? ProfileStrings.locationset : ProfileStrings.location}</Text>
           <Feather name="map" size={24} color={isSelectMapValue ? PrimaryColor : '#000'} />
         </TouchableOpacity>
+
+        <TextInput
+          style={styles.input}
+          placeholder={ProfileStrings.height}
+          onChangeText={(text) =>
+            setData({
+              ...data,
+              height: text.trim(),
+            })
+          }
+        />
 
         <RNPickerSelect
           onValueChange={(text) =>

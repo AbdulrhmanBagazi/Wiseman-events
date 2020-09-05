@@ -47,8 +47,8 @@ function Card(props) {
                 <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {item.Salary}
-                    <Text style={styles.Hour}>{'/' + item.SalaryType}</Text>
+                    {item.Salary} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </View>
               </View>

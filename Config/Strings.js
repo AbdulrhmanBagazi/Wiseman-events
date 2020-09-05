@@ -104,6 +104,7 @@ const ProfileStrings = {
   Title: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
   Done: I18nManager.isRTL ? 'تم' : 'Done',
   Full: I18nManager.isRTL ? 'الإسم الثلاثي' : 'Full Name',
+  height: I18nManager.isRTL ? 'الطول' : 'Height',
   Nationality: I18nManager.isRTL ? 'الجنسية' : 'Nationality',
   Birth: I18nManager.isRTL ? 'تاريخ الميلاد' : 'Date Of Birth',
   Male: I18nManager.isRTL ? 'ذكر' : 'Male',
@@ -273,6 +274,8 @@ const CompleteDetailsStrings = {
   msg: I18nManager.isRTL
     ? 'فيما يتعلق بالدفع النقدي ، ستتلقى إشعارًا بشأن وقت ومكان الدفع.'
     : 'About cash payment you will get notification about when and where for payment.',
+  workHistory: I18nManager.isRTL ? 'سجل العمل' : 'Work History',
+  PaymentAppointments: I18nManager.isRTL ? 'مواعيد الدفع' : 'Payment Appointments',
 }
 
 export {

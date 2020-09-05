@@ -44,7 +44,8 @@ function Activejob(props) {
               </View>
               <Text style={styles.ActivejobHeaderText}>
                 {item.event.Salary}
-                <Text style={styles.ActivejobHeaderTextLight}>/h</Text>
+                {I18nManager.isRTL ? 'ريال' : 'sar'}
+                <Text style={styles.ActivejobHeaderTextLight}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
               </Text>
             </View>
             <View style={styles.ActivejobBody}>

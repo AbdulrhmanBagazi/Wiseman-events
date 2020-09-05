@@ -23,7 +23,7 @@ function CalHours(props) {
   return isLoading ? (
     <ActivityIndicator size="small" color={PrimaryColor} />
   ) : (
-    <Text>
+    <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
       {humanizeDuration(Total, {
         units: ['h', 'm'],
         round: true,

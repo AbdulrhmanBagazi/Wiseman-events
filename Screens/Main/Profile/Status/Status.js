@@ -265,40 +265,42 @@ function Status({ store }) {
   }
 
   React.useEffect(() => {
-    if (store.data.status.days !== null && (store.data.status.time !== null) & I18nManager.isRTL) {
-      var String = store.data.status.time
-      var str = store.data.status.days
-      var res = str.split('to')
-      var arone = getArabic(res[0].trim())
-      var artwo = getArabic(res[1].trim())
-      setTextAr(arone + ' إلى ' + artwo)
+    if (store.data.status !== null) {
+      if (store.data.status.days !== null && store.data.status.time !== null && I18nManager.isRTL) {
+        var String = store.data.status.time
+        var str = store.data.status.days
+        var res = str.split('to')
+        var arone = getArabic(res[0].trim())
+        var artwo = getArabic(res[1].trim())
+        setTextAr(arone + ' إلى ' + artwo)
 
-      if (String !== null && I18nManager.isRTL) {
-        var res = String.split('to')
-        var arone = res[0].trim()
-        var artwo = res[1].trim()
+        if (String !== null && I18nManager.isRTL) {
+          var res = String.split('to')
+          var arone = res[0].trim()
+          var artwo = res[1].trim()
 
-        if (arone.indexOf('am') >= 0) {
-          var newArone = arone.replace('am', 'صباحا')
-        } else {
-          var newArone = arone.replace('pm', 'مساء')
+          if (arone.indexOf('am') >= 0) {
+            var newArone = arone.replace('am', 'صباحا')
+          } else {
+            var newArone = arone.replace('pm', 'مساء')
+          }
+
+          if (artwo.indexOf('am') >= 0) {
+            var newArtwo = artwo.replace('am', 'صباحا')
+          } else {
+            var newArtwo = artwo.replace('pm', 'مساء')
+          }
+
+          setTextarTime(newArone + ' إلى ' + newArtwo)
+          return
         }
 
-        if (artwo.indexOf('am') >= 0) {
-          var newArtwo = artwo.replace('am', 'صباحا')
-        } else {
-          var newArtwo = artwo.replace('pm', 'مساء')
-        }
-
-        setTextarTime(newArone + ' إلى ' + newArtwo)
+        return
+      } else {
+        setTextAr(store.data.status.days)
+        setTextarTime(store.data.status.time)
         return
       }
-
-      return
-    } else {
-      setTextAr(store.data.status.days)
-      setTextarTime(store.data.status.time)
-      return
     }
   }, [])
 

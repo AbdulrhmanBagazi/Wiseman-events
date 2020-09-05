@@ -26,7 +26,9 @@ function CalSalary(props) {
   return isLoading ? (
     <ActivityIndicator size="small" color={PrimaryColor} />
   ) : (
-    <Text>{I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}</Text>
+    <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
+      {I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}
+    </Text>
   )
 }
 
