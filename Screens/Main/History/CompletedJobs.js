@@ -1,12 +1,23 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Image, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager, Linking, Image, Modal } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
-import { PrimaryColor } from '../../../Config/ColorPalette'
 
-function Card(props) {
+function CompletedJobs(props) {
+  const [isData, setData] = React.useState([])
+
+  React.useEffect(() => {
+    var newArray = props.Data.filter((item) => {
+      // console.log(item)
+      return item.Status === 'completed'
+    })
+
+    setData(newArray)
+  }, [props.Data])
+
   const getColor = (status) => {
     switch (status) {
       case 'approved':
@@ -77,10 +88,10 @@ function Card(props) {
   return (
     <View style={styles.AllJobCard}>
       <View style={styles.Logo}>
-        <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
+        <Image style={styles.tinyLogo} source={require('../../../assets/completedjobillustration.png')} />
       </View>
       <FlatList
-        data={props.Data}
+        data={isData}
         showsVerticalScrollIndicator={false}
         refreshControl={props.refreshControl}
         style={styles.AllJobFlatlist}
@@ -142,18 +153,12 @@ function Card(props) {
                       {I18nManager.isRTL ? getArabic(item.Status) : item.Status}
                     </Text>
                   </View>
-                  {item.Status === 'inactive' ||
-                  item.Status === 'declined' ||
-                  item.Status === 'canceled' ||
-                  item.Status === 'completed' ||
-                  item.Status === 'terminated' ||
-                  item.Status === 'withdrawal' ? null : (
-                    <TouchableOpacity
-                      onPress={() => props.Withdrawalapply(item.id, item.userId, item.eventId)}
-                      style={[styles.StatusBox, { backgroundColor: '#e55353', borderColor: PrimaryColor }]}>
-                      <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.withdrawal}</Text>
-                    </TouchableOpacity>
-                  )}
+
+                  <TouchableOpacity
+                    onPress={() => props.Details('CompleteDetails', { item: item })}
+                    style={[styles.StatusBox, { backgroundColor: PrimaryColor, borderColor: PrimaryColor }]}>
+                    <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.Details}</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </View>
@@ -165,4 +170,4 @@ function Card(props) {
   )
 }
 
-export default Card
+export default CompletedJobs

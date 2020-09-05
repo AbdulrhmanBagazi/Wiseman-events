@@ -61,6 +61,7 @@ function JobCard(props) {
                 uri: item.ImageURL,
               }}
               Name={I18nManager.isRTL ? item.NameAr : item.Name}
+              EventStatus={item.Status}
             />
             <View style={styles.SingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>

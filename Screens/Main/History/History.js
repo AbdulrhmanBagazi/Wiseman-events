@@ -22,6 +22,7 @@ import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 //
 import Activejob from './Activejob'
+import CompletedJobs from './CompletedJobs'
 
 function History({ store, navigation }) {
   const Scroll = React.useRef(null)
@@ -29,6 +30,7 @@ function History({ store, navigation }) {
   const [refreshing, setrefreshing] = React.useState(false)
   const [Firstrefreshing, setFirstrefreshing] = React.useState(true)
   const [isLoadButton, setLoadButton] = React.useState(false)
+  const [isData, setData] = React.useState([])
 
   //
   const { signOut } = React.useContext(AuthContext)
@@ -87,6 +89,13 @@ function History({ store, navigation }) {
           if (response.data.check === 'success') {
             await store.setHistoryData(response.data.application)
             setrefreshing(false)
+
+            var newArray = response.data.application.filter((item) => {
+              // console.log(item)
+              return item.Status !== 'completed'
+            })
+
+            setData(newArray)
 
             if (Firstrefreshing) {
               setFirstrefreshing(false)
@@ -315,7 +324,7 @@ function History({ store, navigation }) {
         </View>
         <View style={styles.Container}>
           <Card
-            Data={store.history}
+            Data={isData}
             Withdrawalapply={Withdrawalapply}
             LoadButton={isLoadButton}
             refreshControl={
@@ -324,9 +333,13 @@ function History({ store, navigation }) {
           />
         </View>
         <View style={styles.Container}>
-          <View style={styles.Logo}>
-            <Image style={styles.tinyLogo} source={require('../../../assets/completedjobillustration.png')} />
-          </View>
+          <CompletedJobs
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+            Data={store.history}
+            Details={navigation.navigate}
+          />
         </View>
       </ScrollView>
     </View>

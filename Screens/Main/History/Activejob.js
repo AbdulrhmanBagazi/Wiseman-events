@@ -43,7 +43,8 @@ function Activejob(props) {
                 </Text>
               </View>
               <Text style={styles.ActivejobHeaderText}>
-                10sar<Text style={styles.ActivejobHeaderTextLight}>/h</Text>
+                {item.event.Salary}
+                <Text style={styles.ActivejobHeaderTextLight}>/h</Text>
               </Text>
             </View>
             <View style={styles.ActivejobBody}>
@@ -100,7 +101,7 @@ function Activejob(props) {
                       {I18nManager.isRTL ? 'إجمالي الأرباح' : 'Total Earning'}
                     </Text>
                     {/* <Text style={styles.dataTextActive}>0 sar</Text> */}
-                    <CalSalary Values={item.attendances} />
+                    <CalSalary Values={item.attendances} Rate={item} />
                   </View>
                 </View>
                 <View style={styles.ActivejobBoxBottom}>
@@ -108,16 +109,14 @@ function Activejob(props) {
                     <Text style={styles.GrayColorText}>
                       {I18nManager.isRTL ? 'تاريخ البدء' : 'Start Date'}
                     </Text>
-                    <Text style={styles.dataTextActive}>
-                      {moment(item.event.Start).format('D MMMM, YYYY')}
-                    </Text>
+                    <Text style={styles.dataTextActive}>{moment(item.Start).format('D MMMM, YYYY')}</Text>
                   </View>
 
                   <View style={styles.Activejobsplit}>
                     <Text style={styles.GrayColorText}>
                       {I18nManager.isRTL ? 'تاريخ الانتهاء' : 'End Date'}
                     </Text>
-                    <Text style={styles.dataTextActive}>{moment(item.event.End).format('D MMMM, YYYY')}</Text>
+                    <Text style={styles.dataTextActive}>{moment(item.End).format('D MMMM, YYYY')}</Text>
                   </View>
                 </View>
               </View>

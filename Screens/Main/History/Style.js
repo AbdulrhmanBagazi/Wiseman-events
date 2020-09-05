@@ -380,6 +380,80 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
+  //CompleteDetails
+  CompleteDetailsView: {
+    flex: 1,
+  },
+  CompleteDetailsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    marginVertical: 40,
+    marginHorizontal: 15,
+    alignSelf: 'center',
+  },
+  CompleteDetailsHeaderView: {
+    flex: 2,
+    alignItems: 'flex-start',
+  },
+  CompleteDetailsHeaderViewSalary: {
+    flex: 1,
+    marginHorizontal: 2,
+  },
+  CompleteDetailsHeaderViewText: {
+    color: '#A7AAB2',
+    fontWeight: '600',
+    fontSize: 14,
+    marginBottom: 9,
+  },
+  CompleteDetailsHeaderViewTextValue: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  CompleteDetailsbodyTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginHorizontal: 16,
+    marginBottom: 10,
+  },
+  CompleteDetailsbodyContainer: {
+    marginHorizontal: 16,
+    borderRadius: 5,
+    borderColor: '#E4E8F1',
+    borderWidth: 1,
+  },
+  CompleteDetailsbodyContainerData: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
+    marginTop: 15,
+  },
+  msg: {
+    marginHorizontal: 12,
+    marginVertical: 13,
+    textAlign: 'left',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  CompleteDetailsbodyContainerDataText: {
+    color: '#A7AAB2',
+    fontWeight: '600',
+    fontSize: 14,
+    textAlign: 'left',
+  },
+  CompleteDetailsbodyContainerDataTextValue: {
+    fontWeight: '600',
+    fontSize: 12,
+  },
+  CompleteDetailStatusBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
 })
 
 export default styles

@@ -36,6 +36,7 @@ const HeaderTitles = {
   Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
+  CompleteDetails: I18nManager.isRTL ? 'تفاصيل العمل' : 'Work Details',
 }
 
 const LanguageChangeStrings = {
@@ -155,6 +156,7 @@ const ErrorsStrings = {
 
 const SingleJobStrings = {
   Application: I18nManager.isRTL ? 'قدم الطلب' : 'Submit Application',
+  EventEnded: I18nManager.isRTL ? 'انتهت الفعالية' : 'Event Ended',
   Description: I18nManager.isRTL ? 'الوصف' : 'Description',
   Rules: I18nManager.isRTL ? 'شروط' : 'Rules',
   Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
@@ -181,6 +183,7 @@ const SingleJobStrings = {
   Attendance: I18nManager.isRTL ? 'الحضور' : 'Attendance',
   Time: I18nManager.isRTL ? 'وقت الوردية' : 'Shift Time',
   withdrawal: I18nManager.isRTL ? 'إنسحاب' : 'withdrawal',
+  Details: I18nManager.isRTL ? 'تفاصيل' : 'Details',
 }
 
 const HomePageStrings = {
@@ -258,6 +261,20 @@ const StatusPageStrings = {
   Done: I18nManager.isRTL ? 'تم' : 'Done',
 }
 
+const CompleteDetailsStrings = {
+  Attended: I18nManager.isRTL ? 'آيام العمل' : 'Work days',
+  Totalhours: I18nManager.isRTL ? 'مجموع الساعات' : 'Total Hours',
+  Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
+  Paymentstatus: I18nManager.isRTL ? 'حالة الدفع' : 'Payment Status',
+  Paymentmethod: I18nManager.isRTL ? 'طريقة الدفع او السداد' : 'Payment Method',
+  Start: I18nManager.isRTL ? 'تاريخ البدء' : 'Event Started',
+  Ended: I18nManager.isRTL ? 'تاريخ الإنتهاء' : 'Event Ended',
+  Salary: I18nManager.isRTL ? 'الراتب' : 'Salary',
+  msg: I18nManager.isRTL
+    ? 'فيما يتعلق بالدفع النقدي ، ستتلقى إشعارًا بشأن وقت ومكان الدفع.'
+    : 'About cash payment you will get notification about when and where for payment.',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -276,4 +293,5 @@ export {
   SupportPageStrings,
   IBANPageStrings,
   StatusPageStrings,
+  CompleteDetailsStrings,
 }

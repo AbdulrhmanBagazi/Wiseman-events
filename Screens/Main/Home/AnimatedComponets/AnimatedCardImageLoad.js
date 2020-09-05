@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Animated, ImageBackground, Image } from 'react-native'
+import { View, Text, Animated, ImageBackground, Image, I18nManager } from 'react-native'
 import styles from '../Style'
 
 function AnimatedCardImageLoad(props) {
@@ -24,6 +24,18 @@ function AnimatedCardImageLoad(props) {
       />
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
+
+        <View
+          style={[
+            styles.StatusTextView,
+            { backgroundColor: props.EventStatus === 'active' ? '#11865B' : '#D31340' },
+          ]}>
+          {I18nManager.isRTL ? (
+            <Text style={styles.StatusText}>{props.EventStatus === 'active' ? 'نشط' : 'انتهى'}</Text>
+          ) : (
+            <Text style={styles.StatusText}>{props.EventStatus === 'active' ? 'Active' : 'Ended'}</Text>
+          )}
+        </View>
       </View>
     </View>
   )

@@ -29,8 +29,6 @@ function SingleJob({ route, store, navigation }) {
   const Scroll = React.useRef(null)
   const { item } = route.params
 
-  //   console.log(item)
-
   React.useEffect(() => {
     var Dpoints = I18nManager.isRTL ? item.DescriptionPointsAr : item.DescriptionPoints
     var Rpoints = I18nManager.isRTL ? item.RulesPointsAr : item.RulesPoints
@@ -191,9 +189,20 @@ function SingleJob({ route, store, navigation }) {
         </View>
       </ScrollView>
       <View style={styles.ButtonView}>
-        <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('Application', { item })}>
-          <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
-        </TouchableOpacity>
+        {item.Status === 'active' ? (
+          <TouchableOpacity
+            style={styles.Button}
+            onPress={() => navigation.navigate('Application', { item })}>
+            <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.ButtonDisabled, { borderColor: '#cccccc', backgroundColor: '#cccccc' }]}
+            disabled={true}
+            onPress={() => navigation.navigate('Application', { item })}>
+            <Text style={styles.ButtonText}>{SingleJobStrings.EventEnded}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )

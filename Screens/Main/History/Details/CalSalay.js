@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ActivityIndicator, I18nManager } from 'react-native'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import styles from './Style'
+import { PrimaryColor } from '../../../../Config/ColorPalette'
+import styles from '../Style'
 
 function CalSalary(props) {
   const [isLoading, setLoading] = React.useState(true)
@@ -23,14 +23,10 @@ function CalSalary(props) {
     setLoading(false)
   }, [props.Values])
 
-  return (
-    <View style={styles.dataTextActive}>
-      {isLoading ? (
-        <ActivityIndicator size="small" color={PrimaryColor} />
-      ) : (
-        <Text>{I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}</Text>
-      )}
-    </View>
+  return isLoading ? (
+    <ActivityIndicator size="small" color={PrimaryColor} />
+  ) : (
+    <Text>{I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}</Text>
   )
 }
 

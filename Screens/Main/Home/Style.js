@@ -293,6 +293,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 10,
   },
+  StatusText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 12,
+  },
+  StatusTextView: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+  },
 })
 
 export default styles
