@@ -408,6 +408,7 @@ const styles = StyleSheet.create({
   CompleteDetailsHeaderViewSalary: {
     flex: 1,
     marginHorizontal: 2,
+    alignItems: 'flex-start',
   },
   CompleteDetailsHeaderViewText: {
     color: '#A7AAB2',
@@ -462,6 +463,11 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 5,
+  },
+  CompleteDetailTextnodate: {
+    fontWeight: '600',
+    fontSize: 12,
+    color: PrimaryColor,
   },
 })
 

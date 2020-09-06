@@ -28,6 +28,7 @@ function Status({ store }) {
   const [TimeEnd, setTimeEnd] = React.useState(null)
   const [textAr, setTextAr] = React.useState('')
   const [textarTime, setTextarTime] = React.useState('')
+  const [isReload, setReload] = React.useState(false)
 
   //
   const { signOut } = React.useContext(AuthContext)
@@ -69,6 +70,7 @@ function Status({ store }) {
               setTimeout(() => {
                 setLoading(false)
                 setShow(false)
+                setReload(!isReload)
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
@@ -190,6 +192,7 @@ function Status({ store }) {
               setTimeout(() => {
                 setLoading(false)
                 setShow(false)
+                setReload(!isReload)
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
@@ -302,7 +305,7 @@ function Status({ store }) {
         return
       }
     }
-  }, [])
+  }, [isReload])
 
   const getArabic = (day) => {
     switch (day) {

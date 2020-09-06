@@ -12,12 +12,18 @@ function CalSalary(props) {
     var data = props.Values
     var rate = Number(props.Rate.event.Salary / 60)
     var total = 0
-
     for (var i = 0; i < data.length; i++) {
-      total = total + Math.floor(Number(data[i].TotalHours / 60000))
+      if (data[i].Type === 'organizer') {
+        var rate = Number(props.Rate.event.Salary / 60)
+        var cal = Math.floor(Number(data[i].TotalHours / 60000)) * rate
+        total = total + cal
+      } else {
+        var rate = Number(props.Rate.event.SalarySupervisor / 60)
+        var cal = Math.floor(Number(data[i].TotalHours / 60000)) * rate
+        total = total + cal
+      }
     }
-    var min = total
-    var salary = Math.round(min * rate)
+    var salary = Math.round(total)
 
     setTotal(salary)
     setLoading(false)

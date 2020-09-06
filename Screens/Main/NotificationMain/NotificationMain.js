@@ -175,8 +175,12 @@ function NotificationMain({ navigation, store }) {
                 <FontAwesome name="dollar" size={30} color="#9CA2B0" />
               ) : item.type === 'alert' ? (
                 <Icon name="bell" size={30} color="#9CA2B0" />
-              ) : (
+              ) : item.type === 'warning' ? (
                 <Icon name="alert-triangle" size={30} color="#9CA2B0" />
+              ) : item.type === 'promote' ? (
+                <Icon name="chevrons-up" size={30} color="#9CA2B0" />
+              ) : (
+                <Icon name="chevrons-down" size={30} color="#9CA2B0" />
               )}
             </View>
             <View style={styles.CenterView}>

@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   bodyText: {
     fontWeight: '500',
     color: '#868991',
-    textAlign: 'justify',
+    textAlign: 'left',
   },
   TimeText: {
     fontWeight: '500',

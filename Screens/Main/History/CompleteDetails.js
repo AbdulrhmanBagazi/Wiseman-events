@@ -9,10 +9,30 @@ import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function CompleteDetails({ route }) {
+  const [Super, setSuper] = React.useState([])
+  const [Organizer, setOrganizer] = React.useState([])
+
   const { item } = route.params
   // console.log(item)
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    var data = item.attendances
+
+    var newArrayO = data.filter((item) => {
+      // console.log(item.attendances.length)
+      // return item.Status === 'completed'
+      return item.Type === 'organizer'
+    })
+
+    var newArrayS = data.filter((item) => {
+      // console.log(item.attendances.length)
+      // return item.Status === 'completed'
+      return item.Type === 'supervisor'
+    })
+
+    setSuper(newArrayS)
+    setOrganizer(newArrayO)
+  }, [])
 
   //   values: ['pending', 'paid', 'not-paid'],
 
@@ -85,7 +105,7 @@ function CompleteDetails({ route }) {
 
         <View style={styles.CompleteDetailsHeaderHour}>
           <View style={styles.CompleteDetailsHeaderViewSalary}>
-            <Text style={styles.CompleteDetailsHeaderViewText}>{CompleteDetailsStrings.Salary}</Text>
+            <Text style={styles.CompleteDetailsHeaderViewText}>{CompleteDetailsStrings.SalaryOrganizer}</Text>
             <Text style={styles.CompleteDetailsHeaderViewTextValue}>
               {item.event.Salary}
               {I18nManager.isRTL ? 'ريال' : 'sar'}
@@ -94,6 +114,19 @@ function CompleteDetails({ route }) {
               </Text>
             </Text>
           </View>
+
+          {Super.length >= 1 ? (
+            <View style={styles.CompleteDetailsHeaderViewSalary}>
+              <Text style={styles.CompleteDetailsHeaderViewText}>{CompleteDetailsStrings.Salary}</Text>
+              <Text style={styles.CompleteDetailsHeaderViewTextValue}>
+                {item.event.SalarySupervisor}
+                {I18nManager.isRTL ? 'ريال' : 'sar'}
+                <Text style={styles.CompleteDetailsHeaderViewText}>
+                  /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                </Text>
+              </Text>
+            </View>
+          ) : null}
         </View>
 
         <View>
@@ -106,11 +139,22 @@ function CompleteDetails({ route }) {
                 </Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
-                  {item.attendances.length}
-                </Text>
+                <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>{Organizer.length}</Text>
               </View>
             </View>
+
+            {Super.length >= 1 ? (
+              <View style={styles.CompleteDetailsbodyContainerData}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                    {CompleteDetailsStrings.AttendedSuper}
+                  </Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                  <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>{Super.length}</Text>
+                </View>
+              </View>
+            ) : null}
 
             <View style={styles.CompleteDetailsbodyContainerData}>
               <View style={{ flex: 1 }}>
@@ -181,52 +225,59 @@ function CompleteDetails({ route }) {
           </View>
         </View>
       </View>
-      <View>
-        <Text style={styles.CompleteDetailsbodyTitle}>{CompleteDetailsStrings.PaymentAppointments}</Text>
-        <FlatList
-          data={item.event.appointments}
-          showsVerticalScrollIndicator={false}
-          horizontal={true}
-          style={styles.AllJobFlatlist}
-          renderItem={({ item, index }) => (
-            <View style={styles.ActivejobView}>
-              <View style={styles.ActivejobBoxContainer}>
-                <View style={styles.ActivejobBox}>
-                  <View style={styles.ActivejobBoxTop}>
-                    <View style={styles.Activejobsplit}>
-                      <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'التاريخ' : 'Date'}</Text>
-                      <Text style={styles.dataTextActive}>{item.Date}</Text>
-                    </View>
+      <Text style={styles.CompleteDetailsbodyTitle}>{CompleteDetailsStrings.PaymentAppointments}</Text>
+      {item.event.appointments.length < 1 ? (
+        <View style={[styles.ActivejobView, { alignSelf: 'center' }]}>
+          <View style={styles.ActivejobBoxContainer}>
+            <View style={[styles.ActivejobBox, { justifyContent: 'center', alignItems: 'center' }]}>
+              <Text style={styles.CompleteDetailTextnodate}>{CompleteDetailsStrings.noDate}</Text>
+            </View>
+          </View>
+        </View>
+      ) : null}
+      <FlatList
+        data={item.event.appointments}
+        showsVerticalScrollIndicator={false}
+        horizontal={true}
+        style={[styles.AllJobFlatlist, { alignSelf: 'center' }]}
+        renderItem={({ item, index }) => (
+          <View style={styles.ActivejobView}>
+            <View style={styles.ActivejobBoxContainer}>
+              <View style={styles.ActivejobBox}>
+                <View style={styles.ActivejobBoxTop}>
+                  <View style={styles.Activejobsplit}>
+                    <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'التاريخ' : 'Date'}</Text>
+                    <Text style={styles.dataTextActive}>{item.Date}</Text>
+                  </View>
 
-                    <View style={styles.Activejobsplit}>
-                      <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'الوقت' : 'Time'}</Text>
-                      <Text style={styles.dataTextActive}>
-                        {moment(item.TimeStart, 'hh:mm').format('LT') +
-                          ' => ' +
-                          moment(item.TimeEnd, 'hh:mm').format('LT')}
-                      </Text>
-                    </View>
+                  <View style={styles.Activejobsplit}>
+                    <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'الوقت' : 'Time'}</Text>
+                    <Text style={styles.dataTextActive}>
+                      {moment(item.TimeStart, 'hh:mm').format('LT') +
+                        ' => ' +
+                        moment(item.TimeEnd, 'hh:mm').format('LT')}
+                    </Text>
                   </View>
-                  <View style={styles.ActivejobBoxTop}>
-                    <View style={styles.Activejobsplit}>
-                      <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'وصف' : 'Description'}</Text>
-                      <Text style={styles.dataTextActive}>{item.msg}</Text>
-                    </View>
+                </View>
+                <View style={styles.ActivejobBoxTop}>
+                  <View style={styles.Activejobsplit}>
+                    <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'وصف' : 'Description'}</Text>
+                    <Text style={styles.dataTextActive}>{item.msg}</Text>
                   </View>
-                  <View style={styles.SplitBodyHOne}>
-                    <TouchableOpacity
-                      style={styles.SingleJobDetailsLocationView}
-                      onPress={() => Linking.openURL(item.LocationURL)}>
-                      <Icon name="map-pin" size={24} color={PrimaryColor} />
-                    </TouchableOpacity>
-                  </View>
+                </View>
+                <View style={styles.SplitBodyHOne}>
+                  <TouchableOpacity
+                    style={styles.SingleJobDetailsLocationView}
+                    onPress={() => Linking.openURL(item.LocationURL)}>
+                    <Icon name="map-pin" size={24} color={PrimaryColor} />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </ScrollView>
   )
 }

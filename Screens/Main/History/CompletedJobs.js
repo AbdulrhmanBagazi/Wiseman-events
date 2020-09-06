@@ -11,8 +11,9 @@ function CompletedJobs(props) {
 
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
-      // console.log(item)
-      return item.Status === 'completed'
+      // console.log(item.attendances.length)
+      // return item.Status === 'completed'
+      return item.attendances.length >= 1
     })
 
     setData(newArray)

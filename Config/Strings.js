@@ -263,19 +263,28 @@ const StatusPageStrings = {
 }
 
 const CompleteDetailsStrings = {
-  Attended: I18nManager.isRTL ? 'آيام العمل' : 'Work days',
+  Attended: I18nManager.isRTL ? 'آيام العمل (منظم)' : 'Work days (Organizer)',
+  AttendedSuper: I18nManager.isRTL ? 'آيام العمل (مشرف)' : 'Work days (Supervisor)',
   Totalhours: I18nManager.isRTL ? 'مجموع الساعات' : 'Total Hours',
   Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
   Paymentstatus: I18nManager.isRTL ? 'حالة الدفع' : 'Payment Status',
   Paymentmethod: I18nManager.isRTL ? 'طريقة الدفع او السداد' : 'Payment Method',
   Start: I18nManager.isRTL ? 'تاريخ البدء' : 'Event Started',
   Ended: I18nManager.isRTL ? 'تاريخ الإنتهاء' : 'Event Ended',
-  Salary: I18nManager.isRTL ? 'الراتب' : 'Salary',
+  Salary: I18nManager.isRTL ? 'راتب المشرف' : 'Supervisor Salary',
+  SalaryOrganizer: I18nManager.isRTL ? 'راتب المظم' : 'Organizer Salary',
   msg: I18nManager.isRTL
     ? 'فيما يتعلق بالدفع النقدي ، ستتلقى إشعارًا بشأن وقت ومكان الدفع.'
     : 'About cash payment you will get notification about when and where for payment.',
   workHistory: I18nManager.isRTL ? 'سجل العمل' : 'Work History',
   PaymentAppointments: I18nManager.isRTL ? 'مواعيد الدفع' : 'Payment Appointments',
+  noDate: I18nManager.isRTL ? 'لم يتم تحديد موعد' : 'No date has been set',
+  organizer: I18nManager.isRTL ? 'المنظم' : 'Organizer',
+  supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
+}
+
+const HistoryPageStrings = {
+  RefreshText: I18nManager.isRTL ? 'للتحديث اسحب للأسفل' : 'Pull down to refresh',
 }
 
 export {
@@ -297,4 +306,5 @@ export {
   IBANPageStrings,
   StatusPageStrings,
   CompleteDetailsStrings,
+  HistoryPageStrings,
 }

@@ -14,9 +14,12 @@ function CalHours(props) {
     var total = 0
 
     for (var i = 0; i < data.length; i++) {
-      total = total + Number(data[i].TotalHours)
+      total = total + Math.floor(Number(data[i].TotalHours) / 60000)
     }
-    setTotal(total)
+
+    var mills = total * 60000
+
+    setTotal(mills)
     setLoading(false)
   }, [props.Values])
 

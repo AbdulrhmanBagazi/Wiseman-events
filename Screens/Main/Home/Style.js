@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   DataSections: {
-    flex: 1,
+    // flex: 1,
     marginHorizontal: 15,
     alignItems: 'flex-start',
   },
