@@ -162,6 +162,10 @@ const SingleJobStrings = {
   Rules: I18nManager.isRTL ? 'شروط' : 'Rules',
   Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
   date: I18nManager.isRTL ? 'تاريخ الحدث: ' : 'Event Date: ',
+  StartDate: I18nManager.isRTL ? 'تاريخ المباشرة: ' : 'Start Date: ',
+  StartDateString: I18nManager.isRTL
+    ? 'في حال قبولك، سيتم تحديد تاريخ المباشرة'
+    : 'If accepted, the start date will be determined',
   Vacancy: I18nManager.isRTL ? 'العدد' : 'Vacancy',
   Salary: I18nManager.isRTL ? 'راتب' : 'Salary',
   Shifts: I18nManager.isRTL ? 'المناوبات' : 'Shifts',

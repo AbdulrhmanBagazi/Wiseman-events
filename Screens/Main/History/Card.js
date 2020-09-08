@@ -73,7 +73,6 @@ function Card(props) {
         return 'إنسحاب'
     }
   }
-
   return (
     <View style={styles.AllJobCard}>
       <View style={styles.Logo}>
@@ -95,9 +94,9 @@ function Card(props) {
             />
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
-                {SingleJobStrings.date}
-                <Text style={{ color: '#000' }}>
-                  {I18nManager.isRTL ? item.event.DateAr : item.event.Date}
+                {SingleJobStrings.StartDate}
+                <Text style={{ color: item.Start ? '#2eb85c' : '#e55353' }}>
+                  {item.Start ? item.Start : SingleJobStrings.StartDateString}
                 </Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>

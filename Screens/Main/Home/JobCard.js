@@ -5,6 +5,9 @@ import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
+
 function JobCard(props) {
   const [isFade, setFade] = React.useState(true)
   const [Fade] = React.useState(new Animated.Value(0))
@@ -24,7 +27,7 @@ function JobCard(props) {
     return
   })
   return (
-    <Animated.View style={[styles.JobCard, { opacity: Fade }]}>
+    <View style={styles.JobCard}>
       <View style={styles.space} />
       <View style={styles.Section}>
         <View style={styles.SectionTtitle}>
@@ -55,7 +58,9 @@ function JobCard(props) {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.SingleJob} onPress={() => props.click('SingleJob', { item })}>
+          <AnimatedTouchableOpacity
+            style={[styles.SingleJob, { opacity: Fade }]}
+            onPress={() => props.click('SingleJob', { item })}>
             <AnimatedCardImageLoad
               source={{
                 uri: item.ImageURL,
@@ -96,10 +101,10 @@ function JobCard(props) {
                 </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </AnimatedTouchableOpacity>
         )}
       />
-    </Animated.View>
+    </View>
   )
 }
 

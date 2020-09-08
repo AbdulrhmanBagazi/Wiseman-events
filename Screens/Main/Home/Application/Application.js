@@ -151,6 +151,7 @@ function Application({ route, store }) {
                 showsHorizontalScrollIndicator={false}
                 data={item.eventshifts}
                 horizontal={true}
+                inverted={I18nManager.isRTL ? true : false}
                 renderItem={({ item, index }) => (
                   <AnimatedButton
                     Shift={selectedShift}
