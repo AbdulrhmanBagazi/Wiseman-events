@@ -1,5 +1,14 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Image, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  I18nManager,
+  Image,
+  ActivityIndicator,
+  Alert,
+} from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
@@ -148,8 +157,29 @@ function Card(props) {
                   item.Status === 'terminated' ||
                   item.Status === 'withdrawal' ? null : (
                     <TouchableOpacity
-                      onPress={() => props.Withdrawalapply(item.id, item.userId, item.eventId)}
-                      style={[styles.StatusBox, { backgroundColor: '#e55353', borderColor: PrimaryColor }]}>
+                      onPress={() =>
+                        Alert.alert(
+                          '',
+                          I18nManager.isRTL
+                            ? 'هل أنت متأكد أنك تريد الإنسحاب من العمل؟'
+                            : 'Are you sure you want to withdraw from work?',
+                          [
+                            {
+                              text: I18nManager.isRTL ? 'لا' : 'No',
+                              style: 'cancel',
+                            },
+                            {
+                              text: I18nManager.isRTL ? 'نعم' : 'Yes',
+                              onPress: () => props.Withdrawalapply(item.id, item.userId, item.eventId),
+                            },
+                          ],
+                          { cancelable: false }
+                        )
+                      }
+                      style={[
+                        styles.StatusBoxWithdraw,
+                        { backgroundColor: '#e55353', borderColor: '#e55353' },
+                      ]}>
                       <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.withdrawal}</Text>
                     </TouchableOpacity>
                   )}

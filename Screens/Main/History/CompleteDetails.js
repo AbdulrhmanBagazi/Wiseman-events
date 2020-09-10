@@ -5,6 +5,7 @@ import { CompleteDetailsStrings } from '../../../Config/Strings'
 import moment from 'moment'
 import CalHours from './Details/CalHours'
 import CalSalary from './Details/CalSalay'
+import CalHoursSuper from './Details/CalHoursSuper'
 import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 
@@ -159,13 +160,26 @@ function CompleteDetails({ route }) {
             <View style={styles.CompleteDetailsbodyContainerData}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                  {CompleteDetailsStrings.Totalhours}
+                  {CompleteDetailsStrings.TotalhoursO}
                 </Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end' }}>
                 <CalHours Values={item.attendances} />
               </View>
             </View>
+
+            {Super.length >= 1 ? (
+              <View style={styles.CompleteDetailsbodyContainerData}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                    {CompleteDetailsStrings.TotalhoursS}
+                  </Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                  <CalHoursSuper Values={item.attendances} />
+                </View>
+              </View>
+            ) : null}
 
             <View style={styles.CompleteDetailsbodyContainerData}>
               <View style={{ flex: 1 }}>

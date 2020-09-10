@@ -168,7 +168,7 @@ const SingleJobStrings = {
     : 'If accepted, the start date will be determined',
   Vacancy: I18nManager.isRTL ? 'العدد' : 'Vacancy',
   Salary: I18nManager.isRTL ? 'راتب' : 'Salary',
-  Shifts: I18nManager.isRTL ? 'المناوبات' : 'Shifts',
+  Shifts: I18nManager.isRTL ? 'الورديات' : 'Shifts',
   About: I18nManager.isRTL ? 'عن العمل' : 'About the job',
   Responsibility: I18nManager.isRTL ? 'مسؤوليات العمل' : 'Job responsibilities ',
   CompanyRules: I18nManager.isRTL ? 'شروط العمل' : 'Job Rules',
@@ -269,14 +269,15 @@ const StatusPageStrings = {
 const CompleteDetailsStrings = {
   Attended: I18nManager.isRTL ? 'آيام العمل (منظم)' : 'Work days (Organizer)',
   AttendedSuper: I18nManager.isRTL ? 'آيام العمل (مشرف)' : 'Work days (Supervisor)',
-  Totalhours: I18nManager.isRTL ? 'مجموع الساعات' : 'Total Hours',
+  TotalhoursO: I18nManager.isRTL ? 'إجمالي الساعات (منظم)' : 'Total Hours (Organizer)',
+  TotalhoursS: I18nManager.isRTL ? 'إجمالي الساعات (مشرف)' : 'Total Hours (Supervisor)',
   Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
   Paymentstatus: I18nManager.isRTL ? 'حالة الدفع' : 'Payment Status',
   Paymentmethod: I18nManager.isRTL ? 'طريقة الدفع او السداد' : 'Payment Method',
   Start: I18nManager.isRTL ? 'تاريخ البدء' : 'Event Started',
   Ended: I18nManager.isRTL ? 'تاريخ الإنتهاء' : 'Event Ended',
   Salary: I18nManager.isRTL ? 'راتب المشرف' : 'Supervisor Salary',
-  SalaryOrganizer: I18nManager.isRTL ? 'راتب المظم' : 'Organizer Salary',
+  SalaryOrganizer: I18nManager.isRTL ? 'راتب المنظم' : 'Organizer Salary',
   msg: I18nManager.isRTL
     ? 'فيما يتعلق بالدفع النقدي ، ستتلقى إشعارًا بشأن وقت ومكان الدفع.'
     : 'About cash payment you will get notification about when and where for payment.',

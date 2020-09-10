@@ -30,7 +30,7 @@ function CalHours(props) {
       ) : (
         <Text>
           {humanizeDuration(Total, {
-            units: ['h', 'm'],
+            units: ['h'],
             round: true,
             language: I18nManager.isRTL ? 'ar' : 'en',
             fallbacks: ['en'],

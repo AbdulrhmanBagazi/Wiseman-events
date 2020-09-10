@@ -4,7 +4,7 @@ import { PrimaryColor } from '../../../../Config/ColorPalette'
 import styles from '../Style'
 import humanizeDuration from 'humanize-duration'
 
-function CalHours(props) {
+function CalHoursSuper(props) {
   const [isLoading, setLoading] = React.useState(true)
   const [Total, setTotal] = React.useState(0)
 
@@ -14,7 +14,7 @@ function CalHours(props) {
     var total = 0
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Type === 'organizer') {
+      if (data[i].Type === 'supervisor') {
         total = total + Math.floor(Number(data[i].TotalHours) / 60000)
       }
     }
@@ -39,4 +39,4 @@ function CalHours(props) {
   )
 }
 
-export default CalHours
+export default CalHoursSuper

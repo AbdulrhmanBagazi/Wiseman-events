@@ -10,20 +10,30 @@ function CalSalary(props) {
   React.useEffect(() => {
     setLoading(true)
     var data = props.Values
-    var rate = Number(props.Rate.event.Salary / 60)
-    var total = 0
+    var rateHourOrganizer = Number(props.Rate.event.Salary)
+    var rateHourSupervisor = Number(props.Rate.event.SalarySupervisor)
+
+    var totalHours = 0
+    var totalSuperHours = 0
+
     for (var i = 0; i < data.length; i++) {
       if (data[i].Type === 'organizer') {
-        var rate = Number(props.Rate.event.Salary / 60)
-        var cal = Math.floor(Number(data[i].TotalHours / 60000)) * rate
-        total = total + cal
+        var min = Math.floor(Number(data[i].TotalHours / 60000))
+        var hours = Math.round(min / 60)
+
+        totalHours = totalHours + hours
       } else {
-        var rate = Number(props.Rate.event.SalarySupervisor / 60)
-        var cal = Math.floor(Number(data[i].TotalHours / 60000)) * rate
-        total = total + cal
+        var min = Math.floor(Number(data[i].TotalHours / 60000))
+        var hours = Math.round(min / 60)
+
+        totalSuperHours = totalSuperHours + hours
       }
     }
-    var salary = Math.round(total)
+
+    var organizerSalary = totalHours * rateHourOrganizer
+    var supervisorSalary = totalSuperHours * rateHourSupervisor
+
+    var salary = organizerSalary + supervisorSalary
 
     setTotal(salary)
     setLoading(false)
