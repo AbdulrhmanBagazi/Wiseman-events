@@ -12,7 +12,7 @@ import {
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
-import { SingleJobStrings } from '../../../Config/Strings'
+import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../Config/Strings'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function Card(props) {
@@ -102,12 +102,29 @@ function Card(props) {
               EventStatus={item.event.Status}
             />
             <View style={styles.AllSSingleJobDetails}>
-              <Text style={styles.SingleJobDetailsTime}>
+              {/* <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.StartDate}
                 <Text style={{ color: item.Start ? '#2eb85c' : '#e55353' }}>
                   {item.Start ? item.Start : SingleJobStrings.StartDateString}
                 </Text>
-              </Text>
+              </Text> */}
+              <View style={styles.TypeBadge}>
+                {item.Organizer ? (
+                  <View style={item.Type === 'organizer' ? styles.badgeS : styles.badgeO}>
+                    <Text style={item.Type === 'organizer' ? styles.BadgeTextS : styles.BadgeText}>
+                      {AnimatedButtonSelectStrings.organizer}
+                    </Text>
+                  </View>
+                ) : null}
+
+                {item.Supervisor ? (
+                  <View style={item.Type === 'supervisor' ? styles.badgeS : styles.badgeO}>
+                    <Text style={item.Type === 'supervisor' ? styles.BadgeTextS : styles.BadgeText}>
+                      {AnimatedButtonSelectStrings.supervisor}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}
               </Text>

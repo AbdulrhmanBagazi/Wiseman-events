@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText, GrayColor, LightText } from '../../../Config/ColorPalette'
+import {
+  PrimaryColor,
+  SecondaryText,
+  GrayColor,
+  LightText,
+  SecondaryColor,
+} from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   Container: {
@@ -485,6 +491,32 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 12,
     color: PrimaryColor,
+  },
+  TypeBadge: {
+    flexDirection: 'row',
+    marginVertical: 5,
+    marginHorizontal: 5,
+  },
+  badgeO: {
+    backgroundColor: GrayColor,
+    padding: 5,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  badgeS: {
+    backgroundColor: PrimaryColor,
+    padding: 5,
+    borderRadius: 5,
+  },
+  BadgeText: {
+    fontWeight: '600',
+    fontSize: 11,
+    color: LightText,
+  },
+  BadgeTextS: {
+    fontWeight: '600',
+    fontSize: 11,
+    color: '#fff',
   },
 })
 

@@ -189,6 +189,8 @@ const SingleJobStrings = {
   Time: I18nManager.isRTL ? 'وقت الوردية' : 'Shift Time',
   withdrawal: I18nManager.isRTL ? 'إنسحاب' : 'withdrawal',
   Details: I18nManager.isRTL ? 'تفاصيل' : 'Details',
+  ApplyingAs: I18nManager.isRTL ? 'تحديد الوظيفة' : 'Select Job',
+  SelectOneOrMore: I18nManager.isRTL ? 'حدد واحدًا أو أكثر' : 'Select one or more',
 }
 
 const HomePageStrings = {
@@ -292,6 +294,11 @@ const HistoryPageStrings = {
   RefreshText: I18nManager.isRTL ? 'للتحديث اسحب للأسفل' : 'Pull down to refresh',
 }
 
+const AnimatedButtonSelectStrings = {
+  organizer: I18nManager.isRTL ? 'منظم' : 'Organizer',
+  supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -312,4 +319,5 @@ export {
   StatusPageStrings,
   CompleteDetailsStrings,
   HistoryPageStrings,
+  AnimatedButtonSelectStrings,
 }

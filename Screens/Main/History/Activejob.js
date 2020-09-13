@@ -42,11 +42,11 @@ function Activejob(props) {
                   {I18nManager.isRTL ? item.event.NameAr : item.event.Name}
                 </Text>
               </View>
-              {/* <Text style={styles.ActivejobHeaderText}>
+              <Text style={styles.ActivejobHeaderText}>
                 {item.Type === 'organizer' ? item.event.Salary : item.event.SalarySupervisor}
                 {I18nManager.isRTL ? 'ريال' : 'sar'}
                 <Text style={styles.ActivejobHeaderTextLight}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
-              </Text> */}
+              </Text>
             </View>
             <View style={styles.ActivejobBody}>
               <View style={styles.SplitBodyHOne}>

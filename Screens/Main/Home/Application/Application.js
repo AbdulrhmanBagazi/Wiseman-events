@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, Text, Alert, ScrollView, FlatList, I18nManager } from 'react-native'
 import styles from './Style'
-import { SingleJobStrings } from '../../../../Config/Strings'
+import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../../Config/Strings'
 import ModalApplication from './ModalApplication'
 import AnimatedButton from './AnimatedButton'
+import AnimatedButtonSelect from './AnimatedButtonSelect'
 import LoadingModal from '../../../Components/Loading/LoadingModal'
 import DisabledButton from '../../../Components/DisabledButton/DisabledButton'
 import { URL } from '../../../../Config/Config'
@@ -21,6 +22,9 @@ function Application({ route, store }) {
   const [canApply, setCanApply] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const [isShow, setShow] = React.useState(false)
+  const [isOrganizer, setOrganizer] = React.useState(false)
+  const [isSupervisor, setSupervisor] = React.useState(false)
+
   //
   const { signOut } = React.useContext(AuthContext)
 
@@ -31,7 +35,12 @@ function Application({ route, store }) {
     setTime(I18nManager.isRTL ? item.eventshifts[val].timeAr : item.eventshifts[val].time)
     setAttendance(I18nManager.isRTL ? item.eventshifts[val].attendanceAr : item.eventshifts[val].attendance)
     setShiftId(item.eventshifts[val].id)
-    setCanApply(true)
+
+    if (isOrganizer === false && isSupervisor === false) {
+      setCanApply(false)
+    } else if (isOrganizer === true || isSupervisor === true) {
+      setCanApply(true)
+    }
     return
   }
 
@@ -43,6 +52,8 @@ function Application({ route, store }) {
         {
           eventshiftId: isShiftId,
           eventId: item.id,
+          Organizer: isOrganizer,
+          Supervisor: isSupervisor,
         },
         {
           headers: {
@@ -140,6 +151,44 @@ function Application({ route, store }) {
       })
   }
 
+  const SelectType = async (val, check) => {
+    if (val === 0) {
+      await setOrganizer(check)
+
+      if (check === false) {
+        if (isSupervisor === true && selectedShift !== null) {
+          setCanApply(true)
+        } else {
+          setCanApply(false)
+        }
+      } else {
+        if (check === true && selectedShift !== null) {
+          setCanApply(true)
+        } else {
+          setCanApply(false)
+        }
+      }
+    } else {
+      await setSupervisor(check)
+
+      if (check === false) {
+        if (isOrganizer === true && selectedShift !== null) {
+          setCanApply(true)
+        } else {
+          setCanApply(false)
+        }
+      } else {
+        if (check === true && selectedShift !== null) {
+          setCanApply(true)
+        } else {
+          setCanApply(false)
+        }
+      }
+    }
+
+    return
+  }
+
   return (
     <View style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -151,7 +200,7 @@ function Application({ route, store }) {
                 showsHorizontalScrollIndicator={false}
                 data={item.eventshifts}
                 horizontal={true}
-                inverted={I18nManager.isRTL ? true : false}
+                inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
                 renderItem={({ item, index }) => (
                   <AnimatedButton
                     Shift={selectedShift}
@@ -171,6 +220,29 @@ function Application({ route, store }) {
             <Text style={styles.TimeandA}>
               {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>{isAttendance}</Text>
             </Text>
+          </View>
+          <Text style={styles.title}>{SingleJobStrings.ApplyingAs}</Text>
+          <Text style={styles.SelectOneOrMore}>{SingleJobStrings.SelectOneOrMore}</Text>
+          <View style={styles.SelectViewChose}>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}>
+              <AnimatedButtonSelect
+                Shift={isOrganizer}
+                onPress={() => SelectType(0, !isOrganizer)}
+                Disabled={true}
+                FullText={SingleJobStrings.Full}
+                Value={AnimatedButtonSelectStrings.organizer}
+              />
+              <AnimatedButtonSelect
+                Shift={isSupervisor}
+                onPress={() => SelectType(1, !isSupervisor)}
+                Disabled={true}
+                FullText={SingleJobStrings.Full}
+                Value={AnimatedButtonSelectStrings.supervisor}
+              />
+            </ScrollView>
           </View>
           <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>

@@ -7,6 +7,7 @@ import {
   LightText,
   PrimaryBorder,
   LightBorder,
+  SecondaryColor,
 } from '../../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
@@ -23,6 +24,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginHorizontal: 16,
     marginVertical: 10,
+    textAlign: 'left',
+  },
+  SelectOneOrMore: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'left',
+    marginHorizontal: 16,
+    color: LightText,
   },
   titleSecond: {
     fontSize: 18,
@@ -50,6 +59,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
     padding: 5,
+  },
+  SelectViewChose: {
+    width,
+    borderWidth: 1,
+    borderColor: '#DFE0E3',
+    borderRadius: 5,
+    padding: 5,
+    marginTop: 5,
+    alignItems: 'flex-start',
   },
   ShiftView: {
     flexDirection: 'row',

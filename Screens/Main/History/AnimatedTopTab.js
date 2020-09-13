@@ -43,30 +43,30 @@ function DisabledButton(props) {
         Animated.parallel([
           Animated.timing(First, {
             toValue: props.Value === 2 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
           Animated.timing(Second, {
             toValue: props.Value === 1 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
           Animated.timing(Third, {
             toValue: props.Value === 0 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
         ]).start()
       } else {
         Animated.parallel([
           Animated.timing(First, {
             toValue: props.Value === 0 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
           Animated.timing(Second, {
             toValue: props.Value === 1 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
           Animated.timing(Third, {
             toValue: props.Value === 2 ? 100 : 0,
-            duration: 500,
+            duration: 250,
           }),
         ]).start()
       }
@@ -74,15 +74,15 @@ function DisabledButton(props) {
       Animated.parallel([
         Animated.timing(First, {
           toValue: props.Value === 0 ? 100 : 0,
-          duration: 500,
+          duration: 250,
         }),
         Animated.timing(Second, {
           toValue: props.Value === 1 ? 100 : 0,
-          duration: 500,
+          duration: 250,
         }),
         Animated.timing(Third, {
           toValue: props.Value === 2 ? 100 : 0,
-          duration: 500,
+          duration: 250,
         }),
       ]).start()
     }
