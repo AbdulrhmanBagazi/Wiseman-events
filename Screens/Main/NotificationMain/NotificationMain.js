@@ -2,7 +2,7 @@ import React from 'react'
 import {
   View,
   Text,
-  ScrollView,
+  TouchableOpacity,
   ActivityIndicator,
   I18nManager,
   FlatList,
@@ -15,16 +15,17 @@ import { FontAwesome } from '@expo/vector-icons'
 import moment from 'moment'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import { inject, observer } from 'mobx-react'
-import { width } from '../../../Config/Layout'
 import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
+import { AlertStrings } from '../../../Config/Strings'
 
 function NotificationMain({ navigation, store }) {
   const [isLoading, setLoading] = React.useState(false)
   const [refreshing, setrefreshing] = React.useState(false)
   const { signOut } = React.useContext(AuthContext)
+  const [isLoadingAlert, setLoadingAlert] = React.useState(false)
 
   moment.updateLocale('en', {
     relativeTime: {
@@ -49,6 +50,7 @@ function NotificationMain({ navigation, store }) {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      RefreshMiddle()
       setLoading(false)
       Start()
     })
@@ -73,7 +75,7 @@ function NotificationMain({ navigation, store }) {
         },
       })
       .then(async (response) => {
-        // console.log(response)
+        // console.log(response.data.alerts)
         if (response.status === 200) {
           if (response.data.check === 'success') {
             await store.setAlertsData(response.data.alerts)
@@ -156,6 +158,106 @@ function NotificationMain({ navigation, store }) {
       })
   }
 
+  const AcceptDeclinePromot = async (id, value, applicationId) => {
+    setLoadingAlert(true)
+    axios
+      .post(
+        URL + '/user/acceptDeclinePromot',
+        {
+          id,
+          value,
+          applicationId,
+        },
+        {
+          headers: {
+            Authorization: store.token,
+          },
+        }
+      )
+      .then(async (response) => {
+        if (response.status === 200) {
+          if (response.data === 'success') {
+            setLoadingAlert(false)
+
+            RefreshMiddle()
+            return
+          } else if (response.data === 'fail') {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+              {
+                cancelable: false,
+              }
+            )
+
+            return
+          } else if (response.data === 'revoke') {
+            setLoadingAlert(false)
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'تم إلغاء الطلب!' : 'the request has been canceled!',
+              [{ text: 'OK', onPress: () => RefreshMiddle() }],
+              {
+                cancelable: false,
+              }
+            )
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -169,33 +271,68 @@ function NotificationMain({ navigation, store }) {
           <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
         }
         renderItem={({ item, index }) => (
-          <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
-            <View style={styles.IconView}>
-              {item.type === 'payment' ? (
-                <FontAwesome name="dollar" size={30} color="#9CA2B0" />
-              ) : item.type === 'alert' ? (
-                <Icon name="bell" size={30} color="#9CA2B0" />
-              ) : item.type === 'warning' ? (
-                <Icon name="alert-triangle" size={30} color="#9CA2B0" />
-              ) : item.type === 'promote' ? (
-                <Icon name="chevrons-up" size={30} color="#9CA2B0" />
-              ) : (
-                <Icon name="chevrons-down" size={30} color="#9CA2B0" />
-              )}
-            </View>
-            <View style={styles.CenterView}>
-              <View style={styles.TimeView}>
-                <Text style={styles.title}>{I18nManager.isRTL ? item.titleAr : item.title}</Text>
-                {isLoading ? (
-                  <Text style={styles.TimeText}>{moment(item.createdAt).fromNow()}</Text>
+          <View>
+            <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+              <View style={styles.IconView}>
+                {item.type === 'payment' ? (
+                  <FontAwesome name="dollar" size={30} color="#9CA2B0" />
+                ) : item.type === 'alert' ? (
+                  <Icon name="bell" size={30} color="#9CA2B0" />
+                ) : item.type === 'warning' ? (
+                  <Icon name="alert-triangle" size={30} color="#9CA2B0" />
+                ) : item.type === 'promote' ? (
+                  <Icon
+                    name="chevrons-up"
+                    size={30}
+                    color={
+                      item.replied === false
+                        ? '#9CA2B0'
+                        : item.replied === true && item.replyvalue === 'Accept'
+                        ? '#45a164'
+                        : '#d16767'
+                    }
+                  />
+                ) : item.type === 'demote' ? (
+                  <Icon name="chevrons-down" size={30} color="#9CA2B0" />
                 ) : (
-                  <ActivityIndicator size="small" color={PrimaryColor} />
+                  <Icon name="award" size={30} color="#9CA2B0" />
                 )}
               </View>
-              <View style={styles.BodyTextView}>
-                <Text style={styles.bodyText}>{I18nManager.isRTL ? item.messageAr : item.message}</Text>
+              <View style={styles.CenterView}>
+                <View style={styles.TimeView}>
+                  <Text style={styles.title}>{I18nManager.isRTL ? item.titleAr : item.title}</Text>
+                  {isLoading ? (
+                    <Text style={styles.TimeText}>{moment(item.createdAt).fromNow()}</Text>
+                  ) : (
+                    <ActivityIndicator size="small" color={PrimaryColor} />
+                  )}
+                </View>
+                <View style={styles.BodyTextView}>
+                  <Text style={styles.bodyText}>{I18nManager.isRTL ? item.messageAr : item.message}</Text>
+                </View>
               </View>
             </View>
+            {item.type === 'promote' && item.replied === false ? (
+              <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+                {isLoadingAlert ? (
+                  <ActivityIndicator size="small" color={PrimaryColor} />
+                ) : (
+                  <View style={styles.SpaceViewBody}>
+                    <TouchableOpacity
+                      style={styles.Accept}
+                      onPress={() => AcceptDeclinePromot(item.id, 'Accept', item.applicationId)}>
+                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Accept}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.Decline}
+                      onPress={() => AcceptDeclinePromot(item.id, 'Decline', item.applicationId)}>
+                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            ) : null}
           </View>
         )}
       />

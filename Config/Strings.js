@@ -299,6 +299,11 @@ const AnimatedButtonSelectStrings = {
   supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
 }
 
+const AlertStrings = {
+  Accept: I18nManager.isRTL ? 'قبول' : 'Accept',
+  Decline: I18nManager.isRTL ? 'رفض' : 'Decline',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -320,4 +325,5 @@ export {
   CompleteDetailsStrings,
   HistoryPageStrings,
   AnimatedButtonSelectStrings,
+  AlertStrings,
 }

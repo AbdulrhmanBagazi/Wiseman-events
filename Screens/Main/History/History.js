@@ -67,7 +67,9 @@ function History({ store, navigation }) {
     return
   }
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {})
+    const unsubscribe = navigation.addListener('focus', () => {
+      RefreshMiddle()
+    })
 
     RefreshMiddle()
 

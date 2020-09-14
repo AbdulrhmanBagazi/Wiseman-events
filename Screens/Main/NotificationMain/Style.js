@@ -57,6 +57,46 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#868991',
   },
+  AcceptPromotion: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  SpaceView: {
+    flex: 1,
+  },
+  SpaceViewBody: {
+    flexDirection: 'row',
+    flex: 3,
+  },
+  Accept: {
+    padding: 5,
+    backgroundColor: '#45a164',
+    borderRadius: 5,
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  Decline: {
+    padding: 5,
+    backgroundColor: '#d16767',
+    marginHorizontal: 10,
+    borderRadius: 5,
+    flex: 1,
+  },
+  AcceptDeclinetext: {
+    fontWeight: '600',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  Atext: {
+    fontWeight: '600',
+    color: '#45a164',
+    textAlign: 'center',
+  },
+  Dtext: {
+    fontWeight: '600',
+    color: '#d16767',
+    textAlign: 'center',
+  },
 })
 
 export default styles

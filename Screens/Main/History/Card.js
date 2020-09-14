@@ -109,7 +109,7 @@ function Card(props) {
                 </Text>
               </Text> */}
               <View style={styles.TypeBadge}>
-                {item.Organizer ? (
+                {item.Organizer || item.Type === 'organizer' ? (
                   <View style={item.Type === 'organizer' ? styles.badgeS : styles.badgeO}>
                     <Text style={item.Type === 'organizer' ? styles.BadgeTextS : styles.BadgeText}>
                       {AnimatedButtonSelectStrings.organizer}
@@ -117,7 +117,7 @@ function Card(props) {
                   </View>
                 ) : null}
 
-                {item.Supervisor ? (
+                {item.Supervisor || item.Type === 'supervisor' ? (
                   <View style={item.Type === 'supervisor' ? styles.badgeS : styles.badgeO}>
                     <Text style={item.Type === 'supervisor' ? styles.BadgeTextS : styles.BadgeText}>
                       {AnimatedButtonSelectStrings.supervisor}
