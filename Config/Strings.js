@@ -159,7 +159,7 @@ const SingleJobStrings = {
   Application: I18nManager.isRTL ? 'قدم الطلب' : 'Submit Application',
   EventEnded: I18nManager.isRTL ? 'انتهت الفعالية' : 'Event Ended',
   Description: I18nManager.isRTL ? 'الوصف' : 'Description',
-  Rules: I18nManager.isRTL ? 'شروط' : 'Rules',
+  Rules: I18nManager.isRTL ? 'شروط' : 'Terms',
   Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
   date: I18nManager.isRTL ? 'تاريخ الحدث: ' : 'Event Date: ',
   StartDate: I18nManager.isRTL ? 'تاريخ المباشرة: ' : 'Start Date: ',
@@ -171,7 +171,7 @@ const SingleJobStrings = {
   Shifts: I18nManager.isRTL ? 'الورديات' : 'Shifts',
   About: I18nManager.isRTL ? 'عن العمل' : 'About the job',
   Responsibility: I18nManager.isRTL ? 'مسؤوليات العمل' : 'Job responsibilities ',
-  CompanyRules: I18nManager.isRTL ? 'شروط العمل' : 'Job Rules',
+  CompanyRules: I18nManager.isRTL ? 'شروط العمل' : 'Job terms',
   TraniningRules: I18nManager.isRTL ? 'شروط التريب' : 'Training Rules',
   ShiftSelect: I18nManager.isRTL ? 'تحديد الوردية' : 'Select Shift',
   ShiftTime: I18nManager.isRTL ? 'وقت الوردية: ' : 'Shift Time: ',
@@ -191,6 +191,7 @@ const SingleJobStrings = {
   Details: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   ApplyingAs: I18nManager.isRTL ? 'تحديد الوظيفة' : 'Select Job',
   SelectOneOrMore: I18nManager.isRTL ? 'حدد واحدًا أو أكثر' : 'Select one or more',
+  notRequired: I18nManager.isRTL ? 'غير مطلوب' : 'Not Required',
 }
 
 const HomePageStrings = {

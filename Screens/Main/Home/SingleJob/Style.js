@@ -83,6 +83,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     alignItems: 'center',
   },
+  DataSectionsSalary: {
+    flex: 2,
+    marginHorizontal: 15,
+    alignItems: 'center',
+  },
   SingleJobDetailsSections: {
     fontWeight: '600',
     fontSize: 14,

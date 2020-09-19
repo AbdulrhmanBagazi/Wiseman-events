@@ -75,7 +75,6 @@ function SingleJob({ route, store, navigation }) {
 
     return
   }
-
   return (
     <View style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -111,7 +110,7 @@ function SingleJob({ route, store, navigation }) {
               <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
               <Text style={styles.SingleJobDetailsSectionsValue}>{item.Shifts}</Text>
             </View>
-            <View style={styles.DataSections}>
+            <View style={styles.DataSectionsSalary}>
               <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
               <Text style={styles.SingleJobDetailsSectionsValue}>
                 {item.Salary}
@@ -131,22 +130,38 @@ function SingleJob({ route, store, navigation }) {
                 <View style={styles.SelectView}>
                   <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(0)}>
                     <Animated.Text
-                      style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
+                      style={[
+                        styles.SelectText,
+                        item.Training === '' && item.TrainingAr === ''
+                          ? { color: isSelected === 1 ? PrimaryColor : '#000' }
+                          : { color: isSelected === 2 ? PrimaryColor : '#000' },
+                      ]}>
+                      {/** 2 */}
                       {SingleJobStrings.Description}
                     </Animated.Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(1)}>
+                    {/** 1 */}
+
                     <Animated.Text
-                      style={[styles.SelectText, { color: isSelected === 1 ? PrimaryColor : '#000' }]}>
+                      style={[
+                        styles.SelectText,
+                        item.Training === '' && item.TrainingAr === ''
+                          ? { color: isSelected === 0 ? PrimaryColor : '#000' }
+                          : { color: isSelected === 1 ? PrimaryColor : '#000' },
+                      ]}>
                       {SingleJobStrings.Rules}
                     </Animated.Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
-                    <Animated.Text
-                      style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
-                      {SingleJobStrings.Tranining}
-                    </Animated.Text>
-                  </TouchableOpacity>
+
+                  {item.Training === '' && item.TrainingAr === '' ? null : (
+                    <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
+                      <Animated.Text
+                        style={[styles.SelectText, { color: isSelected === 0 ? PrimaryColor : '#000' }]}>
+                        {SingleJobStrings.Tranining}
+                      </Animated.Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               ) : (
                 <View style={styles.SelectView}>
@@ -162,12 +177,15 @@ function SingleJob({ route, store, navigation }) {
                       {SingleJobStrings.Rules}
                     </Animated.Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
-                    <Animated.Text
-                      style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
-                      {SingleJobStrings.Tranining}
-                    </Animated.Text>
-                  </TouchableOpacity>
+
+                  {item.Training === '' && item.TrainingAr === '' ? null : (
+                    <TouchableOpacity style={styles.SelectButtonFirst} onPress={() => ScrollTo(2)}>
+                      <Animated.Text
+                        style={[styles.SelectText, { color: isSelected === 2 ? PrimaryColor : '#000' }]}>
+                        {SingleJobStrings.Tranining}
+                      </Animated.Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               )}
               <ScrollView
@@ -182,7 +200,13 @@ function SingleJob({ route, store, navigation }) {
                   Data={isPoints.D}
                 />
                 <Rules Rules={I18nManager.isRTL ? item.RulesAr : item.Rules} Data={isPoints.R} />
-                <Tranining Training={I18nManager.isRTL ? item.TrainingAr : item.Training} Data={isPoints.T} />
+
+                {item.Training === '' && item.TrainingAr === '' ? null : (
+                  <Tranining
+                    Training={I18nManager.isRTL ? item.TrainingAr : item.Training}
+                    Data={isPoints.T}
+                  />
+                )}
               </ScrollView>
             </View>
           )}

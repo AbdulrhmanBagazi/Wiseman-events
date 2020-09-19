@@ -40,7 +40,7 @@ function JobCard(props) {
         </View>
         <View style={styles.SectionMore}>
           <TouchableOpacity
-            style={styles.SectionMore}
+            style={styles.SectionMoreButton}
             onPress={() => props.More('AllJobs', { id: props.ID })}>
             <Text style={styles.JobsMore}>{I18nManager.isRTL ? 'المزيد' : 'More'}</Text>
             <Icon
