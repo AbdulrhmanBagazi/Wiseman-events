@@ -9,11 +9,7 @@ function AnimatedButtonSelect(props) {
   const [First] = React.useState(new Animated.Value(0))
   const FirstColor = First.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#fff', SecondaryColor],
-  })
-  const FirstDarkColor = First.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#ccc', PrimaryColor],
+    outputRange: ['#fff', PrimaryColor],
   })
 
   React.useEffect(() => {
@@ -34,8 +30,20 @@ function AnimatedButtonSelect(props) {
       ) : (
         <AnimatedTouchableOpacity
           onPress={props.onPress}
-          style={[styles.ShiftButton, { borderColor: FirstDarkColor, backgroundColor: FirstColor }]}>
-          <Animated.Text style={[styles.shift, { color: FirstDarkColor }]}>{props.Value}</Animated.Text>
+          style={[
+            styles.ShiftButtonSelect,
+            {
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <AnimatedTouchableOpacity onPress={props.onPress} style={[styles.SelectCircle]}>
+            <AnimatedTouchableOpacity
+              onPress={props.onPress}
+              style={[styles.SelectCircleSmall, { backgroundColor: FirstColor }]}></AnimatedTouchableOpacity>
+          </AnimatedTouchableOpacity>
+          <Animated.Text style={[styles.shift]}>{props.Value}</Animated.Text>
         </AnimatedTouchableOpacity>
       )}
     </View>

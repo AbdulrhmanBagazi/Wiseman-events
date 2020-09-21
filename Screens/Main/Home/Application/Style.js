@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'left',
   },
+  titleS: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginHorizontal: 15,
+    marginVertical: 10,
+    textAlign: 'left',
+  },
   SelectOneOrMore: {
     fontSize: 14,
     fontWeight: '500',
@@ -78,6 +85,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 8,
     marginVertical: 10,
+  },
+  ShiftButtonSelect: {
+    padding: 10,
   },
   SelectViewPoints: {
     width,
@@ -187,6 +197,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  SelectCircle: {
+    width: width / 20,
+    height: width / 20,
+    borderRadius: width + height / 2,
+    marginRight: 10,
+    borderColor: PrimaryColor,
+    borderWidth: 1,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  SelectCircleSmall: {
+    width: width / 30,
+    height: width / 30,
+    borderRadius: width + height / 2,
+    // borderColor: '#fff',
+    // borderWidth: 2,
   },
 })
 

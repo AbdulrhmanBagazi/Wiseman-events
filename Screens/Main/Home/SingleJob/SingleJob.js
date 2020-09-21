@@ -102,23 +102,54 @@ function SingleJob({ route, store, navigation }) {
             <Icon name="external-link" size={14} color={PrimaryColor} />
           </TouchableOpacity>
           <View style={styles.SingleJobDetailsDataView}>
-            <View style={styles.DataSections}>
-              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
-              <Text style={styles.SingleJobDetailsSectionsValue}>{item.Employees}</Text>
+            <Text style={styles.SingleSalaryText}>{SingleJobStrings.Salary}</Text>
+            <View style={styles.DataSectionsTop}>
+              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                <Text style={styles.SalarySpace}>
+                  {SingleJobStrings.supervisor + ': '}
+                  <Text style={styles.SingleSalaryTextData}>
+                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                  </Text>
+                </Text>
+              </View>
+              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                <Text>
+                  {SingleJobStrings.organizer + ': '}
+                  <Text style={styles.SingleSalaryTextData}>
+                    {item.Salary} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                  </Text>
+                </Text>
+              </View>
             </View>
             <View style={styles.DataSections}>
-              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
-              <Text style={styles.SingleJobDetailsSectionsValue}>{item.Shifts}</Text>
-            </View>
-            <View style={styles.DataSectionsSalary}>
-              <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
-              <Text style={styles.SingleJobDetailsSectionsValue}>
-                {item.Salary}
-                {I18nManager.isRTL ? 'ريال' : 'sar'}
-                <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
-              </Text>
+              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                <Text style={styles.SingleShiftText}>{SingleJobStrings.Shifts + ': ' + item.Shifts}</Text>
+              </View>
+              <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                <Text style={styles.SingleShiftTextSpace}>
+                  {SingleJobStrings.Meal + ': '}
+                  {item.ProvideAmeal === true
+                    ? I18nManager.isRTL
+                      ? 'نعم'
+                      : 'yes'
+                    : I18nManager.isRTL
+                    ? 'لا'
+                    : 'no'}
+                </Text>
+              </View>
             </View>
           </View>
+
+          {!item.ProvideAmeal ? (
+            <View style={styles.NoteView}>
+              <Text style={styles.NoteText}>{SingleJobStrings.Note + ' '}</Text>
+              <Text style={styles.NoteTextValue}>{SingleJobStrings.Mealallowance}</Text>
+              <Text style={styles.NoteText}>
+                {' ' + item.ProvideAnAllowance}
+                {I18nManager.isRTL ? 'ريال' : 'sar'}
+              </Text>
+            </View>
+          ) : null}
 
           {isLoading ? (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>

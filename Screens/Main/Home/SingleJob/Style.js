@@ -70,18 +70,25 @@ const styles = StyleSheet.create({
   SingleJobDetailsLocationView: {
     flexDirection: 'row',
     marginHorizontal: 40,
-    marginVertical: 20,
+    marginVertical: 10,
     textAlign: 'center',
   },
   SingleJobDetailsDataView: {
     // backgroundColor: 'red',
-    flexDirection: 'row',
-    marginVertical: 17,
+    // flexDirection: 'row',
+    width: width - 10,
+    alignItems: 'flex-start',
   },
   DataSections: {
-    flex: 1,
-    marginHorizontal: 15,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    width: width - 10,
+    marginVertical: 10,
+  },
+  DataSectionsTop: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    width: width - 10,
   },
   DataSectionsSalary: {
     flex: 2,
@@ -97,6 +104,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     marginVertical: 6,
+  },
+  SingleSalaryText: {
+    fontWeight: '500',
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  SingleSalaryTextData: {
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  SingleShiftText: {
+    fontWeight: '500',
+    fontSize: 16,
+  },
+  SingleShiftTextSpace: {
+    fontWeight: '500',
+    fontSize: 16,
   },
   Hour: {
     color: LightText,
@@ -222,6 +246,23 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: SecondaryText,
     textAlign: 'left',
+  },
+  NoteView: {
+    width: width - 20,
+    backgroundColor: '#F8F8F9',
+    marginVertical: 15,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  NoteText: {
+    fontWeight: '500',
+    fontSize: 16,
+  },
+  NoteTextValue: {
+    fontWeight: '400',
+    fontSize: 16,
   },
 })
 

@@ -220,8 +220,29 @@ function Application({ route, store }) {
             <Text style={styles.TimeandA}>
               {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>{isAttendance}</Text>
             </Text>
+
+            <Text style={styles.titleS}>{SingleJobStrings.Applyingfor}</Text>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}>
+              <AnimatedButtonSelect
+                Shift={isOrganizer}
+                onPress={() => SelectType(0, !isOrganizer)}
+                Disabled={true}
+                FullText={SingleJobStrings.Full}
+                Value={AnimatedButtonSelectStrings.organizer}
+              />
+              <AnimatedButtonSelect
+                Shift={isSupervisor}
+                onPress={() => SelectType(1, !isSupervisor)}
+                Disabled={true}
+                FullText={SingleJobStrings.Full}
+                Value={AnimatedButtonSelectStrings.supervisor}
+              />
+            </ScrollView>
           </View>
-          <Text style={styles.title}>{SingleJobStrings.ApplyingAs}</Text>
+          {/* <Text style={styles.title}>{SingleJobStrings.ApplyingAs}</Text>
           <Text style={styles.SelectOneOrMore}>{SingleJobStrings.SelectOneOrMore}</Text>
           <View style={styles.SelectViewChose}>
             <ScrollView
@@ -243,7 +264,7 @@ function Application({ route, store }) {
                 Value={AnimatedButtonSelectStrings.supervisor}
               />
             </ScrollView>
-          </View>
+          </View> */}
           <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>
             <View style={styles.TextPointsView}>

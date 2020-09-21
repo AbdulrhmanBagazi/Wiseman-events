@@ -161,7 +161,7 @@ const SingleJobStrings = {
   Description: I18nManager.isRTL ? 'الوصف' : 'Description',
   Rules: I18nManager.isRTL ? 'شروط' : 'Terms',
   Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
-  date: I18nManager.isRTL ? 'تاريخ الحدث: ' : 'Event Date: ',
+  date: I18nManager.isRTL ? 'تاريخ الفعالية: ' : 'Event Date: ',
   StartDate: I18nManager.isRTL ? 'تاريخ المباشرة: ' : 'Start Date: ',
   StartDateString: I18nManager.isRTL
     ? 'في حال قبولك، سيتم تحديد تاريخ المباشرة'
@@ -192,6 +192,12 @@ const SingleJobStrings = {
   ApplyingAs: I18nManager.isRTL ? 'تحديد الوظيفة' : 'Select Job',
   SelectOneOrMore: I18nManager.isRTL ? 'حدد واحدًا أو أكثر' : 'Select one or more',
   notRequired: I18nManager.isRTL ? 'غير مطلوب' : 'Not Required',
+  organizer: I18nManager.isRTL ? 'المنظم' : 'Organizer',
+  supervisor: I18nManager.isRTL ? 'المشرف' : 'Supervisor',
+  Meal: I18nManager.isRTL ? 'وجبة' : 'Meal',
+  Note: I18nManager.isRTL ? 'ملاحظة:' : 'Note:',
+  Mealallowance: I18nManager.isRTL ? 'بدل وجبة عن كل يوم دوام' : 'Meal allowance for each working day',
+  Applyingfor: I18nManager.isRTL ? 'التقديم' : 'Applying',
 }
 
 const HomePageStrings = {
@@ -288,7 +294,7 @@ const CompleteDetailsStrings = {
   PaymentAppointments: I18nManager.isRTL ? 'مواعيد الدفع' : 'Payment Appointments',
   noDate: I18nManager.isRTL ? 'لم يتم تحديد موعد' : 'No date has been set',
   organizer: I18nManager.isRTL ? 'المنظم' : 'Organizer',
-  supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
+  supervisor: I18nManager.isRTL ? 'المشرف' : 'Supervisor',
 }
 
 const HistoryPageStrings = {
