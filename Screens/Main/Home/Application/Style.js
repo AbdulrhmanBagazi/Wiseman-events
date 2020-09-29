@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   Title: {
     fontSize: 32,
-    marginVertical: 15,
+    textAlign: 'center',
   },
   Slogan: {
     textAlign: 'center',

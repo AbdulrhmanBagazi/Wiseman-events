@@ -188,6 +188,7 @@ const SingleJobStrings = {
   Attendance: I18nManager.isRTL ? 'الحضور' : 'Attendance',
   Time: I18nManager.isRTL ? 'وقت الوردية' : 'Shift Time',
   withdrawal: I18nManager.isRTL ? 'إنسحاب' : 'withdrawal',
+  Cancel: I18nManager.isRTL ? 'إلغاء' : 'Cancel',
   Details: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   ApplyingAs: I18nManager.isRTL ? 'تحديد الوظيفة' : 'Select Job',
   SelectOneOrMore: I18nManager.isRTL ? 'حدد واحدًا أو أكثر' : 'Select one or more',

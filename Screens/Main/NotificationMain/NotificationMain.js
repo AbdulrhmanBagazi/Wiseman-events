@@ -75,7 +75,6 @@ function NotificationMain({ navigation, store }) {
         },
       })
       .then(async (response) => {
-        // console.log(response.data.alerts)
         if (response.status === 200) {
           if (response.data.check === 'success') {
             await store.setAlertsData(response.data.alerts)
@@ -258,6 +257,106 @@ function NotificationMain({ navigation, store }) {
       })
   }
 
+  const AcceptDeclineTransfer = async (id, value, applicationId) => {
+    setLoadingAlert(true)
+    axios
+      .post(
+        URL + '/user/acceptDeclineTransfer',
+        {
+          id,
+          value,
+          applicationId,
+        },
+        {
+          headers: {
+            Authorization: store.token,
+          },
+        }
+      )
+      .then(async (response) => {
+        if (response.status === 200) {
+          if (response.data === 'success') {
+            setLoadingAlert(false)
+
+            RefreshMiddle()
+            return
+          } else if (response.data === 'fail') {
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+              {
+                cancelable: false,
+              }
+            )
+
+            return
+          } else if (response.data === 'revoke') {
+            setLoadingAlert(false)
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'تم إلغاء الطلب!' : 'the request has been canceled!',
+              [{ text: 'OK', onPress: () => RefreshMiddle() }],
+              {
+                cancelable: false,
+              }
+            )
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoadingAlert(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -294,8 +393,22 @@ function NotificationMain({ navigation, store }) {
                   />
                 ) : item.type === 'demote' ? (
                   <Icon name="chevrons-down" size={30} color="#9CA2B0" />
-                ) : (
+                ) : item.type === 'completed' ? (
                   <Icon name="award" size={30} color="#9CA2B0" />
+                ) : (
+                  <Icon
+                    name="clock"
+                    size={30}
+                    color={
+                      item.TransferShift === null
+                        ? '#9CA2B0'
+                        : item.TransferShift.replied === false
+                        ? '#9CA2B0'
+                        : item.TransferShift.replied === true && item.TransferShift.replyvalue === 'accept'
+                        ? '#45a164'
+                        : '#d16767'
+                    }
+                  />
                 )}
               </View>
               <View style={styles.CenterView}>
@@ -327,6 +440,42 @@ function NotificationMain({ navigation, store }) {
                     <TouchableOpacity
                       style={styles.Decline}
                       onPress={() => AcceptDeclinePromot(item.id, 'Decline', item.applicationId)}>
+                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            ) : null}
+
+            {item.type === 'transfer' &&
+            item.TransferShift !== null &&
+            item.TransferShift.replied === false ? (
+              <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+                {isLoadingAlert ? (
+                  <ActivityIndicator size="small" color={PrimaryColor} />
+                ) : (
+                  <View style={styles.SpaceViewBody}>
+                    <TouchableOpacity
+                      style={styles.Accept}
+                      onPress={() =>
+                        AcceptDeclineTransfer(
+                          item.TransferShift.id,
+                          'Accept',
+                          item.TransferShift.applicationId
+                        )
+                      }>
+                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Accept}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.Decline}
+                      onPress={() =>
+                        AcceptDeclineTransfer(
+                          item.TransferShift.id,
+                          'Decline',
+                          item.TransferShift.applicationId
+                        )
+                      }>
                       <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
                     </TouchableOpacity>
                   </View>

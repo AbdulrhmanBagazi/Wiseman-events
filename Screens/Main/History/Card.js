@@ -197,7 +197,9 @@ function Card(props) {
                         styles.StatusBoxWithdraw,
                         { backgroundColor: '#e55353', borderColor: '#e55353' },
                       ]}>
-                      <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.withdrawal}</Text>
+                      <Text style={[styles.StatuText, { color: '#fff' }]}>
+                        {item.Status === 'pending' ? SingleJobStrings.Cancel : SingleJobStrings.withdrawal}
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>

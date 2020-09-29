@@ -188,7 +188,12 @@ function CompleteDetails({ route }) {
                 </Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <CalSalary Values={item.attendances} Rate={item} />
+                <CalSalary
+                  Values={item.attendances}
+                  Rate={item}
+                  Meal={item.event.ProvideAmeal}
+                  MealPlus={item.event.ProvideAnAllowance}
+                />
               </View>
             </View>
 

@@ -102,7 +102,12 @@ function Activejob(props) {
                       {I18nManager.isRTL ? 'إجمالي الأرباح' : 'Total Earning'}
                     </Text>
                     {/* <Text style={styles.dataTextActive}>0 sar</Text> */}
-                    <CalSalary Values={item.attendances} Rate={item} />
+                    <CalSalary
+                      Meal={item.event.ProvideAmeal}
+                      MealPlus={item.event.ProvideAnAllowance}
+                      Values={item.attendances}
+                      Rate={item}
+                    />
                   </View>
                 </View>
                 <View style={styles.ActivejobBoxBottom}>

@@ -13,7 +13,7 @@ function CompletedJobs(props) {
     var newArray = props.Data.filter((item) => {
       // console.log(item.attendances.length)
       // return item.Status === 'completed'
-      return item.attendances.length >= 1
+      return item.Status !== 'approved' && item.attendances.length >= 1
     })
 
     setData(newArray)
