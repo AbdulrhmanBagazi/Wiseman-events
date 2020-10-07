@@ -83,10 +83,10 @@ function JobCard(props) {
                 </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
-                <View style={styles.DataSections}>
+                {/* <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Vacancy}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.Employees}</Text>
-                </View>
+                </View> */}
                 <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.Shifts}</Text>

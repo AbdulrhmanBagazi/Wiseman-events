@@ -109,6 +109,7 @@ function SingleJob({ route, store, navigation }) {
                   {SingleJobStrings.supervisor + ': '}
                   <Text style={styles.SingleSalaryTextData}>
                     {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
               </View>
@@ -117,6 +118,7 @@ function SingleJob({ route, store, navigation }) {
                   {SingleJobStrings.organizer + ': '}
                   <Text style={styles.SingleSalaryTextData}>
                     {item.Salary} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
               </View>

@@ -14,6 +14,7 @@ import Icon from '../../../Config/Icons'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../Config/Strings'
 import { PrimaryColor } from '../../../Config/ColorPalette'
+import moment from 'moment'
 
 function Card(props) {
   const getColor = (status) => {
@@ -142,13 +143,23 @@ function Card(props) {
                 <View style={styles.DataSectionsTime}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {I18nManager.isRTL ? item.eventshift.timeAr : item.eventshift.time}
+                    {I18nManager.isRTL
+                      ? moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')
+                      : moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')}{' '}
+                    {I18nManager.isRTL ? (
+                      <Icon name="arrow-left" size={14} color="black" />
+                    ) : (
+                      <Icon name="arrow-right" size={14} color="black" />
+                    )}{' '}
+                    {I18nManager.isRTL
+                      ? moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')
+                      : moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')}
                   </Text>
                 </View>
                 <View style={styles.DataSectionsAta}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Attendance}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
+                    {moment(item.eventshift.attendance, 'hh:mm').format('hh:mma')}
                   </Text>
                 </View>
               </View>

@@ -13,6 +13,7 @@ import { inject, observer } from 'mobx-react'
 //
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
+import moment from 'moment'
 
 function Application({ route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
@@ -31,9 +32,16 @@ function Application({ route, store }) {
   const { item } = route.params
 
   const Select = async (val) => {
+    var Time = I18nManager.isRTL
+      ? moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+        ' إلى ' +
+        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
+      : moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+        ' To ' +
+        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
     setselectedShift(val)
-    setTime(I18nManager.isRTL ? item.eventshifts[val].timeAr : item.eventshifts[val].time)
-    setAttendance(I18nManager.isRTL ? item.eventshifts[val].attendanceAr : item.eventshifts[val].attendance)
+    setTime(Time)
+    setAttendance(moment(item.eventshifts[val].attendance, 'hh:mm').format('hh:mma'))
     setShiftId(item.eventshifts[val].id)
 
     if (isOrganizer === false && isSupervisor === false) {
@@ -225,7 +233,7 @@ function Application({ route, store }) {
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal={true}
-              inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}>
+              style={{ alignSelf: 'flex-start' }}>
               <AnimatedButtonSelect
                 Shift={isOrganizer}
                 onPress={() => SelectType(0, !isOrganizer)}

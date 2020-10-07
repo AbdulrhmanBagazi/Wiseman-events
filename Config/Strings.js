@@ -172,7 +172,7 @@ const SingleJobStrings = {
   About: I18nManager.isRTL ? 'عن العمل' : 'About the job',
   Responsibility: I18nManager.isRTL ? 'مسؤوليات العمل' : 'Job responsibilities ',
   CompanyRules: I18nManager.isRTL ? 'شروط العمل' : 'Job terms',
-  TraniningRules: I18nManager.isRTL ? 'شروط التريب' : 'Training Rules',
+  TraniningRules: I18nManager.isRTL ? 'شروط التريب' : 'Training terms',
   ShiftSelect: I18nManager.isRTL ? 'تحديد الوردية' : 'Select Shift',
   ShiftTime: I18nManager.isRTL ? 'وقت الوردية: ' : 'Shift Time: ',
   ShiftAtta: I18nManager.isRTL ? 'وقت الحضور: ' : 'Attendance Time: ',

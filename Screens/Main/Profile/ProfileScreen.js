@@ -41,12 +41,12 @@ function Profile({ store, navigation }) {
         <Text style={styles.name} numberOfLines={2}>
           {store.data.profile.name}
         </Text>
-        <Text style={styles.balance}>
+        {/* <Text style={styles.balance}>
           {I18nManager.isRTL ? 'رصيد:' : 'Balance:'}
           <Text style={{ color: 'black' }}>
             2000<Text style={styles.balance}>sar</Text>
           </Text>
-        </Text>
+        </Text> */}
       </View>
       <View style={styles.rating}>
         <Rating type="star" ratingCount={5} startingValue={4.5} imageSize={16} />
