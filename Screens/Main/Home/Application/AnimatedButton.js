@@ -45,6 +45,7 @@ function AnimatedButton(props) {
     Animated.timing(First, {
       toValue: props.itemIndex === props.Shift ? 100 : 0,
       duration: 500,
+      useNativeDriver: false,
     }).start()
   }, [props.Shift])
 

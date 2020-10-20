@@ -74,11 +74,13 @@ function IBAN({ store }) {
       Animated.timing(Match, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
   }
@@ -88,11 +90,13 @@ function IBAN({ store }) {
       Animated.timing(one, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(one, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -100,11 +104,13 @@ function IBAN({ store }) {
       Animated.timing(one, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(one, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -112,11 +118,13 @@ function IBAN({ store }) {
       Animated.timing(two, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(two, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 

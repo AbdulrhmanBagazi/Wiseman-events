@@ -47,10 +47,12 @@ AnimatedButton = (props) => {
       Animated.timing(AR, {
         toValue: props.Language === 'ar' ? 100 : 0,
         duration: 500,
+        useNativeDriver: false,
       }),
       Animated.timing(EN, {
         toValue: props.Language === 'en' ? 100 : 0,
         duration: 500,
+        useNativeDriver: false,
       }),
     ]).start()
   }, [props.Language])

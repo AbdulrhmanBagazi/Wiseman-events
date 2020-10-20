@@ -44,14 +44,17 @@ function DisabledButton(props) {
           Animated.timing(First, {
             toValue: props.Value === 2 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
           Animated.timing(Second, {
             toValue: props.Value === 1 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
           Animated.timing(Third, {
             toValue: props.Value === 0 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
         ]).start()
       } else {
@@ -59,14 +62,17 @@ function DisabledButton(props) {
           Animated.timing(First, {
             toValue: props.Value === 0 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
           Animated.timing(Second, {
             toValue: props.Value === 1 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
           Animated.timing(Third, {
             toValue: props.Value === 2 ? 100 : 0,
             duration: 250,
+            useNativeDriver: false,
           }),
         ]).start()
       }
@@ -75,14 +81,17 @@ function DisabledButton(props) {
         Animated.timing(First, {
           toValue: props.Value === 0 ? 100 : 0,
           duration: 250,
+          useNativeDriver: false,
         }),
         Animated.timing(Second, {
           toValue: props.Value === 1 ? 100 : 0,
           duration: 250,
+          useNativeDriver: false,
         }),
         Animated.timing(Third, {
           toValue: props.Value === 2 ? 100 : 0,
           duration: 250,
+          useNativeDriver: false,
         }),
       ]).start()
     }

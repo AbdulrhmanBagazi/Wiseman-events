@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, I18nManager, Text, TouchableOpacity } from 'react-native'
 import { inject, observer } from 'mobx-react'
-import { Restart } from 'fiction-expo-restart'
+import * as Updates from 'expo-updates'
 import { LanguageStore } from '../../../Config/AsyncStorage'
 import { LanguageChangeStrings } from '../../../Config/Strings'
 import styles from './Style'
@@ -19,13 +19,13 @@ LanguageChange = ({ store }) => {
       I18nManager.allowRTL(true)
       I18nManager.forceRTL(true)
       await LanguageStore(val)
-      Restart()
+      Updates.reloadAsync()
       return
     } else if (val === 'en') {
       I18nManager.allowRTL(false)
       I18nManager.forceRTL(false)
       await LanguageStore(val)
-      Restart()
+      Updates.reloadAsync()
       return
     } else {
       return

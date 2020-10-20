@@ -16,6 +16,7 @@ function AnimatedButtonSelect(props) {
     Animated.timing(First, {
       toValue: props.Shift ? 100 : 0,
       duration: 500,
+      useNativeDriver: false,
     }).start()
   }, [props.Shift])
 

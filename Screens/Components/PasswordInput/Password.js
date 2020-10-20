@@ -50,11 +50,13 @@ function AnimatedIcon(props) {
       Animated.timing(MatchLower, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(MatchLower, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -62,11 +64,13 @@ function AnimatedIcon(props) {
       Animated.timing(MatchUpper, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(MatchUpper, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -74,11 +78,13 @@ function AnimatedIcon(props) {
       Animated.timing(MatchNumber, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(MatchNumber, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -86,11 +92,13 @@ function AnimatedIcon(props) {
       Animated.timing(MatchLength, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(MatchLength, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
 
@@ -98,11 +106,13 @@ function AnimatedIcon(props) {
       Animated.timing(Match, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else if (props.Check === 'Error') {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
   }, [props.Check, props.PasswordValue])

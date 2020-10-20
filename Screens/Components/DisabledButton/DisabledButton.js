@@ -21,6 +21,7 @@ function DisabledButton(props) {
     Animated.timing(ButtonColor, {
       toValue: props.Check === true ? 100 : 0,
       duration: 500,
+      useNativeDriver: false,
     }).start()
     setDisabled(props.Check === true ? false : true)
   }, [props.Check])

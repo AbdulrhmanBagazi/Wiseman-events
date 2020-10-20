@@ -51,10 +51,12 @@ function SignUp({ navigation }) {
       Animated.timing(Agree, {
         toValue: !isAgreeCheck === false ? 0 : 100,
         duration: 500,
+        useNativeDriver: false,
       }),
       Animated.timing(AgreeText, {
         toValue: !isAgreeCheck === false ? 0 : 100,
         duration: 500,
+        useNativeDriver: false,
       }),
     ]).start()
 

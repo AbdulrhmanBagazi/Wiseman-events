@@ -56,10 +56,12 @@ AnimatedButton = (props) => {
       Animated.timing(M, {
         toValue: props.GenderValue === 'male' ? 100 : 0,
         duration: 500,
+        useNativeDriver: false,
       }),
       Animated.timing(F, {
         toValue: props.GenderValue === 'female' ? 100 : 0,
         duration: 500,
+        useNativeDriver: false,
       }),
     ]).start()
   }, [props.GenderValue])

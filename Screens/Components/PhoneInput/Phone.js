@@ -14,16 +14,19 @@ function AnimatedPhone(props) {
       Animated.timing(Match, {
         toValue: 100,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else if (props.CheckPhone === 'Error') {
       Animated.timing(Match, {
         toValue: 50,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     } else {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
+        useNativeDriver: false,
       }).start()
     }
   }, [props.CheckPhone])

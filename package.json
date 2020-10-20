@@ -22,7 +22,6 @@
     "expo-splash-screen": "^0.2.3",
     "expo-store-review": "~2.1.0",
     "expo-updates": "~0.2.1",
-    "fiction-expo-restart": "^1.0.4",
     "humanize-duration": "^3.23.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",

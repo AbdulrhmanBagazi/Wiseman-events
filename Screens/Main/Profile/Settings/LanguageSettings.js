@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Animated, TouchableOpacity, I18nManager, Alert 
 import styles from './Style'
 import { Entypo } from '@expo/vector-icons'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
-import { Restart } from 'fiction-expo-restart'
+import * as Updates from 'expo-updates'
 import { LanguageStore } from '../../../../Config/AsyncStorage'
 
 function LanguageSettings({ navigation }) {
@@ -12,13 +12,13 @@ function LanguageSettings({ navigation }) {
       I18nManager.allowRTL(true)
       I18nManager.forceRTL(true)
       await LanguageStore(val)
-      Restart()
+      Updates.reloadAsync()
       return
     } else if (val === 'en' && I18nManager.isRTL) {
       I18nManager.allowRTL(false)
       I18nManager.forceRTL(false)
       await LanguageStore(val)
-      Restart()
+      Updates.reloadAsync()
       return
     } else {
       navigation.goBack()
