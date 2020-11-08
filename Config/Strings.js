@@ -15,6 +15,8 @@ const HeaderTitles = {
   Home: I18nManager.isRTL ? 'الرئيسية' : 'Home',
   AllJobs: I18nManager.isRTL ? 'جميع الوظائف' : 'All Jobs',
   SingleJobs: I18nManager.isRTL ? 'تفاصيل' : 'Details',
+  WorkSchedule: I18nManager.isRTL ? 'الجدول الزمني للفعاليات' : 'Event Schedule',
+  WorkScheduleUser: I18nManager.isRTL ? 'جدول عملك' : 'Your work schedule',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
   History: I18nManager.isRTL ? 'السجل' : 'Job History',
   Notifications: I18nManager.isRTL ? 'التنبيهات' : 'Alerts',
@@ -50,6 +52,7 @@ const Register = {
     ? 'مرحبًا بك في اسم التطبيق. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
     : 'Welcome to app name. Please provice the information below, set your account.',
   Phone: I18nManager.isRTL ? 'رقم الجوال(05XXXXXXXX)' : 'Mobile Number (05XXXXXXXX)',
+  nID: I18nManager.isRTL ? 'رقم الهوية الوطنية/الإقامة' : 'National ID / Iqama number',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
   RePassword: I18nManager.isRTL ? 'اعادة ادخال كلمة السر' : 'Re-enter password',
   Continue: I18nManager.isRTL ? 'إستمرار' : 'Continue',
@@ -104,7 +107,9 @@ const ProfileStrings = {
   Title: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
   Done: I18nManager.isRTL ? 'تم' : 'Done',
   Full: I18nManager.isRTL ? 'الإسم الثلاثي' : 'Full Name',
-  height: I18nManager.isRTL ? 'الطول' : 'Height',
+  First: I18nManager.isRTL ? 'الاسم الآول' : 'First Name',
+  Last: I18nManager.isRTL ? 'الاسم الآخير' : 'Last Name',
+  height: I18nManager.isRTL ? 'طولك' : 'Your Height',
   Nationality: I18nManager.isRTL ? 'الجنسية' : 'Nationality',
   Birth: I18nManager.isRTL ? 'تاريخ الميلاد' : 'Date Of Birth',
   Male: I18nManager.isRTL ? 'ذكر' : 'Male',
@@ -137,6 +142,7 @@ const NotificationStrings = {
 
 const ErrorsStrings = {
   MobileUsed: I18nManager.isRTL ? 'رقم الجوال مستخدم' : 'The mobile number is used',
+  nIDUsed: I18nManager.isRTL ? 'رقم الهوية الوطنية/الإقامة مستخدم' : 'The national ID / Iqama number is used',
   MobileNotFound: I18nManager.isRTL
     ? 'لا يوجد حساب مرتبط برقم الجوال'
     : 'No account associated with the mobile number',
@@ -300,6 +306,8 @@ const CompleteDetailsStrings = {
 
 const HistoryPageStrings = {
   RefreshText: I18nManager.isRTL ? 'للتحديث اسحب للأسفل' : 'Pull down to refresh',
+  Soon: I18nManager.isRTL ? 'قريبا سوف تحصل على جدول عملك' : 'Soon you will get your work schedule',
+  WorkSchedule: I18nManager.isRTL ? 'جدول العمل' : 'Work Schedule',
 }
 
 const AnimatedButtonSelectStrings = {
@@ -310,6 +318,14 @@ const AnimatedButtonSelectStrings = {
 const AlertStrings = {
   Accept: I18nManager.isRTL ? 'قبول' : 'Accept',
   Decline: I18nManager.isRTL ? 'رفض' : 'Decline',
+}
+
+const WorkScheduleUserString = {
+  Work: I18nManager.isRTL ? 'أيام العمل' : 'Work Days',
+  incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
+  active: I18nManager.isRTL ? 'نشط أو مكتمل' : 'Active or Completed',
+  Absence: I18nManager.isRTL ? 'غياب' : 'Absence',
+  Today: I18nManager.isRTL ? 'اليوم' : 'Today',
 }
 
 export {
@@ -334,4 +350,5 @@ export {
   HistoryPageStrings,
   AnimatedButtonSelectStrings,
   AlertStrings,
+  WorkScheduleUserString,
 }

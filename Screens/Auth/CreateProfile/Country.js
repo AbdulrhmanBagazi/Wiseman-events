@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View, I18nManager } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal'
 import { ProfileStrings } from '../../../Config/Strings'
 import { width } from '../../../Config/Layout'
@@ -36,6 +36,7 @@ export default function CountryUI(props) {
           withEmoji,
           onSelect,
         }}
+        // translation={I18nManager.isRTL ? 'ara' : 'eng'}
         visible={isvisible}
         countryCode={props.countryCode}
         onSelect={props.onSelect}

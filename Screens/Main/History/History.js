@@ -322,6 +322,9 @@ function History({ store, navigation }) {
               <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
             }
             Data={store.history}
+            onPressWork={navigation.navigate}
+            Secret="WiseManApp"
+            userId={store.data.id}
           />
         </View>
         <View style={styles.Container}>

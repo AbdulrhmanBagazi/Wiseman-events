@@ -45,20 +45,18 @@ const styles = StyleSheet.create({
   info: {
     width,
     marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   rating: {
     width,
-    marginTop: 15,
+    marginTop: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    textAlign: 'left',
   },
   name: {
     fontSize: 18,
     fontWeight: '600',
-    flex: 2,
     textAlign: 'left',
   },
   balance: {

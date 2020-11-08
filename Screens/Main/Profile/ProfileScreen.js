@@ -24,7 +24,6 @@ function Profile({ store, navigation }) {
 
     return
   }
-
   return (
     <View style={styles.Container}>
       <View style={styles.header}>
@@ -39,7 +38,10 @@ function Profile({ store, navigation }) {
       </View>
       <View style={styles.info}>
         <Text style={styles.name} numberOfLines={2}>
-          {store.data.profile.name}
+          {store.data.profile.first_name + ' ' + store.data.profile.last_name}
+        </Text>
+        <Text style={styles.rating} numberOfLines={2}>
+          {store.data.nID}
         </Text>
         {/* <Text style={styles.balance}>
           {I18nManager.isRTL ? 'رصيد:' : 'Balance:'}

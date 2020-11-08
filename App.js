@@ -27,10 +27,12 @@ import CreateProfile from './Screens/Auth/CreateProfile/CreateProfile'
 import Home from './Screens/Main/Home/HomeScreen'
 import AllJobs from './Screens/Main/Home/AllJobs/AllJobs'
 import History from './Screens/Main/History/History'
+import WorkScheduleUser from './Screens/Main/History/WorkScheduleUser'
 import NotificationMain from './Screens/Main/NotificationMain/NotificationMain'
 import Profile from './Screens/Main/Profile/ProfileScreen'
 import Splash from './Screens/Redirect/Splash/Splash'
 import SingleJob from './Screens/Main/Home/SingleJob/SingleJob'
+import WorkSchedule from './Screens/Main/Home/SingleJob/WorkSchedule'
 import Application from './Screens/Main/Home/Application/Application'
 //
 import Status from './Screens/Main/Profile/Status/Status'
@@ -125,6 +127,36 @@ const MainScreens = () => {
         }}
         name="SingleJob"
         component={SingleJob}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.WorkSchedule,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="WorkSchedule"
+        component={WorkSchedule}
+      />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.WorkScheduleUser,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="WorkScheduleUser"
+        component={WorkScheduleUser}
       />
       <MainStack.Screen
         options={{

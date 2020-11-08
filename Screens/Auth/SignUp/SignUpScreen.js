@@ -31,7 +31,11 @@ function SignUp({ navigation }) {
     Phone: '',
     Password: '',
     RePassword: '',
+    nId: '',
   })
+  //
+  const [isnIdheck, setnIdCheck] = React.useState('')
+  //
   const [isCheck, setCheck] = React.useState('')
   const [isPhoneCheck, setPhoneCheck] = React.useState('')
   const [isAgreeCheck, setAgreeCheck] = React.useState(false)
@@ -73,6 +77,31 @@ function SignUp({ navigation }) {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
       return d.charCodeAt(0) - 1632
     })
+  }
+
+  const NidInput = async (val) => {
+    var ID = await convertToArabicNumber(val)
+    setData({
+      ...data,
+      nId: ID.trim(),
+    })
+    if (ID === '') {
+      setnIdCheck('')
+      return
+    }
+    if (isNaN(ID) === true && ID.length < 10) {
+      setnIdCheck('Error')
+      return
+    }
+    if (ID.length > 10 || ID.length < 10) {
+      setnIdCheck('Error')
+      return
+    }
+    if (isNaN(ID) === false && ID.length === 10) {
+      setnIdCheck('Success')
+      return
+    }
+    return
   }
 
   const PhoneInput = async (val) => {
@@ -140,12 +169,14 @@ function SignUp({ navigation }) {
       val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
       isCheck === 'Success' &&
       isPhoneCheck === 'Success' &&
-      isAgreeCheck === true
+      isAgreeCheck === true &&
+      isnIdheck === 'Success'
     ) {
       axios
         .post(URL + '/user/signup', {
           phone: val.Phone,
           password: val.Password,
+          nID: val.nId,
         })
         .then((response) => {
           if (response.data.error === 'exists') {
@@ -153,7 +184,16 @@ function SignUp({ navigation }) {
             setError(ErrorsStrings.MobileUsed)
             setLoading(false)
             return
-          } else if (response.status === 200) {
+          } else if (response.data.error === 'existsID') {
+            // console.log(response.data.error)
+            setError(ErrorsStrings.nIDUsed)
+            setLoading(false)
+            return
+          } else if (response.data.error === 'error') {
+            setError(ErrorsStrings.ErrorOccurred)
+            setLoading(false)
+            return
+          } else if (response.data.check === 'success') {
             setError(' ')
             store.setDataSignup(response.data.user)
             store.setToken(response.data.token)
@@ -162,11 +202,24 @@ function SignUp({ navigation }) {
           }
         })
         .catch((error) => {
-          setError(ErrorsStrings.ErrorOccurred)
-          setLoading(false)
-          return
+          if (error.response) {
+            if (error.response.status) {
+              if (error.response.status === 401) {
+                setError(ErrorsStrings.LoginError)
+                setLoading(false)
+                return
+              } else {
+                setError(ErrorsStrings.ErrorOccurred)
+                setLoading(false)
+                return
+              }
+            }
+          } else {
+            setError(ErrorsStrings.ErrorOccurred)
+            setLoading(false)
+            return
+          }
         })
-      return
     }
 
     await setLoading(false)
@@ -197,6 +250,14 @@ function SignUp({ navigation }) {
           onChangeText={(text) => PhoneInput(text)}
           keyboardType={'number-pad'}
           CheckPhone={isPhoneCheck}
+        />
+
+        <InputPhone
+          placeholder={Register.nID}
+          style={styles.input}
+          onChangeText={(text) => NidInput(text)}
+          keyboardType={'number-pad'}
+          CheckPhone={isnIdheck}
         />
 
         <Inputpassowrd

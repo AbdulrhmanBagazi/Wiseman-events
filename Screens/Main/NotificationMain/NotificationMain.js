@@ -94,6 +94,19 @@ function NotificationMain({ navigation, store }) {
               }
             )
             return
+          } else {
+            setrefreshing(false)
+            setLoading(true)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setrefreshing(false) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
           }
         } else {
           setrefreshing(false)
@@ -395,6 +408,8 @@ function NotificationMain({ navigation, store }) {
                   <Icon name="chevrons-down" size={30} color="#9CA2B0" />
                 ) : item.type === 'completed' ? (
                   <Icon name="award" size={30} color="#9CA2B0" />
+                ) : item.type === 'calendar' ? (
+                  <Icon name="calendar" size={30} color="#9CA2B0" />
                 ) : (
                   <Icon
                     name="clock"

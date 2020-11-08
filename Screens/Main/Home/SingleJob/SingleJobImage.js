@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, Animated, SafeAreaView, Image } from 'react-native'
+import { View, Text, Animated, TouchableOpacity } from 'react-native'
 import styles from './Style'
+import Icon from '../../../../Config/Icons'
 
 function SingleJobImage(props) {
   const [ImageLoad] = React.useState(new Animated.Value(0))
@@ -25,6 +26,9 @@ function SingleJobImage(props) {
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
       </View>
+      <TouchableOpacity style={styles.WorkS} onPress={props.onPressWork}>
+        <Icon name="calendar" size={25} color="#fff" />
+      </TouchableOpacity>
     </View>
   )
 }

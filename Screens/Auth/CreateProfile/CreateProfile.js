@@ -94,7 +94,8 @@ function CreateProfile({ store }) {
   const [date, setDate] = React.useState(false)
   const [DateValue, setDateValue] = React.useState(new Date())
   const [data, setData] = React.useState({
-    Fullname: '',
+    first_name: '',
+    last_name: '',
     Nationality: '',
     City: ProfileStrings.City,
     Location: '',
@@ -140,14 +141,23 @@ function CreateProfile({ store }) {
   }
   //
 
+  const convertToArabicNumber = async (string) => {
+    return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
+      return d.charCodeAt(0) - 1632
+    })
+  }
+
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
     setError(' ')
+    var convHight = await convertToArabicNumber(data.height)
+
     if (isLoading) {
       return
     }
     if (
-      data.Fullname.length < 1 ||
+      data.first_name.length < 1 ||
+      data.last_name.length < 1 ||
       data.Nationality.length < 1 ||
       data.City.length < 1 ||
       data.Birth.length < 1 ||
@@ -164,14 +174,15 @@ function CreateProfile({ store }) {
       .post(
         URL + '/user/createprofile',
         {
-          name: data.Fullname,
+          first_name: data.first_name,
+          last_name: data.last_name,
           nationality: data.Nationality,
           birthdate: data.Birth,
           gender: Gender,
           city: CityDataEn,
           location: data.Latitude + ',' + data.Longitude,
           english: data.English,
-          height: data.height,
+          height: convHight,
         },
         {
           headers: { Authorization: store.token },
@@ -316,11 +327,22 @@ function CreateProfile({ store }) {
 
         <TextInput
           style={styles.input}
-          placeholder={ProfileStrings.Full}
+          placeholder={ProfileStrings.First}
           onChangeText={(text) =>
             setData({
               ...data,
-              Fullname: text.trim(),
+              first_name: text.trim(),
+            })
+          }
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder={ProfileStrings.Last}
+          onChangeText={(text) =>
+            setData({
+              ...data,
+              last_name: text.trim(),
             })
           }
         />

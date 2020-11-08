@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import QrcodeGen from './QrcodeGen'
 import CalHours from './CalHours'
 import CalSalary from './CalSalay'
+import { HistoryPageStrings } from '../../../Config/Strings'
 
 function Activejob(props) {
   const [isData, setData] = React.useState([])
@@ -36,7 +37,7 @@ function Activejob(props) {
           <View style={styles.ActivejobView}>
             <View style={styles.ActivejobHeader}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={index === 0 ? styles.ImageActive : styles.Image}></View>
+                <View style={styles.Image}></View>
                 <View style={styles.spaceActive}></View>
                 <Text style={styles.ActivejobHeaderTextLight}>
                   {I18nManager.isRTL ? item.event.NameAr : item.event.Name}
@@ -64,11 +65,13 @@ function Activejob(props) {
                 </TouchableOpacity>
               </View>
               <View style={styles.SplitBodyH}>
-                {index === 0 ? (
-                  <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
-                    <MaterialCommunityIcons name="qrcode-scan" size={40} color={PrimaryColor} />
-                  </TouchableOpacity>
-                ) : null}
+                <TouchableOpacity
+                  style={styles.calendarButton}
+                  onPress={() =>
+                    props.onPressWork('WorkScheduleUser', { eventId: item.eventId, applicationId: item.id })
+                  }>
+                  <Icon name="calendar" size={40} color={PrimaryColor} />
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.ActivejobBoxContainer}>
@@ -84,7 +87,7 @@ function Activejob(props) {
                       {I18nManager.isRTL ? 'وقت الحضور' : 'Attendance Time'}
                     </Text>
                     <Text style={styles.dataTextActive}>
-                      {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
+                      {moment(item.eventshift.attendance, 'hh:mm').format('hh:mma')}
                     </Text>
                   </View>
                 </View>
@@ -111,45 +114,46 @@ function Activejob(props) {
                   </View>
                 </View>
                 <View style={styles.ActivejobBoxBottom}>
-                  <View style={styles.Activejobsplit}>
-                    <Text style={styles.GrayColorText}>
-                      {I18nManager.isRTL ? 'تاريخ البدء' : 'Start Date'}
-                    </Text>
-                    <Text style={styles.dataTextActive}>{moment(item.Start).format('D MMMM, YYYY')}</Text>
-                  </View>
+                  {item.Start && item.End ? (
+                    <View style={styles.Activejobsplit}>
+                      <Text style={styles.GrayColorText}>
+                        {I18nManager.isRTL ? 'اليوم الأول' : 'First day'}
+                      </Text>
+                      <Text style={styles.dataTextActive}>{moment(item.Start).format('D MMMM, YYYY')}</Text>
+                    </View>
+                  ) : (
+                    <Text style={styles.NoDateSetText}>{HistoryPageStrings.Soon}</Text>
+                  )}
 
-                  <View style={styles.Activejobsplit}>
-                    <Text style={styles.GrayColorText}>
-                      {I18nManager.isRTL ? 'تاريخ الانتهاء' : 'End Date'}
-                    </Text>
-                    <Text style={styles.dataTextActive}>{moment(item.End).format('D MMMM, YYYY')}</Text>
-                  </View>
+                  {item.Start && item.End ? (
+                    <View style={styles.Activejobsplit}>
+                      <Text style={styles.GrayColorText}>
+                        {I18nManager.isRTL ? 'اليوم الأخير' : 'Last day'}
+                      </Text>
+                      <Text style={styles.dataTextActive}>{moment(item.End).format('D MMMM, YYYY')}</Text>
+                    </View>
+                  ) : null}
                 </View>
               </View>
             </View>
-            {/* {isData.length > 1 && index === 0 ? (
-                  <View style={styles.ActiveSoon}>
-                    <Text style={styles.ActiveSoonText}>
-                      {I18nManager.isRTL ? 'وظائفك القادمة' : 'Your upcoming jobs'}
-                    </Text>
-                  </View>
-                ) : null} */}
-
-            {index === 0 ? (
-              <Modal animationType="fade" transparent={true} key={index} visible={isShow}>
-                <TouchableOpacity style={styles.modal} onPress={() => setShow(false)} activeOpacity={0.5}>
-                  <View style={styles.modalContainer}>
-                    <QrcodeGen
-                      value={item.userId + ',' + item.eventId + ',' + item.eventshiftId + ',' + item.id}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </Modal>
-            ) : null}
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
+
+      <Modal animationType="fade" transparent={true} visible={isShow}>
+        <TouchableOpacity style={styles.modal} onPress={() => setShow(false)} activeOpacity={0.5}>
+          <View style={styles.modalContainer}>
+            <QrcodeGen value={props.Secret + ',' + props.userId} />
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      <View style={styles.work}>
+        <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
+          <MaterialCommunityIcons name="qrcode" size={50} color="#fff" />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

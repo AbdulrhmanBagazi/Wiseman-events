@@ -264,6 +264,14 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
   },
+  WorkS: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    backgroundColor: PrimaryColor,
+    borderRadius: 5,
+    padding: 5,
+  },
 })
 
 export default styles

@@ -84,6 +84,7 @@ function SingleJob({ route, store, navigation }) {
               uri: item.ImageURL,
             }}
             Name={I18nManager.isRTL ? item.NameAr : item.Name}
+            onPressWork={() => navigation.navigate('WorkSchedule', { eventId: item.id })}
           />
         </View>
         <View style={styles.DataContainer}>

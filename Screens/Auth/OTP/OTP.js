@@ -7,11 +7,11 @@ import {
   Keyboard,
   ScrollView,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import { OTPStrings, ErrorsStrings } from '../../../Config/Strings'
-import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { width } from '../../../Config/Layout'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import { AuthContext } from '../../../Hooks/Context'
@@ -26,8 +26,22 @@ function OTP({ store }) {
   const [isError, setError] = React.useState(' ')
   const [isLoading, setLoading] = React.useState(false)
   const [isShow, setShow] = React.useState(false)
+  const [value, onChangeText] = React.useState('')
+
+  const convertToArabicNumber = async (string) => {
+    return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
+      return d.charCodeAt(0) - 1632
+    })
+  }
 
   const VeridyCode = async (code) => {
+    var Code = await convertToArabicNumber(code)
+    onChangeText(Code)
+
+    if (Code.length < 4) {
+      return
+    }
+
     await Keyboard.dismiss()
     if (isLoading) {
       return
@@ -37,7 +51,7 @@ function OTP({ store }) {
       .post(
         URL + '/user/VerifyOTP',
         {
-          code: code,
+          code: Code,
         },
         {
           headers: { Authorization: store.token },
@@ -112,16 +126,27 @@ function OTP({ store }) {
 
           <Text style={styles.error}>{isError}</Text>
 
-          <View>
-            <OTPInputView
-              pinCount={4}
-              style={{ width: width / 1.5, height: 100 }}
-              codeInputFieldStyle={styles.underlineStyleBase}
-              codeInputHighlightStyle={styles.underlineStyleHighLighted}
-              autoFocusOnLoad={false}
-              onCodeFilled={(code) => {
-                VeridyCode(code)
-              }}
+          <View
+            style={{
+              backgroundColor: '#fff',
+              height: 45,
+              width,
+              borderColor: '#AF0029',
+              borderWidth: 1,
+              borderRadius: 5,
+              padding: 5,
+              marginBottom: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TextInput
+              style={{ width, height: 45, textAlign: 'center' }}
+              keyboardType={'number-pad'}
+              onChangeText={(text) => VeridyCode(text)}
+              value={value}
+              autoFocus={true}
+              maxLength={4}
+              editable={!isLoading}
             />
           </View>
 
