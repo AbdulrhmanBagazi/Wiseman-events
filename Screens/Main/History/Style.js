@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
   },
   TouchableOpacityText: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: '600',
   }, //
   SingleJob: {

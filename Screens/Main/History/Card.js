@@ -188,7 +188,11 @@ function Card(props) {
                       onPress={() =>
                         Alert.alert(
                           '',
-                          I18nManager.isRTL
+                          item.Status === 'pending'
+                            ? I18nManager.isRTL
+                              ? 'هل أنت متأكد أنك تريد إلغاء التقديم؟'
+                              : 'Are you sure you want to cancel the submission?'
+                            : I18nManager.isRTL
                             ? 'هل أنت متأكد أنك تريد الإنسحاب من العمل؟'
                             : 'Are you sure you want to withdraw from work?',
                           [
