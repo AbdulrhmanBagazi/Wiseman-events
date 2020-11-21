@@ -1,5 +1,6 @@
-import * as Permissions from 'expo-permissions'
 import React from 'react'
+import * as Notifications from 'expo-notifications'
+import * as Permissions from 'expo-permissions'
 import {
   View,
   Text,
@@ -18,7 +19,6 @@ import { URL } from '../../../../Config/Config'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import { Notifications } from 'expo'
 import Constants from 'expo-constants'
 
 function NotificationSettings({ store }) {
@@ -73,17 +73,16 @@ function NotificationSettings({ store }) {
     }
 
     if (Platform.OS === 'android') {
-      Notifications.createChannelAndroidAsync('default', {
+      Notifications.setNotificationChannelAsync('default', {
         name: 'default',
-        sound: true,
-        priority: 'max',
-        vibrate: [0, 250, 250, 250],
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
       })
     }
-
     //
 
-    var token = await Notifications.getExpoPushTokenAsync()
+    var token = (await Notifications.getExpoPushTokenAsync()).data
 
     if (token) {
       axios
@@ -121,6 +120,7 @@ function NotificationSettings({ store }) {
           }
         })
         .catch((error) => {
+          // console.log(error.response)
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',

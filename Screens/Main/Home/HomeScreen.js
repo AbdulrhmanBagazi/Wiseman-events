@@ -13,6 +13,7 @@ import Icon from '../../../Config/Icons'
 //
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
+import * as Notifications from 'expo-notifications'
 
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
@@ -20,15 +21,32 @@ function Home({ store, navigation }) {
   const [isSoon, setSoon] = React.useState(false)
   const [isRefresh, setRefresh] = React.useState(false)
   const [isStatus, setStatus] = React.useState(false)
-  //
-  // const { signOut } = React.useContext(AuthContext)
-  // const _handleNotification = (notification) => {
-  //   console.log({ notification: notification })
-  // }
+  const responseListener = React.useRef()
+  const notificationListener = React.useRef()
 
-  // const _handleNotificationResponse = (response) => {
-  //   console.log(response)
-  // }
+  //
+  const { signOut } = React.useContext(AuthContext)
+
+  React.useEffect(() => {
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      navigation.navigate('Home')
+      if (response.notification.request.content.data.body.data) {
+        navigation.navigate(response.notification.request.content.data.body.data)
+        return
+      } else {
+        return
+      }
+    })
+
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      console.log(notification)
+    })
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener)
+      Notifications.removeNotificationSubscription(responseListener)
+    }
+  }, [])
 
   React.useEffect(() => {
     setLoading(true)
@@ -111,10 +129,6 @@ function Home({ store, navigation }) {
           return
         }
       })
-
-    // Notifications.addNotificationReceivedListener(_handleNotification)
-
-    // Notifications.addNotificationResponseReceivedListener(_handleNotificationResponse)
 
     return unsubscribe
   }, [isRefresh, navigation])

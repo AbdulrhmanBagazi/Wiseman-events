@@ -1,5 +1,6 @@
-import * as Permissions from 'expo-permissions'
 import React from 'react'
+import * as Notifications from 'expo-notifications'
+import * as Permissions from 'expo-permissions'
 import {
   View,
   Text,
@@ -14,7 +15,6 @@ import {
 import styles from './Style'
 import { NotificationStrings, ErrorsStrings } from '../../../Config/Strings'
 import { inject, observer } from 'mobx-react'
-import { Notifications } from 'expo'
 import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import debounce from 'lodash/debounce'
@@ -66,19 +66,18 @@ function Notification({ navigation, store }) {
       setLoading(false)
       return
     }
-
     if (Platform.OS === 'android') {
-      Notifications.createChannelAndroidAsync('default', {
+      Notifications.setNotificationChannelAsync('default', {
         name: 'default',
-        sound: true,
-        priority: 'max',
-        vibrate: [0, 250, 250, 250],
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
       })
     }
 
     //
 
-    var token = await Notifications.getExpoPushTokenAsync()
+    var token = (await Notifications.getExpoPushTokenAsync()).data
     setPushToken(token)
 
     if (token) {

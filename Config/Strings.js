@@ -18,7 +18,7 @@ const HeaderTitles = {
   WorkSchedule: I18nManager.isRTL ? 'الجدول الزمني للفعاليات' : 'Event Schedule',
   WorkScheduleUser: I18nManager.isRTL ? 'جدول عملك' : 'Your work schedule',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
-  History: I18nManager.isRTL ? 'السجل' : 'Job History',
+  History: I18nManager.isRTL ? 'سجل العمل' : 'Work record',
   Notifications: I18nManager.isRTL ? 'التنبيهات' : 'Alerts',
   SignIn: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
   SignUp: I18nManager.isRTL ? 'إنشاء حساب' : 'Register',
