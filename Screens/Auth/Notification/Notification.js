@@ -1,6 +1,16 @@
 import * as Permissions from 'expo-permissions'
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, Modal, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  ActivityIndicator,
+  Linking,
+  Alert,
+  I18nManager,
+} from 'react-native'
 import styles from './Style'
 import { NotificationStrings, ErrorsStrings } from '../../../Config/Strings'
 import { inject, observer } from 'mobx-react'
@@ -9,6 +19,7 @@ import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import debounce from 'lodash/debounce'
 import { PrimaryColor } from '../../../Config/ColorPalette'
+import Constants from 'expo-constants'
 
 function Notification({ navigation, store }) {
   const [PushToken, setPushToken] = React.useState('')
@@ -17,34 +28,60 @@ function Notification({ navigation, store }) {
   const [isError, setError] = React.useState(' ')
 
   const registerForPushNotificationsAsync = async () => {
-    if (isLoading) {
-      return
-    }
     setLoading(true)
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-    let finalStatus = existingStatus
-    if (existingStatus !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-      setLoading(false)
-      finalStatus = status
-    }
-    if (finalStatus !== 'granted') {
+    //
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+      let finalStatus = existingStatus
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+        finalStatus = status
+      }
+      if (finalStatus !== 'granted') {
+        // alert('Failed to get push token for push notification!')
+        setLoading(false)
+
+        Alert.alert(
+          '',
+          I18nManager.isRTL
+            ? 'يرجى السماح للتطبيق باستخدام الإشعارات من إعدادات هاتفك'
+            : 'Please allow the app to use notifications from your phone setting',
+          [
+            {
+              text: I18nManager.isRTL ? 'إلغاء' : 'cancel',
+              style: 'cancel',
+            },
+            {
+              text: I18nManager.isRTL ? 'أفتح الإعدادات ' : 'open settings',
+              onPress: () => Linking.openSettings(),
+            },
+          ],
+          { cancelable: false }
+        )
+
+        return
+      }
+    } else {
+      alert('Must use physical device for Push Notifications')
       setLoading(false)
       return
     }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      })
+    }
+
+    //
+
     var token = await Notifications.getExpoPushTokenAsync()
     setPushToken(token)
 
     if (token) {
-      if (Platform.OS === 'android') {
-        Notifications.createChannelAndroidAsync('default', {
-          name: 'default',
-          sound: true,
-          priority: 'max',
-          vibrate: [0, 250, 250, 250],
-        })
-      }
-
       axios
         .post(
           URL + '/user/addnotifications',
@@ -147,7 +184,9 @@ function Notification({ navigation, store }) {
               <Text style={styles.Title}>{NotificationStrings.Setting}</Text>
               <Text style={styles.Slogan}>{NotificationStrings.SettingSlogan}</Text>
 
-              <TouchableOpacity style={styles.ModalButton} onPress={debounce(() => NotificationDone(), 200)}>
+              <TouchableOpacity
+                style={styles.ModalButton}
+                onPress={debounce(() => (isLoading ? null : NotificationDone()), 200)}>
                 <Text style={styles.ButtonText}>{NotificationStrings.Done}</Text>
               </TouchableOpacity>
             </View>

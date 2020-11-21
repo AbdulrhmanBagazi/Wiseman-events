@@ -1,6 +1,16 @@
 import * as Permissions from 'expo-permissions'
 import React from 'react'
-import { View, Text, ScrollView, Switch, Modal, I18nManager, ActivityIndicator, Alert } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  Switch,
+  Modal,
+  I18nManager,
+  ActivityIndicator,
+  Alert,
+  Linking,
+} from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
 import axios from 'axios'
@@ -9,6 +19,7 @@ import { PrimaryColor } from '../../../../Config/ColorPalette'
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import { Notifications } from 'expo'
+import Constants from 'expo-constants'
 
 function NotificationSettings({ store }) {
   const [isEnabled, setIsEnabled] = React.useState(false)
@@ -20,30 +31,61 @@ function NotificationSettings({ store }) {
   const registerForPushNotificationsAsync = async () => {
     await setIsEnabled((previousState) => !previousState)
     setShow(true)
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-    let finalStatus = existingStatus
-    if (existingStatus !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+      let finalStatus = existingStatus
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+        finalStatus = status
+      }
+      if (finalStatus !== 'granted') {
+        // alert('Failed to get push token for push notification!')
+        setShow(false)
+
+        Alert.alert(
+          '',
+          I18nManager.isRTL
+            ? 'يرجى السماح للتطبيق باستخدام الإشعارات من إعدادات هاتفك'
+            : 'Please allow the app to use notifications from your phone setting',
+          [
+            {
+              text: I18nManager.isRTL ? 'إلغاء' : 'cancel',
+              style: 'cancel',
+            },
+            {
+              text: I18nManager.isRTL ? 'أفتح الإعدادات ' : 'open settings',
+              onPress: () => Linking.openSettings(),
+            },
+          ],
+          { cancelable: false }
+        )
+        await setIsEnabled((previousState) => !previousState)
+
+        return
+      }
+    } else {
+      alert('Must use physical device for Push Notifications')
       setShow(false)
-      finalStatus = status
-    }
-    if (finalStatus !== 'granted') {
-      setShow(false)
+      await setIsEnabled((previousState) => !previousState)
+
       return
     }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      })
+    }
+
+    //
 
     var token = await Notifications.getExpoPushTokenAsync()
 
     if (token) {
-      if (Platform.OS === 'android') {
-        Notifications.createChannelAndroidAsync('default', {
-          name: 'default',
-          sound: true,
-          priority: 'max',
-          vibrate: [0, 250, 250, 250],
-        })
-      }
-
       axios
         .post(
           URL + '/user/addnotifications',

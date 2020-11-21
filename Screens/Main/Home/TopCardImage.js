@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, Text, Animated, TouchableOpacity } from 'react-native'
-import styles from './Style'
-import Icon from '../../../../Config/Icons'
+import { Animated } from 'react-native'
 import * as FileSystem from 'expo-file-system'
 import shorthash from 'shorthash'
+import styles from './Style'
 
-function SingleJobImage(props) {
+function TopCardImage(props) {
   const [ImageLoad] = React.useState(new Animated.Value(0))
   const [isUrl, setUrl] = React.useState(null)
   const [isLoading, setLoading] = React.useState(true)
@@ -48,23 +47,13 @@ function SingleJobImage(props) {
     }, 1000)
   }
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 103 }}>
-      {isLoading ? null : (
-        <Animated.Image
-          onLoadEnd={() => Start()}
-          source={isUrl}
-          style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
-        />
-      )}
-      <View style={styles.AllSingleJobLayer}>
-        <Text style={styles.SingleTitle}>{props.Name}</Text>
-      </View>
-      <TouchableOpacity style={styles.WorkS} onPress={props.onPressWork}>
-        <Icon name="calendar" size={25} color="#fff" />
-      </TouchableOpacity>
-    </View>
+  return isLoading ? null : (
+    <Animated.Image
+      onLoadEnd={() => Start()}
+      source={isUrl}
+      style={[styles.TopCardImage, { opacity: ImageLoad }]}
+    />
   )
 }
 
-export default SingleJobImage
+export default TopCardImage

@@ -26,6 +26,12 @@ function NotificationMain({ navigation, store }) {
   const [refreshing, setrefreshing] = React.useState(false)
   const { signOut } = React.useContext(AuthContext)
   const [isLoadingAlert, setLoadingAlert] = React.useState(false)
+  const [isData, setData] = React.useState([])
+
+  const [count, setcount] = React.useState(0)
+  const [ispage, setpage] = React.useState(0)
+  const [showMore, setshowmore] = React.useState(false)
+  const [LoadFooter, setLoadFooter] = React.useState(false)
 
   moment.updateLocale('en', {
     relativeTime: {
@@ -68,18 +74,23 @@ function NotificationMain({ navigation, store }) {
   const RefreshMiddle = async () => {
     setrefreshing(true)
     setLoading(false)
+    setshowmore(false)
     axios
       .get(URL + '/user/getAlerts', {
         headers: {
           Authorization: store.token,
+          'Cache-Control': 'no-cache',
         },
       })
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            await store.setAlertsData(response.data.alerts)
+            setData(response.data.alerts.rows)
+            setcount(response.data.alerts.count)
             setrefreshing(false)
             setLoading(true)
+            setpage(0)
+
             return
           } else if (response.data.check === 'fail') {
             setrefreshing(false)
@@ -370,10 +381,117 @@ function NotificationMain({ navigation, store }) {
       })
   }
 
+  const LoadMore = async () => {
+    setshowmore(false)
+    setLoadFooter(true)
+    axios
+      .post(
+        URL + '/user/getAlertsPages',
+        {
+          page: ispage + 1,
+        },
+        {
+          headers: {
+            Authorization: store.token,
+          },
+        }
+      )
+      .then(async (response) => {
+        if (response.status === 200) {
+          if (response.data.check === 'success') {
+            setData([...isData, ...response.data.alerts.rows])
+            setcount(response.data.alerts.count)
+            setpage(ispage + 1)
+            setLoadFooter(false)
+            return
+          } else if (response.data.check === 'fail') {
+            setLoadFooter(false)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setshowmore(true) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          } else {
+            setLoadFooter(false)
+
+            Alert.alert(
+              '',
+              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+              [{ text: 'OK', onPress: () => setshowmore(true) }],
+              {
+                cancelable: false,
+              }
+            )
+            return
+          }
+        } else {
+          setLoadFooter(false)
+
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setshowmore(true) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        setLoadFooter(false)
+
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setshowmore(true) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setshowmore(true) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={store.alerts}
+        data={isData}
         showsVerticalScrollIndicator={false}
         srtyle={{
           flex: 1,
@@ -381,6 +499,16 @@ function NotificationMain({ navigation, store }) {
         keyExtractor={(item) => item.id.toString()}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+        }
+        onEndReachedThreshold={0} // Tried 0, 0.01, 0.1, 0.7, 50, 100, 700
+        onEndReached={() => {
+          isData.length < count ? setshowmore(true) : null
+        }}
+        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
+        ListFooterComponent={
+          LoadFooter ? (
+            <ActivityIndicator style={{ marginVertical: 10 }} size="large" color={PrimaryColor} />
+          ) : null
         }
         renderItem={({ item, index }) => (
           <View>
@@ -500,6 +628,12 @@ function NotificationMain({ navigation, store }) {
           </View>
         )}
       />
+
+      {showMore ? (
+        <TouchableOpacity style={styles.ShowMoreButton} onPress={() => LoadMore()}>
+          <Text style={styles.ShowMoreButtonText}>{I18nManager.isRTL ? 'تحميل المزيد' : 'Load More'}</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Image } from 'react-native'
 import Icon from '../../../Config/Icons'
 import styles from './Style'
-import { Rating } from 'react-native-ratings'
+// import { Rating } from 'react-native-ratings'
 import { Entypo } from '@expo/vector-icons'
 import { ProfilePageStrings } from '../../../Config/Strings'
 import { inject, observer } from 'mobx-react'
@@ -50,15 +50,12 @@ function Profile({ store, navigation }) {
           </Text>
         </Text> */}
       </View>
-      <View style={styles.rating}>
-        <Rating type="star" ratingCount={5} startingValue={4.5} imageSize={16} />
-        <Text style={styles.ratingText}>4.7</Text>
-        <Text style={styles.ratingTextNumber}>(12)</Text>
-      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.about}>
           <View style={styles.aboutE}>
-            <Text style={styles.aboutT}>{I18nManager.isRTL ? 'معلومات الشخصية' : 'Profile information'}</Text>
+            <Text style={styles.aboutT}>
+              {I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile information'}
+            </Text>
           </View>
           <View style={styles.aboutB}>
             <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Status')}>
@@ -105,7 +102,7 @@ function Profile({ store, navigation }) {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Levels')}>
+            {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Levels')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Levels}</Text>
@@ -121,7 +118,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('IBAN')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
@@ -143,14 +140,10 @@ function Profile({ store, navigation }) {
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                <Entypo
-                  name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
-                  size={18}
-                  color="#C6C9CD"
-                />
+                <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
+            {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Support}</Text>
@@ -163,7 +156,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </ScrollView>

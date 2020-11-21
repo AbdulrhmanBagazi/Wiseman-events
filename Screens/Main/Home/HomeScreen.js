@@ -21,7 +21,14 @@ function Home({ store, navigation }) {
   const [isRefresh, setRefresh] = React.useState(false)
   const [isStatus, setStatus] = React.useState(false)
   //
-  const { signOut } = React.useContext(AuthContext)
+  // const { signOut } = React.useContext(AuthContext)
+  // const _handleNotification = (notification) => {
+  //   console.log({ notification: notification })
+  // }
+
+  // const _handleNotificationResponse = (response) => {
+  //   console.log(response)
+  // }
 
   React.useEffect(() => {
     setLoading(true)
@@ -39,6 +46,7 @@ function Home({ store, navigation }) {
       .get(URL + '/user/mainPageJobs', {
         headers: {
           Authorization: store.token,
+          'Cache-Control': 'no-cache',
         },
       })
       .then(async (response) => {
@@ -103,6 +111,10 @@ function Home({ store, navigation }) {
           return
         }
       })
+
+    // Notifications.addNotificationReceivedListener(_handleNotification)
+
+    // Notifications.addNotificationResponseReceivedListener(_handleNotificationResponse)
 
     return unsubscribe
   }, [isRefresh, navigation])

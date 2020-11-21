@@ -23,6 +23,7 @@ function Splash({ store }) {
           .get(URL + '/user/authhenticate', {
             headers: {
               Authorization: Token,
+              'Cache-Control': 'no-cache',
             },
           })
           .then(async (response) => {

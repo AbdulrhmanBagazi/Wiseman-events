@@ -445,6 +445,7 @@ function CreateProfile({ store }) {
               height: text.trim(),
             })
           }
+          keyboardType={'number-pad'}
         />
 
         <RNPickerSelect

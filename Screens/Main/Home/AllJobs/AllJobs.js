@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ActivityIndicator, Text, TouchableOpacity } from 'react-native'
+import { View, ActivityIndicator, Text, TouchableOpacity, Alert, I18nManager } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import Card from './Card'
 import styles from '../Style'
@@ -27,6 +27,7 @@ function AllJobs({ route, store, navigation }) {
       .get(URL + '/user/getJobs/' + id, {
         headers: {
           Authorization: store.token,
+          'Cache-Control': 'no-cache',
         },
       })
       .then(async (response) => {

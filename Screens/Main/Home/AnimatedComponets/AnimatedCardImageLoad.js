@@ -1,9 +1,41 @@
 import React from 'react'
-import { View, Text, Animated, ImageBackground, Image, I18nManager } from 'react-native'
+import { View, Text, Animated, I18nManager } from 'react-native'
 import styles from '../Style'
+import * as FileSystem from 'expo-file-system'
+import shorthash from 'shorthash'
 
 function AnimatedCardImageLoad(props) {
   const [ImageLoad] = React.useState(new Animated.Value(0))
+  const [isUrl, setUrl] = React.useState(null)
+  const [isLoading, setLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    Load()
+  }, [])
+
+  const Load = async () => {
+    const { uri } = props.source
+    const name = await shorthash.unique(uri)
+    const path = `${FileSystem.cacheDirectory}${name}`
+    const image = await FileSystem.getInfoAsync(path)
+
+    if (image.exists) {
+      setUrl({
+        uri: image.uri,
+      })
+      setLoading(false)
+
+      return
+    } else {
+      const newImage = await FileSystem.downloadAsync(uri, path)
+
+      setUrl({
+        uri: newImage.uri,
+      })
+      setLoading(false)
+      return
+    }
+  }
 
   const Start = async () => {
     setTimeout(() => {
@@ -17,11 +49,13 @@ function AnimatedCardImageLoad(props) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 103 }}>
-      <Animated.Image
-        onLoadEnd={() => Start()}
-        source={props.source}
-        style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
-      />
+      {isLoading ? null : (
+        <Animated.Image
+          onLoadEnd={() => Start()}
+          source={isUrl}
+          style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
+        />
+      )}
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
 

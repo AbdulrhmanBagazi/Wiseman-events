@@ -109,7 +109,7 @@ const ProfileStrings = {
   Full: I18nManager.isRTL ? 'الإسم الثلاثي' : 'Full Name',
   First: I18nManager.isRTL ? 'الاسم الآول' : 'First Name',
   Last: I18nManager.isRTL ? 'الاسم الآخير' : 'Last Name',
-  height: I18nManager.isRTL ? 'طولك' : 'Your Height',
+  height: I18nManager.isRTL ? 'طولك بالسنتيمتر' : 'Your height in centimeters',
   Nationality: I18nManager.isRTL ? 'الجنسية' : 'Nationality',
   Birth: I18nManager.isRTL ? 'تاريخ الميلاد' : 'Date Of Birth',
   Male: I18nManager.isRTL ? 'ذكر' : 'Male',
@@ -220,7 +220,7 @@ const ProfilePageStrings = {
   Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
   IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
-  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
+  Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
 }

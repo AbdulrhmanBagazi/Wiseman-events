@@ -83,6 +83,7 @@ function History({ store, navigation }) {
       .get(URL + '/user/getApplication', {
         headers: {
           Authorization: store.token,
+          'Cache-Control': 'no-cache',
         },
       })
       .then(async (response) => {

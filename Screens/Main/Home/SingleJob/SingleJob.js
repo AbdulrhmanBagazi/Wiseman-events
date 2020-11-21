@@ -126,7 +126,9 @@ function SingleJob({ route, store, navigation }) {
             </View>
             <View style={styles.DataSections}>
               <View style={{ flex: 1, alignItems: 'flex-start' }}>
-                <Text style={styles.SingleShiftText}>{SingleJobStrings.Shifts + ': ' + item.Shifts}</Text>
+                <Text style={styles.SingleShiftText}>
+                  {SingleJobStrings.Shifts + ': ' + item.eventshifts.length}
+                </Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-start' }}>
                 <Text style={styles.SingleShiftTextSpace}>

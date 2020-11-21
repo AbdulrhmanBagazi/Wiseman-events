@@ -16,6 +16,8 @@
     "@twotalltotems/react-native-otp-input": "1.3.7",
     "axios": "^0.19.2",
     "expo": "~37.0.3",
+    "expo-constants": "~9.0.0",
+    "expo-file-system": "~8.1.0",
     "expo-location": "~8.1.0",
     "expo-notifications": "~0.1.1",
     "expo-permissions": "~8.1.0",
@@ -42,7 +44,8 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-svg": "~11.0.1",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "shorthash": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

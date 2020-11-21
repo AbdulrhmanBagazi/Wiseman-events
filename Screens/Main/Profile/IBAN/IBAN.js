@@ -61,7 +61,7 @@ function IBAN({ store }) {
   const AcountNameInput = (val) => {
     setData({
       ...Data,
-      AcountName: val.trim(),
+      AcountName: val,
     })
   }
 
@@ -86,7 +86,7 @@ function IBAN({ store }) {
   }
 
   const Add = async () => {
-    if (Data.IBAN.length < 24 || Data.IBAN.length > 24) {
+    if (Data.IBAN.length < 22 || Data.IBAN.length > 22) {
       Animated.timing(one, {
         toValue: 100,
         duration: 500,
@@ -128,13 +128,13 @@ function IBAN({ store }) {
       }).start()
     }
 
-    if (Data.IBAN.length === 24 && Data.AcountName.length > 1 && Data.IBAN === Data.ReIBAN) {
+    if (Data.IBAN.length === 22 && Data.AcountName.length > 1 && Data.IBAN === Data.ReIBAN) {
       setLoading(true)
       axios
         .post(
           URL + '/user/AddIBAN',
           {
-            IBAN: Data.IBAN,
+            IBAN: 'SA' + Data.IBAN,
             AccountName: Data.AcountName,
           },
           {
@@ -150,6 +150,10 @@ function IBAN({ store }) {
               setTimeout(() => {
                 setLoading(false)
                 setShow(false)
+                setData({
+                  ...Data,
+                  ReIBAN: '',
+                })
               }, 2000)
               return
             } else if (response.data.check === 'fail') {
@@ -230,7 +234,7 @@ function IBAN({ store }) {
   React.useEffect(() => {
     if (store.data.iban !== null) {
       setData({
-        IBAN: store.data.iban.IBAN,
+        IBAN: store.data.iban.IBAN.substring(2),
         AcountName: store.data.iban.AccountName,
       })
     }
@@ -265,12 +269,17 @@ function IBAN({ store }) {
                 marginBottom: 10,
                 justifyContent: 'center',
                 alignSelf: 'center',
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Text>SA</Text>
+              </View>
               <TextInput
                 placeholder={IBANPageStrings.IBAN}
                 style={styles.input}
                 onChangeText={(text) => IBAMInput(text)}
                 value={Data.IBAN}
+                keyboardType={'number-pad'}
               />
             </Animated.View>
 
@@ -286,13 +295,18 @@ function IBAN({ store }) {
                 marginBottom: 10,
                 justifyContent: 'center',
                 alignSelf: 'center',
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Text>SA</Text>
+              </View>
               <TextInput
                 contextMenuHidden={true}
                 placeholder={IBANPageStrings.RepeatIBAN}
                 style={styles.input}
                 onChangeText={(text) => ReIBANInput(text)}
                 value={Data.ReIBAN}
+                keyboardType={'number-pad'}
               />
             </Animated.View>
             <View style={styles.CheckMatch}>
@@ -352,12 +366,17 @@ function IBAN({ store }) {
               justifyContent: 'center',
               alignSelf: 'center',
               marginTop: 10,
+              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Text>SA</Text>
+            </View>
             <TextInput
               placeholder={IBANPageStrings.IBAN}
               style={styles.input}
               onChangeText={(text) => IBAMInput(text)}
               value={Data.IBAN}
+              keyboardType={'number-pad'}
             />
           </Animated.View>
           <Animated.View
@@ -372,13 +391,18 @@ function IBAN({ store }) {
               marginBottom: 10,
               justifyContent: 'center',
               alignSelf: 'center',
+              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Text>SA</Text>
+            </View>
             <TextInput
               contextMenuHidden={true}
               placeholder={IBANPageStrings.RepeatIBAN}
               style={styles.input}
               onChangeText={(text) => ReIBANInput(text)}
               value={Data.ReIBAN}
+              keyboardType={'number-pad'}
             />
           </Animated.View>
           <View style={styles.CheckMatch}>

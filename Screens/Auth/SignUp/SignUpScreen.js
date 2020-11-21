@@ -128,29 +128,31 @@ function SignUp({ navigation }) {
     }
     return
   }
-  const PasswordInput = (val) => {
+  const PasswordInput = async (val) => {
+    var pass = await convertToArabicNumber(val)
     setData({
       ...data,
-      Password: val,
+      Password: pass,
     })
     if (val === '') {
       setCheck('')
-    } else if (data.RePassword === val) {
+    } else if (data.RePassword === pass) {
       setCheck('Success')
     } else {
       setCheck('Error')
     }
     return
   }
-  const RePasswordInput = (val) => {
+  const RePasswordInput = async (val) => {
+    var pass = await convertToArabicNumber(val)
     setData({
       ...data,
-      RePassword: val,
+      RePassword: pass,
     })
     if (val === '') {
       setCheck('')
     }
-    if (data.Password === val) {
+    if (data.Password === pass) {
       setCheck('Success')
     } else {
       setCheck('Error')

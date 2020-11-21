@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native'
 import { PrimaryColor } from '../../../Config/ColorPalette'
-import { width } from '../../../Config/Layout'
 
 const styles = StyleSheet.create({
   Button: {

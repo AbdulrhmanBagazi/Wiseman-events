@@ -89,7 +89,7 @@ function JobCard(props) {
                 </View> */}
                 <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.Shifts}</Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshifts.length}</Text>
                 </View>
                 <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>

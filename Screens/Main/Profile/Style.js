@@ -44,8 +44,9 @@ const styles = StyleSheet.create({
   },
   info: {
     width,
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'flex-start',
+    padding: 10,
   },
   rating: {
     width,
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   aboutE: {
-    marginTop: 50,
+    marginTop: 20,
     borderBottomWidth: 1,
     borderColor: '#DFE0E3',
     width: width + 20,
