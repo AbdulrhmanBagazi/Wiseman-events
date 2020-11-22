@@ -310,44 +310,48 @@ function History({ store, navigation }) {
           <ActivityIndicator size="large" color={PrimaryColor} />
         </View>
       ) : null}
-      <ScrollView
-        pagingEnabled={true}
-        scrollEventThrottle={16}
-        horizontal={true}
-        onScroll={(e) => check(e)}
-        ref={Scroll}
-        showsHorizontalScrollIndicator={false}>
-        <View style={styles.Container}>
-          <Activejob
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-            }
-            Data={store.history}
-            onPressWork={navigation.navigate}
-            Secret="WiseManApp"
-            userId={store.data.id}
-          />
-        </View>
-        <View style={styles.Container}>
-          <Card
-            Data={isData}
-            Withdrawalapply={Withdrawalapply}
-            LoadButton={isLoadButton}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-            }
-          />
-        </View>
-        <View style={styles.Container}>
-          <CompletedJobs
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-            }
-            Data={store.history}
-            Details={navigation.navigate}
-          />
-        </View>
-      </ScrollView>
+
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          pagingEnabled={true}
+          scrollEventThrottle={16}
+          horizontal={true}
+          onScroll={(e) => check(e)}
+          ref={Scroll}
+          directionalLockEnabled={false}
+          showsHorizontalScrollIndicator={false}>
+          <View style={styles.Container}>
+            <Activejob
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              }
+              Data={isData}
+              onPressWork={navigation.navigate}
+              Secret="WiseManApp"
+              userId={store.data.id}
+            />
+          </View>
+          <View style={styles.Container}>
+            <Card
+              Data={isData}
+              Withdrawalapply={Withdrawalapply}
+              LoadButton={isLoadButton}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              }
+            />
+          </View>
+          <View style={styles.Container}>
+            <CompletedJobs
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              }
+              Data={isData}
+              Details={navigation.navigate}
+            />
+          </View>
+        </ScrollView>
+      </View>
     </View>
   )
 }

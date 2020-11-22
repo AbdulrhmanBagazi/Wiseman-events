@@ -1,23 +1,14 @@
 import React from 'react'
 import { View, ActivityIndicator, I18nManager, Alert, TouchableOpacity, Text, Modal } from 'react-native'
 import { CalendarList } from 'react-native-calendars'
-import {
-  BackgroundColor,
-  PrimaryColor,
-  SecondaryColor,
-  PrimaryText,
-  SecondaryText,
-  GrayColor,
-  LightBorder,
-  LightText,
-  PrimaryBorder,
-} from '../../../Config/ColorPalette'
+import { PrimaryColor, PrimaryText, LightText, PrimaryBorder } from '../../../Config/ColorPalette'
 import { LocaleConfig } from 'react-native-calendars'
 import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import { inject, observer } from 'mobx-react'
 import styles from './Style'
 import { WorkScheduleUserString } from '../../../Config/Strings'
+import InfoModal from '../../Components/InfoModal/InfoModal'
 
 //Config
 //#11865B
@@ -96,6 +87,9 @@ function WorkScheduleUser({ route, store }) {
   const [refreshing, setrefreshing] = React.useState(false)
   const [isDays, setDays] = React.useState({})
   const [isShow, setShow] = React.useState(false)
+  const [isData, setData] = React.useState([])
+  const [isShowInfo, setShowInfo] = React.useState(false)
+  const [isDataInfo, setDataInfo] = React.useState({})
 
   const { eventId, applicationId } = route.params
 
@@ -119,7 +113,7 @@ function WorkScheduleUser({ route, store }) {
           if (response.data.check === 'success') {
             var Days = response.data.days
             var Attendance = response.data.Attendance
-
+            setData(response.data.Attendance)
             let newAttendanceObject = {}
             await Attendance.map((item) => {
               newAttendanceObject = {
@@ -243,6 +237,20 @@ function WorkScheduleUser({ route, store }) {
         }
       })
   }, [refreshing])
+
+  const ViewDay = async (val) => {
+    var a = await isData.find((e) => e.eventday.start === val.dateString)
+
+    if (a) {
+      setShowInfo(true)
+      setDataInfo(a)
+
+      return
+    }
+
+    return
+  }
+
   return (
     <View style={{ flex: 1 }}>
       {isLoading ? (
@@ -255,6 +263,9 @@ function WorkScheduleUser({ route, store }) {
           futureScrollRange={20}
           markedDates={{ ...isDays }}
           enableSwipeMonths={true}
+          onDayPress={(day) => {
+            ViewDay(day)
+          }}
           theme={{
             'stylesheet.calendar.header': {
               dayHeader: {
@@ -298,6 +309,14 @@ function WorkScheduleUser({ route, store }) {
           </View>
         </TouchableOpacity>
       </Modal>
+
+      <InfoModal
+        OpenModal={isShowInfo}
+        onPress={() => setShowInfo(false)}
+        TakeAttendence={WorkScheduleUserString.TakeAttendence}
+        TakeAttendenceEnd={WorkScheduleUserString.TakeAttendenceEnd}
+        Data={isDataInfo}
+      />
     </View>
   )
 }

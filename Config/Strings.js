@@ -324,8 +324,15 @@ const WorkScheduleUserString = {
   Work: I18nManager.isRTL ? 'أيام العمل' : 'Work Days',
   incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
   active: I18nManager.isRTL ? 'نشط أو مكتمل' : 'Active or Completed',
+  activeStatus: I18nManager.isRTL ? 'نشط' : 'Active',
+  CompletedStatus: I18nManager.isRTL ? 'مكتمل' : 'Completed',
+  pendingStatus: I18nManager.isRTL ? 'قيد الانتظار' : 'pending',
   Absence: I18nManager.isRTL ? 'غياب' : 'Absence',
   Today: I18nManager.isRTL ? 'اليوم' : 'Today',
+  TakeAttendence: I18nManager.isRTL ? 'تسجيل الحضور' : 'Check-in',
+  TakeAttendenceEnd: I18nManager.isRTL ? 'تسجيل الإنصراف' : 'Check-out',
+  Info: I18nManager.isRTL ? 'معلومات' : 'Info',
+  noInfo: I18nManager.isRTL ? 'لا يوجد معلومات' : 'No Information',
 }
 
 export {
