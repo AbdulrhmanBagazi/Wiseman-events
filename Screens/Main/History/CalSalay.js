@@ -22,16 +22,14 @@ function CalSalary(props) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].Status === 'completed') {
         if (data[i].Type === 'organizer') {
-          var min = Math.floor(Number(data[i].TotalHours / 60000))
-          var hours = Math.round(min / 60)
+          var hours = data[i].TotalHours / 60
 
           totalHours = totalHours + hours
           if (Meal === false) {
             daysCompleted = daysCompleted + 1
           }
         } else {
-          var min = Math.floor(Number(data[i].TotalHours / 60000))
-          var hours = Math.round(min / 60)
+          var hours = data[i].TotalHours / 60
 
           totalSuperHours = totalSuperHours + hours
           if (Meal === false) {
@@ -41,8 +39,8 @@ function CalSalary(props) {
       }
     }
 
-    var organizerSalary = totalHours * rateHourOrganizer
-    var supervisorSalary = totalSuperHours * rateHourSupervisor
+    var organizerSalary = Math.floor(totalHours) * rateHourOrganizer
+    var supervisorSalary = Math.floor(totalSuperHours) * rateHourSupervisor
 
     var salary = organizerSalary + supervisorSalary
     var meal = daysCompleted * MealPlus

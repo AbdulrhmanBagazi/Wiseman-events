@@ -147,12 +147,14 @@ function SingleJob({ route, store, navigation }) {
 
           {!item.ProvideAmeal ? (
             <View style={styles.NoteView}>
-              <Text style={styles.NoteText}>{SingleJobStrings.Note + ' '}</Text>
-              <Text style={styles.NoteTextValue}>{SingleJobStrings.Mealallowance}</Text>
-              <Text style={styles.NoteText}>
-                {' ' + item.ProvideAnAllowance}
-                {I18nManager.isRTL ? 'ريال' : 'sar'}
-              </Text>
+              <View style={styles.NoteViewContainer}>
+                <Text style={styles.NoteText}>{SingleJobStrings.Note + ' '}</Text>
+                <Text style={styles.NoteTextValue}>{SingleJobStrings.Mealallowance}</Text>
+                <Text style={styles.NoteText}>
+                  {' ' + item.ProvideAnAllowance}
+                  {I18nManager.isRTL ? 'ريال' : 'sar'}
+                </Text>
+              </View>
             </View>
           ) : null}
 
@@ -251,16 +253,14 @@ function SingleJob({ route, store, navigation }) {
       </ScrollView>
       <View style={styles.ButtonView}>
         {item.Status === 'active' ? (
-          <TouchableOpacity
-            style={styles.Button}
-            onPress={() => navigation.navigate('Application', { item })}>
+          <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('ApplyToJob', { item })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={[styles.ButtonDisabled, { borderColor: '#cccccc', backgroundColor: '#cccccc' }]}
             disabled={true}
-            onPress={() => navigation.navigate('Application', { item })}>
+            onPress={() => navigation.navigate('ApplyToJob', { item })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.EventEnded}</Text>
           </TouchableOpacity>
         )}

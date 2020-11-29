@@ -12,8 +12,8 @@ function CompletedJobs(props) {
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
       // console.log(item.attendances.length)
-      // return item.Status === 'completed'
-      return item.Status !== 'approved' && item.attendances.length >= 1
+      return item.Status === 'completed'
+      // return item.Status !== 'approved' && item.attendances.length >= 1
     })
 
     setData(newArray)
@@ -122,7 +122,7 @@ function CompletedJobs(props) {
                 </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
-                <View style={styles.DataSections}>
+                {/* <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.shift}</Text>
                 </View>
@@ -137,7 +137,7 @@ function CompletedJobs(props) {
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
                   </Text>
-                </View>
+                </View> */}
               </View>
               {props.LoadButton ? (
                 <View style={styles.StatusView}>

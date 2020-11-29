@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  KeyboardAvoidingView,
-  ScrollView,
-  Keyboard,
-  SafeAreaView,
-  ActivityIndicator,
-} from 'react-native'
+import { View, TouchableOpacity, Text, Keyboard, Image, ActivityIndicator } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
 import styles from './Style'
@@ -143,14 +134,12 @@ function SignIn({ navigation, store }) {
   return (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
-        <View style={styles.Logo}></View>
+        <Image style={styles.tinyLogo} source={require('../../../assets/L.png')} />
         <Text style={styles.Title}>Welcome to App</Text>
         <Text style={styles.Slogan}>
           It's great opportunity to work on part time job and earn extra money
         </Text>
-
         <Text style={styles.error}>{isError}</Text>
-
         <InputPhone
           placeholder={SignInStrings.Phone}
           style={styles.inputPhone}
@@ -163,13 +152,11 @@ function SignIn({ navigation, store }) {
           style={styles.inputPassword}
           onChangeText={(text) => PasswordInput(text)}
         />
-
         <View style={styles.ForgotContainer}>
           <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('Reset') : null)}>
             <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
           </TouchableOpacity>
         </View>
-
         <TouchableOpacity
           style={styles.Button}
           onPress={debounce(() => (!isLoading ? Login(data) : null), 200)}>
@@ -179,7 +166,6 @@ function SignIn({ navigation, store }) {
             <Text style={styles.ButtonText}>{SignInStrings.Login}</Text>
           )}
         </TouchableOpacity>
-
         <View style={styles.Register}>
           <Text style={styles.Member}>{SignInStrings.Member}</Text>
           <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('SignUp') : null)}>

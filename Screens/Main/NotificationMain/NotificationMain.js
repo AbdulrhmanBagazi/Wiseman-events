@@ -56,18 +56,20 @@ function NotificationMain({ navigation, store }) {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      RefreshMiddle()
-      setLoading(false)
-      Start()
+      if (store.NotificationMainPage) {
+        RefreshMiddle()
+        setLoading(false)
+        return
+      } else {
+        return
+      }
     })
 
     return unsubscribe
   }, [navigation])
 
   const Start = () => {
-    setTimeout(() => {
-      setLoading(true)
-    }, 500)
+    setLoading(true)
     return
   }
 
@@ -87,9 +89,11 @@ function NotificationMain({ navigation, store }) {
           if (response.data.check === 'success') {
             setData(response.data.alerts.rows)
             setcount(response.data.alerts.count)
+            await store.setNotificationMainPage()
             setrefreshing(false)
             setLoading(true)
             setpage(0)
+            Start()
 
             return
           } else if (response.data.check === 'fail') {

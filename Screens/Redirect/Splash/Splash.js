@@ -1,14 +1,23 @@
 import React from 'react'
-import { View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator, Image, Animated } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenGet, UserTokenRemove } from '../../../Config/AsyncStorage'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
-import { PrimaryColor } from '../../../Config/ColorPalette'
+import { height, width } from '../../../Config/Layout'
 
 function Splash({ store }) {
   const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
+  const [ImageLoad] = React.useState(new Animated.Value(0))
+
+  const Start = async () => {
+    Animated.timing(ImageLoad, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start()
+  }
 
   React.useEffect(() => {
     CheckLanguage = async () => {
@@ -34,16 +43,24 @@ function Splash({ store }) {
               // await UserTokenRemove()
 
               if (!response.data.user.verify) {
-                Verify()
+                setTimeout(() => {
+                  Verify()
+                }, 1000)
                 return
               } else if (!response.data.user.profile) {
-                Profile()
+                setTimeout(() => {
+                  Profile()
+                }, 1000)
                 return
               } else if (!response.data.user.notification) {
-                Notification()
+                setTimeout(() => {
+                  Notification()
+                }, 1000)
                 return
               } else {
-                signIn()
+                setTimeout(() => {
+                  signIn()
+                }, 1000)
                 return
               }
             }
@@ -81,8 +98,20 @@ function Splash({ store }) {
   }, [])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <ActivityIndicator size="large" color={PrimaryColor} />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#fff',
+      }}>
+      <Animated.Image
+        style={{
+          width,
+          resizeMode: 'contain',
+          opacity: ImageLoad,
+        }}
+        onLoadEnd={() => Start()}
+        source={require('../../../assets/LL.png')}
+      />
     </View>
   )
 }

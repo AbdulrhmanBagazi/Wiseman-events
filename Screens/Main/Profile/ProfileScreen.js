@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Image } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Share } from 'react-native'
 import Icon from '../../../Config/Icons'
 import styles from './Style'
 // import { Rating } from 'react-native-ratings'
@@ -24,6 +24,26 @@ function Profile({ store, navigation }) {
 
     return
   }
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'www.google.com',
+      })
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
   return (
     <View style={styles.Container}>
       <View style={styles.header}>
@@ -41,7 +61,7 @@ function Profile({ store, navigation }) {
           {store.data.profile.first_name + ' ' + store.data.profile.last_name}
         </Text>
         <Text style={styles.rating} numberOfLines={2}>
-          {store.data.nID}
+          {store.data.nID + ' (' + store.data.phone + ')'}
         </Text>
         {/* <Text style={styles.balance}>
           {I18nManager.isRTL ? 'رصيد:' : 'Balance:'}
@@ -58,6 +78,20 @@ function Profile({ store, navigation }) {
             </Text>
           </View>
           <View style={styles.aboutB}>
+            {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Contact')}>
+              <View
+                style={{ flex: 2, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+                <Text style={styles.leftText}>{ProfilePageStrings.Contact}</Text>
+              </View>
+              <View
+                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+                <Entypo
+                  name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
+                  size={18}
+                  color="#C6C9CD"
+                />
+              </View>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Status')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
@@ -94,7 +128,7 @@ function Profile({ store, navigation }) {
               </View>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-                <Text style={styles.rightText}>2000/sar</Text>
+                {/* <Text style={styles.rightText}>2000/sar</Text> */}
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -133,7 +167,8 @@ function Profile({ store, navigation }) {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Invite')}>
+
+            <TouchableOpacity style={styles.aboutButton} onPress={() => onShare()}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Invite}</Text>

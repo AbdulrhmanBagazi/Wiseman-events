@@ -14,6 +14,29 @@ class Store {
   fewevents = []
   token = null
 
+  HistoryPage = true
+  NotificationMainPage = true
+  MainPage = true
+
+  setNotificationMainPage = async () => {
+    this.NotificationMainPage = false
+
+    return
+  }
+
+  setHistoryPage = async () => {
+    this.HistoryPage = false
+
+    return
+  }
+
+  setResetPages = async () => {
+    this.HistoryPage = true
+    this.NotificationMainPage = true
+
+    return
+  }
+
   setData = async (Data) => {
     this.data = Data.user
     // this.history = Data.user.applications
@@ -111,6 +134,11 @@ decorate(Store, {
   alerts: observable.ref,
   setAlertsData: action,
   setDataSignup: action,
+  NotificationMainPage: observable,
+  setNotificationMainPage: action,
+  HistoryPage: observable,
+  setHistoryPage: action,
+  setResetPages: action,
 })
 
 const store = new Store()

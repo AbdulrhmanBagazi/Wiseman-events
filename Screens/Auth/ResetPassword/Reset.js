@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Image,
-  Keyboard,
-  ActivityIndicator,
-} from 'react-native'
+import { View, Text, TouchableOpacity, Image, Keyboard, ActivityIndicator } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString, ErrorsStrings } from '../../../Config/Strings'
 import InputPhone from '../../Components/PhoneInput/Phone'

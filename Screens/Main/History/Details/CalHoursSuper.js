@@ -15,7 +15,7 @@ function CalHoursSuper(props) {
 
     for (var i = 0; i < data.length; i++) {
       if (data[i].Type === 'supervisor') {
-        total = total + Math.floor(Number(data[i].TotalHours) / 60000)
+        total = total + data[i].TotalHours
       }
     }
 

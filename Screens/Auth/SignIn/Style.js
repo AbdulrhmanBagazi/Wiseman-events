@@ -20,11 +20,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Logo: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    backgroundColor: GrayColor,
-    marginVertical: 5,
+    width,
+    height: height / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tinyLogo: {
+    height: height / 4,
+    resizeMode: 'contain',
   },
   Title: {
     fontSize: 32,

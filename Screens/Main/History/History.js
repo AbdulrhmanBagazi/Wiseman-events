@@ -28,9 +28,9 @@ function History({ store, navigation }) {
   const Scroll = React.useRef(null)
   const [isSelected, setSelected] = React.useState(0)
   const [refreshing, setrefreshing] = React.useState(false)
-  const [Firstrefreshing, setFirstrefreshing] = React.useState(true)
   const [isLoadButton, setLoadButton] = React.useState(false)
   const [isData, setData] = React.useState([])
+  const [isAllData, setAllData] = React.useState([])
 
   //
   const { signOut } = React.useContext(AuthContext)
@@ -68,7 +68,12 @@ function History({ store, navigation }) {
   }
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      RefreshMiddle()
+      if (store.HistoryPage) {
+        RefreshMiddle()
+        return
+      } else {
+        return
+      }
     })
 
     RefreshMiddle()
@@ -87,10 +92,11 @@ function History({ store, navigation }) {
         },
       })
       .then(async (response) => {
-        // console.log(response)
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            await store.setHistoryData(response.data.application)
+            // await store.setHistoryData(response.data.application)
+            await store.setHistoryPage()
+
             setrefreshing(false)
 
             var newArray = response.data.application.filter((item) => {
@@ -99,17 +105,11 @@ function History({ store, navigation }) {
             })
 
             setData(newArray)
-
-            if (Firstrefreshing) {
-              setFirstrefreshing(false)
-            }
-
+            setAllData(response.data.application)
             return
           } else if (response.data.check === 'fail') {
             setrefreshing(false)
-            if (Firstrefreshing) {
-              setFirstrefreshing(false)
-            }
+
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -121,9 +121,7 @@ function History({ store, navigation }) {
             return
           } else {
             setrefreshing(false)
-            if (Firstrefreshing) {
-              setFirstrefreshing(false)
-            }
+
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -136,9 +134,7 @@ function History({ store, navigation }) {
           }
         } else {
           setrefreshing(false)
-          if (Firstrefreshing) {
-            setFirstrefreshing(false)
-          }
+
           Alert.alert(
             '',
             I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -153,9 +149,6 @@ function History({ store, navigation }) {
       .catch(async (error) => {
         // console.log(error)
         setrefreshing(false)
-        if (Firstrefreshing) {
-          setFirstrefreshing(false)
-        }
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
@@ -305,59 +298,48 @@ function History({ store, navigation }) {
         onPressTwo={() => ScrollTo(1)}
         onPressThird={() => ScrollTo(2)}
       />
-      {Firstrefreshing ? (
-        <View style={{ padding: 10, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size="large" color={PrimaryColor} />
-        </View>
-      ) : null}
 
-      <View style={{ flex: 1 }}>
-        <ScrollView
-          pagingEnabled={true}
-          scrollEventThrottle={16}
-          horizontal={true}
-          onScroll={(e) => check(e)}
-          ref={Scroll}
-          directionalLockEnabled={false}
-          showsHorizontalScrollIndicator={false}>
-          <View style={styles.Container}>
-            <Activejob
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-              }
-              Data={isData}
-              onPressWork={navigation.navigate}
-              Secret="WiseManApp"
-              userId={store.data.id}
-            />
-          </View>
-          <View style={styles.Container}>
-            <Card
-              Data={isData}
-              Withdrawalapply={Withdrawalapply}
-              LoadButton={isLoadButton}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-              }
-            />
-          </View>
-          <View style={styles.Container}>
-            <CompletedJobs
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
-              }
-              Data={isData}
-              Details={navigation.navigate}
-            />
-          </View>
-        </ScrollView>
-      </View>
+      <ScrollView
+        pagingEnabled={true}
+        scrollEventThrottle={16}
+        horizontal={true}
+        onScroll={(e) => check(e)}
+        ref={Scroll}
+        directionalLockEnabled={false}
+        showsHorizontalScrollIndicator={false}>
+        <View style={styles.Container}>
+          <Activejob
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+            Data={isAllData}
+            onPressWork={navigation.navigate}
+            Secret="WiseManApp"
+            userId={store.data.id}
+          />
+        </View>
+        <View style={styles.Container}>
+          <Card
+            Data={isData}
+            Withdrawalapply={Withdrawalapply}
+            LoadButton={isLoadButton}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+          />
+        </View>
+        <View style={styles.Container}>
+          <CompletedJobs
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+            }
+            Data={isAllData}
+            Details={navigation.navigate}
+          />
+        </View>
+      </ScrollView>
     </View>
   )
 }
 
 export default inject('store')(observer(History))
-
-//completedjobillustration.png
-//appliedjobillustration.png
-//activejobillustrations.png

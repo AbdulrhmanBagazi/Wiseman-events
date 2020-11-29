@@ -252,9 +252,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F9',
     marginVertical: 15,
     padding: 10,
+    borderRadius: 5,
+  },
+  NoteViewContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    flexWrap: 'wrap',
   },
   NoteText: {
     fontWeight: '500',

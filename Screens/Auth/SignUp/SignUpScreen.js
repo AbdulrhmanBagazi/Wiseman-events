@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  Animated,
-  TouchableOpacity,
-  ActivityIndicator,
-  Keyboard,
-  I18nManager,
-} from 'react-native'
+import { View, Text, Image, Animated, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
 import styles from './Style'
 import { Register, ErrorsStrings } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
@@ -241,7 +231,7 @@ function SignUp({ navigation }) {
   return (
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
-        <View style={styles.Logo} />
+        <Image style={styles.tinyLogo} source={require('../../../assets/L.png')} />
         <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
 
         <Text style={styles.error}>{isError}</Text>

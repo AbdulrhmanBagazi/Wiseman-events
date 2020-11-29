@@ -38,6 +38,8 @@ function InfoModal(props) {
           ? WorkScheduleUserString.Absence
           : T === 'incomplete'
           ? WorkScheduleUserString.incomplete
+          : T === 'completed'
+          ? WorkScheduleUserString.CompletedStatus
           : WorkScheduleUserString.pendingStatus
       setStatus(String)
     } else {

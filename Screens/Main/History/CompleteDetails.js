@@ -200,6 +200,22 @@ function CompleteDetails({ route }) {
             <View style={styles.CompleteDetailsbodyContainerData}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                  {CompleteDetailsStrings.Received}
+                </Text>
+              </View>
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <CalSalary
+                  Values={item.attendances}
+                  Rate={item}
+                  Meal={item.event.ProvideAmeal}
+                  MealPlus={item.event.ProvideAnAllowance}
+                />
+              </View>
+            </View>
+
+            <View style={styles.CompleteDetailsbodyContainerData}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.CompleteDetailsbodyContainerDataText}>
                   {CompleteDetailsStrings.Paymentstatus}
                 </Text>
               </View>

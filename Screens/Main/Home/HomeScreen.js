@@ -38,12 +38,12 @@ function Home({ store, navigation }) {
       }
     })
 
-    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      console.log(notification)
-    })
+    // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //   console.log(notification)
+    // })
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener)
+      // Notifications.removeNotificationSubscription(notificationListener)
       Notifications.removeNotificationSubscription(responseListener)
     }
   }, [])

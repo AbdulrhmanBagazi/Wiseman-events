@@ -17,7 +17,7 @@ export default function useCachedResources() {
         // })
       } catch (e) {
         // We might want to provide this error information to an error reporting service
-        console.log(e)
+        // console.log(e)
       } finally {
         setLoadingComplete(true)
         SplashScreen.hideAsync()

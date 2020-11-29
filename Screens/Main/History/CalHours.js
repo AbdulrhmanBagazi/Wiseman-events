@@ -14,7 +14,7 @@ function CalHours(props) {
     var total = 0
 
     for (var i = 0; i < data.length; i++) {
-      total = total + Math.floor(Number(data[i].TotalHours) / 60000)
+      total = total + data[i].TotalHours
     }
 
     var mills = total * 60000

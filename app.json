@@ -6,21 +6,22 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "splash": {
+        "backgroundColor": "#fff"
+      }
     },
     "android": {
       "package": "com.wiseman.wisemantest",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "splash": {
+        "backgroundColor": "#fff"
+      }
     }
   }
 }

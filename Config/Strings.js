@@ -32,13 +32,14 @@ const HeaderTitles = {
   LanguageSettings: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
   Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
   status: I18nManager.isRTL ? 'الحالة' : 'Job status',
-  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
+  Earnings: I18nManager.isRTL ? 'الأرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
   IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
-  Invite: I18nManager.isRTL ? 'دعوة أصدقاء' : 'Invite friends',
+  Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
   CompleteDetails: I18nManager.isRTL ? 'تفاصيل العمل' : 'Work Details',
+  Contact: I18nManager.isRTL ? 'رقم الاتصال / واتس آب' : 'Contact / Whatsapp number',
 }
 
 const LanguageChangeStrings = {
@@ -217,12 +218,13 @@ const HomePageStrings = {
 
 const ProfilePageStrings = {
   status: I18nManager.isRTL ? 'الحالة' : 'Status',
-  Earnings: I18nManager.isRTL ? 'أرباح' : 'Earnings',
+  Earnings: I18nManager.isRTL ? 'الأرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
   IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
   Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
+  Contact: I18nManager.isRTL ? 'رقم الاتصال / واتس آب' : 'Contact / Whatsapp number',
 }
 
 const SettingsPageStrings = {
@@ -302,6 +304,7 @@ const CompleteDetailsStrings = {
   noDate: I18nManager.isRTL ? 'لم يتم تحديد موعد' : 'No date has been set',
   organizer: I18nManager.isRTL ? 'المنظم' : 'Organizer',
   supervisor: I18nManager.isRTL ? 'المشرف' : 'Supervisor',
+  Received: I18nManager.isRTL ? 'تم الاستلام' : 'Received',
 }
 
 const HistoryPageStrings = {
@@ -335,6 +338,16 @@ const WorkScheduleUserString = {
   noInfo: I18nManager.isRTL ? 'لا يوجد معلومات' : 'No Information',
 }
 
+const EarningsStrings = {
+  organizer: I18nManager.isRTL ? 'منظم' : 'Organizer',
+  supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
+  hours: I18nManager.isRTL ? 'ساعات' : 'Hours',
+  Received: I18nManager.isRTL ? 'تم الاستلام' : 'Received',
+  Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
+  SAR: I18nManager.isRTL ? 'ريال' : 'SAR',
+  deductionamount: I18nManager.isRTL ? 'خصم' : 'Deduction',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -358,4 +371,5 @@ export {
   AnimatedButtonSelectStrings,
   AlertStrings,
   WorkScheduleUserString,
+  EarningsStrings,
 }

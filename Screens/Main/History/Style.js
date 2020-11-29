@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
   },
   SingleAllJob: {
     backgroundColor: '#fff',
@@ -454,6 +453,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 10,
     marginTop: 20,
+    alignSelf: 'flex-start',
   },
   CompleteDetailsbodyContainer: {
     marginHorizontal: 16,

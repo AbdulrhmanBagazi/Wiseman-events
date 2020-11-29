@@ -39,9 +39,10 @@ import Status from './Screens/Main/Profile/Status/Status'
 import Earnings from './Screens/Main/Profile/Earnings/Earnings'
 import Levels from './Screens/Main/Profile/Levels/Levels'
 import IBAN from './Screens/Main/Profile/IBAN/IBAN'
-import Invite from './Screens/Main/Profile/Invite/Invite'
-import Support from './Screens/Main/Profile/Support/Support'
+// import Invite from './Screens/Main/Profile/Invite/Invite'
+// import Support from './Screens/Main/Profile/Support/Support'
 import Settings from './Screens/Main/Profile/Settings/Settings'
+import Contact from './Screens/Main/Profile/Contact/Contact'
 //
 import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings'
 import Rateus from './Screens/Main/Profile/Settings/Rateus'
@@ -170,7 +171,7 @@ const MainScreens = () => {
             shadowOpacity: 0,
           },
         }}
-        name="Application"
+        name="ApplyToJob"
         component={Application}
       />
       <MainStack.Screen
@@ -264,10 +265,9 @@ const MainScreens = () => {
         name="IBAN"
         component={IBAN}
       />
-
       <MainStack.Screen
         options={{
-          title: HeaderTitles.Invite,
+          title: HeaderTitles.Contact,
           headerTintColor: 'black',
           headerBackTitleVisible: false,
           headerShown: true,
@@ -277,24 +277,8 @@ const MainScreens = () => {
             shadowOpacity: 0,
           },
         }}
-        name="Invite"
-        component={Invite}
-      />
-
-      <MainStack.Screen
-        options={{
-          title: HeaderTitles.Support,
-          headerTintColor: 'black',
-          headerBackTitleVisible: false,
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: '#fff',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-        }}
-        name="Support"
-        component={Support}
+        name="Contact"
+        component={Contact}
       />
       <MainStack.Screen
         options={{
@@ -677,6 +661,8 @@ export default () => {
   const [isVerify, setVerify] = React.useState(false)
   const [isProfile, setProfile] = React.useState(false)
   const [isNotification, setNotification] = React.useState(false)
+  const routeNameRef = React.useRef()
+  const navigationRef = React.useRef()
 
   const auth = React.useMemo(() => {
     return {
@@ -742,6 +728,23 @@ export default () => {
               colors: {
                 background: '#fff',
               },
+            }}
+            ref={navigationRef}
+            onReady={() => (routeNameRef.current = navigationRef.current.getCurrentRoute().name)}
+            onStateChange={() => {
+              const previousRouteName = routeNameRef.current
+              const currentRouteName = navigationRef.current.getCurrentRoute().name
+
+              if (previousRouteName !== currentRouteName) {
+                // The line below uses the expo-firebase-analytics tracker
+                // https://docs.expo.io/versions/latest/sdk/firebase-analytics/
+                // Change this line to use another Mobile analytics SDK
+                // Analytics.setCurrentScreen(currentRouteName);
+                // console.log(currentRouteName)
+              }
+
+              // Save the current route name for later comparision
+              routeNameRef.current = currentRouteName
             }}>
             <RootScreens
               authenticated={isAuth}
