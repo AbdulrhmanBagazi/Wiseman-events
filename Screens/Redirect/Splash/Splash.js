@@ -102,15 +102,17 @@ function Splash({ store }) {
       style={{
         flex: 1,
         backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
       <Animated.Image
         style={{
-          width,
+          width: width / 1.5,
           resizeMode: 'contain',
           opacity: ImageLoad,
         }}
         onLoadEnd={() => Start()}
-        source={require('../../../assets/LL.png')}
+        source={require('../../../assets/L.png')}
       />
     </View>
   )

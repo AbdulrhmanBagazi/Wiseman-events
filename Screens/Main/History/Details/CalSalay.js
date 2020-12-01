@@ -20,19 +20,21 @@ function CalSalary(props) {
     var daysCompleted = 0
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Type === 'organizer') {
-        var hours = Math.floor(data[i].TotalHours / 60)
+      if (data[i].Status === 'completed') {
+        if (data[i].Type === 'organizer') {
+          var hours = data[i].TotalHours / 60
 
-        totalHours = totalHours + hours
-        if (Meal === false) {
-          daysCompleted = daysCompleted + 1
-        }
-      } else {
-        var hours = Math.floor(data[i].TotalHours / 60)
+          totalHours = totalHours + hours
+          if (Meal === false) {
+            daysCompleted = daysCompleted + 1
+          }
+        } else {
+          var hours = data[i].TotalHours / 60
 
-        totalSuperHours = totalSuperHours + hours
-        if (Meal === false) {
-          daysCompleted = daysCompleted + 1
+          totalSuperHours = totalSuperHours + hours
+          if (Meal === false) {
+            daysCompleted = daysCompleted + 1
+          }
         }
       }
     }
@@ -51,7 +53,7 @@ function CalSalary(props) {
     <ActivityIndicator size="small" color={PrimaryColor} />
   ) : (
     <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
-      {I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}
+      {I18nManager.isRTL ? Total + 'ريال ' : Total + ' SAR'}
     </Text>
   )
 }

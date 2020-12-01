@@ -69,26 +69,21 @@ function Card(props) {
 
       <View style={styles.DataView}>
         <View style={styles.DataViewC}>
-          <Text style={styles.TextData}>{EarningsStrings.Totalearning}</Text>
-          <Text style={styles.TextDataValue}>
-            {Math.floor(props.Data.organizer_hours / 60) * Number(props.Data.event.Salary) +
-              Math.floor(props.Data.supervisor_hours / 60) * Number(props.Data.event.SalarySupervisor) +
-              (props.Data.event.ProvideAmeal
-                ? 0
-                : Number(props.Data.total_completed) * Number(props.Data.event.ProvideAnAllowance))}
-            {EarningsStrings.SAR}
-          </Text>
-        </View>
-        <View style={styles.DataViewC}>
           <Text style={styles.TextData}>{EarningsStrings.deductionamount}</Text>
           <Text style={styles.TextDataValue}>
-            {props.Data.Deduction ? props.Data.Deduction + EarningsStrings.SAR : '...'}
+            {props.Data.Deduction ? props.Data.Deduction + ' ' + EarningsStrings.SAR : '...'}
           </Text>
         </View>
+
+        <View style={styles.DataViewC}>
+          <Text style={styles.TextData}>{EarningsStrings.Bonus}</Text>
+          <Text style={styles.TextDataValue}>{props.Data.Bonus + ' ' + EarningsStrings.SAR}</Text>
+        </View>
+
         <View style={styles.DataViewC}>
           <Text style={styles.TextData}>{EarningsStrings.Received}</Text>
           <Text style={styles.TextDataValue}>
-            {props.Data.Paid ? props.Data.Paid + EarningsStrings.SAR : '...'}
+            {props.Data.Paid ? props.Data.Paid + ' ' + EarningsStrings.SAR : '...'}
           </Text>
         </View>
       </View>

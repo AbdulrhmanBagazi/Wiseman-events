@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Animated, I18nManager } from 'react-native'
+import { View, Text, Animated, I18nManager, Image } from 'react-native'
 import styles from '../Style'
 import * as FileSystem from 'expo-file-system'
 import shorthash from 'shorthash'
@@ -56,6 +56,8 @@ function AnimatedCardImageLoad(props) {
           style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
         />
       )}
+
+      <Image source={require('../../../../assets/L.png')} style={styles.smallogo} />
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
 

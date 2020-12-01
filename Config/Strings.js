@@ -297,14 +297,18 @@ const CompleteDetailsStrings = {
   Salary: I18nManager.isRTL ? 'راتب المشرف' : 'Supervisor Salary',
   SalaryOrganizer: I18nManager.isRTL ? 'راتب المنظم' : 'Organizer Salary',
   msg: I18nManager.isRTL
-    ? 'فيما يتعلق بالدفع النقدي ، ستتلقى إشعارًا بشأن وقت ومكان الدفع.'
-    : 'About cash payment you will get notification about when and where for payment.',
+    ? 'بما يتعلق بالإستلام النقدي للمستحقات، ستتلقى إشعار بخصوص موعد الإستلام.'
+    : 'Regarding the cash receipt of your dues, you will receive a notification regarding the date of collection.',
   workHistory: I18nManager.isRTL ? 'سجل العمل' : 'Work History',
   PaymentAppointments: I18nManager.isRTL ? 'مواعيد الدفع' : 'Payment Appointments',
   noDate: I18nManager.isRTL ? 'لم يتم تحديد موعد' : 'No date has been set',
   organizer: I18nManager.isRTL ? 'المنظم' : 'Organizer',
   supervisor: I18nManager.isRTL ? 'المشرف' : 'Supervisor',
   Received: I18nManager.isRTL ? 'تم الاستلام' : 'Received',
+  deduction: I18nManager.isRTL ? 'خصم' : 'Deduction',
+  bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
+  absence: I18nManager.isRTL ? 'غياب' : 'Absence',
+  incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
 }
 
 const HistoryPageStrings = {
@@ -346,6 +350,7 @@ const EarningsStrings = {
   Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
   SAR: I18nManager.isRTL ? 'ريال' : 'SAR',
   deductionamount: I18nManager.isRTL ? 'خصم' : 'Deduction',
+  Bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
 }
 
 export {

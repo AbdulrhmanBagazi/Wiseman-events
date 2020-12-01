@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     color: LightText,
     fontSize: 16,
     marginHorizontal: 29,
-    marginVertical: 15,
+    marginVertical: 10,
   },
   error: {
     textAlign: 'center',

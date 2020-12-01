@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Animated, TouchableOpacity } from 'react-native'
+import { View, Text, Animated, TouchableOpacity, Image } from 'react-native'
 import styles from './Style'
 import Icon from '../../../../Config/Icons'
 import * as FileSystem from 'expo-file-system'
@@ -57,6 +57,8 @@ function SingleJobImage(props) {
           style={[styles.AllSingleJobTitleView, { opacity: ImageLoad }]}
         />
       )}
+
+      <Image source={require('../../../../assets/L.png')} style={styles.smallogo} />
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
       </View>

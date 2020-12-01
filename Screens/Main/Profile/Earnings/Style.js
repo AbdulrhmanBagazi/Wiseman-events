@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   DataViewC: {
-    marginRight: 50,
+    marginRight: 30,
     alignItems: 'flex-start',
   },
   TextData: {

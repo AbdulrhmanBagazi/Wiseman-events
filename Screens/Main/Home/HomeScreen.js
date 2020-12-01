@@ -37,7 +37,8 @@ function Home({ store, navigation }) {
         return
       }
     })
-
+    // navigation.navigate('Profile')
+    // navigation.navigate('Earnings')
     // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
     //   console.log(notification)
     // })
@@ -147,7 +148,6 @@ function Home({ store, navigation }) {
               {isSoon ? (
                 <View>
                   <Text style={styles.soon}>{HomePageStrings.Soon}</Text>
-                  <RefreshButton onPress={() => setRefresh(!isRefresh)} />
                 </View>
               ) : (
                 <View>

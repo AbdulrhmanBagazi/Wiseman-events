@@ -109,7 +109,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text style={styles.SalarySpace}>
                   {SingleJobStrings.supervisor + ': '}
                   <Text style={styles.SingleSalaryTextData}>
-                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال ' : ' SAR'}
                     <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
@@ -118,7 +118,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text>
                   {SingleJobStrings.organizer + ': '}
                   <Text style={styles.SingleSalaryTextData}>
-                    {item.Salary} {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    {item.Salary} {I18nManager.isRTL ? 'ريال ' : ' SAR'}
                     <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
@@ -152,7 +152,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text style={styles.NoteTextValue}>{SingleJobStrings.Mealallowance}</Text>
                 <Text style={styles.NoteText}>
                   {' ' + item.ProvideAnAllowance}
-                  {I18nManager.isRTL ? 'ريال' : 'sar'}
+                  {I18nManager.isRTL ? 'ريال ' : ' SAR'}
                 </Text>
               </View>
             </View>

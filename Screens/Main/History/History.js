@@ -99,12 +99,14 @@ function History({ store, navigation }) {
 
             setrefreshing(false)
 
-            var newArray = response.data.application.filter((item) => {
-              // console.log(item)
-              return item.Status !== 'completed'
-            })
+            // var newArray = response.data.application.filter((item) => {
+            //   // console.log(item)
+            //   return item.Status !== 'completed'
+            // })
 
-            setData(newArray)
+            // setData(newArray)
+
+            setData(response.data.application)
             setAllData(response.data.application)
             return
           } else if (response.data.check === 'fail') {

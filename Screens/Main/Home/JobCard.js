@@ -95,7 +95,7 @@ function JobCard(props) {
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     {item.Salary + '-' + item.SalarySupervisor}
-                    {I18nManager.isRTL ? 'ريال' : 'sar'}
+                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
                     <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </View>

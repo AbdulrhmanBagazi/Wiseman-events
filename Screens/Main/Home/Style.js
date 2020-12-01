@@ -311,6 +311,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomLeftRadius: 5,
   },
+  smallogo: {
+    height: width / 10,
+    width: width / 10,
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    zIndex: 99,
+  },
 })
 
 export default styles

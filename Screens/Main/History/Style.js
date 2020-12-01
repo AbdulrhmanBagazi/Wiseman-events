@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   SingleJobDetailsTime: {
     fontWeight: '600',
     fontSize: 14,
-    marginVertical: 10,
+    marginVertical: 8,
     marginHorizontal: 10,
     color: LightText,
   },
@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 16,
     fontWeight: '600',
+    color: LightText,
   },
   CompleteDetailsbodyContainerDataText: {
     color: '#A7AAB2',

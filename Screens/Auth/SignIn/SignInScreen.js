@@ -135,7 +135,6 @@ function SignIn({ navigation, store }) {
     <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Image style={styles.tinyLogo} source={require('../../../assets/L.png')} />
-        <Text style={styles.Title}>Welcome to App</Text>
         <Text style={styles.Slogan}>
           It's great opportunity to work on part time job and earn extra money
         </Text>

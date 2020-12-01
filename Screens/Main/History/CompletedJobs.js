@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Linking, Image, Modal } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, I18nManager, Image } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
 import { SingleJobStrings } from '../../../Config/Strings'
+import moment from 'moment'
 
 function CompletedJobs(props) {
   const [isData, setData] = React.useState([])
@@ -122,22 +123,32 @@ function CompletedJobs(props) {
                 </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
-                {/* <View style={styles.DataSections}>
+                <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.shift}</Text>
                 </View>
                 <View style={styles.DataSectionsTime}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {I18nManager.isRTL ? item.eventshift.timeAr : item.eventshift.time}
+                    {I18nManager.isRTL
+                      ? moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')
+                      : moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')}{' '}
+                    {I18nManager.isRTL ? (
+                      <Icon name="arrow-left" size={14} color="black" />
+                    ) : (
+                      <Icon name="arrow-right" size={14} color="black" />
+                    )}{' '}
+                    {I18nManager.isRTL
+                      ? moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')
+                      : moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')}
                   </Text>
                 </View>
                 <View style={styles.DataSectionsAta}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Attendance}</Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {I18nManager.isRTL ? item.eventshift.attendanceAr : item.eventshift.attendance}
+                    {moment(item.eventshift.attendance, 'hh:mm').format('hh:mma')}
                   </Text>
-                </View> */}
+                </View>
               </View>
               {props.LoadButton ? (
                 <View style={styles.StatusView}>

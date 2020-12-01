@@ -39,8 +39,8 @@ function CalSalary(props) {
       }
     }
 
-    var organizerSalary = Math.floor(totalHours) * rateHourOrganizer
-    var supervisorSalary = Math.floor(totalSuperHours) * rateHourSupervisor
+    var organizerSalary = totalHours * rateHourOrganizer
+    var supervisorSalary = totalSuperHours * rateHourSupervisor
 
     var salary = organizerSalary + supervisorSalary
     var meal = daysCompleted * MealPlus
@@ -54,7 +54,7 @@ function CalSalary(props) {
       {isLoading ? (
         <ActivityIndicator size="small" color={PrimaryColor} />
       ) : (
-        <Text>{I18nManager.isRTL ? Total + 'ريال' : Total + 'sar'}</Text>
+        <Text>{I18nManager.isRTL ? Total + 'ريال ' : Total + ' SAR'}</Text>
       )}
     </View>
   )
