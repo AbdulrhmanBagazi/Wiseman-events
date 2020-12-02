@@ -40,6 +40,7 @@ const HeaderTitles = {
   Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
   CompleteDetails: I18nManager.isRTL ? 'تفاصيل العمل' : 'Work Details',
   Contact: I18nManager.isRTL ? 'رقم الاتصال / واتس آب' : 'Contact / Whatsapp number',
+  UpdateProfile: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
 }
 
 const LanguageChangeStrings = {
@@ -118,8 +119,13 @@ const ProfileStrings = {
   City: I18nManager.isRTL ? 'المدينة' : 'City',
   location: I18nManager.isRTL ? 'تعيين موقع المنزل/العمل' : 'set Home/Work location',
   locationset: I18nManager.isRTL ? 'تم تحديد الموقع' : 'The location has been determined',
+  locationup: I18nManager.isRTL ? 'تحديث الموقع' : 'Update Location',
   Search: I18nManager.isRTL ? 'بحث' : 'Search',
   Save: I18nManager.isRTL ? 'حفظ' : 'Save',
+  locationmsg: I18nManager.isRTL
+    ? 'سنعرض المسافة بينك وبين موقع الفعالية، عند التقديم للعمل في الفعاليات.'
+    : 'We will display the distance between you and the event location, when you apply to jobs',
+  Update: I18nManager.isRTL ? 'تحديث' : 'Update',
 }
 
 const NotificationStrings = {
@@ -234,6 +240,7 @@ const SettingsPageStrings = {
   Language: I18nManager.isRTL ? 'تغير اللغة' : 'Change Language',
   Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
   Logout: I18nManager.isRTL ? 'تسجيل خروج' : 'Logout',
+  UpdateProfile: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
 }
 
 const LevelsPageStrings = {

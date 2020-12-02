@@ -2,9 +2,9 @@ import React from 'react'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { StyleSheet, Modal, View, SafeAreaView, TouchableOpacity, Text } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-import { width } from '../../../Config/Layout'
-import { PrimaryColor, GrayColor } from '../../../Config/ColorPalette'
-import { ProfileStrings } from '../../../Config/Strings'
+import { width } from '../../../../../Config/Layout'
+import { PrimaryColor, GrayColor } from '../../../../../Config/ColorPalette'
+import { ProfileStrings } from '../../../../../Config/Strings'
 
 export default function MapUI(props) {
   return (

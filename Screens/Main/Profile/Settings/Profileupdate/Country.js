@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View, I18nManager } from 'react-native'
-import { ProfileStrings } from '../../../Config/Strings'
+import { ProfileStrings } from '../../../../../Config/Strings'
 import { Entypo } from '@expo/vector-icons'
 import CountryPicker, { FlagButton, CountryFilter } from 'react-native-country-picker-modal'
 
@@ -13,7 +13,6 @@ export default function CountryUI(props) {
 
   return (
     <CountryPicker
-      containerButtonStyle={{ marginBottom: 5 }}
       placeholder={ProfileStrings.Nationality}
       onClose={() => OpenClose(false)}
       theme={{

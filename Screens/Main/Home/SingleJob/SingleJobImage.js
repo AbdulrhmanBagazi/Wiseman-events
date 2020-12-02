@@ -58,7 +58,7 @@ function SingleJobImage(props) {
         />
       )}
 
-      <Image source={require('../../../../assets/L.png')} style={styles.smallogo} />
+      {/* <Image source={require('../../../../assets/L.png')} style={styles.smallogo} /> */}
       <View style={styles.AllSingleJobLayer}>
         <Text style={styles.SingleTitle}>{props.Name}</Text>
       </View>

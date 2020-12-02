@@ -211,18 +211,20 @@ function CompleteDetails({ route, store }) {
             </View>
 
             <View style={styles.CompleteDetailsHeaderHour}>
-              <View style={styles.CompleteDetailsHeaderViewSalary}>
-                <Text style={styles.CompleteDetailsHeaderViewText}>
-                  {CompleteDetailsStrings.SalaryOrganizer}
-                </Text>
-                <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                  {item.event.Salary}
-                  {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+              {Organizer.length >= 1 ? (
+                <View style={styles.CompleteDetailsHeaderViewSalary}>
                   <Text style={styles.CompleteDetailsHeaderViewText}>
-                    /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                    {CompleteDetailsStrings.SalaryOrganizer}
                   </Text>
-                </Text>
-              </View>
+                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
+                    {item.event.Salary}
+                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                    <Text style={styles.CompleteDetailsHeaderViewText}>
+                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                    </Text>
+                  </Text>
+                </View>
+              ) : null}
 
               {Super.length >= 1 ? (
                 <View style={styles.CompleteDetailsHeaderViewSalary}>
@@ -241,16 +243,18 @@ function CompleteDetails({ route, store }) {
             <View>
               <Text style={styles.CompleteDetailsbodyTitle}>{CompleteDetailsStrings.workHistory}</Text>
               <View style={styles.CompleteDetailsbodyContainer}>
-                <View style={styles.CompleteDetailsbodyContainerData}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                      {CompleteDetailsStrings.Attended}
-                    </Text>
+                {Organizer.length >= 1 ? (
+                  <View style={styles.CompleteDetailsbodyContainerData}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                        {CompleteDetailsStrings.Attended}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                      <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>{Organizer.length}</Text>
+                    </View>
                   </View>
-                  <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>{Organizer.length}</Text>
-                  </View>
-                </View>
+                ) : null}
 
                 {Super.length >= 1 ? (
                   <View style={styles.CompleteDetailsbodyContainerData}>
@@ -265,16 +269,18 @@ function CompleteDetails({ route, store }) {
                   </View>
                 ) : null}
 
-                <View style={styles.CompleteDetailsbodyContainerData}>
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                      {CompleteDetailsStrings.TotalhoursO}
-                    </Text>
+                {Organizer.length >= 1 ? (
+                  <View style={styles.CompleteDetailsbodyContainerData}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                        {CompleteDetailsStrings.TotalhoursO}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                      <CalHours Values={item.attendances} />
+                    </View>
                   </View>
-                  <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <CalHours Values={item.attendances} />
-                  </View>
-                </View>
+                ) : null}
 
                 {Super.length >= 1 ? (
                   <View style={styles.CompleteDetailsbodyContainerData}>

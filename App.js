@@ -1,5 +1,6 @@
 import * as React from 'react'
 import 'react-native-gesture-handler'
+import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -43,18 +44,30 @@ import IBAN from './Screens/Main/Profile/IBAN/IBAN'
 // import Support from './Screens/Main/Profile/Support/Support'
 import Settings from './Screens/Main/Profile/Settings/Settings'
 import Contact from './Screens/Main/Profile/Contact/Contact'
+import UpdateProfile from './Screens/Main/Profile/Settings/Profileupdate/Updateprofile'
 //
 import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings'
 import Rateus from './Screens/Main/Profile/Settings/Rateus'
 import NotificationSettings from './Screens/Main/Profile/Settings/NotificationSettings'
 import CompleteDetails from './Screens/Main/History/CompleteDetails'
+//
+import { width } from './Config/Layout'
+
+function LogoTitle() {
+  return (
+    <Image
+      style={{ height: width / 8, width: width / 8, resizeMode: 'contain' }}
+      source={require('./assets/L.png')}
+    />
+  )
+}
 
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
-        options={{ title: 'App Names', headerBackTitleVisible: false }}
+        options={{ headerTitle: (props) => <LogoTitle {...props} />, headerBackTitleVisible: false }}
         name="Home"
         component={Home}
       />
@@ -232,6 +245,22 @@ const MainScreens = () => {
         }}
         name="Earnings"
         component={Earnings}
+      />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.UpdateProfile,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="UpdateProfile"
+        component={UpdateProfile}
       />
 
       <MainStack.Screen

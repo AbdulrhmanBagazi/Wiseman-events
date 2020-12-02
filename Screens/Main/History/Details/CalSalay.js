@@ -39,8 +39,11 @@ function CalSalary(props) {
       }
     }
 
-    var organizerSalary = totalHours * rateHourOrganizer
-    var supervisorSalary = totalSuperHours * rateHourSupervisor
+    var HoursSuper = Math.round(totalSuperHours - 0.3)
+    var HoursOrganizer = Math.round(totalHours - 0.3)
+
+    var organizerSalary = HoursOrganizer * rateHourOrganizer
+    var supervisorSalary = HoursSuper * rateHourSupervisor
 
     var salary = organizerSalary + supervisorSalary
     var meal = daysCompleted * MealPlus

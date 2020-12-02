@@ -116,6 +116,15 @@ class Store {
     this.alerts = data.reverse()
     return
   }
+
+  setProfile = async (data, profile) => {
+    var data = data
+
+    data.profile = profile
+
+    this.data = data
+    return
+  }
 }
 
 decorate(Store, {
@@ -138,6 +147,7 @@ decorate(Store, {
   setNotificationMainPage: action,
   HistoryPage: observable,
   setHistoryPage: action,
+  setResetPages: action,
   setResetPages: action,
 })
 
