@@ -43,6 +43,13 @@ const styles = StyleSheet.create({
     color: LightText,
     marginHorizontal: 10,
   },
+  TextTransfer: {
+    fontWeight: '500',
+    fontSize: 13,
+    color: LightText,
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
   TextDateValue: {
     fontWeight: '500',
     fontSize: 13,

@@ -8,6 +8,7 @@ import {
   FlatList,
   RefreshControl,
   Alert,
+  Linking,
 } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
@@ -515,7 +516,9 @@ function NotificationMain({ navigation, store }) {
           ) : null
         }
         renderItem={({ item, index }) => (
-          <View>
+          <TouchableOpacity
+            disabled={item.type === 'location' ? false : true}
+            onPress={() => (item.type === 'location' ? Linking.openURL(item.location) : null)}>
             <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
               <View style={styles.IconView}>
                 {item.type === 'payment' ? (
@@ -542,7 +545,7 @@ function NotificationMain({ navigation, store }) {
                   <Icon name="award" size={30} color="#9CA2B0" />
                 ) : item.type === 'calendar' ? (
                   <Icon name="calendar" size={30} color="#9CA2B0" />
-                ) : (
+                ) : item.type === 'clock' ? (
                   <Icon
                     name="clock"
                     size={30}
@@ -556,6 +559,8 @@ function NotificationMain({ navigation, store }) {
                         : '#d16767'
                     }
                   />
+                ) : (
+                  <Icon name="map-pin" size={30} color="#9CA2B0" />
                 )}
               </View>
               <View style={styles.CenterView}>
@@ -569,9 +574,27 @@ function NotificationMain({ navigation, store }) {
                 </View>
                 <View style={styles.BodyTextView}>
                   <Text style={styles.bodyText}>{I18nManager.isRTL ? item.messageAr : item.message}</Text>
+                  {item.type === 'location' ? (
+                    <Text style={styles.bodyTextTime}>
+                      {I18nManager.isRTL
+                        ? moment(item.end, 'hh:mm').format('hh:mma')
+                        : moment(item.start, 'hh:mm').format('hh:mma')}{' '}
+                      {I18nManager.isRTL ? (
+                        <Icon name="arrow-left" size={14} color="black" />
+                      ) : (
+                        <Icon name="arrow-right" size={14} color="black" />
+                      )}{' '}
+                      {I18nManager.isRTL
+                        ? moment(item.start, 'hh:mm').format('hh:mma')
+                        : moment(item.end, 'hh:mm').format('hh:mma')}
+                    </Text>
+                  ) : null}
                 </View>
               </View>
+
+              {item.type === 'location' ? <Icon name="external-link" size={14} color={PrimaryColor} /> : null}
             </View>
+
             {item.type === 'promote' && item.replied === false ? (
               <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
                 {isLoadingAlert ? (
@@ -629,7 +652,7 @@ function NotificationMain({ navigation, store }) {
                 )}
               </View>
             ) : null}
-          </View>
+          </TouchableOpacity>
         )}
       />
 

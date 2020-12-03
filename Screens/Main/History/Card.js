@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  Linking,
 } from 'react-native'
 import styles from './Style'
 import Icon from '../../../Config/Icons'
@@ -129,12 +130,15 @@ function Card(props) {
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}
               </Text>
-              <View style={styles.SingleJobDetailsLocationView}>
+              <TouchableOpacity
+                style={styles.SingleJobDetailsLocationView}
+                onPress={() => Linking.openURL(item.event.LocationURL)}>
                 <Icon name="map-pin" size={14} color="#000" />
                 <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
                   {I18nManager.isRTL ? item.event.LocationAr : item.event.Location}
                 </Text>
-              </View>
+                <Icon name="external-link" size={14} color={PrimaryColor} />
+              </TouchableOpacity>
               <View style={styles.SingleJobDetailsDataView}>
                 <View style={styles.DataSections}>
                   <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>

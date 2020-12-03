@@ -31,7 +31,12 @@ function Home({ store, navigation }) {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
-        navigation.navigate(response.notification.request.content.data.body.data)
+        if (response.notification.request.content.data.body.data === 'Earnings') {
+          navigation.navigate('Profile')
+          navigation.navigate(response.notification.request.content.data.body.data)
+        } else {
+          navigation.navigate(response.notification.request.content.data.body.data)
+        }
         return
       } else {
         return

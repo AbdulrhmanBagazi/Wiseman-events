@@ -271,7 +271,7 @@ function CompleteDetails({ route, store }) {
 
                 {Organizer.length >= 1 ? (
                   <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 2 }}>
                       <Text style={styles.CompleteDetailsbodyContainerDataText}>
                         {CompleteDetailsStrings.TotalhoursO}
                       </Text>
@@ -284,7 +284,7 @@ function CompleteDetails({ route, store }) {
 
                 {Super.length >= 1 ? (
                   <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 2 }}>
                       <Text style={styles.CompleteDetailsbodyContainerDataText}>
                         {CompleteDetailsStrings.TotalhoursS}
                       </Text>

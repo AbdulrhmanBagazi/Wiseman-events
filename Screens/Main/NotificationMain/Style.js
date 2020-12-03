@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     color: '#868991',
     textAlign: 'left',
   },
+  bodyTextTime: {
+    fontWeight: '500',
+    color: '#868991',
+    textAlign: 'left',
+    marginTop: 5,
+  },
   TimeText: {
     fontWeight: '500',
     color: '#868991',

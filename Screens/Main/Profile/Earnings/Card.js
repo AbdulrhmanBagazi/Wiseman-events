@@ -67,6 +67,13 @@ function Card(props) {
         <Text style={styles.TextDateValue}>{props.Data.total_completed}</Text>
       </Text>
 
+      {props.Data.TransferID ? (
+        <Text style={styles.TextTransfer}>
+          {I18nManager.isRTL ? 'رقم الحوالة: ' : 'Transfer number: '}
+          <Text style={styles.TextDateValue}>{props.Data.TransferID}</Text>
+        </Text>
+      ) : null}
+
       <View style={styles.DataView}>
         <View style={styles.DataViewC}>
           <Text style={styles.TextData}>{EarningsStrings.deductionamount}</Text>
