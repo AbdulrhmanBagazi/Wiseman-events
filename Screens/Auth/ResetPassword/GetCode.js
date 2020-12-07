@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  ActivityIndicator,
-  Keyboard,
-} from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
 import styles from './Style'
 import { ResetPasswordString, ErrorsStrings } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
@@ -42,29 +33,33 @@ function GetCode({ navigation }) {
     })
   }
 
-  const PasswordInput = (val) => {
+  const PasswordInput = async (val) => {
+    var Pss = await convertToArabicNumber(val)
+
     setData({
       ...data,
-      Password: val,
+      Password: Pss,
     })
     if (val === '') {
       setCheck('')
-    } else if (data.RePassword === val) {
+    } else if (data.RePassword === Pss) {
       setCheck('Success')
     } else {
       setCheck('Error')
     }
   }
 
-  const RePasswordInput = (val) => {
+  const RePasswordInput = async (val) => {
+    var RePss = await convertToArabicNumber(val)
+
     setData({
       ...data,
-      RePassword: val,
+      RePassword: RePss,
     })
     if (val === '') {
       setCheck('')
     }
-    if (data.Password === val) {
+    if (data.Password === RePss) {
       setCheck('Success')
     } else {
       setCheck('Error')
@@ -109,7 +104,11 @@ function GetCode({ navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
         <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>

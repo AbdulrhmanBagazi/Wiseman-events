@@ -150,7 +150,7 @@ function CompleteDetails({ route, store }) {
 
   const getColorBorder = (status) => {
     switch (status) {
-      case 'approved':
+      case 'paid':
         return '#2eb85c'
       case 'wait-list':
         return '#321fdb'
@@ -298,6 +298,17 @@ function CompleteDetails({ route, store }) {
                 <View style={styles.CompleteDetailsbodyContainerData}>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                      {CompleteDetailsStrings.Late}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                    <Paymentdata Values={isData} Late={true} />
+                  </View>
+                </View>
+
+                <View style={styles.CompleteDetailsbodyContainerData}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
                       {CompleteDetailsStrings.absence}
                     </Text>
                   </View>
@@ -330,6 +341,17 @@ function CompleteDetails({ route, store }) {
                       Meal={item.event.ProvideAmeal}
                       MealPlus={item.event.ProvideAnAllowance}
                     />
+                  </View>
+                </View>
+
+                <View style={styles.CompleteDetailsbodyContainerData}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                      {CompleteDetailsStrings.Fees}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                    <Paymentdata Values={isData} Fees={true} />
                   </View>
                 </View>
 

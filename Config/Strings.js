@@ -41,6 +41,7 @@ const HeaderTitles = {
   CompleteDetails: I18nManager.isRTL ? 'تفاصيل العمل' : 'Work Details',
   Contact: I18nManager.isRTL ? 'رقم الاتصال / واتس آب' : 'Contact / Whatsapp number',
   UpdateProfile: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
+  ChangePassword: I18nManager.isRTL ? 'تحديث كلمة المرور' : 'Password update',
 }
 
 const LanguageChangeStrings = {
@@ -63,9 +64,7 @@ const Register = {
   Match: I18nManager.isRTL ? 'تتطابق كلمتا المرور' : 'Both passwords match',
   Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
   Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
-  Iagreeto: I18nManager.isRTL
-    ? 'تحقق هنا للإشارة إلى أنك قرأت ووافقت على'
-    : 'Check here to indicate that you have read and agree to',
+  Iagreeto: I18nManager.isRTL ? 'أوافق على' : 'I agree to ',
 }
 
 const ResetPasswordString = {
@@ -94,6 +93,7 @@ const ResetPasswordString = {
     : 'Your password must be 8 or more characters long, contain both uppercase and lowercase letter & number.',
   GotTheCodeMe: I18nManager.isRTL ? 'حصلت على الرمز؟' : 'Got the code?',
   GotTheCode: I18nManager.isRTL ? 'إعادة تعيين' : 'Reset',
+  Update: I18nManager.isRTL ? 'تحديث' : 'Update',
 }
 
 const OTPStrings = {
@@ -241,6 +241,7 @@ const SettingsPageStrings = {
   Rateus: I18nManager.isRTL ? 'قيمنا' : 'Rate us',
   Logout: I18nManager.isRTL ? 'تسجيل خروج' : 'Logout',
   UpdateProfile: I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile Information',
+  ChangePassword: I18nManager.isRTL ? 'تحديث كلمة المرور' : 'Password update',
 }
 
 const LevelsPageStrings = {
@@ -316,6 +317,8 @@ const CompleteDetailsStrings = {
   bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
   absence: I18nManager.isRTL ? 'غياب' : 'Absence',
   incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
+  Late: I18nManager.isRTL ? 'التآخير' : 'Late',
+  Fees: I18nManager.isRTL ? 'رسوم التحويل' : 'Transfer fee',
 }
 
 const HistoryPageStrings = {
@@ -358,6 +361,8 @@ const EarningsStrings = {
   SAR: I18nManager.isRTL ? 'ريال' : 'SAR',
   deductionamount: I18nManager.isRTL ? 'خصم' : 'Deduction',
   Bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
+  absence: I18nManager.isRTL ? 'غياب' : 'Absence',
+  incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
 }
 
 export {

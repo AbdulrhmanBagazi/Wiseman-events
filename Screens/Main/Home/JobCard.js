@@ -54,6 +54,8 @@ function JobCard(props) {
 
       <FlatList
         data={props.data}
+        pagingEnabled={true}
+        style={styles.MainjobsView}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}

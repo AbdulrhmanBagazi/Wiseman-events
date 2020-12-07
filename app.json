@@ -9,8 +9,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "web": {
+      "config": {
+        "firebase": {
+          "measurementId": "G-F3BXMZC267"
+        }
+      }
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.wiseman.wisemantest",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "splash": {
         "backgroundColor": "#fff"
@@ -19,6 +28,7 @@
     "android": {
       "package": "com.wiseman.wisemantest",
       "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true,
       "splash": {
         "backgroundColor": "#fff"
       }

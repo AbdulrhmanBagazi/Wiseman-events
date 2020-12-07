@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Analytics from 'expo-firebase-analytics'
 import { View, Text, Image, Animated, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
 import styles from './Style'
 import { Register, ErrorsStrings } from '../../../Config/Strings'
@@ -189,6 +190,7 @@ function SignUp({ navigation }) {
             setError(' ')
             store.setDataSignup(response.data.user)
             store.setToken(response.data.token)
+            Analytics.logEvent('logSignUp')
             Verify()
             return
           }
@@ -229,7 +231,11 @@ function SignUp({ navigation }) {
   // }, [isRegister])
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Image style={styles.tinyLogo} source={require('../../../assets/L.png')} />
         <Text style={styles.Slogan}>{Register.ResetSlogan}</Text>
@@ -287,7 +293,7 @@ function SignUp({ navigation }) {
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1, textAlign: 'left' }}>
             <Text>{Register.Iagreeto}</Text>
             <TouchableOpacity>
-              <Animated.Text style={{ color: AgreeColorText }}>{Register.Terms}</Animated.Text>
+              <Animated.Text style={{ color: AgreeColorText }}>{' ' + Register.Terms}</Animated.Text>
             </TouchableOpacity>
             <Text style={styles.and}> & </Text>
             <TouchableOpacity>

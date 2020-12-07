@@ -29,12 +29,28 @@ function Settings({ store, navigation }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.about}>
-        <View style={styles.aboutE}></View>
+        {/* <View style={styles.aboutE}></View> */}
         <View style={styles.aboutB}>
           <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('UpdateProfile')}>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.UpdateProfile}</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View
+                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+                <Entypo
+                  name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
+                  size={18}
+                  color="#C6C9CD"
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('ChangePassword')}>
+            <View
+              style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+              <Text style={styles.leftText}>{SettingsPageStrings.ChangePassword}</Text>
             </View>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
               <View

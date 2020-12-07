@@ -7,7 +7,9 @@ function TopCard(props) {
   return (
     <FlatList
       data={props.Data}
+      style={styles.MainjobsView}
       horizontal={true}
+      pagingEnabled={true}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
         <View style={styles.TopCard}>

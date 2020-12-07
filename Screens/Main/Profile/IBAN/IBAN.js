@@ -242,6 +242,38 @@ function IBAN({ store }) {
 
   // console.log(store.data)
 
+  const Arbanks = [
+    'البنك الأهلي التجاري',
+    'بنك ساب',
+    'البنك السعودي للاستثمار',
+    'مصرف الإنماء',
+    'البنك السعودي الفرنسي',
+    'بنك الرياض',
+    'مجموعة سامبا المالية',
+    'البنك الأول',
+    'مصرف الراجحي',
+    'البنك العربي الوطني',
+    'بنك البلاد',
+    'بنك الجزيرة',
+    'بنك الخليج الدولي',
+  ]
+
+  const Enbanks = [
+    'The National Commercial Bank',
+    'The Saudi British Bank (SABB)',
+    'Saudi Investment Bank',
+    'Alinma bank',
+    'Banque Saudi Fransi',
+    'Riyad Bank',
+    'Samba Financial Group (Samba)',
+    'Alawwal bank',
+    'Al Rajhi Bank',
+    'Arab National Bank',
+    'Bank AlBilad',
+    'Bank AlJazira',
+    'Gulf International Bank Saudi Arabia (GIB-SA)',
+  ]
+
   return (
     <ScrollView>
       {store.data.iban === null ? (

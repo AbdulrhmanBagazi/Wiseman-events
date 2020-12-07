@@ -6,6 +6,7 @@ import { PrimaryColor, SecondaryColor } from '../../../../Config/ColorPalette'
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 const EnglishNumbers = [
+  '',
   'First',
   'Second',
   'Third',
@@ -18,6 +19,7 @@ const EnglishNumbers = [
   'Tenth',
 ]
 const ArabicNumbers = [
+  '',
   'الأولى',
   'الثانية',
   'الثالثة',

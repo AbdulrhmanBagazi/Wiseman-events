@@ -317,7 +317,11 @@ function CreateProfile({ store }) {
   // })
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/profileinformation.png')} />

@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Analytics from 'expo-firebase-analytics'
 import { View, TouchableOpacity, Text, Keyboard, Image, ActivityIndicator } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
@@ -72,10 +73,12 @@ function SignIn({ navigation, store }) {
       return
     }
 
+    var pass = await convertToArabicNumber(val.Password)
+
     axios
       .post(URL + '/user/signin', {
         phone: val.UserName,
-        password: val.Password,
+        password: pass,
       })
       .then(async (response) => {
         if (response.status === 200) {
@@ -84,21 +87,25 @@ function SignIn({ navigation, store }) {
 
           if (!response.data.user.verify) {
             setLoading(false)
+            Analytics.logEvent('logLogin')
 
             Verify()
             return
           } else if (!response.data.user.profile) {
             setLoading(false)
+            Analytics.logEvent('logLogin')
 
             Profile()
             return
           } else if (!response.data.user.notification) {
             setLoading(false)
+            Analytics.logEvent('logLogin')
 
             Notification()
             return
           } else {
             setLoading(false)
+            Analytics.logEvent('logLogin')
 
             signIn()
             return
@@ -132,7 +139,11 @@ function SignIn({ navigation, store }) {
   }
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Image style={styles.tinyLogo} source={require('../../../assets/L.png')} />
         <Text style={styles.Slogan}>

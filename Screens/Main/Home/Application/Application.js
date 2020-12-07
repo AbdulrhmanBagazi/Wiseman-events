@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, Alert, ScrollView, FlatList, I18nManager } from 'react-native'
+import * as Analytics from 'expo-firebase-analytics'
+import { View, Text, Alert, ScrollView, FlatList, I18nManager, ActivityIndicator } from 'react-native'
 import styles from './Style'
 import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../../Config/Strings'
 import ModalApplication from './ModalApplication'
@@ -14,6 +15,7 @@ import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import moment from 'moment'
+import { PrimaryColor } from '../../../../Config/ColorPalette'
 
 function Application({ route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
@@ -25,11 +27,35 @@ function Application({ route, store }) {
   const [isShow, setShow] = React.useState(false)
   const [isOrganizer, setOrganizer] = React.useState(false)
   const [isSupervisor, setSupervisor] = React.useState(false)
+  const [isHours, setHours] = React.useState(0)
+  const [isData, setData] = React.useState([])
+  const [isDataLoading, setDataLoading] = React.useState(true)
 
   //
   const { signOut } = React.useContext(AuthContext)
 
   const { item } = route.params
+
+  React.useEffect(() => {
+    var en = item.eventshifts.reverse()
+    var ar = item.eventshifts
+
+    if (I18nManager.isRTL && Platform.OS !== 'ios') {
+      setTimeout(() => {
+        setData(ar)
+        setDataLoading(false)
+      }, 500)
+
+      return
+    } else {
+      setTimeout(() => {
+        setData(en)
+        setDataLoading(false)
+      }, 500)
+
+      return
+    }
+  }, [])
 
   const Select = async (val) => {
     var Time = I18nManager.isRTL
@@ -39,11 +65,11 @@ function Application({ route, store }) {
       : moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
         ' To ' +
         moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
-    setselectedShift(val)
+    setselectedShift(item.eventshifts[val].shift)
     setTime(Time)
     setAttendance(moment(item.eventshifts[val].attendance, 'hh:mm').format('hh:mma'))
     setShiftId(item.eventshifts[val].id)
-
+    setHours(item.eventshifts[val].totalhours)
     if (isOrganizer === false && isSupervisor === false) {
       setCanApply(false)
     } else if (isOrganizer === true || isSupervisor === true) {
@@ -82,11 +108,13 @@ function Application({ route, store }) {
               }
             )
           } else if (response.data.check === 'success') {
-            await store.ReloadData()
+            // await store.ReloadData()
+            Analytics.logEvent('ApplyingToJob')
+            await store.setHistoryPageBack()
             setTimeout(() => {
               setLoading(false)
               setShow(true)
-            }, 1000)
+            }, 500)
             return
           } else if (response.data.check === 'fail') {
             setLoading(false)
@@ -204,26 +232,43 @@ function Application({ route, store }) {
           <Text style={styles.title}>{SingleJobStrings.ShiftSelect}</Text>
           <View style={styles.SelectView}>
             <View style={styles.ShiftView}>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                data={item.eventshifts}
-                horizontal={true}
-                inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
-                renderItem={({ item, index }) => (
-                  <AnimatedButton
-                    Shift={selectedShift}
-                    itemIndex={index}
-                    onPress={() => Select(index)}
-                    Disabled={item.show}
-                    FullText={SingleJobStrings.Full}
+              {isDataLoading ? (
+                <View>
+                  <ActivityIndicator
+                    size="small"
+                    color={PrimaryColor}
+                    style={{
+                      padding: 10,
+                      marginHorizontal: 8,
+                      marginVertical: 10,
+                    }}
                   />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-              />
+                </View>
+              ) : (
+                <FlatList
+                  showsHorizontalScrollIndicator={false}
+                  data={isData}
+                  horizontal={true}
+                  inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
+                  renderItem={({ item, index }) => (
+                    <AnimatedButton
+                      Shift={selectedShift}
+                      itemIndex={item.shift}
+                      onPress={() => Select(index)}
+                      Disabled={item.show}
+                      FullText={SingleJobStrings.Full}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                />
+              )}
             </View>
 
             <Text style={styles.TimeandA}>
-              {SingleJobStrings.ShiftTime} <Text style={{ color: 'black' }}>{isTime}</Text>
+              {SingleJobStrings.ShiftTime}{' '}
+              <Text style={{ color: 'black' }}>
+                {isTime ? isTime + ` (${isHours} ${I18nManager.isRTL ? 'ساعات' : 'Hours'})` : null}
+              </Text>
             </Text>
             <Text style={styles.TimeandA}>
               {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>{isAttendance}</Text>
@@ -250,29 +295,6 @@ function Application({ route, store }) {
               />
             </ScrollView>
           </View>
-          {/* <Text style={styles.title}>{SingleJobStrings.ApplyingAs}</Text>
-          <Text style={styles.SelectOneOrMore}>{SingleJobStrings.SelectOneOrMore}</Text>
-          <View style={styles.SelectViewChose}>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}>
-              <AnimatedButtonSelect
-                Shift={isOrganizer}
-                onPress={() => SelectType(0, !isOrganizer)}
-                Disabled={true}
-                FullText={SingleJobStrings.Full}
-                Value={AnimatedButtonSelectStrings.organizer}
-              />
-              <AnimatedButtonSelect
-                Shift={isSupervisor}
-                onPress={() => SelectType(1, !isSupervisor)}
-                Disabled={true}
-                FullText={SingleJobStrings.Full}
-                Value={AnimatedButtonSelectStrings.supervisor}
-              />
-            </ScrollView>
-          </View> */}
           <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>
             <View style={styles.TextPointsView}>

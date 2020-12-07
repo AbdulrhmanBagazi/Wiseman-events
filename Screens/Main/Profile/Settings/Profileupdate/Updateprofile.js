@@ -89,7 +89,7 @@ function UpdateProfile({ store, navigation }) {
   const [show, setShow] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState(' ')
+  const [isError, setError] = React.useState('')
   const [isShowMap, setShowMap] = React.useState(false)
   //values
   const [Gender, setGender] = React.useState(store.data.profile.gender)
@@ -144,7 +144,7 @@ function UpdateProfile({ store, navigation }) {
 
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss()
-    setError(' ')
+    setError('')
     var convHight = await convertToArabicNumber(data.height)
 
     if (isLoading) {
@@ -161,7 +161,9 @@ function UpdateProfile({ store, navigation }) {
       data.height.length < 1 ||
       isSelectMapValue === false
     ) {
-      setError(ErrorsStrings.Required)
+      Alert.alert('', ErrorsStrings.Required, [{ text: 'OK', onPress: () => setLoading(false) }], {
+        cancelable: false,
+      })
       return
     }
 
@@ -199,7 +201,14 @@ function UpdateProfile({ store, navigation }) {
           }
 
           await store.setProfile(store.data, profile)
-          setLoading(false)
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'تم تحديث ملفك الشخصي' : 'Your profile has been updated',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
           return
         } else {
           Alert.alert(
@@ -380,10 +389,12 @@ function UpdateProfile({ store, navigation }) {
   }, [])
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
-        <Text style={styles.error}>{isError}</Text>
-
         <TextInput
           style={styles.input}
           placeholder={ProfileStrings.First}

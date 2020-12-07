@@ -70,30 +70,22 @@ function Reset({ navigation }) {
       })
       .then((response) => {
         if (response.data === 'notexists') {
-          setTimeout(() => {
-            setError(ErrorsStrings.MobileNotFound)
-            setLoading(false)
-          }, 1000)
+          setError(ErrorsStrings.MobileNotFound)
+          setLoading(false)
 
           return
         } else if (response.data === 'success') {
-          setTimeout(() => {
-            navigation.navigate('GetCode')
-            setLoading(false)
-          }, 1000)
+          navigation.navigate('GetCode')
+          setLoading(false)
           return
         } else if (response.data === '24') {
-          setTimeout(() => {
-            setError(ErrorsStrings.cantReset)
-            setLoading(false)
-          }, 1000)
+          setError(ErrorsStrings.cantReset)
+          setLoading(false)
 
           return
         } else {
-          setTimeout(() => {
-            setError(ErrorsStrings.OTPCode)
-            setLoading(false)
-          }, 1000)
+          setError(ErrorsStrings.OTPCode)
+          setLoading(false)
 
           return
         }
@@ -109,7 +101,11 @@ function Reset({ navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/lock.png')} />

@@ -15,7 +15,10 @@ function Support() {
   }
 
   return (
-    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+    <KeyboardAwareScrollView
+      automaticallyAdjustContentInsets={false}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.Container}>
         <Text style={styles.Title}>{SupportPageStrings.Title}</Text>
         <Text style={styles.About}>{SupportPageStrings.About}</Text>

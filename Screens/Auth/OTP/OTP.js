@@ -154,15 +154,17 @@ function OTP({ store }) {
             isLoading ? (
               <ActivityIndicator size="small" color={PrimaryColor} />
             ) : (
-              <CountDown
-                until={30}
-                digitStyle={{ backgroundColor: 'transparent' }}
-                digitTxtStyle={{ color: '#AF0029' }}
-                onFinish={() => ChangeState()}
-                timeToShow={['S']}
-                timeLabels={{ s: '' }}
-                size={20}
-              />
+              <View style={{ direction: 'ltr' }}>
+                <CountDown
+                  until={120}
+                  digitStyle={{ backgroundColor: 'transparent' }}
+                  digitTxtStyle={{ color: '#AF0029' }}
+                  onFinish={() => ChangeState()}
+                  timeToShow={['M', 'S']}
+                  timeLabels={{ s: '' }}
+                  size={20}
+                />
+              </View>
             )
           ) : (
             <TouchableOpacity

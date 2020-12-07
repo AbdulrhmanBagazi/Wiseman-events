@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   TopCard: {
-    width,
+    width: width + 10,
     // height: 200,
     flex: 1,
     // marginVertical: 10,
@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
   },
+  MainjobsView: {
+    width: width + 20,
+  },
   Section: {
     width,
     // marginTop: 30,
@@ -103,9 +106,8 @@ const styles = StyleSheet.create({
   //
   SingleJob: {
     backgroundColor: '#fff',
-    width,
+    width: width - 5,
     flex: 1,
-    width: width - 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,

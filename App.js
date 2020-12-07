@@ -1,6 +1,8 @@
 import * as React from 'react'
 import 'react-native-gesture-handler'
 import { Image } from 'react-native'
+import * as Analytics from 'expo-firebase-analytics'
+import * as Sentry from '@sentry/react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -50,8 +52,15 @@ import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings'
 import Rateus from './Screens/Main/Profile/Settings/Rateus'
 import NotificationSettings from './Screens/Main/Profile/Settings/NotificationSettings'
 import CompleteDetails from './Screens/Main/History/CompleteDetails'
+import ChangePassword from './Screens/Main/Profile/Settings/ChangePassword'
 //
 import { width } from './Config/Layout'
+
+// Sentry.init({
+//   dsn: 'YOUR DSN HERE',
+//   enableInExpoDevelopment: true,
+//   debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
+// })
 
 function LogoTitle() {
   return (
@@ -354,6 +363,22 @@ const MainScreens = () => {
         name="NotificationSettings"
         component={NotificationSettings}
       />
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.ChangePassword,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="ChangePassword"
+        component={ChangePassword}
+      />
+
       <MainStack.Screen
         options={{
           title: HeaderTitles.Rateus,
@@ -765,11 +790,11 @@ export default () => {
               const currentRouteName = navigationRef.current.getCurrentRoute().name
 
               if (previousRouteName !== currentRouteName) {
+                // console.log(currentRouteName, currentRouteName)
                 // The line below uses the expo-firebase-analytics tracker
                 // https://docs.expo.io/versions/latest/sdk/firebase-analytics/
                 // Change this line to use another Mobile analytics SDK
-                // Analytics.setCurrentScreen(currentRouteName);
-                // console.log(currentRouteName)
+                Analytics.setCurrentScreen(currentRouteName, currentRouteName)
               }
 
               // Save the current route name for later comparision

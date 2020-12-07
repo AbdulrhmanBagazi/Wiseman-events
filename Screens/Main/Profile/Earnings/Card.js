@@ -74,6 +74,13 @@ function Card(props) {
         </Text>
       ) : null}
 
+      {props.Data.TransferID ? (
+        <Text style={styles.TextTransfer}>
+          {I18nManager.isRTL ? 'رسوم التحويل: ' : 'Transfer fee: '}
+          <Text style={styles.TextDateValue}>{10 + ' ' + EarningsStrings.SAR}</Text>
+        </Text>
+      ) : null}
+
       <View style={styles.DataView}>
         <View style={styles.DataViewC}>
           <Text style={styles.TextData}>{EarningsStrings.deductionamount}</Text>
@@ -84,7 +91,9 @@ function Card(props) {
 
         <View style={styles.DataViewC}>
           <Text style={styles.TextData}>{EarningsStrings.Bonus}</Text>
-          <Text style={styles.TextDataValue}>{props.Data.Bonus + ' ' + EarningsStrings.SAR}</Text>
+          <Text style={styles.TextDataValue}>
+            {props.Data.Bonus ? props.Data.Bonus + ' ' + EarningsStrings.SAR : '...'}
+          </Text>
         </View>
 
         <View style={styles.DataViewC}>

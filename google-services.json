@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:72734728413:android:7854498e34db3241983b34",
+        "mobilesdk_app_id": "1:72734728413:android:1d26d6c7918cab5f983b34",
         "android_client_info": {
           "package_name": "com.wiseman.wisemantest"
         }
@@ -30,6 +30,13 @@
             {
               "client_id": "72734728413-al600gjiolcivapemrch177q13f1hjr5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "72734728413-k7lldqiur9q24mrgf7a8tkv02umcq3o2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wiseman.wisemantest"
+              }
             }
           ]
         }
