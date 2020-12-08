@@ -28,34 +28,11 @@ function Application({ route, store }) {
   const [isOrganizer, setOrganizer] = React.useState(false)
   const [isSupervisor, setSupervisor] = React.useState(false)
   const [isHours, setHours] = React.useState(0)
-  const [isData, setData] = React.useState([])
-  const [isDataLoading, setDataLoading] = React.useState(true)
 
   //
   const { signOut } = React.useContext(AuthContext)
 
-  const { item } = route.params
-
-  React.useEffect(() => {
-    var en = item.eventshifts.reverse()
-    var ar = item.eventshifts
-
-    if (I18nManager.isRTL && Platform.OS !== 'ios') {
-      setTimeout(() => {
-        setData(ar)
-        setDataLoading(false)
-      }, 500)
-
-      return
-    } else {
-      setTimeout(() => {
-        setData(en)
-        setDataLoading(false)
-      }, 500)
-
-      return
-    }
-  }, [])
+  const { item, shifts } = route.params
 
   const Select = async (val) => {
     var Time = I18nManager.isRTL
@@ -232,36 +209,22 @@ function Application({ route, store }) {
           <Text style={styles.title}>{SingleJobStrings.ShiftSelect}</Text>
           <View style={styles.SelectView}>
             <View style={styles.ShiftView}>
-              {isDataLoading ? (
-                <View>
-                  <ActivityIndicator
-                    size="small"
-                    color={PrimaryColor}
-                    style={{
-                      padding: 10,
-                      marginHorizontal: 8,
-                      marginVertical: 10,
-                    }}
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={shifts}
+                horizontal={true}
+                inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
+                renderItem={({ item, index }) => (
+                  <AnimatedButton
+                    Shift={selectedShift}
+                    itemIndex={item.shift}
+                    onPress={() => Select(index)}
+                    Disabled={item.show}
+                    FullText={SingleJobStrings.Full}
                   />
-                </View>
-              ) : (
-                <FlatList
-                  showsHorizontalScrollIndicator={false}
-                  data={isData}
-                  horizontal={true}
-                  inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
-                  renderItem={({ item, index }) => (
-                    <AnimatedButton
-                      Shift={selectedShift}
-                      itemIndex={item.shift}
-                      onPress={() => Select(index)}
-                      Disabled={item.show}
-                      FullText={SingleJobStrings.Full}
-                    />
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                />
-              )}
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
             </View>
 
             <Text style={styles.TimeandA}>

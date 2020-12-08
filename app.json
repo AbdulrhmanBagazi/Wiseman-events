@@ -12,6 +12,7 @@
     "web": {
       "config": {
         "firebase": {
+          "apiKey": "AIzaSyCLeZUzK84KpGMcGuQWqXKlSM86R5c0gMA",
           "measurementId": "G-F3BXMZC267"
         }
       }

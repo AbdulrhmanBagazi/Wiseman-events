@@ -77,7 +77,7 @@ function Card(props) {
       {props.Data.TransferID ? (
         <Text style={styles.TextTransfer}>
           {I18nManager.isRTL ? 'رسوم التحويل: ' : 'Transfer fee: '}
-          <Text style={styles.TextDateValue}>{10 + ' ' + EarningsStrings.SAR}</Text>
+          <Text style={styles.TextDateValue}>{8.05 + ' ' + EarningsStrings.SAR}</Text>
         </Text>
       ) : null}
 

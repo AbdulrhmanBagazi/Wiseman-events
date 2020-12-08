@@ -335,6 +335,8 @@ const AnimatedButtonSelectStrings = {
 const AlertStrings = {
   Accept: I18nManager.isRTL ? 'قبول' : 'Accept',
   Decline: I18nManager.isRTL ? 'رفض' : 'Decline',
+  Location: I18nManager.isRTL ? 'الموقع' : 'Location',
+  Contact: I18nManager.isRTL ? 'التواصل' : 'Contact',
 }
 
 const WorkScheduleUserString = {
@@ -363,6 +365,7 @@ const EarningsStrings = {
   Bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
   absence: I18nManager.isRTL ? 'غياب' : 'Absence',
   incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
+  Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
 }
 
 export {

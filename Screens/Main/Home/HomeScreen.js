@@ -28,6 +28,7 @@ function Home({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
 
   React.useEffect(() => {
+    store.setResetPages()
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
@@ -49,7 +50,7 @@ function Home({ store, navigation }) {
     // })
 
     return () => {
-      // Notifications.removeNotificationSubscription(notificationListener)
+      Notifications.removeNotificationSubscription(notificationListener)
       Notifications.removeNotificationSubscription(responseListener)
     }
   }, [])

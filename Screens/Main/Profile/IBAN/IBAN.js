@@ -10,6 +10,7 @@ import {
   Alert,
   Modal,
   Animated,
+  StyleSheet,
 } from 'react-native'
 import styles from './Style'
 import { IBANPageStrings } from '../../../../Config/Strings'
@@ -21,6 +22,39 @@ import { width } from '../../../../Config/Layout'
 //
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
+import RNPickerSelect from 'react-native-picker-select'
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    backgroundColor: '#fff',
+    height: 45,
+    width: width - 20,
+    borderColor: '#4C4F56',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    // marginBottom: 10,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    textAlign: 'center',
+  },
+  viewContainer: {
+    backgroundColor: '#fff',
+    height: 45,
+    width: width - 20,
+    borderColor: '#4C4F56',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  inputAndroid: {
+    color: '#000',
+    textAlign: 'center',
+  },
+})
 
 function IBAN({ store }) {
   const [one] = React.useState(new Animated.Value(0))
@@ -49,6 +83,7 @@ function IBAN({ store }) {
     IBAN: '',
     ReIBAN: '',
     AcountName: '',
+    Bank: '',
   })
 
   const IBAMInput = (val) => {
@@ -83,6 +118,12 @@ function IBAN({ store }) {
         useNativeDriver: false,
       }).start()
     }
+  }
+
+  const convertToArabicNumber = async (string) => {
+    return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
+      return d.charCodeAt(0) - 1632
+    })
   }
 
   const Add = async () => {
@@ -128,14 +169,22 @@ function IBAN({ store }) {
       }).start()
     }
 
-    if (Data.IBAN.length === 22 && Data.AcountName.length > 1 && Data.IBAN === Data.ReIBAN) {
+    if (
+      Data.IBAN.length === 22 &&
+      Data.AcountName.length > 1 &&
+      Data.IBAN === Data.ReIBAN &&
+      Data.Bank.length > 1
+    ) {
       setLoading(true)
+
+      var IBANen = await convertToArabicNumber(Data.IBAN)
       axios
         .post(
           URL + '/user/AddIBAN',
           {
-            IBAN: 'SA' + Data.IBAN,
+            IBAN: 'SA' + IBANen,
             AccountName: Data.AcountName,
+            Bank: Data.Bank,
           },
           {
             headers: {
@@ -236,43 +285,80 @@ function IBAN({ store }) {
       setData({
         IBAN: store.data.iban.IBAN.substring(2),
         AcountName: store.data.iban.AccountName,
+        Bank: store.data.iban.Bank,
       })
     }
   }, [])
 
   // console.log(store.data)
 
-  const Arbanks = [
-    'البنك الأهلي التجاري',
-    'بنك ساب',
-    'البنك السعودي للاستثمار',
-    'مصرف الإنماء',
-    'البنك السعودي الفرنسي',
-    'بنك الرياض',
-    'مجموعة سامبا المالية',
-    'البنك الأول',
-    'مصرف الراجحي',
-    'البنك العربي الوطني',
-    'بنك البلاد',
-    'بنك الجزيرة',
-    'بنك الخليج الدولي',
-  ]
+  const getArabic = (status) => {
+    switch (status) {
+      case 'The National Commercial Bank':
+        return 'البنك الأهلي التجاري'
+      case 'The Saudi British Bank (SABB)':
+        return 'بنك ساب'
+      case 'Saudi Investment Bank':
+        return 'البنك السعودي للاستثمار'
+      case 'Alinma bank':
+        return 'مصرف الإنماء'
+      case 'Banque Saudi Fransi':
+        return 'البنك السعودي الفرنسي'
+      case 'Riyad Bank':
+        return 'بنك الرياض'
+      case 'Samba Financial Group (Samba)':
+        return 'مجموعة سامبا المالية (سامبا)'
+      case 'Alawwal bank':
+        return 'البنك الأول'
+      case 'Al Rajhi Bank':
+        return 'مصرف الراجحي'
+      case 'Arab National Bank':
+        return 'البنك العربي الوطني'
+      case 'Bank AlBilad':
+        return 'بنك البلاد'
+      case 'Bank AlJazira':
+        return 'بنك الجزيرة'
+      case 'Gulf International Bank Saudi Arabia (GIB-SA)':
+        return 'بنك الخليج الدولي'
+      default:
+        return ''
+    }
+  }
 
-  const Enbanks = [
-    'The National Commercial Bank',
-    'The Saudi British Bank (SABB)',
-    'Saudi Investment Bank',
-    'Alinma bank',
-    'Banque Saudi Fransi',
-    'Riyad Bank',
-    'Samba Financial Group (Samba)',
-    'Alawwal bank',
-    'Al Rajhi Bank',
-    'Arab National Bank',
-    'Bank AlBilad',
-    'Bank AlJazira',
-    'Gulf International Bank Saudi Arabia (GIB-SA)',
-  ]
+  const Banks = I18nManager.isRTL
+    ? [
+        { label: 'البنك الأهلي التجاري', value: 'The National Commercial Bank' },
+        { label: 'بنك ساب', value: 'The Saudi British Bank (SABB)' },
+        { label: 'البنك السعودي للاستثمار', value: 'Saudi Investment Bank' },
+        { label: 'مصرف الإنماء', value: 'Alinma bank' },
+        { label: 'البنك السعودي الفرنسي', value: 'Banque Saudi Fransi' },
+        { label: 'بنك الرياض', value: 'Riyad Bank' },
+        { label: 'مجموعة سامبا المالية (سامبا)', value: 'Samba Financial Group (Samba)' },
+        { label: 'البنك الأول', value: 'Alawwal bank' },
+        { label: 'مصرف الراجحي', value: 'Al Rajhi Bank' },
+        { label: 'البنك العربي الوطني', value: 'Arab National Bank' },
+        { label: 'بنك البلاد', value: 'Bank AlBilad' },
+        { label: 'بنك الجزيرة', value: 'Bank AlJazira' },
+        { label: 'بنك الخليج الدولي', value: 'Gulf International Bank Saudi Arabia (GIB-SA)' },
+      ]
+    : [
+        { label: 'The National Commercial Bank', value: 'The National Commercial Bank' },
+        { label: 'The Saudi British Bank (SABB)', value: 'The Saudi British Bank (SABB)' },
+        { label: 'Saudi Investment Bank', value: 'Saudi Investment Bank' },
+        { label: 'Alinma bank', value: 'Alinma bank' },
+        { label: 'Banque Saudi Fransi', value: 'Banque Saudi Fransi' },
+        { label: 'Riyad Bank', value: 'Riyad Bank' },
+        { label: 'Samba Financial Group (Samba)', value: 'Samba Financial Group (Samba)' },
+        { label: 'Alawwal bank', value: 'Alawwal bank' },
+        { label: 'Al Rajhi Bank', value: 'Al Rajhi Bank' },
+        { label: 'Arab National Bank', value: 'Arab National Bank' },
+        { label: 'Bank AlBilad', value: 'Bank AlBilad' },
+        { label: 'Bank AlJazira', value: 'Bank AlJazira' },
+        {
+          label: 'Gulf International Bank Saudi Arabia (GIB-SA)',
+          value: 'Gulf International Bank Saudi Arabia (GIB-SA)',
+        },
+      ]
 
   return (
     <ScrollView>
@@ -360,11 +446,30 @@ function IBAN({ store }) {
               }}>
               <TextInput
                 placeholder={IBANPageStrings.AccountName}
-                style={styles.input}
+                style={styles.inputName}
                 onChangeText={(text) => AcountNameInput(text)}
                 value={Data.AcountName}
               />
             </Animated.View>
+
+            <RNPickerSelect
+              onValueChange={(text) =>
+                setData({
+                  ...Data,
+                  Bank: text,
+                })
+              }
+              style={{
+                ...pickerSelectStyles,
+              }}
+              placeholder={{
+                label: I18nManager.isRTL ? 'البنك' : 'Bank',
+                value: '',
+              }}
+              items={Banks}
+              Icon={() => null}
+              value={Data.Bank}
+            />
 
             <TouchableOpacity style={styles.ButtonAdd} onPress={() => Add()}>
               <Text style={styles.ButtonText}>{IBANPageStrings.Save}</Text>
@@ -456,11 +561,30 @@ function IBAN({ store }) {
             }}>
             <TextInput
               placeholder={IBANPageStrings.AccountName}
-              style={styles.input}
+              style={styles.inputName}
               onChangeText={(text) => AcountNameInput(text)}
               value={Data.AcountName}
             />
           </Animated.View>
+
+          <RNPickerSelect
+            onValueChange={(text) =>
+              setData({
+                ...Data,
+                Bank: text,
+              })
+            }
+            style={{
+              ...pickerSelectStyles,
+            }}
+            placeholder={{
+              label: I18nManager.isRTL ? 'البنك' : 'Bank',
+              value: '',
+            }}
+            items={Banks}
+            Icon={() => null}
+            value={Data.Bank}
+          />
 
           <TouchableOpacity style={styles.ButtonAdd} onPress={() => Add()}>
             <Text style={styles.ButtonText}>{IBANPageStrings.Save}</Text>
@@ -478,6 +602,12 @@ function IBAN({ store }) {
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
               <Text style={styles.ViewText}>{I18nManager.isRTL ? 'الإسم' : 'Name'}</Text>
               <Text style={{ flex: 1, textAlign: 'right' }}>{store.data.iban.AccountName}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+              <Text style={styles.ViewText}>{I18nManager.isRTL ? 'البنك' : 'Bank'}</Text>
+              <Text style={{ flex: 1, textAlign: 'right' }}>
+                {I18nManager.isRTL ? getArabic(store.data.iban.Bank) : store.data.iban.Bank}
+              </Text>
             </View>
           </View>
 

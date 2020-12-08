@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   TitleImage: {
     height: 190,
     width: width + 20,
+    backgroundColor: '#fff',
   },
   DataContainer: {
     width: width + 20,

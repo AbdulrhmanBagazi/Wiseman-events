@@ -96,6 +96,11 @@ const styles = StyleSheet.create({
     textAlign: I18nManager.isRTL ? 'left' : 'left',
     flex: 4,
   },
+  inputName: {
+    // height: 45,
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    flex: 4,
+  },
   modal: {
     backgroundColor: 'rgba(	15	,20	,50, 0.5)',
     flex: 1,

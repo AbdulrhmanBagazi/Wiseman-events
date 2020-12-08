@@ -5,7 +5,7 @@ import * as Analytics from 'expo-firebase-analytics'
 import * as Sentry from '@sentry/react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
 import ICONS from './Config/Icons'
@@ -43,7 +43,7 @@ import Earnings from './Screens/Main/Profile/Earnings/Earnings'
 import Levels from './Screens/Main/Profile/Levels/Levels'
 import IBAN from './Screens/Main/Profile/IBAN/IBAN'
 // import Invite from './Screens/Main/Profile/Invite/Invite'
-// import Support from './Screens/Main/Profile/Support/Support'
+import Support from './Screens/Main/Profile/Support/Support'
 import Settings from './Screens/Main/Profile/Settings/Settings'
 import Contact from './Screens/Main/Profile/Contact/Contact'
 import UpdateProfile from './Screens/Main/Profile/Settings/Profileupdate/Updateprofile'
@@ -62,6 +62,10 @@ import { width } from './Config/Layout'
 //   debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
 // })
 
+const TransitionScreenOptions = {
+  ...TransitionPresets.SlideFromRightIOS, // This is where the transition happens
+}
+
 function LogoTitle() {
   return (
     <Image
@@ -74,7 +78,7 @@ function LogoTitle() {
 const HomeStack = createStackNavigator()
 const HomeScreens = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={TransitionScreenOptions}>
       <HomeStack.Screen
         options={{ headerTitle: (props) => <LogoTitle {...props} />, headerBackTitleVisible: false }}
         name="Home"
@@ -127,7 +131,7 @@ const HistoryScreens = () => {
 const MainStack = createStackNavigator()
 const MainScreens = () => {
   return (
-    <MainStack.Navigator>
+    <MainStack.Navigator screenOptions={TransitionScreenOptions}>
       <MainStack.Screen
         options={{
           headerShown: false,
@@ -303,6 +307,22 @@ const MainScreens = () => {
         name="IBAN"
         component={IBAN}
       />
+
+      <MainStack.Screen
+        options={{
+          title: HeaderTitles.Support,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="Support"
+        component={Support}
+      />
       <MainStack.Screen
         options={{
           title: HeaderTitles.Contact,
@@ -468,7 +488,7 @@ const TabsScreens = () => {
 const AuthStack = createStackNavigator()
 const AuthScreens = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={TransitionScreenOptions}>
       <AuthStack.Screen
         options={{
           headerShown: true,
@@ -631,7 +651,7 @@ const LoadingScreens = () => {
 const Root = createStackNavigator()
 const RootScreens = ({ authenticated, selectLanguage, verify, profile, notification, loading }) => {
   return (
-    <Root.Navigator headerMode="none">
+    <Root.Navigator headerMode="none" screenOptions={TransitionScreenOptions}>
       {loading ? (
         <Root.Screen
           name="Loading"
@@ -794,7 +814,7 @@ export default () => {
                 // The line below uses the expo-firebase-analytics tracker
                 // https://docs.expo.io/versions/latest/sdk/firebase-analytics/
                 // Change this line to use another Mobile analytics SDK
-                Analytics.setCurrentScreen(currentRouteName, currentRouteName)
+                // Analytics.setCurrentScreen(currentRouteName, currentRouteName)
               }
 
               // Save the current route name for later comparision

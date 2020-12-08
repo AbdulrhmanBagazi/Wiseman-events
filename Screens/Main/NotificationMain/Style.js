@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   Decline: {
     padding: 5,
@@ -87,6 +89,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 5,
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Contact: {
+    padding: 5,
+    backgroundColor: '#4CAF50',
+    marginHorizontal: 10,
+    borderRadius: 5,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   AcceptDeclinetext: {
     fontWeight: '600',

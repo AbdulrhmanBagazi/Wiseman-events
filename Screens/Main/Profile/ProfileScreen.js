@@ -1,5 +1,14 @@
 import React from 'react'
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Share } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  I18nManager,
+  Share,
+  Image,
+} from 'react-native'
 import Icon from '../../../Config/Icons'
 import styles from './Style'
 // import { Rating } from 'react-native-ratings'
@@ -52,7 +61,7 @@ function Profile({ store, navigation }) {
             <Icon style={styles.icon} name="settings" size={25} color="black" />
           </TouchableOpacity>
           <View style={styles.Image}>
-            <Text style={{ color: '#fff', fontWeight: '600', fontSize: 16 }}>2</Text>
+            <Image style={styles.tinyLogo} resizeMode="contain" source={require('../../../assets/L.png')} />
           </View>
         </SafeAreaView>
       </View>
@@ -178,7 +187,7 @@ function Profile({ store, navigation }) {
                 <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Support}</Text>
@@ -191,7 +200,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

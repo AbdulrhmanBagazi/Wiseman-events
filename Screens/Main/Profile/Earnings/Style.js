@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 10,
     marginHorizontal: 10,
+    flexWrap: 'wrap',
   },
   DataViewC: {
     marginRight: 30,

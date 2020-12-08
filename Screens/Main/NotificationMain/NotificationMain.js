@@ -21,6 +21,7 @@ import { URL } from '../../../Config/Config'
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { AlertStrings } from '../../../Config/Strings'
+import { Ionicons } from '@expo/vector-icons'
 
 function NotificationMain({ navigation, store }) {
   const [isLoading, setLoading] = React.useState(false)
@@ -516,9 +517,7 @@ function NotificationMain({ navigation, store }) {
           ) : null
         }
         renderItem={({ item, index }) => (
-          <TouchableOpacity
-            disabled={item.type === 'location' ? false : true}
-            onPress={() => (item.type === 'location' ? Linking.openURL(item.location) : null)}>
+          <TouchableOpacity disabled={true}>
             <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
               <View style={styles.IconView}>
                 {item.type === 'payment' ? (
@@ -592,7 +591,7 @@ function NotificationMain({ navigation, store }) {
                 </View>
               </View>
 
-              {item.type === 'location' ? <Icon name="external-link" size={14} color={PrimaryColor} /> : null}
+              {/* {item.type === 'location' ? <Icon name="external-link" size={14} color={PrimaryColor} /> : null} */}
             </View>
 
             {item.type === 'promote' && item.replied === false ? (
@@ -614,6 +613,39 @@ function NotificationMain({ navigation, store }) {
                     </TouchableOpacity>
                   </View>
                 )}
+              </View>
+            ) : item.type === 'location' ? (
+              <View style={styles.NotificationBoxFirst}>
+                <View style={styles.SpaceViewBody}>
+                  <TouchableOpacity style={styles.Accept} onPress={() => Linking.openURL(item.location)}>
+                    <Text style={styles.AcceptDeclinetext}>{AlertStrings.Location}</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.Contact}
+                    onPress={() =>
+                      Linking.openURL('whatsapp://send?phone=+966' + Number(item.phone))
+                        .then((data) => {
+                          return null
+                        })
+                        .catch(() => {
+                          Alert.alert(
+                            '',
+                            I18nManager.isRTL
+                              ? 'تأكد من تثبيت WhatsApp على جهازك!'
+                              : 'Make sure WhatsApp installed on your device',
+                            [{ text: 'OK', onPress: () => setshowmore(true) }],
+                            {
+                              cancelable: false,
+                            }
+                          )
+
+                          return null
+                        })
+                    }>
+                    <Ionicons name="logo-whatsapp" size={20} color="#fff" />
+                  </TouchableOpacity>
+                </View>
               </View>
             ) : null}
 

@@ -25,6 +25,7 @@ function SingleJob({ route, store, navigation }) {
   const [isSelected, setSelected] = React.useState(0)
   const [isPoints, setPoints] = React.useState([])
   const [isLoading, setLoading] = React.useState(true)
+  const [isShifts, setShifts] = React.useState([])
 
   const Scroll = React.useRef(null)
   const { item } = route.params
@@ -38,7 +39,12 @@ function SingleJob({ route, store, navigation }) {
     var T = Tpoints.split(',')
 
     setPoints({ D: D, R: R, T: T })
-
+    if (I18nManager.isRTL && Platform.OS !== 'ios') {
+      var data = item.eventshifts.reverse()
+      setShifts(data)
+    } else {
+      setShifts(item.eventshifts)
+    }
     setLoading(false)
     return
   }, [])
@@ -253,14 +259,16 @@ function SingleJob({ route, store, navigation }) {
       </ScrollView>
       <View style={styles.ButtonView}>
         {item.Status === 'active' ? (
-          <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('ApplyToJob', { item })}>
+          <TouchableOpacity
+            style={styles.Button}
+            onPress={() => navigation.navigate('ApplyToJob', { item, shifts: isShifts })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={[styles.ButtonDisabled, { borderColor: '#cccccc', backgroundColor: '#cccccc' }]}
             disabled={true}
-            onPress={() => navigation.navigate('ApplyToJob', { item })}>
+            onPress={() => navigation.navigate('ApplyToJob', { item, shifts: isShifts })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.EventEnded}</Text>
           </TouchableOpacity>
         )}

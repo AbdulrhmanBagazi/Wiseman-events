@@ -21,8 +21,22 @@ function AllJobs({ route, store, navigation }) {
   const { id } = route.params
 
   React.useEffect(() => {
-    setLoading(true)
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      if (isLoading) {
+        // Prevent default behavior of leaving the screen
+        e.preventDefault()
 
+        return
+      }
+
+      return
+    })
+
+    return unsubscribe
+  }, [navigation, isLoading])
+
+  React.useEffect(() => {
+    setLoading(true)
     axios
       .get(URL + '/user/getJobs/' + id, {
         headers: {
@@ -34,7 +48,9 @@ function AllJobs({ route, store, navigation }) {
         if (response.status === 200) {
           if (response.data.check === 'success') {
             await setData(response.data.data)
-            setLoading(true)
+            setTimeout(() => {
+              setLoading(false)
+            }, 500)
             return
           } else if (response.data.check === 'fail') {
             setError(true)
@@ -96,13 +112,13 @@ function AllJobs({ route, store, navigation }) {
     <View style={styles.AllJobsContainer}>
       {/* <Card /> */}
       {isLoading ? (
-        <Card Data={isData} PushJob={() => navigation.navigate('SingleJob')} click={navigation.navigate} />
+        <ActivityIndicator size="large" color="#AF0029" style={{ alignSelf: 'center' }} />
       ) : isError ? (
         <View>
           <RefreshButton onPress={() => setRefresh(!isRefresh)} />
         </View>
       ) : (
-        <ActivityIndicator size="large" color="#AF0029" style={{ alignSelf: 'center' }} />
+        <Card Data={isData} PushJob={() => navigation.navigate('SingleJob')} click={navigation.navigate} />
       )}
     </View>
   )

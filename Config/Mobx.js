@@ -39,6 +39,7 @@ class Store {
   setResetPages = async () => {
     this.HistoryPage = true
     this.NotificationMainPage = true
+    this.MainPage = true
 
     return
   }
@@ -154,7 +155,6 @@ decorate(Store, {
   HistoryPage: observable,
   setHistoryPage: action,
   setHistoryPageBack: action,
-  setResetPages: action,
   setResetPages: action,
 })
 

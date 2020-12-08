@@ -9,11 +9,26 @@ import { URL } from '../../../../Config/Config'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
 import Card from './Card'
 
-function Earnings({ store }) {
+function Earnings({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
   const { signOut } = React.useContext(AuthContext)
   const [isData, setData] = React.useState([])
   const [isReload, setReload] = React.useState(false)
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      if (isLoading) {
+        // Prevent default behavior of leaving the screen
+        e.preventDefault()
+
+        return
+      }
+
+      return
+    })
+
+    return unsubscribe
+  }, [navigation, isLoading])
 
   React.useEffect(() => {
     axios

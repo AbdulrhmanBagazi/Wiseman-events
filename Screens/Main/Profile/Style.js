@@ -41,6 +41,12 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 5,
+  },
+  tinyLogo: {
+    width: '100%',
+    // height: undefined,
+    resizeMode: 'contain',
   },
   info: {
     width,
