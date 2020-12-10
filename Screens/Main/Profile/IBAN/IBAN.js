@@ -617,6 +617,12 @@ function IBAN({ store }) {
         </View>
       )}
 
+      <Text style={styles.WarnningText}>
+        {I18nManager.isRTL
+          ? 'يرجى التآكد من كافة المعلومات المدخلة و المتعلقة بحسابكم الخاص، سيتم تحويل متسحقاتكم المالية بناء على البيانات التالية دون ادنى مسؤلية من قبلنا.'
+          : 'Please confirm all entered information related to your account. Your financial dues will be transferred based on the following data without any responsibility on our part.'}
+      </Text>
+
       <Modal animationType="fade" transparent={true} visible={isLoading}>
         <View style={styles.modal}>
           <ActivityIndicator size="large" color={PrimaryColor} />

@@ -151,6 +151,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 16,
   },
+  WarnningText: {
+    color: 'red',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    width,
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
 })
 
 export default styles

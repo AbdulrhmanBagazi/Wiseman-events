@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   TitleCode: {
     fontSize: 32,
-    marginTop: 100,
+    marginTop: 50,
   },
   Slogan: {
     textAlign: 'center',

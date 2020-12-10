@@ -1,5 +1,14 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, I18nManager, Alert } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+  I18nManager,
+  Alert,
+  AppState,
+} from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import { HomePageStrings } from '../../../Config/Strings'
@@ -23,12 +32,11 @@ function Home({ store, navigation }) {
   const [isStatus, setStatus] = React.useState(false)
   const responseListener = React.useRef()
   const notificationListener = React.useRef()
-
+  const appState = React.useRef(AppState.currentState)
   //
   const { signOut } = React.useContext(AuthContext)
 
   React.useEffect(() => {
-    store.setResetPages()
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
@@ -43,6 +51,7 @@ function Home({ store, navigation }) {
         return
       }
     })
+
     // navigation.navigate('Profile')
     // navigation.navigate('Earnings')
     // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
@@ -54,6 +63,22 @@ function Home({ store, navigation }) {
       Notifications.removeNotificationSubscription(responseListener)
     }
   }, [])
+
+  React.useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange)
+
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange)
+    }
+  }, [])
+
+  const _handleAppStateChange = (nextAppState) => {
+    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      store.setResetPages()
+    }
+
+    appState.current = nextAppState
+  }
 
   React.useEffect(() => {
     setLoading(true)

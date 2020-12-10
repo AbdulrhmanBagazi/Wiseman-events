@@ -1,3 +1,3 @@
-const URL = 'http://192.168.100.5:9999'
+const URL = 'http://eventsapi-env.eba-wmcbxfiy.eu-central-1.elasticbeanstalk.com'
 
 export { URL }

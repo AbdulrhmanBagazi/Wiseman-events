@@ -79,7 +79,7 @@ function History({ store, navigation }) {
     RefreshMiddle()
 
     return unsubscribe
-  }, [navigation])
+  }, [navigation, store.HistoryPage])
 
   //getApplication
   const RefreshMiddle = async () => {

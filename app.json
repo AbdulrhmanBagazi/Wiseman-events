@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "wiseman-events",
-    "slug": "wiseman-events",
-    "platforms": ["ios", "android", "web"],
+    "name": "تنظيم",
+    "slug": "organizing",
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/appicon.png",

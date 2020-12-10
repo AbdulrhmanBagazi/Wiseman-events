@@ -108,7 +108,7 @@ function GetCode({ navigation }) {
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
       showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="always">
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
         <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>

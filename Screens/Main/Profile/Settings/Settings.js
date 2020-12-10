@@ -33,7 +33,7 @@ function Settings({ store, navigation }) {
         <View style={styles.aboutB}>
           <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('UpdateProfile')}>
             <View
-              style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+              style={{ flex: 2, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.UpdateProfile}</Text>
             </View>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
