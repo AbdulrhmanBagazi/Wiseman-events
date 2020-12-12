@@ -1,12 +1,6 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../../Config/ColorPalette'
+import { PrimaryColor, LightText } from '../../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   Container: {
@@ -43,7 +37,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 20,
     marginHorizontal: 16,
-    marginTop: 20,
+    marginVertical: 20,
   },
   About: {
     fontWeight: '500',

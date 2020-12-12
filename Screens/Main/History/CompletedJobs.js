@@ -96,6 +96,7 @@ function CompletedJobs(props) {
         data={isData}
         showsVerticalScrollIndicator={false}
         refreshControl={props.refreshControl}
+        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
           <TouchableOpacity style={styles.SingleAllJob} disabled={true}>

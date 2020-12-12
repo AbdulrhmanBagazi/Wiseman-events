@@ -203,7 +203,7 @@ function IBAN({ store }) {
                   ...Data,
                   ReIBAN: '',
                 })
-              }, 2000)
+              }, 500)
               return
             } else if (response.data.check === 'fail') {
               setLoading(false)

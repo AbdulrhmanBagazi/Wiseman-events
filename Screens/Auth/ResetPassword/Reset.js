@@ -94,7 +94,7 @@ function Reset({ navigation }) {
         setTimeout(() => {
           setError(ErrorsStrings.OTPCode)
           setLoading(false)
-        }, 1000)
+        }, 500)
 
         return
       })

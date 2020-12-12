@@ -259,13 +259,13 @@ const SupportPageStrings = {
   About: I18nManager.isRTL
     ? 'أخبرنا بمشكلتك ، وسوف نتصل بك في أقرب وقت ممكن. نحن دائما سعداء للمساعدة.'
     : 'Tell us your problem, we will contact you as soon as possible. We are always happy to help.',
-  Message: I18nManager.isRTL ? 'رسالة' : 'Message',
-  PlaceHolder: I18nManager.isRTL ? 'أخبرنا عن مشكلتك ...' : 'Tell us about your problem...',
+  Message: I18nManager.isRTL ? 'تفاصيل' : 'Details',
+  PlaceHolder: I18nManager.isRTL ? 'تفاصيل...' : 'Details...',
   Send: I18nManager.isRTL ? 'إرسال' : 'Send',
   Done: I18nManager.isRTL ? 'تم' : 'Ok',
   ModalAbout: I18nManager.isRTL
-    ? 'وصلتنا شكواك. سنعود إليك قريبًا ، شكرًا.'
-    : 'We got your complaint. We will come back to you very soon, thank you for your patients.',
+    ? 'شكرًا لك ، بمجرد مراجعة الفريق لمشكلتك ، سيتم إشعارك.'
+    : 'Thank you, once the team review your issue you will be notified.',
 }
 
 const IBANPageStrings = {

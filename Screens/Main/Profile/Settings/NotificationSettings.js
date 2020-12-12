@@ -105,7 +105,7 @@ function NotificationSettings({ store }) {
             }
             setTimeout(() => {
               setShow(false)
-            }, 2000)
+            }, 500)
             return
           } else {
             Alert.alert(
@@ -162,7 +162,7 @@ function NotificationSettings({ store }) {
             }
             setTimeout(() => {
               setShow(false)
-            }, 2000)
+            }, 500)
             return
           } else if (response.data === 'fail') {
             setIsEnabled((previousState) => !previousState)

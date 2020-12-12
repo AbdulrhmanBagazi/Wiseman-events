@@ -36,7 +36,7 @@ function Splash({ store }) {
             },
           })
           .then(async (response) => {
-            // console.log(response)
+            // console.log(response.data)
             if (response.status === 200) {
               await store.setData(response.data)
               await store.setToken(Token)

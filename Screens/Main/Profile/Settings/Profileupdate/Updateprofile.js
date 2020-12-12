@@ -528,11 +528,7 @@ function UpdateProfile({ store, navigation }) {
         />
 
         <TouchableOpacity style={styles.Button} onPress={debounce(() => HandleCreateProfile(), 250)}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text style={styles.ButtonText}>{ProfileStrings.Update}</Text>
-          )}
+          <Text style={styles.ButtonText}>{ProfileStrings.Update}</Text>
         </TouchableOpacity>
       </View>
 
@@ -546,6 +542,12 @@ function UpdateProfile({ store, navigation }) {
       />
 
       <View style={{ height: 25 }}></View>
+
+      <Modal animationType="fade" transparent={true} visible={isLoading}>
+        <View style={styles.modal}>
+          <ActivityIndicator size="large" color={PrimaryColor} />
+        </View>
+      </Modal>
     </KeyboardAwareScrollView>
   )
 }

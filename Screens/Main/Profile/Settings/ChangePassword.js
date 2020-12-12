@@ -1,7 +1,16 @@
 //ChangePassword
 
 import React from 'react'
-import { View, Text, TouchableOpacity, ActivityIndicator, Keyboard, Alert, I18nManager } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+  Alert,
+  I18nManager,
+  Modal,
+} from 'react-native'
 import styles from './Style'
 import { ResetPasswordString, ErrorsStrings } from '../../../../Config/Strings'
 import Inputpassowrd from '../../../Components/PasswordInput/Password'
@@ -11,6 +20,7 @@ import { URL } from '../../../../Config/Config'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { AuthContext } from '../../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
+import { PrimaryColor } from '../../../../Config/ColorPalette'
 
 function ChangePassword({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
@@ -191,13 +201,15 @@ function ChangePassword({ store, navigation }) {
         <TouchableOpacity
           style={styles.Button}
           onPress={debounce(() => (!isLoading ? ResetPassword(data) : null), 200)}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text style={styles.ButtonText}>{ResetPasswordString.Update}</Text>
-          )}
+          <Text style={styles.ButtonText}>{ResetPasswordString.Update}</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal animationType="fade" transparent={true} visible={isLoading}>
+        <View style={styles.modal}>
+          <ActivityIndicator size="large" color={PrimaryColor} />
+        </View>
+      </Modal>
     </KeyboardAwareScrollView>
   )
 }

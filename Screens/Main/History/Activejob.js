@@ -32,6 +32,7 @@ function Activejob(props) {
         data={isData}
         showsVerticalScrollIndicator={false}
         refreshControl={props.refreshControl}
+        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
           <View style={styles.ActivejobView}>
@@ -151,7 +152,7 @@ function Activejob(props) {
 
       <View style={styles.work}>
         <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
-          <MaterialCommunityIcons name="qrcode" size={50} color="#fff" />
+          <MaterialCommunityIcons name="qrcode" size={40} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>

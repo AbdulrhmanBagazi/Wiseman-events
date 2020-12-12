@@ -315,8 +315,8 @@ function History({ store, navigation }) {
             }
             Data={isAllData}
             onPressWork={navigation.navigate}
-            Secret="WiseManApp"
-            userId={store.data.id}
+            Secret="تنظيم"
+            userId={store.data.qr.id}
           />
         </View>
         <View style={styles.Container}>

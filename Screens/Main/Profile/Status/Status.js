@@ -71,7 +71,7 @@ function Status({ store }) {
                 setLoading(false)
                 setShow(false)
                 setReload(!isReload)
-              }, 2000)
+              }, 500)
               return
             } else if (response.data.check === 'fail') {
               setLoading(false)
@@ -193,7 +193,7 @@ function Status({ store }) {
                 setLoading(false)
                 setShow(false)
                 setReload(!isReload)
-              }, 2000)
+              }, 500)
               return
             } else if (response.data.check === 'fail') {
               setLoading(false)

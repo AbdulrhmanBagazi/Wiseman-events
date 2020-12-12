@@ -535,6 +535,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     left: 10,
+    opacity: 0.5,
   },
   calendarButton: {
     backgroundColor: 'transparent',
@@ -542,7 +543,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     padding: 5,
-    alignSelf: 'flex-end',
   },
   calendarButtonText: {
     fontWeight: '600',

@@ -187,7 +187,7 @@ function Profile({ store, navigation }) {
                 <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
+            <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Support')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Support}</Text>
@@ -200,7 +200,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

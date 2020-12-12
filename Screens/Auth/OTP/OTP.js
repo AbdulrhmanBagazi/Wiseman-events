@@ -108,7 +108,7 @@ function OTP({ store }) {
   const ChangeState = async () => {
     setTimeout(() => {
       setShow(false)
-    }, 1500)
+    }, 500)
 
     return
   }
