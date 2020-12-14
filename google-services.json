@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "72734728413",
-    "firebase_url": "https://wiseman-test.firebaseio.com",
-    "project_id": "wiseman-test",
-    "storage_bucket": "wiseman-test.appspot.com"
+    "project_number": "35150018160",
+    "project_id": "organizing-app-91901",
+    "storage_bucket": "organizing-app-91901.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:72734728413:android:1d26d6c7918cab5f983b34",
+        "mobilesdk_app_id": "1:35150018160:android:4512d154022e368bb7a6b5",
         "android_client_info": {
-          "package_name": "com.wiseman.wisemantest"
+          "package_name": "com.wiseman.organizing"
         }
       },
       "oauth_client": [
         {
-          "client_id": "72734728413-al600gjiolcivapemrch177q13f1hjr5.apps.googleusercontent.com",
+          "client_id": "35150018160-schslcopgo482i2a3030647hv0ahnvgb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyByagBKGqRwa3R0aac9a0o_iEj42GWzbH4"
+          "current_key": "AIzaSyAN5nUwIov5fsXzY_3uM6JOby5VhVc_kYc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "72734728413-al600gjiolcivapemrch177q13f1hjr5.apps.googleusercontent.com",
+              "client_id": "35150018160-schslcopgo482i2a3030647hv0ahnvgb.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "72734728413-k7lldqiur9q24mrgf7a8tkv02umcq3o2.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.wiseman.wisemantest"
-              }
             }
           ]
         }

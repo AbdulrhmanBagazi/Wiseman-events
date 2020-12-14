@@ -352,6 +352,7 @@ const WorkScheduleUserString = {
   TakeAttendenceEnd: I18nManager.isRTL ? 'تسجيل الإنصراف' : 'Check-out',
   Info: I18nManager.isRTL ? 'معلومات' : 'Info',
   noInfo: I18nManager.isRTL ? 'لا يوجد معلومات' : 'No Information',
+  dayoff: I18nManager.isRTL ? 'يوم عطلة' : 'day off',
 }
 
 const EarningsStrings = {

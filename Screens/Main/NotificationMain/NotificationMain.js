@@ -510,10 +510,16 @@ function NotificationMain({ navigation, store }) {
         onEndReached={() => {
           isData.length < count ? setshowmore(true) : null
         }}
-        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
+        contentContainerStyle={{ paddingBottom: 20, paddingTop: 0 }}
         ListFooterComponent={
           LoadFooter ? (
             <ActivityIndicator style={{ marginVertical: 10 }} size="large" color={PrimaryColor} />
+          ) : showMore ? (
+            <TouchableOpacity style={styles.ShowMoreButton} onPress={() => LoadMore()}>
+              <Text style={styles.ShowMoreButtonText}>
+                {I18nManager.isRTL ? 'تحميل المزيد' : 'Load More'}
+              </Text>
+            </TouchableOpacity>
           ) : null
         }
         renderItem={({ item, index }) => (
@@ -688,11 +694,7 @@ function NotificationMain({ navigation, store }) {
         )}
       />
 
-      {showMore ? (
-        <TouchableOpacity style={styles.ShowMoreButton} onPress={() => LoadMore()}>
-          <Text style={styles.ShowMoreButtonText}>{I18nManager.isRTL ? 'تحميل المزيد' : 'Load More'}</Text>
-        </TouchableOpacity>
-      ) : null}
+      {}
     </View>
   )
 }

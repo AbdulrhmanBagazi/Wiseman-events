@@ -121,19 +121,19 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: 25,
+    // position: 'absolute',
+    // bottom: 25,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
+    marginVertical: 10,
   },
   ShowMoreButtonText: {
     fontSize: 12,
     color: '#fff',
     textAlign: 'center',
-    marginHorizontal: 10,
   },
 })
 

@@ -56,11 +56,11 @@ import ChangePassword from './Screens/Main/Profile/Settings/ChangePassword'
 //
 import { width } from './Config/Layout'
 
-// Sentry.init({
-//   dsn: 'YOUR DSN HERE',
-//   enableInExpoDevelopment: true,
-//   debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
-// })
+Sentry.init({
+  dsn: 'https://5caff191c9cb4fd5be537ab3eeac1907@o489391.ingest.sentry.io/5551545',
+  enableNative: false,
+  debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
+})
 
 const TransitionScreenOptions = {
   ...TransitionPresets.SlideFromRightIOS, // This is where the transition happens

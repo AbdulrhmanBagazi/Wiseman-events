@@ -9,17 +9,21 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "web": {
-      "config": {
-        "firebase": {
-          "apiKey": "AIzaSyCLeZUzK84KpGMcGuQWqXKlSM86R5c0gMA",
-          "measurementId": "G-F3BXMZC267"
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "wiseman-co",
+            "project": "events-main-app",
+            "authToken": "39702650814441bea5897b42fd4f2ddc01516690f0d0482297004b4afd15d862"
+          }
         }
-      }
+      ]
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.wiseman.wisemantest",
+      "bundleIdentifier": "com.wiseman.organizing",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "splash": {
@@ -27,7 +31,7 @@
       }
     },
     "android": {
-      "package": "com.wiseman.wisemantest",
+      "package": "com.wiseman.organizing",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "splash": {

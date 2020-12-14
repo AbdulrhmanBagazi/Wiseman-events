@@ -8,6 +8,7 @@ import {
   I18nManager,
   Alert,
   AppState,
+  RefreshControl,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { PrimaryColor } from '../../../Config/ColorPalette'
@@ -37,6 +38,14 @@ function Home({ store, navigation }) {
   const { signOut } = React.useContext(AuthContext)
 
   React.useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange)
+
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange)
+    }
+  }, [])
+
+  React.useEffect(() => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
@@ -64,14 +73,6 @@ function Home({ store, navigation }) {
     }
   }, [])
 
-  React.useEffect(() => {
-    AppState.addEventListener('change', _handleAppStateChange)
-
-    return () => {
-      AppState.removeEventListener('change', _handleAppStateChange)
-    }
-  }, [])
-
   const _handleAppStateChange = (nextAppState) => {
     if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
       store.setResetPages()
@@ -92,6 +93,7 @@ function Home({ store, navigation }) {
       }
       return
     })
+
     axios
       .get(URL + '/user/mainPageJobs', {
         headers: {
@@ -103,12 +105,16 @@ function Home({ store, navigation }) {
         if (response.status === 200) {
           if (response.data.check === 'success') {
             if (response.data.data.length === 0) {
-              setError(false)
-              setSoon(true)
-              setLoading(false)
+              setTimeout(() => {
+                setError(false)
+                setSoon(true)
+                setLoading(false)
+              }, 1000)
             } else {
               await store.setfewevents(response.data.data)
-              setLoading(false)
+              setTimeout(() => {
+                setLoading(false)
+              }, 1000)
             }
 
             return
@@ -167,7 +173,15 @@ function Home({ store, navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => (isLoading ? null : setRefresh(!isRefresh))}
+            tintColor={PrimaryColor}
+          />
+        }>
         <View style={styles.Container}>
           <TopCard Data={store.banner} />
           {isLoading ? (
