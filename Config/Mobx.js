@@ -13,6 +13,8 @@ class Store {
   banner = []
   fewevents = []
   token = null
+  profileImage = null
+  filename = null
 
   HistoryPage = true
   NotificationMainPage = true
@@ -48,6 +50,8 @@ class Store {
     this.data = Data.user
     // this.history = Data.user.applications
     // this.alerts = Data.user.alerts.reverse()
+    this.profileImage = Data.url
+    this.filename = Data.filename
 
     this.banner = Data.banner
     return
@@ -156,6 +160,8 @@ decorate(Store, {
   setHistoryPage: action,
   setHistoryPageBack: action,
   setResetPages: action,
+  profileImage: observable,
+  filename: observable,
 })
 
 const store = new Store()

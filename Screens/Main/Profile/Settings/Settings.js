@@ -20,6 +20,7 @@ function Settings({ store, navigation }) {
   // }
 
   const Logout = async () => {
+    await store.setResetPages()
     await UserTokenRemove()
     signOut()
 

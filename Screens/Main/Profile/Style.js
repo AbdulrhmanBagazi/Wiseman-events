@@ -1,12 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native'
+import { width } from '../../../Config/Layout'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   Container: {
@@ -30,23 +24,6 @@ const styles = StyleSheet.create({
   safe: {
     width: width + 20,
     alignItems: 'flex-end',
-  },
-  Image: {
-    backgroundColor: PrimaryColor,
-    width: 60,
-    height: 60,
-    position: 'absolute',
-    top: 50,
-    left: 10,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
-  },
-  tinyLogo: {
-    width: '100%',
-    // height: undefined,
-    resizeMode: 'contain',
   },
   info: {
     width,

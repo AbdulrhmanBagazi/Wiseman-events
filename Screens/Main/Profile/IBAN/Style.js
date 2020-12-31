@@ -155,10 +155,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     fontWeight: '600',
-    textAlign: 'center',
+    textAlign: 'left',
     width,
     alignSelf: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
 })
 

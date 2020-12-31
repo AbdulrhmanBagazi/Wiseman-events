@@ -15,9 +15,13 @@ import styles from './Style'
 import { Entypo } from '@expo/vector-icons'
 import { ProfilePageStrings } from '../../../Config/Strings'
 import { inject, observer } from 'mobx-react'
+import ProfileImage from './ProfileImage/ProfileImage'
+import AnimatedProfileImage from '../../Components/AnimatedImageProfile/AnimatedImageProfile'
 
 function Profile({ store, navigation }) {
   const [Data, setDataValue] = React.useState(null)
+  const [isModal, setModal] = React.useState(false)
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setValue()
@@ -60,9 +64,14 @@ function Profile({ store, navigation }) {
           <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('Settings')}>
             <Icon style={styles.icon} name="settings" size={25} color="black" />
           </TouchableOpacity>
-          <View style={styles.Image}>
-            <Image style={styles.tinyLogo} resizeMode="contain" source={require('../../../assets/L.png')} />
-          </View>
+          <AnimatedProfileImage
+            onPress={() => setModal(!isModal)}
+            source={{
+              uri: store.profileImage,
+            }}
+            filename={store.filename}
+          />
+          <ProfileImage open={isModal} close={() => setModal(!isModal)} token={store.token} />
         </SafeAreaView>
       </View>
       <View style={styles.info}>

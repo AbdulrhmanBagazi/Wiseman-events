@@ -640,7 +640,6 @@ function NotificationMain({ navigation, store }) {
                             I18nManager.isRTL
                               ? 'تأكد من تثبيت WhatsApp على جهازك!'
                               : 'Make sure WhatsApp installed on your device',
-                            [{ text: 'OK', onPress: () => setshowmore(true) }],
                             {
                               cancelable: false,
                             }

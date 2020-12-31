@@ -10,6 +10,7 @@ import {
   TextInput,
 } from 'react-native'
 import styles from './Style'
+import * as Analytics from 'expo-firebase-analytics'
 import { inject, observer } from 'mobx-react'
 import { OTPStrings, ErrorsStrings } from '../../../Config/Strings'
 import { width } from '../../../Config/Layout'
@@ -59,6 +60,7 @@ function OTP({ store }) {
       )
       .then((response) => {
         if (response.data === 'success') {
+          Analytics.logEvent('Phone Verified', 'Phone Verified')
           Profile()
           return
         } else {

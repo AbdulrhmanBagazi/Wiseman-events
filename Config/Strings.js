@@ -34,7 +34,7 @@ const HeaderTitles = {
   status: I18nManager.isRTL ? 'الحالة' : 'Job status',
   Earnings: I18nManager.isRTL ? 'الأرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
-  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  IBAN: I18nManager.isRTL ? 'أضف الآيبان' : 'Add IBAN',
   Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
@@ -52,8 +52,8 @@ const LanguageChangeStrings = {
 const Register = {
   Register: I18nManager.isRTL ? 'تسجيل' : 'Register',
   ResetSlogan: I18nManager.isRTL
-    ? 'مرحبًا بك في اسم التطبيق. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
-    : 'Welcome to app name. Please provice the information below, set your account.',
+    ? 'مرحبًا بك في تنظيم. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
+    : 'Welcome to "تنظيم". Please provide the information below, set your account.',
   Phone: I18nManager.isRTL ? 'رقم الجوال(05XXXXXXXX)' : 'Mobile Number (05XXXXXXXX)',
   nID: I18nManager.isRTL ? 'رقم الهوية الوطنية/الإقامة' : 'National ID / Iqama number',
   Password: I18nManager.isRTL ? 'كلمة المرور' : 'Password',
@@ -226,7 +226,7 @@ const ProfilePageStrings = {
   status: I18nManager.isRTL ? 'الحالة' : 'Status',
   Earnings: I18nManager.isRTL ? 'الأرباح' : 'Earnings',
   Levels: I18nManager.isRTL ? 'المستوى' : 'Levels',
-  IBAN: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
+  IBAN: I18nManager.isRTL ? 'أضف الآيبان' : 'Add IBAN',
   Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
@@ -269,16 +269,16 @@ const SupportPageStrings = {
 }
 
 const IBANPageStrings = {
-  Title: I18nManager.isRTL ? 'معلومات IBAN' : 'IBAN Info',
+  Title: I18nManager.isRTL ? 'معلومات الآيبان' : 'IBAN Info',
   About: I18nManager.isRTL
-    ? 'لم تقم بإضافة أي رقم IBAN حتى الآن. أضف حسابك البنكي لتتلقى دفعات مباشرة إلى حسابك.'
+    ? 'لم تقم بإضافة أي رقم آيبان حتى الآن. أضف حسابك البنكي لتتلقى دفعات مباشرة إلى حسابك.'
     : "You haven't added any IBAN yet. Add your BANK account to get paid directly to your account.",
-  Button: I18nManager.isRTL ? 'أضف IBAN' : 'Add IBAN',
-  IBAN: I18nManager.isRTL ? 'IBAN' : 'IBAN',
-  RepeatIBAN: I18nManager.isRTL ? 'كرر IBAN' : 'Repeat IBAN',
+  Button: I18nManager.isRTL ? 'أضف الآيبان' : 'Add IBAN',
+  IBAN: I18nManager.isRTL ? 'الآيبان' : 'IBAN',
+  RepeatIBAN: I18nManager.isRTL ? 'كرر الآيبان' : 'Repeat IBAN',
   AccountName: I18nManager.isRTL ? 'اسم صاحب الحساب' : 'Name of the account holder',
   Save: I18nManager.isRTL ? 'حفظ' : 'Save',
-  New: I18nManager.isRTL ? '+ تعديل IBAN' : '+Edit IBAN',
+  New: I18nManager.isRTL ? '+ تعديل الآيبان' : '+Edit IBAN',
   Cancel: I18nManager.isRTL ? 'إلغاء' : 'Cancel',
   Match: I18nManager.isRTL ? 'تتطابق' : 'Matched',
 }

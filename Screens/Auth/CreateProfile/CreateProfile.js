@@ -12,6 +12,7 @@ import {
   I18nManager,
   StyleSheet,
 } from 'react-native'
+import * as Analytics from 'expo-firebase-analytics'
 import styles from './Style'
 import { ProfileStrings, ErrorsStrings } from '../../../Config/Strings'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -190,10 +191,12 @@ function CreateProfile({ store }) {
       .then((response) => {
         if (response.data === 'success') {
           Notification()
+          Analytics.logEvent('Profile Created', 'Profile Created')
           return
         }
         if (response.data === 'exists') {
           Notification()
+          Analytics.logEvent('Profile Created', 'Profile Created')
           return
         } else {
           setError(ErrorsStrings.ErrorOccurred)
@@ -383,7 +386,7 @@ function CreateProfile({ store }) {
                   value={DateValue}
                   mode="date"
                   is24Hour={true}
-                  display="default"
+                  display="spinner"
                   onChange={onChange}
                 />
 

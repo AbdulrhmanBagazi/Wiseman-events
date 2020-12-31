@@ -61,12 +61,6 @@ function Home({ store, navigation }) {
       }
     })
 
-    // navigation.navigate('Profile')
-    // navigation.navigate('Earnings')
-    // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    //   console.log(notification)
-    // })
-
     return () => {
       Notifications.removeNotificationSubscription(notificationListener)
       Notifications.removeNotificationSubscription(responseListener)

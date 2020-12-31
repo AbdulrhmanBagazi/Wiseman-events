@@ -452,7 +452,7 @@ function UpdateProfile({ store, navigation }) {
                   value={DateValue}
                   mode="date"
                   is24Hour={true}
-                  display="default"
+                  display="spinner"
                   onChange={onChange}
                 />
 

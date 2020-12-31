@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, I18nManager } from 'react-native'
 import styles from './Style'
 import { EarningsStrings } from '../../../../Config/Strings'
+import humanizeDuration from 'humanize-duration'
 
 function Card(props) {
   const getColor = (status) => {
@@ -42,7 +43,6 @@ function Card(props) {
         return 'partial-payment'
     }
   }
-
   return (
     <View style={styles.CardContainer}>
       <View style={styles.DataViewTitle}>
@@ -66,6 +66,33 @@ function Card(props) {
         {I18nManager.isRTL ? 'عدد الآيام: ' : 'Total Days: '}{' '}
         <Text style={styles.TextDateValue}>{props.Data.total_completed}</Text>
       </Text>
+      {props.Data.organizer_hours > 0 ? (
+        <Text style={styles.TextTransfer}>
+          {I18nManager.isRTL ? 'الساعات (منظم): ' : 'Hours (Organizer): '}{' '}
+          <Text style={styles.TextDateValue}>
+            {humanizeDuration(props.Data.organizer_hours * 60000, {
+              units: ['h'],
+              round: true,
+              language: I18nManager.isRTL ? 'ar' : 'en',
+              fallbacks: ['en'],
+            })}
+          </Text>
+        </Text>
+      ) : null}
+
+      {props.Data.supervisor_hours > 0 ? (
+        <Text style={styles.TextTransfer}>
+          {I18nManager.isRTL ? 'الساعات (مشرف): ' : 'Hours (Supervisor): '}{' '}
+          <Text style={styles.TextDateValue}>
+            {humanizeDuration(props.Data.supervisor_hours * 60000, {
+              units: ['h'],
+              round: true,
+              language: I18nManager.isRTL ? 'ar' : 'en',
+              fallbacks: ['en'],
+            })}
+          </Text>
+        </Text>
+      ) : null}
 
       {props.Data.TransferID ? (
         <Text style={styles.TextTransfer}>
