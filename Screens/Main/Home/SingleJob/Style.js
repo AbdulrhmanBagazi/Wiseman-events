@@ -172,6 +172,18 @@ const styles = StyleSheet.create({
     elevation: 2,
     marginBottom: 30,
   },
+  ButtonBanned: {
+    flexDirection: 'row',
+    width,
+    borderRadius: 5,
+    borderWidth: 1,
+    // height: 50,
+    padding: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
+    flexWrap: 'wrap',
+  },
   ButtonTextDisabled: {
     color: '#ccc',
     fontWeight: 'bold',
@@ -181,6 +193,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  ButtonTextBanned: {
+    color: 'red',
+    fontWeight: 'normal',
+    fontSize: 14,
+    textAlign: 'justify',
   },
   SelectText: {
     fontSize: 16,

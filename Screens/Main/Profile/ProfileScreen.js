@@ -66,10 +66,8 @@ function Profile({ store, navigation }) {
           </TouchableOpacity>
           <AnimatedProfileImage
             onPress={() => setModal(!isModal)}
-            source={{
-              uri: store.profileImage,
-            }}
-            filename={store.filename}
+            filename={store.profileImage}
+            token={store.token}
           />
           <ProfileImage open={isModal} close={() => setModal(!isModal)} token={store.token} />
         </SafeAreaView>

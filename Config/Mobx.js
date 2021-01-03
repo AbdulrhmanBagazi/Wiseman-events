@@ -14,7 +14,6 @@ class Store {
   fewevents = []
   token = null
   profileImage = null
-  filename = null
 
   HistoryPage = true
   NotificationMainPage = true
@@ -50,10 +49,15 @@ class Store {
     this.data = Data.user
     // this.history = Data.user.applications
     // this.alerts = Data.user.alerts.reverse()
-    this.profileImage = Data.url
-    this.filename = Data.filename
+    this.profileImage = Data.user.profile.profile_image
 
     this.banner = Data.banner
+    return
+  }
+
+  updateimage = async (Data) => {
+    this.profileImage = Data
+
     return
   }
 
@@ -161,7 +165,7 @@ decorate(Store, {
   setHistoryPageBack: action,
   setResetPages: action,
   profileImage: observable,
-  filename: observable,
+  updateimage: action,
 })
 
 const store = new Store()

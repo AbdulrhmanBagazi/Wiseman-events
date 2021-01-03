@@ -16,6 +16,8 @@ import { URL } from '../../../../Config/Config'
 import Icon from '../../../../Config/Icons'
 import * as ImagePicker from 'expo-image-picker'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
+import { inject, observer } from 'mobx-react'
+import { ProfileImageStrings } from '../../../../Config/Strings'
 
 function ProfileImage(props) {
   const { signOut } = React.useContext(AuthContext)
@@ -49,14 +51,89 @@ function ProfileImage(props) {
     }
   }
 
+  const updateImage = async (name) => {
+    axios
+      .post(
+        URL + '/user/addNewProfileImage',
+        {
+          filename: name,
+        },
+        {
+          headers: {
+            Authorization: props.token,
+            'Cache-Control': 'no-cache',
+          },
+        }
+      )
+      .then(async (response) => {
+        if (response.data === 'success') {
+          props.store.updateimage(name)
+          setLoading(false)
+          setEnd(true)
+
+          return
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+      .catch(async (error) => {
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              await UserTokenRemove()
+              Alert.alert(
+                '',
+                I18nManager.isRTL
+                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
+                  : 'the session ended, please re-login',
+                [{ text: 'OK', onPress: () => signOut() }],
+                {
+                  cancelable: false,
+                }
+              )
+
+              return
+            } else {
+              Alert.alert(
+                '',
+                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+                [{ text: 'OK', onPress: () => setLoading(false) }],
+                {
+                  cancelable: false,
+                }
+              )
+              return
+            }
+          }
+        } else {
+          Alert.alert(
+            '',
+            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+            [{ text: 'OK', onPress: () => setLoading(false) }],
+            {
+              cancelable: false,
+            }
+          )
+          return
+        }
+      })
+  }
+
   const UploadImage = async (URL, name, imageuri) => {
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           // Successfully uploaded the file.
-          setLoading(false)
-          setEnd(true)
+          updateImage(name)
           return
         } else {
           // The file could not be uploaded.
@@ -161,7 +238,7 @@ function ProfileImage(props) {
 
             {isEnd ? (
               <TouchableOpacity onPress={props.close} style={styles.Button} disabled={isLoading}>
-                <Text style={styles.ButtonText}>Done</Text>
+                <Icon name="check" size={20} color="#fff" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
@@ -171,7 +248,7 @@ function ProfileImage(props) {
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
-                  <Text style={styles.ButtonText}>Uploade</Text>
+                  <Text style={styles.ButtonText}>{ProfileImageStrings.Upload}</Text>
                 )}
               </TouchableOpacity>
             )}
@@ -190,4 +267,4 @@ function ProfileImage(props) {
   )
 }
 
-export default ProfileImage
+export default inject('store')(observer(ProfileImage))

@@ -212,6 +212,9 @@ const SingleJobStrings = {
   Note: I18nManager.isRTL ? 'ملاحظة:' : 'Note:',
   Mealallowance: I18nManager.isRTL ? 'بدل وجبة عن كل يوم دوام' : 'Meal allowance for each working day',
   Applyingfor: I18nManager.isRTL ? 'التقديم' : 'Applying',
+  Banned: I18nManager.isRTL
+    ? 'تم تعليق حسابك بسبب انتهاك شروط الاستخدام! قد يؤثر هذا على عملك الحالي ، يمكنك الاستمرار في استخدام التطبيق لتلقي المستحقات السابقة.'
+    : 'Your account has been suspended due to violation of term of use! this may affect your current work, you can continue using the app to receive past dues.',
 }
 
 const HomePageStrings = {
@@ -369,6 +372,11 @@ const EarningsStrings = {
   Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
 }
 
+const ProfileImageStrings = {
+  Done: I18nManager.isRTL ? 'منجز' : 'Done',
+  Upload: I18nManager.isRTL ? 'رفع' : 'Upload',
+}
+
 export {
   SignInStrings,
   HeaderTitles,
@@ -393,4 +401,5 @@ export {
   AlertStrings,
   WorkScheduleUserString,
   EarningsStrings,
+  ProfileImageStrings,
 }

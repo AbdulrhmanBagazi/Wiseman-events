@@ -115,7 +115,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text style={styles.SalarySpace}>
                   {SingleJobStrings.supervisor + ': '}
                   <Text style={styles.SingleSalaryTextData}>
-                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال' : 'SAR'}
                     <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
@@ -124,7 +124,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text>
                   {SingleJobStrings.organizer + ': '}
                   <Text style={styles.SingleSalaryTextData}>
-                    {item.Salary} {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                    {item.Salary} {I18nManager.isRTL ? 'ريال' : 'SAR'}
                     <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
                   </Text>
                 </Text>
@@ -158,7 +158,7 @@ function SingleJob({ route, store, navigation }) {
                 <Text style={styles.NoteTextValue}>{SingleJobStrings.Mealallowance}</Text>
                 <Text style={styles.NoteText}>
                   {' ' + item.ProvideAnAllowance}
-                  {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                  {I18nManager.isRTL ? 'ريال' : 'SAR'}
                 </Text>
               </View>
             </View>
@@ -258,20 +258,26 @@ function SingleJob({ route, store, navigation }) {
         </View>
       </ScrollView>
       <View style={styles.ButtonView}>
-        {item.Status === 'active' ? (
+        {item.Status === 'active' && !store.data.banned ? (
           <TouchableOpacity
             style={styles.Button}
             onPress={() => navigation.navigate('ApplyToJob', { item, shifts: isShifts })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.Application}</Text>
           </TouchableOpacity>
-        ) : (
+        ) : !store.data.banned ? (
           <TouchableOpacity
             style={[styles.ButtonDisabled, { borderColor: '#cccccc', backgroundColor: '#cccccc' }]}
             disabled={true}
             onPress={() => navigation.navigate('ApplyToJob', { item, shifts: isShifts })}>
             <Text style={styles.ButtonText}>{SingleJobStrings.EventEnded}</Text>
           </TouchableOpacity>
-        )}
+        ) : store.data.banned ? (
+          <TouchableOpacity
+            style={[styles.ButtonBanned, { borderColor: '#cccccc', backgroundColor: 'transparent' }]}
+            disabled={true}>
+            <Text style={styles.ButtonTextBanned}>{SingleJobStrings.Banned}</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   )
