@@ -103,6 +103,7 @@ const OTPStrings = {
     : 'Please check your SMS messages. We have sent you 4 digits code.',
   Verify: I18nManager.isRTL ? 'تحقق الآن' : 'Verify now',
   Resend: I18nManager.isRTL ? 'إعادة إرسال' : 'Resend',
+  Logout: I18nManager.isRTL ? 'تسجيل خروج' : 'Logout',
 }
 
 const ProfileStrings = {

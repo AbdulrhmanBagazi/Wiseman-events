@@ -405,7 +405,7 @@ function UpdateProfile({ store, navigation }) {
             })
           }
           value={data.first_name}
-          editable={false}
+          // editable={false}
         />
 
         <TextInput
@@ -418,7 +418,7 @@ function UpdateProfile({ store, navigation }) {
             })
           }
           value={data.last_name}
-          editable={false}
+          // editable={false}
         />
 
         <CountryUI style={styles.country} onSelect={(val) => onSelect(val)} countryCode={countryCode} />

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     textAlign: I18nManager.isRTL ? 'right' : 'left',
-    backgroundColor: '#F8F8F9',
+    backgroundColor: '#fff',
   },
   inputH: {
     width: width + 20,

@@ -20,9 +20,10 @@ import axios from 'axios'
 import { URL } from '../../../Config/Config'
 import CountDown from 'react-native-countdown-component'
 import debounce from 'lodash/debounce'
+import { UserTokenRemove } from '../../../Config/AsyncStorage'
 
 function OTP({ store }) {
-  const { Profile } = React.useContext(AuthContext)
+  const { Profile, signOut } = React.useContext(AuthContext)
   const [isResend, setResend] = React.useState(false)
   const [isError, setError] = React.useState(' ')
   const [isLoading, setLoading] = React.useState(false)
@@ -115,6 +116,13 @@ function OTP({ store }) {
     return
   }
 
+  const Logout = async () => {
+    await UserTokenRemove()
+    signOut()
+
+    return
+  }
+
   return (
     <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView
@@ -179,6 +187,14 @@ function OTP({ store }) {
               )}
             </TouchableOpacity>
           )}
+
+          <TouchableOpacity style={styles.Button} disabled={isLoading} onPress={() => Logout()}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.ButtonText}>{OTPStrings.Logout}</Text>
+            )}
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </ScrollView>
