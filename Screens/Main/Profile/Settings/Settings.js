@@ -84,7 +84,13 @@ function Settings({ store, navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.aboutButton}
-            onPress={() => Linking.openURL('https://wisemanksa.com/')}>
+            onPress={() =>
+              Linking.openURL(
+                I18nManager.isRTL
+                  ? 'https://organize.wiseman.app/privacypolicyar'
+                  : 'https://organize.wiseman.app/privacypolicyen'
+              )
+            }>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.PrivacyPolicy}</Text>
@@ -95,7 +101,13 @@ function Settings({ store, navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.aboutButton}
-            onPress={() => Linking.openURL('https://wisemanksa.com/')}>
+            onPress={() =>
+              Linking.openURL(
+                I18nManager.isRTL
+                  ? 'https://organize.wiseman.app/termsofservicear'
+                  : 'https://organize.wiseman.app/termsofserviceen'
+              )
+            }>
             <View
               style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <Text style={styles.leftText}>{SettingsPageStrings.Terms}</Text>

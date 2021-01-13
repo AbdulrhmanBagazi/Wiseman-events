@@ -24,6 +24,7 @@ import Icon from '../../../Config/Icons'
 import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import * as Notifications from 'expo-notifications'
+import moment from 'moment'
 
 function Home({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
@@ -35,7 +36,7 @@ function Home({ store, navigation }) {
   const notificationListener = React.useRef()
   const appState = React.useRef(AppState.currentState)
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut, Load } = React.useContext(AuthContext)
 
   React.useEffect(() => {
     AppState.addEventListener('change', _handleAppStateChange)
@@ -67,12 +68,32 @@ function Home({ store, navigation }) {
     }
   }, [])
 
-  const _handleAppStateChange = (nextAppState) => {
+  const _handleAppStateChange = async (nextAppState) => {
     if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-      store.setResetPages()
+      if (store.resetDate) {
+        var time = await moment(store.resetDate)
+        var current = await moment()
+        var duration = await moment(current).diff(time, 'minutes')
+
+        if (Number(duration) >= 60) {
+          store.setresetDate()
+          store.setResetPages()
+          Load()
+
+          return
+        }
+
+        return
+      } else {
+        store.setresetDate()
+        store.setResetPages()
+        return
+      }
     }
 
     appState.current = nextAppState
+
+    return
   }
 
   React.useEffect(() => {

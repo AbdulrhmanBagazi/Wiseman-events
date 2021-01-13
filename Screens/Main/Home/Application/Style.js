@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#DFE0E3',
     alignSelf: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   TextPointsView: {
     flexDirection: 'row',
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: SecondaryText,
-    marginHorizontal: 10,
-    textAlign: 'justify',
+    marginVertical: 8,
+    textAlign: 'left',
   },
   ButtonView: {
     padding: 10,

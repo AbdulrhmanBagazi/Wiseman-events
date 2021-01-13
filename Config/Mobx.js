@@ -19,6 +19,8 @@ class Store {
   NotificationMainPage = true
   MainPage = true
 
+  resetDate = null
+
   setNotificationMainPage = async () => {
     this.NotificationMainPage = false
 
@@ -140,6 +142,14 @@ class Store {
     this.data = data
     return
   }
+
+  setresetDate = async () => {
+    var date = new Date()
+
+    this.resetDate = date
+
+    return
+  }
 }
 
 decorate(Store, {
@@ -166,6 +176,8 @@ decorate(Store, {
   setResetPages: action,
   profileImage: observable,
   updateimage: action,
+  resetDate: observable,
+  setresetDate: action,
 })
 
 const store = new Store()

@@ -6,7 +6,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
   ActivityIndicator,
   Linking,
   Alert,
@@ -20,12 +19,12 @@ import { URL } from '../../../Config/Config'
 import debounce from 'lodash/debounce'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import Constants from 'expo-constants'
+import { AuthContext } from '../../../Hooks/Context'
 
 function Notification({ navigation, store }) {
-  const [PushToken, setPushToken] = React.useState('')
   const [isLoading, setLoading] = React.useState(false)
-  const [isShow, setShow] = React.useState(false)
   const [isError, setError] = React.useState(' ')
+  const { Load } = React.useContext(AuthContext)
 
   const registerForPushNotificationsAsync = async () => {
     setLoading(true)
@@ -78,7 +77,6 @@ function Notification({ navigation, store }) {
     //
 
     var token = (await Notifications.getExpoPushTokenAsync()).data
-    setPushToken(token)
 
     if (token) {
       axios
@@ -94,8 +92,8 @@ function Notification({ navigation, store }) {
         )
         .then((response) => {
           if (response.data === 'success') {
-            setShow(true)
             setLoading(false)
+            Load()
             return
           } else {
             setError(ErrorsStrings.ErrorOccurred)
@@ -131,7 +129,8 @@ function Notification({ navigation, store }) {
       )
       .then((response) => {
         if (response.data === 'success') {
-          setShow(true)
+          setLoading(false)
+          Load()
           return
         } else {
           setError(ErrorsStrings.ErrorOccurred)
@@ -146,19 +145,13 @@ function Notification({ navigation, store }) {
       })
   }
 
-  const NotificationDone = () => {
-    setShow(false)
-    navigation.navigate('NotificationSuccess')
-    return
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.Logo}>
         <Image style={styles.tinyLogo} source={require('../../../assets/notificationillustration.png')} />
       </View>
       <Text style={styles.Title}>{NotificationStrings.Title}</Text>
-      <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text>
+      {/* <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text> */}
       <Text style={styles.error}>{isError}</Text>
 
       <View style={styles.ButtonView}>
@@ -176,21 +169,6 @@ function Notification({ navigation, store }) {
             </TouchableOpacity>
           </View>
         )}
-
-        <Modal animationType="fade" transparent={true} visible={isShow}>
-          <View style={styles.modal}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.Title}>{NotificationStrings.Setting}</Text>
-              <Text style={styles.Slogan}>{NotificationStrings.SettingSlogan}</Text>
-
-              <TouchableOpacity
-                style={styles.ModalButton}
-                onPress={debounce(() => (isLoading ? null : NotificationDone()), 200)}>
-                <Text style={styles.ButtonText}>{NotificationStrings.Done}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
       </View>
     </View>
   )

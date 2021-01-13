@@ -23,7 +23,6 @@ import GetCode from './Screens/Auth/ResetPassword/GetCode'
 import ResetSuccess from './Screens/Auth/ResetPassword/ResetSuccess'
 import OTP from './Screens/Auth/OTP/OTP'
 import Notification from './Screens/Auth/Notification/Notification'
-import NotificationSuccess from './Screens/Auth/Notification/NotificationSuccess'
 import CreateProfile from './Screens/Auth/CreateProfile/CreateProfile'
 //
 import Home from './Screens/Main/Home/HomeScreen'
@@ -627,19 +626,6 @@ const NotificationScreens = () => {
         }}
         name="Notification"
         component={Notification}
-      />
-
-      <NotificationStack.Screen
-        options={{
-          headerShown: true,
-          title: '',
-          headerBackTitleVisible: false,
-          headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
-          headerTintColor: 'black',
-          headerLeft: null,
-        }}
-        name="NotificationSuccess"
-        component={NotificationSuccess}
       />
     </NotificationStack.Navigator>
   )

@@ -15,7 +15,6 @@ import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import moment from 'moment'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
 
 function Application({ route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
@@ -88,6 +87,7 @@ function Application({ route, store }) {
             // await store.ReloadData()
             Analytics.logEvent('ApplyingToJob')
             await store.setHistoryPageBack()
+            await store.setResetPages()
             setTimeout(() => {
               setLoading(false)
               setShow(true)
@@ -260,27 +260,32 @@ function Application({ route, store }) {
           </View>
           <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>
-            <View style={styles.TextPointsView}>
-              <Text style={styles.TextSelect}>
-                {'\u2022' + ' '} يجب على الطالب في برنامج الإعداد الجامعي إكمال هذه المتطلبات (حسب المسار الذي
-                يتبع له) ليتمكن من
-              </Text>
-            </View>
-            <View style={styles.TextPointsView}>
-              <Text style={styles.TextSelect}>
-                {'\u2022' + ' '}
-                Employee have to report attendence before 30 min of event. Employee have to report attendence
-                before 30 min of event. Employee have to report attendence before 30 min of event. Employee
-                have to report attendence before 30 min of event. Employee have to report attendence before 30
-                min of event.
-              </Text>
-            </View>
-            <View style={styles.TextPointsView}>
-              <Text style={styles.TextSelect}>
-                {'\u2022' + ' '}
-                Vinyl next level heirloom snackwave banh mi kombucha brooklyn tattooed
-              </Text>
-            </View>
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR)'
+                : 'make sure to check-in and check-out (via QR code)'}
+            </Text>
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'الالتزام بالوقت المحدد لتسجيل الحضور'
+                : 'Commitment to the specified time to register attendance'}
+            </Text>
+
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'في حال التأخير أو عدم الالتزام بوقت العمل المحدد يتم خصم من المستحقات المالية'
+                : 'In the event of delay or non-compliance with the specified working time, the financial dues will be deducted'}
+            </Text>
+
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'في حالة عدم الالتزام بأيام العمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل'
+                : 'In the event of non-compliance with the working days, it may lead to deduction from financial dues or dismissal from work'}
+            </Text>
           </View>
         </View>
 

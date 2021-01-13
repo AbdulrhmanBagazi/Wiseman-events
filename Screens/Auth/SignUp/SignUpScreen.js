@@ -1,6 +1,15 @@
 import React from 'react'
 import * as Analytics from 'expo-firebase-analytics'
-import { View, Text, Animated, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
+import {
+  View,
+  Text,
+  Animated,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+  Linking,
+  I18nManager,
+} from 'react-native'
 import styles from './Style'
 import { Register, ErrorsStrings } from '../../../Config/Strings'
 import Inputpassowrd from '../../Components/PasswordInput/Password'
@@ -309,11 +318,25 @@ function SignUp({ navigation }) {
           </View>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1, textAlign: 'left' }}>
             <Text>{Register.Iagreeto}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  I18nManager.isRTL
+                    ? 'https://organize.wiseman.app/termsofservicear'
+                    : 'https://organize.wiseman.app/termsofserviceen'
+                )
+              }>
               <Animated.Text style={{ color: AgreeColorText }}>{' ' + Register.Terms}</Animated.Text>
             </TouchableOpacity>
             <Text style={styles.and}> & </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  I18nManager.isRTL
+                    ? 'https://organize.wiseman.app/privacypolicyar'
+                    : 'https://organize.wiseman.app/privacypolicyen'
+                )
+              }>
               <Animated.Text style={{ color: AgreeColorText }}>{Register.Privacy}</Animated.Text>
             </TouchableOpacity>
           </View>
