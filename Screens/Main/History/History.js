@@ -1,17 +1,8 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  ScrollView,
-  RefreshControl,
-  Alert,
-  I18nManager,
-  Image,
-  ActivityIndicator,
-} from 'react-native'
+import { View, ScrollView, RefreshControl, Alert, I18nManager } from 'react-native'
 import styles from './Style'
 import { inject, observer } from 'mobx-react'
-import { width } from '../../../Config/Layout'
+import { width, height } from '../../../Config/Layout'
 import AnimatedTopTab from './AnimatedTopTab'
 import Card from './Card'
 import { PrimaryColor } from '../../../Config/ColorPalette'
@@ -306,7 +297,8 @@ function History({ store, navigation }) {
         horizontal={true}
         onScroll={(e) => check(e)}
         ref={Scroll}
-        directionalLockEnabled={false}
+        style={{ flex: 1, marginTop: 50 }}
+        directionalLockEnabled={true}
         showsHorizontalScrollIndicator={false}>
         <View style={styles.Container}>
           <Activejob

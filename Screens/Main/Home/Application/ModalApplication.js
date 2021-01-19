@@ -13,9 +13,15 @@ function ModalApplication(props) {
           <Text style={styles.Title}>{SingleJobStrings.successful}</Text>
           <Text style={styles.Slogan}>{SingleJobStrings.submitted}</Text>
 
-          <TouchableOpacity style={styles.ModalButton} onPress={props.onPress}>
-            <Text style={styles.ButtonText}>{SingleJobStrings.Done}</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity style={styles.ModalButton} onPress={props.onPress}>
+              <Text style={styles.ButtonText}>{SingleJobStrings.Done}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.ModalButtonHome} onPress={props.onPressHome}>
+              <Text style={styles.ButtonTextHome}>{SingleJobStrings.GoHome}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>

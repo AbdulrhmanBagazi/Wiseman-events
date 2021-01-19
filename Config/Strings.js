@@ -216,6 +216,7 @@ const SingleJobStrings = {
   Banned: I18nManager.isRTL
     ? 'تم تعليق حسابك بسبب انتهاك شروط الاستخدام! قد يؤثر هذا على عملك الحالي ، يمكنك الاستمرار في استخدام التطبيق لتلقي المستحقات السابقة.'
     : 'Your account has been suspended due to violation of term of use! this may affect your current work, you can continue using the app to receive past dues.',
+  GoHome: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
 }
 
 const HomePageStrings = {

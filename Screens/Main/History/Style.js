@@ -9,17 +9,16 @@ import {
 } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
-  Container: {
-    width: width + 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   ButtonsView: {
     width,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'center',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    zIndex: 99,
+    top: 0,
   },
   TouchableOpacityButton: {
     justifyContent: 'center',
@@ -131,12 +130,7 @@ const styles = StyleSheet.create({
     height: 20,
     width,
   }, //
-  AllJobCard: {
-    width,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   SingleAllJob: {
     backgroundColor: '#fff',
     width,
@@ -185,6 +179,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     alignItems: 'flex-start',
+  },
+  AllJobCard: {
+    width,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Container: {
+    width: width + 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   AllJobFlatlist: {
     width: width + 10,
@@ -367,6 +373,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
+    opacity: 0.5,
   },
   ButtonText: {
     color: '#fff',
@@ -535,7 +542,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     left: 10,
-    opacity: 0.5,
   },
   calendarButton: {
     backgroundColor: 'transparent',

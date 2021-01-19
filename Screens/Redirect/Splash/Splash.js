@@ -6,6 +6,7 @@ import { UserTokenGet, UserTokenRemove } from '../../../Config/AsyncStorage'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
 import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
+import { width, height } from '../../../Config/Layout'
 
 function Splash({ store }) {
   const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
@@ -111,7 +112,7 @@ function Splash({ store }) {
         style={{
           opacity: ImageLoad,
         }}>
-        <Svg width="300" height="300" viewBox="0 0 300 300">
+        <Svg width={width / 2} height={height / 2} viewBox="0 0 300 300">
           <G transform="translate(-597.908 -352.154)">
             <Path
               fill="#AF0029"

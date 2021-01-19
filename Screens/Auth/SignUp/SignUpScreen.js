@@ -22,6 +22,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { Entypo } from '@expo/vector-icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
+import { width, height } from '../../../Config/Layout'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
@@ -247,7 +248,7 @@ function SignUp({ navigation }) {
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
-        <Svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 300 300">
+        <Svg width={width / 2} height="200" viewBox="0 0 300 300">
           <Defs></Defs>
           <Rect fill="#fff" class="a" width="300" height="300" rx="70" />
           <G transform="translate(-597.908 -352.154)">

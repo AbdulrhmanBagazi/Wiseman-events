@@ -51,7 +51,9 @@ class Store {
     this.data = Data.user
     // this.history = Data.user.applications
     // this.alerts = Data.user.alerts.reverse()
-    this.profileImage = Data.user.profile.profile_image
+    if (Data.user.profile) {
+      this.profileImage = Data.user.profile.profile_image
+    }
 
     this.banner = Data.banner
     return

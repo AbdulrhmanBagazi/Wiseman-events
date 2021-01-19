@@ -16,7 +16,7 @@ import { AuthContext } from '../../../../Hooks/Context'
 import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import moment from 'moment'
 
-function Application({ route, store }) {
+function Application({ navigation, route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
   const [isTime, setTime] = React.useState(null)
   const [isAttendance, setAttendance] = React.useState(null)
@@ -289,7 +289,14 @@ function Application({ route, store }) {
           </View>
         </View>
 
-        <ModalApplication ShowModal={isShow} onPress={() => setShow(false)} />
+        <ModalApplication
+          ShowModal={isShow}
+          onPress={() => setShow(false)}
+          onPressHome={() => {
+            setShow(false)
+            navigation.navigate('Home')
+          }}
+        />
         <LoadingModal Loading={isLoading} />
       </ScrollView>
       <View style={styles.ButtonView}>

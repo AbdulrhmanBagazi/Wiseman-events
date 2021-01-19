@@ -25,9 +25,11 @@ function Activejob(props) {
 
   return (
     <View style={styles.AllJobCard}>
-      <View style={styles.Logo}>
-        <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
-      </View>
+      {isData.length <= 0 ? (
+        <View style={styles.Logo}>
+          <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
+        </View>
+      ) : null}
       <FlatList
         data={isData}
         showsVerticalScrollIndicator={false}
