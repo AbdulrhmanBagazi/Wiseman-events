@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, TouchableOpacity } from 'react-native'
+import { Animated, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from './Style'
 import * as FileSystem from 'expo-file-system'
 import shorthash from 'shorthash'
@@ -123,8 +123,10 @@ function AnimatedImageProfile(props) {
 
   return (
     <TouchableOpacity style={styles.Image} onPress={props.onPress}>
-      {isLoading ? (
+      {isLoading && !props.filename ? (
         <Icon name="upload" size={25} color="#fff" />
+      ) : isLoading && props.filename ? (
+        <ActivityIndicator size="small" color="#fff" />
       ) : (
         <Animated.Image
           onLoadEnd={() => Start()}

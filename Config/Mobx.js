@@ -19,10 +19,35 @@ class Store {
   NotificationMainPage = true
   MainPage = true
 
+  EarningsBadge = false
+  HistoryBadge = false
+  NotificationMain = false
+
   resetDate = null
+
+  updEarningsBadgeage = async (val) => {
+    this.EarningsBadge = val
+    return
+  }
+
+  updageHistoryBadge = async (val) => {
+    this.HistoryBadge = val
+    return
+  }
+
+  updageNotificationMain = async (val) => {
+    this.NotificationMain = val
+    return
+  }
 
   setNotificationMainPage = async () => {
     this.NotificationMainPage = false
+
+    return
+  }
+
+  setNotificationMainPageBack = async () => {
+    this.NotificationMainPage = true
 
     return
   }
@@ -172,6 +197,7 @@ decorate(Store, {
   setDataSignup: action,
   NotificationMainPage: observable,
   setNotificationMainPage: action,
+  setNotificationMainPageBack: action,
   HistoryPage: observable,
   setHistoryPage: action,
   setHistoryPageBack: action,
@@ -180,6 +206,12 @@ decorate(Store, {
   updateimage: action,
   resetDate: observable,
   setresetDate: action,
+  EarningsBadge: observable,
+  HistoryBadge: observable,
+  NotificationMain: observable,
+  updEarningsBadgeage: action,
+  updageHistoryBadge: action,
+  updageNotificationMain: action,
 })
 
 const store = new Store()

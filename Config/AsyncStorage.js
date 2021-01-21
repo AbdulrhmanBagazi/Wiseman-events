@@ -34,6 +34,16 @@ const UserPhoneOTPGet = async () => {
   return value
 }
 
+const QrStore = async (QR) => {
+  await AsyncStorage.setItem('@Wiseman-events:Qr', QR)
+  return
+}
+
+const QrGet = async () => {
+  var QR = await AsyncStorage.getItem('@Wiseman-events:Qr')
+  return QR
+}
+
 export {
   LanguageStore,
   LanguageGet,
@@ -42,4 +52,6 @@ export {
   UserTokenRemove,
   UserPhoneOTP,
   UserPhoneOTPGet,
+  QrStore,
+  QrGet,
 }

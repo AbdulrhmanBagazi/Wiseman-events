@@ -20,7 +20,6 @@ function Earnings({ store, navigation }) {
       if (isLoading) {
         // Prevent default behavior of leaving the screen
         e.preventDefault()
-
         return
       }
 
@@ -43,6 +42,7 @@ function Earnings({ store, navigation }) {
           if (response.data.check === 'success') {
             setData(response.data.payments)
             setLoading(false)
+            store.updEarningsBadgeage(false)
             // console.log(response.data.payments)
             return
           } else if (response.data.check === 'fail') {

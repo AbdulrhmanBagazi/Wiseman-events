@@ -57,17 +57,31 @@ function History({ store, navigation }) {
 
     return
   }
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e) => {
+      // Do something
+      if (store.HistoryPage) {
+        RefreshMiddle()
+        return
+      }
+
+      return
+    })
+
+    return unsubscribe
+  }, [navigation])
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.HistoryPage) {
         RefreshMiddle()
         return
       } else {
+        store.updageHistoryBadge(false)
         return
       }
     })
-
-    RefreshMiddle()
 
     return unsubscribe
   }, [navigation, store.HistoryPage])
@@ -98,6 +112,9 @@ function History({ store, navigation }) {
             setData(newArray)
 
             setAllData(response.data.application)
+
+            store.updageHistoryBadge(false)
+
             return
           } else if (response.data.check === 'fail') {
             setrefreshing(false)

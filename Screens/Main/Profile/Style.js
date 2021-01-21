@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native'
 import { width } from '../../../Config/Layout'
-import { PrimaryColor } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   Container: {

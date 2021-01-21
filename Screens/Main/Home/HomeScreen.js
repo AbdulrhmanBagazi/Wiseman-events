@@ -22,7 +22,7 @@ import RefreshButton from '../../Components/RefreshButton/RefreshButton'
 import Icon from '../../../Config/Icons'
 //
 import { AuthContext } from '../../../Hooks/Context'
-import { UserTokenRemove } from '../../../Config/AsyncStorage'
+import { UserTokenRemove, QrStore } from '../../../Config/AsyncStorage'
 import * as Notifications from 'expo-notifications'
 import moment from 'moment'
 
@@ -40,6 +40,7 @@ function Home({ store, navigation }) {
 
   React.useEffect(() => {
     AppState.addEventListener('change', _handleAppStateChange)
+    QrStore(store.data.qr.id)
 
     return () => {
       AppState.removeEventListener('change', _handleAppStateChange)
@@ -47,14 +48,40 @@ function Home({ store, navigation }) {
   }, [])
 
   React.useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      if (notification.request.content.data.body.data) {
+        if (notification.request.content.data.body.data === 'Earnings') {
+          store.updEarningsBadgeage(true)
+          return
+        } else if (notification.request.content.data.body.data === 'History') {
+          store.setHistoryPageBack()
+          store.updageHistoryBadge(true)
+          return
+        } else if (notification.request.content.data.body.data === 'NotificationMain') {
+          store.setNotificationMainPageBack()
+          store.updageNotificationMain(true)
+          return
+        }
+        return
+      } else {
+        return
+      }
+    })
+    return () => subscription.remove()
+  }, [])
+
+  React.useEffect(() => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
         if (response.notification.request.content.data.body.data === 'Earnings') {
-          navigation.navigate('Profile')
-          navigation.navigate(response.notification.request.content.data.body.data)
-        } else {
-          navigation.navigate(response.notification.request.content.data.body.data)
+          store.updEarningsBadgeage(true)
+        } else if (response.notification.request.content.data.body.data === 'History') {
+          store.setHistoryPageBack()
+          store.updageHistoryBadge(true)
+        } else if (response.notification.request.content.data.body.data === 'NotificationMain') {
+          store.setNotificationMainPageBack()
+          store.updageNotificationMain(true)
         }
         return
       } else {

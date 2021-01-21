@@ -86,11 +86,11 @@ function Card(props) {
   }
   return (
     <View style={styles.AllJobCard}>
-      {props.Data.length <= 0 ? (
+      {/* {props.Data.length <= 0 ? (
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
         </View>
-      ) : null}
+      ) : null} */}
       <FlatList
         data={props.Data}
         showsVerticalScrollIndicator={false}

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, I18nManager, FlatList } from 'react-native'
 import styles from './Style'
 import TopCardImage from './TopCardImage'
+import { width } from '../../../Config/Layout'
 
 function TopCard(props) {
   return (
@@ -12,7 +13,7 @@ function TopCard(props) {
       pagingEnabled={true}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
-        <View style={styles.TopCard}>
+        <View style={[styles.TopCard, { width: props.Data.length > 1 ? width - 5 : width + 10 }]}>
           <TopCardImage
             source={{
               uri: item.ImageURL,

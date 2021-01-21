@@ -260,11 +260,7 @@ function NotificationSettings({ store }) {
                 trackColor={{ false: '#767577', true: '#AF0029' }}
                 thumbColor={isEnabled ? '#FEF3F6' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={
-                  store.data.notification.notificationsID === 'false'
-                    ? registerForPushNotificationsAsync
-                    : toggleSwitch
-                }
+                onValueChange={!isEnabled ? registerForPushNotificationsAsync : toggleSwitch}
                 value={isEnabled}
               />
             </View>

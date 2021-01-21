@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { Provider } from 'mobx-react'
 import Store from './Config/Mobx'
-import ICONS from './Config/Icons'
+import TabIcon from './Config/TabIcon'
 import { PrimaryColor, SecondaryText } from './Config/ColorPalette'
 //Hooks
 import { AuthContext } from './Hooks/Context'
@@ -453,7 +453,7 @@ const TabsScreens = () => {
           }
 
           // You can return any component that you like here!
-          return <ICONS name={iconName} size={size} color={color} />
+          return <TabIcon name={iconName} size={size} color={color} />
         },
       })}
       tabBarOptions={{

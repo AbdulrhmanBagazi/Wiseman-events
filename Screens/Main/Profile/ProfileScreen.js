@@ -17,6 +17,7 @@ import { ProfilePageStrings } from '../../../Config/Strings'
 import { inject, observer } from 'mobx-react'
 import ProfileImage from './ProfileImage/ProfileImage'
 import AnimatedProfileImage from '../../Components/AnimatedImageProfile/AnimatedImageProfile'
+import { PrimaryColor } from '../../../Config/ColorPalette'
 
 function Profile({ store, navigation }) {
   const [Data, setDataValue] = React.useState(null)
@@ -150,6 +151,23 @@ function Profile({ store, navigation }) {
                   size={18}
                   color="#C6C9CD"
                 />
+                {store.EarningsBadge ? (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: PrimaryColor,
+                      borderRadius: 10 / 2,
+                      width: 10,
+                      height: 10,
+                      padding: 5,
+                      shadowColor: '#000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 2,
+                      elevation: 2,
+                      right: 20,
+                    }}></View>
+                ) : null}
               </View>
             </TouchableOpacity>
             {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Levels')}>

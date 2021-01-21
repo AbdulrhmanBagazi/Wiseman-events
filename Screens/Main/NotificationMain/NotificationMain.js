@@ -57,18 +57,35 @@ function NotificationMain({ navigation, store }) {
   })
 
   React.useEffect(() => {
+    const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e) => {
+      // Do something
+      if (store.NotificationMainPage) {
+        RefreshMiddle()
+        setLoading(false)
+
+        return
+      }
+
+      return
+    })
+
+    return unsubscribe
+  }, [navigation])
+
+  React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.NotificationMainPage) {
         RefreshMiddle()
         setLoading(false)
         return
       } else {
+        store.updageNotificationMain(false)
         return
       }
     })
 
     return unsubscribe
-  }, [navigation])
+  }, [navigation, store.NotificationMainPage])
 
   const Start = () => {
     setLoading(true)
@@ -95,6 +112,8 @@ function NotificationMain({ navigation, store }) {
             setrefreshing(false)
             setLoading(true)
             setpage(0)
+            store.updageNotificationMain(false)
+
             Start()
 
             return
@@ -515,7 +534,7 @@ function NotificationMain({ navigation, store }) {
           LoadFooter ? (
             <ActivityIndicator style={{ marginVertical: 10 }} size="large" color={PrimaryColor} />
           ) : showMore ? (
-            <TouchableOpacity style={styles.ShowMoreButton} onPress={() => LoadMore()}>
+            <TouchableOpacity style={styles.ShowMoreButton} disabled={refreshing} onPress={() => LoadMore()}>
               <Text style={styles.ShowMoreButtonText}>
                 {I18nManager.isRTL ? 'تحميل المزيد' : 'Load More'}
               </Text>
@@ -607,12 +626,14 @@ function NotificationMain({ navigation, store }) {
                 ) : (
                   <View style={styles.SpaceViewBody}>
                     <TouchableOpacity
+                      disabled={refreshing}
                       style={styles.Accept}
                       onPress={() => AcceptDeclinePromot(item.id, 'Accept', item.applicationId)}>
                       <Text style={styles.AcceptDeclinetext}>{AlertStrings.Accept}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                      disabled={refreshing}
                       style={styles.Decline}
                       onPress={() => AcceptDeclinePromot(item.id, 'Decline', item.applicationId)}>
                       <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
@@ -623,12 +644,16 @@ function NotificationMain({ navigation, store }) {
             ) : item.type === 'location' ? (
               <View style={styles.NotificationBoxFirst}>
                 <View style={styles.SpaceViewBody}>
-                  <TouchableOpacity style={styles.Accept} onPress={() => Linking.openURL(item.location)}>
+                  <TouchableOpacity
+                    disabled={refreshing}
+                    style={styles.Accept}
+                    onPress={() => Linking.openURL(item.location)}>
                     <Text style={styles.AcceptDeclinetext}>{AlertStrings.Location}</Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={styles.Contact}
+                    disabled={refreshing}
                     onPress={() =>
                       Linking.openURL('whatsapp://send?phone=+966' + Number(item.phone))
                         .then((data) => {
@@ -664,6 +689,7 @@ function NotificationMain({ navigation, store }) {
                   <View style={styles.SpaceViewBody}>
                     <TouchableOpacity
                       style={styles.Accept}
+                      disabled={refreshing}
                       onPress={() =>
                         AcceptDeclineTransfer(
                           item.TransferShift.id,
@@ -676,6 +702,7 @@ function NotificationMain({ navigation, store }) {
 
                     <TouchableOpacity
                       style={styles.Decline}
+                      disabled={refreshing}
                       onPress={() =>
                         AcceptDeclineTransfer(
                           item.TransferShift.id,

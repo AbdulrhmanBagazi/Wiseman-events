@@ -25,11 +25,11 @@ function Activejob(props) {
 
   return (
     <View style={styles.AllJobCard}>
-      {isData.length <= 0 ? (
+      {/* {isData.length <= 0 ? (
         <View style={styles.Logo}>
           <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
         </View>
-      ) : null}
+      ) : null} */}
       <FlatList
         data={isData}
         showsVerticalScrollIndicator={false}
@@ -73,7 +73,18 @@ function Activejob(props) {
                   onPress={() =>
                     props.onPressWork('WorkScheduleUser', { eventId: item.eventId, applicationId: item.id })
                   }>
-                  <Icon name="calendar" size={40} color={PrimaryColor} />
+                  <Icon
+                    name="calendar"
+                    size={40}
+                    color={PrimaryColor}
+                    style={{
+                      shadowColor: '#000',
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 2,
+                      elevation: 2,
+                    }}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -154,7 +165,7 @@ function Activejob(props) {
 
       <View style={styles.work}>
         <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
-          <MaterialCommunityIcons name="qrcode" size={40} color="#fff" />
+          <MaterialCommunityIcons name="qrcode" size={55} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
