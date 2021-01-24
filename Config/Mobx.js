@@ -23,20 +23,30 @@ class Store {
   HistoryBadge = false
   NotificationMain = false
 
+  EarningsBadgeNumber = 0
+  HistoryBadgeNumber = 0
+  NotificationMainNumber = 0
+
   resetDate = null
 
-  updEarningsBadgeage = async (val) => {
+  updEarningsBadgeage = async (num, val) => {
     this.EarningsBadge = val
+    this.EarningsBadgeNumber = num
+
     return
   }
 
-  updageHistoryBadge = async (val) => {
+  updageHistoryBadge = async (num, val) => {
     this.HistoryBadge = val
+    this.HistoryBadgeNumber = num
+
     return
   }
 
-  updageNotificationMain = async (val) => {
+  updageNotificationMain = async (num, val) => {
     this.NotificationMain = val
+    this.NotificationMainNumber = num
+
     return
   }
 
@@ -212,6 +222,9 @@ decorate(Store, {
   updEarningsBadgeage: action,
   updageHistoryBadge: action,
   updageNotificationMain: action,
+  EarningsBadgeNumber: observable,
+  HistoryBadgeNumber: observable,
+  NotificationMainNumber: observable,
 })
 
 const store = new Store()

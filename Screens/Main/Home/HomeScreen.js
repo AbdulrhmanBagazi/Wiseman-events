@@ -51,15 +51,24 @@ function Home({ store, navigation }) {
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
       if (notification.request.content.data.body.data) {
         if (notification.request.content.data.body.data === 'Earnings') {
-          store.updEarningsBadgeage(true)
+          store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
+          Notifications.setBadgeCountAsync(
+            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
+          )
           return
         } else if (notification.request.content.data.body.data === 'History') {
           store.setHistoryPageBack()
-          store.updageHistoryBadge(true)
+          store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
+          Notifications.setBadgeCountAsync(
+            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
+          )
           return
         } else if (notification.request.content.data.body.data === 'NotificationMain') {
           store.setNotificationMainPageBack()
-          store.updageNotificationMain(true)
+          store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+          Notifications.setBadgeCountAsync(
+            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
+          )
           return
         }
         return
@@ -75,13 +84,13 @@ function Home({ store, navigation }) {
       navigation.navigate('Home')
       if (response.notification.request.content.data.body.data) {
         if (response.notification.request.content.data.body.data === 'Earnings') {
-          store.updEarningsBadgeage(true)
+          store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
         } else if (response.notification.request.content.data.body.data === 'History') {
           store.setHistoryPageBack()
-          store.updageHistoryBadge(true)
+          store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
         } else if (response.notification.request.content.data.body.data === 'NotificationMain') {
           store.setNotificationMainPageBack()
-          store.updageNotificationMain(true)
+          store.updageNotificationMain(store.NotificationMainNumber + 1, true)
         }
         return
       } else {

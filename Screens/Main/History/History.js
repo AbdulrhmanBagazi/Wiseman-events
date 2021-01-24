@@ -14,6 +14,7 @@ import { UserTokenRemove } from '../../../Config/AsyncStorage'
 //
 import Activejob from './Activejob'
 import CompletedJobs from './CompletedJobs'
+import * as Notifications from 'expo-notifications'
 
 function History({ store, navigation }) {
   const Scroll = React.useRef(null)
@@ -76,9 +77,13 @@ function History({ store, navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.HistoryPage) {
         RefreshMiddle()
+        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.NotificationMainNumber + 0)
+
         return
       } else {
-        store.updageHistoryBadge(false)
+        store.updageHistoryBadge(0, false)
+        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.NotificationMainNumber + 0)
+
         return
       }
     })
@@ -113,7 +118,7 @@ function History({ store, navigation }) {
 
             setAllData(response.data.application)
 
-            store.updageHistoryBadge(false)
+            store.updageHistoryBadge(0, false)
 
             return
           } else if (response.data.check === 'fail') {

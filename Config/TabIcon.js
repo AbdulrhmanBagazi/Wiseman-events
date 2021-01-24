@@ -1,13 +1,16 @@
 import * as React from 'react'
 import { Feather } from '@expo/vector-icons'
 import { inject, observer } from 'mobx-react'
-import { View, Animated } from 'react-native'
+import { View, Animated, Text } from 'react-native'
 import { PrimaryColor } from './ColorPalette'
 
 function TabIcon(props) {
   const [ImageLoadE] = React.useState(new Animated.Value(0))
   const [ImageLoadN] = React.useState(new Animated.Value(0))
   const [ImageLoadH] = React.useState(new Animated.Value(0))
+  const [isE, setE] = React.useState(0)
+  const [isN, setN] = React.useState(0)
+  const [isH, setH] = React.useState(0)
 
   React.useEffect(() => {
     Animated.parallel([
@@ -27,7 +30,18 @@ function TabIcon(props) {
         useNativeDriver: false,
       }),
     ]).start()
-  }, [props.store.EarningsBadge, props.store.NotificationMain, props.store.HistoryBadge])
+
+    setE(props.store.EarningsBadgeNumber)
+    setN(props.store.HistoryBadgeNumber)
+    setH(props.store.NotificationMainNumber)
+  }, [
+    props.store.EarningsBadge,
+    props.store.NotificationMain,
+    props.store.HistoryBadge,
+    props.store.EarningsBadgeNumber,
+    props.store.HistoryBadgeNumber,
+    props.store.NotificationMainNumber,
+  ])
 
   return (
     <View>
@@ -38,51 +52,63 @@ function TabIcon(props) {
             position: 'absolute',
             bottom: 0,
             backgroundColor: PrimaryColor,
-            borderRadius: 10 / 2,
-            width: 10,
-            height: 10,
-            padding: 5,
+            borderRadius: 15 / 2,
+            width: 15,
+            height: 15,
+            // padding: 5,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 2,
             elevation: 2,
             opacity: ImageLoadE,
-          }}></Animated.View>
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>{isE <= 0 ? '' : isE}</Text>
+        </Animated.View>
       ) : props.name === 'bell' ? (
         <Animated.View
           style={{
             position: 'absolute',
             bottom: 0,
             backgroundColor: PrimaryColor,
-            borderRadius: 10 / 2,
-            width: 10,
-            height: 10,
-            padding: 5,
+            borderRadius: 15 / 2,
+            width: 15,
+            height: 15,
+            // padding: 5,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 2,
             elevation: 2,
             opacity: ImageLoadN,
-          }}></Animated.View>
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>{isH <= 0 ? '' : isH}</Text>
+        </Animated.View>
       ) : props.name === 'clipboard' ? (
         <Animated.View
           style={{
             position: 'absolute',
             bottom: 0,
             backgroundColor: PrimaryColor,
-            borderRadius: 10 / 2,
-            width: 10,
-            height: 10,
-            padding: 5,
+            borderRadius: 15 / 2,
+            width: 15,
+            height: 15,
+            // padding: 5,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 2,
             elevation: 2,
             opacity: ImageLoadH,
-          }}></Animated.View>
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>{isN <= 0 ? '' : isN}</Text>
+        </Animated.View>
       ) : null}
     </View>
   )
