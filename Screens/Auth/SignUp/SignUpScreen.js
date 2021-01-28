@@ -327,7 +327,9 @@ function SignUp({ navigation }) {
                     : 'https://organize.wiseman.app/termsofserviceen'
                 )
               }>
-              <Animated.Text style={{ color: AgreeColorText }}>{' ' + Register.Terms}</Animated.Text>
+              <Animated.Text style={{ color: AgreeColorText, textDecorationLine: 'underline' }}>
+                {' ' + Register.Terms}
+              </Animated.Text>
             </TouchableOpacity>
             <Text style={styles.and}> & </Text>
             <TouchableOpacity
@@ -338,7 +340,9 @@ function SignUp({ navigation }) {
                     : 'https://organize.wiseman.app/privacypolicyen'
                 )
               }>
-              <Animated.Text style={{ color: AgreeColorText }}>{Register.Privacy}</Animated.Text>
+              <Animated.Text style={{ color: AgreeColorText, textDecorationLine: 'underline' }}>
+                {Register.Privacy}
+              </Animated.Text>
             </TouchableOpacity>
           </View>
         </View>

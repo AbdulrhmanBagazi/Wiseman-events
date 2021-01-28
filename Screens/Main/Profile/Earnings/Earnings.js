@@ -8,7 +8,6 @@ import axios from 'axios'
 import { URL } from '../../../../Config/Config'
 import { PrimaryColor } from '../../../../Config/ColorPalette'
 import Card from './Card'
-import * as Notifications from 'expo-notifications'
 
 function Earnings({ store, navigation }) {
   const [isLoading, setLoading] = React.useState(true)
@@ -44,7 +43,6 @@ function Earnings({ store, navigation }) {
             setData(response.data.payments)
             setLoading(false)
             store.updEarningsBadgeage(0, false)
-            Notifications.setBadgeCountAsync(store.HistoryBadgeNumber + store.NotificationMainNumber + 0)
 
             // console.log(response.data.payments)
             return

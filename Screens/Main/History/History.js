@@ -14,7 +14,6 @@ import { UserTokenRemove } from '../../../Config/AsyncStorage'
 //
 import Activejob from './Activejob'
 import CompletedJobs from './CompletedJobs'
-import * as Notifications from 'expo-notifications'
 
 function History({ store, navigation }) {
   const Scroll = React.useRef(null)
@@ -77,12 +76,10 @@ function History({ store, navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.HistoryPage) {
         RefreshMiddle()
-        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.NotificationMainNumber + 0)
 
         return
       } else {
         store.updageHistoryBadge(0, false)
-        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.NotificationMainNumber + 0)
 
         return
       }
@@ -308,9 +305,9 @@ function History({ store, navigation }) {
     <View style={{ flex: 1 }}>
       <AnimatedTopTab
         Value={isSelected}
-        onPressOne={() => ScrollTo(0)}
+        onPressOne={() => ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 2 : 0)}
         onPressTwo={() => ScrollTo(1)}
-        onPressThird={() => ScrollTo(2)}
+        onPressThird={() => ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 0 : 2)}
       />
 
       <ScrollView

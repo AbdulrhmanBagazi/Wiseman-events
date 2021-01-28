@@ -8,7 +8,6 @@ const Icon = Animated.createAnimatedComponent(Feather)
 
 function AnimatedIcon(props) {
   const [isHide, setHide] = React.useState(true)
-  const [isHideRe, setHideRe] = React.useState(true)
   const [Match] = React.useState(new Animated.Value(0))
   //
   const [MatchLength] = React.useState(new Animated.Value(0))
@@ -39,10 +38,6 @@ function AnimatedIcon(props) {
 
   const toggleHide = async (value) => {
     setHide(value === false ? true : false)
-  }
-
-  const toggleHideRe = async (value) => {
-    setHideRe(value === false ? true : false)
   }
 
   React.useEffect(() => {
@@ -134,30 +129,37 @@ function AnimatedIcon(props) {
         {I18nManager.isRTL ? (
           <Text style={[styles.Resendmessage, { textAlign: 'left' }]}>
             <Text>يجب ان تتكون كلمة المرور من</Text>{' '}
-            <Animated.Text style={{ color: MatchLengthColor }}>٦ آحرف آو آكثر</Animated.Text>{' '}
+            <Animated.Text style={{ color: MatchLengthColor, fontWeight: 'bold' }}>
+              ٦ أحرف أو أكثر
+            </Animated.Text>{' '}
             <Text> وتحتوي على آحرف</Text>{' '}
-            <Animated.Text style={{ color: MatchUpperColor }}>كبيرة</Animated.Text> و
-            <Animated.Text style={{ color: MatchLowerColor }}>صغيرة</Animated.Text> و{' '}
-            <Animated.Text style={{ color: MatchNumberColor }}>رقم</Animated.Text>.
+            <Animated.Text style={{ color: MatchUpperColor, fontWeight: 'bold' }}>كبيرة</Animated.Text> و
+            <Animated.Text style={{ color: MatchLowerColor, fontWeight: 'bold' }}>صغيرة</Animated.Text> و{' '}
+            <Animated.Text style={{ color: MatchNumberColor, fontWeight: 'bold' }}>رقم</Animated.Text>.
           </Text>
         ) : (
           <Text style={styles.Resendmessage}>
             Your password must be{' '}
-            <Animated.Text style={{ color: MatchLengthColor }}>6 or more characters</Animated.Text> long,
-            contain both <Animated.Text style={{ color: MatchUpperColor }}>uppercase</Animated.Text> and{' '}
-            <Animated.Text style={{ color: MatchLowerColor }}>lowercase</Animated.Text> letter &{' '}
-            <Animated.Text style={{ color: MatchNumberColor }}>number</Animated.Text>.
+            <Animated.Text style={{ color: MatchLengthColor, fontWeight: 'bold' }}>
+              6 characters or more
+            </Animated.Text>{' '}
+            long, contain both{' '}
+            <Animated.Text style={{ color: MatchUpperColor, fontWeight: 'bold' }}>uppercase</Animated.Text>{' '}
+            and{' '}
+            <Animated.Text style={{ color: MatchLowerColor, fontWeight: 'bold' }}>lowercase</Animated.Text>{' '}
+            letter &{' '}
+            <Animated.Text style={{ color: MatchNumberColor, fontWeight: 'bold' }}>number</Animated.Text>.
           </Text>
         )}
       </View>
       <View>
-        <TextInput {...props} secureTextEntry={isHideRe} textContentType="password" />
-        <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHideRe(isHideRe)}>
-          <Icon name={isHideRe === false ? 'eye' : 'eye-off'} size={24} color={LightText} />
+        <TextInput {...props} secureTextEntry={isHide} textContentType="password" />
+        <TouchableOpacity style={styles.HidePassword} onPress={() => toggleHide(isHide)}>
+          <Icon name={isHide === false ? 'eye' : 'eye-off'} size={24} color={LightText} />
         </TouchableOpacity>
       </View>
       <View style={styles.CheckMatch}>
-        <Animated.Text style={{ color: MatchColor }}>{props.MatchString}</Animated.Text>
+        <Animated.Text style={{ color: MatchColor, fontWeight: 'bold' }}>{props.MatchString}</Animated.Text>
       </View>
     </View>
   )

@@ -22,7 +22,6 @@ import { AuthContext } from '../../../Hooks/Context'
 import { UserTokenRemove } from '../../../Config/AsyncStorage'
 import { AlertStrings } from '../../../Config/Strings'
 import { Ionicons } from '@expo/vector-icons'
-import * as Notifications from 'expo-notifications'
 
 function NotificationMain({ navigation, store }) {
   const [isLoading, setLoading] = React.useState(false)
@@ -78,11 +77,9 @@ function NotificationMain({ navigation, store }) {
       if (store.NotificationMainPage) {
         RefreshMiddle()
         setLoading(false)
-        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.HistoryBadgeNumber + 0)
         return
       } else {
         store.updageNotificationMain(0, false)
-        Notifications.setBadgeCountAsync(store.EarningsBadgeNumber + store.HistoryBadgeNumber + 0)
         return
       }
     })

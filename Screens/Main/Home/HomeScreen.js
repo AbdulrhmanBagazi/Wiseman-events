@@ -9,6 +9,7 @@ import {
   Alert,
   AppState,
   RefreshControl,
+  Platform,
 } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { PrimaryColor } from '../../../Config/ColorPalette'
@@ -49,31 +50,49 @@ function Home({ store, navigation }) {
 
   React.useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
-      if (notification.request.content.data.body.data) {
-        if (notification.request.content.data.body.data === 'Earnings') {
-          store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
-          Notifications.setBadgeCountAsync(
-            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
-          )
+      if (Platform.OS === 'android') {
+        Notifications.dismissAllNotificationsAsync()
+        if (notification.request.content.data.data) {
+          if (notification.request.content.data.data === 'Earnings') {
+            store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
+
+            return
+          } else if (notification.request.content.data.data === 'History') {
+            store.setHistoryPageBack()
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
+
+            return
+          } else if (notification.request.content.data.data === 'NotificationMain') {
+            store.setNotificationMainPageBack()
+            store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+
+            return
+          }
           return
-        } else if (notification.request.content.data.body.data === 'History') {
-          store.setHistoryPageBack()
-          store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
-          Notifications.setBadgeCountAsync(
-            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
-          )
-          return
-        } else if (notification.request.content.data.body.data === 'NotificationMain') {
-          store.setNotificationMainPageBack()
-          store.updageNotificationMain(store.NotificationMainNumber + 1, true)
-          Notifications.setBadgeCountAsync(
-            store.EarningsBadgeNumber + store.HistoryBadgeNumber + store.NotificationMainNumber
-          )
+        } else {
           return
         }
-        return
       } else {
-        return
+        if (notification.request.content.data.body.data) {
+          if (notification.request.content.data.body.data === 'Earnings') {
+            store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
+
+            return
+          } else if (notification.request.content.data.body.data === 'History') {
+            store.setHistoryPageBack()
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
+
+            return
+          } else if (notification.request.content.data.body.data === 'NotificationMain') {
+            store.setNotificationMainPageBack()
+            store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+
+            return
+          }
+          return
+        } else {
+          return
+        }
       }
     })
     return () => subscription.remove()
@@ -82,19 +101,38 @@ function Home({ store, navigation }) {
   React.useEffect(() => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       navigation.navigate('Home')
-      if (response.notification.request.content.data.body.data) {
-        if (response.notification.request.content.data.body.data === 'Earnings') {
-          store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
-        } else if (response.notification.request.content.data.body.data === 'History') {
-          store.setHistoryPageBack()
-          store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
-        } else if (response.notification.request.content.data.body.data === 'NotificationMain') {
-          store.setNotificationMainPageBack()
-          store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+
+      if (Platform.OS === 'android') {
+        Notifications.dismissAllNotificationsAsync()
+        if (response.notification.request.content.data.data) {
+          if (response.notification.request.content.data.data === 'Earnings') {
+            store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
+          } else if (response.notification.request.content.data.data === 'History') {
+            store.setHistoryPageBack()
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
+          } else if (response.notification.request.content.data.data === 'NotificationMain') {
+            store.setNotificationMainPageBack()
+            store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+          }
+          return
+        } else {
+          return
         }
-        return
       } else {
-        return
+        if (response.notification.request.content.data.body.data) {
+          if (response.notification.request.content.data.body.data === 'Earnings') {
+            store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
+          } else if (response.notification.request.content.data.body.data === 'History') {
+            store.setHistoryPageBack()
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
+          } else if (response.notification.request.content.data.body.data === 'NotificationMain') {
+            store.setNotificationMainPageBack()
+            store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+          }
+          return
+        } else {
+          return
+        }
       }
     })
 
