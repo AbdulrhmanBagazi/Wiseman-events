@@ -36,7 +36,13 @@ export default function CountryUI(props) {
       )}
       renderCountryFilter={(modalData) => (
         <CountryFilter
-          style={{ textAlign: 'left' }}
+          style={{
+            textAlign: 'right',
+            borderBottomColor: '#000',
+            borderBottomWidth: 1,
+            flex: 0.9,
+            padding: 5,
+          }}
           {...modalData}
           placeholder={I18nManager.isRTL ? 'بحث' : 'Search'}
         />

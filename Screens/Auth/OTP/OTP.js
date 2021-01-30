@@ -84,6 +84,7 @@ function OTP({ store }) {
     if (isShow) {
       return
     }
+
     axios
       .get(URL + '/user/SendOTP', {
         headers: {

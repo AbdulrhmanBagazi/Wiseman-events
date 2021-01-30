@@ -134,8 +134,8 @@ const NotificationStrings = {
   Allow: I18nManager.isRTL ? 'السماح' : 'Allow',
   Not: I18nManager.isRTL ? 'ليس الان' : 'Not Now',
   Slogan: I18nManager.isRTL
-    ? 'السماح لاسم التطبيق بإرسال إشعارات إليك عند التعيين في وظيفة وتحديثات الدفع والوظيفة الجديدة وما إلى ذلك.'
-    : 'Allow app name to send you notifications when you get hired on a job, payment updates,  new job etc.',
+    ? 'السماح للتطبيق بإرسال الإشعارات لتصلك معلومات بخصوص حالة الوظائف، الدفعات المالية، الحضور، وكل المعلومات المهمه خلال عملك.'
+    : 'Allow the application to send notifications to receive information regarding job status, payments, attendance, and all important information during your work.',
   Congrats: I18nManager.isRTL ? 'تهانينا!' : 'Congratulations!',
   CongratsSlogan: I18nManager.isRTL
     ? 'تم تعيين ملف التعريف الخاص بك ، يمكنك الآن تصفح الوظائف في مدينتك والبدء في التقديم ، والتوظيف ، وكسب أموال إضافية عندما تكون حرًا.'

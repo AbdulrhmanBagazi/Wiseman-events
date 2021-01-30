@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Animated, Text, TouchableOpacity } from 'react-native'
+import { View, Animated, TouchableOpacity } from 'react-native'
 import {
   PrimaryColor,
   SecondaryColor,
-  GrayColor,
   SecondaryText,
   PrimaryBorder,
   PrimaryText,

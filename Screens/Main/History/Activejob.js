@@ -13,15 +13,21 @@ import { HistoryPageStrings } from '../../../Config/Strings'
 function Activejob(props) {
   const [isData, setData] = React.useState([])
   const [isShow, setShow] = React.useState(false)
+  const [isTrue, setTrue] = React.useState(false)
 
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
-      // console.log(item)
       return item.Status === 'approved'
     })
 
     setData(newArray)
   }, [props.Data])
+
+  React.useEffect(() => {
+    var Check = props.calendarIds.indexOf(1) < 0 ? false : true
+
+    setTrue(Check)
+  }, [props.calendarIds])
 
   return (
     <View style={styles.AllJobCard}>
@@ -77,14 +83,38 @@ function Activejob(props) {
                     name="calendar"
                     size={40}
                     color={PrimaryColor}
-                    style={{
-                      shadowColor: '#000',
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.25,
-                      shadowRadius: 2,
-                      elevation: 2,
-                    }}
+                    style={
+                      {
+                        // shadowColor: '#000',
+                        // shadowOffset: { width: 0, height: 2 },
+                        // shadowOpacity: 0.25,
+                        // shadowRadius: 2,
+                        // elevation: 2,
+                      }
+                    }
                   />
+                  {isTrue ? (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        backgroundColor: '#ffff00',
+                        borderRadius: 20 / 2,
+                        width: 20,
+                        height: 20,
+                        // padding: 5,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 2,
+                        elevation: 2,
+                        opacity: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        left: 25,
+                        bottom: 5,
+                      }}></View>
+                  ) : null}
                 </TouchableOpacity>
               </View>
             </View>

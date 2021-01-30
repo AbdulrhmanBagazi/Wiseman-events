@@ -26,8 +26,23 @@ class Store {
   EarningsBadgeNumber = 0
   HistoryBadgeNumber = 0
   NotificationMainNumber = 0
+  CalendarMainIDs = []
 
   resetDate = null
+
+  setCalendarIds = async (old, val) => {
+    this.CalendarMainIDs = [...old, val]
+
+    return
+  }
+
+  removeCalendarIds = async (old, val) => {
+    arr = old.filter((item) => item !== val)
+
+    this.CalendarMainIDs = [...arr]
+
+    return
+  }
 
   updEarningsBadgeage = async (num, val) => {
     this.EarningsBadge = val
@@ -225,6 +240,9 @@ decorate(Store, {
   EarningsBadgeNumber: observable,
   HistoryBadgeNumber: observable,
   NotificationMainNumber: observable,
+  CalendarMainIDs: observable.ref,
+  setCalendarIds: action,
+  removeCalendarIds: action,
 })
 
 const store = new Store()

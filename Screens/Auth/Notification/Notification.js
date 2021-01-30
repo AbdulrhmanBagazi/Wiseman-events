@@ -151,7 +151,7 @@ function Notification({ navigation, store }) {
         <Image style={styles.tinyLogo} source={require('../../../assets/notificationillustration.png')} />
       </View>
       <Text style={styles.Title}>{NotificationStrings.Title}</Text>
-      {/* <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text> */}
+      <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text>
       <Text style={styles.error}>{isError}</Text>
 
       <View style={styles.ButtonView}>

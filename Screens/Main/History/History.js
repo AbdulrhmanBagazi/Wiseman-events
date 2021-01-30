@@ -22,7 +22,6 @@ function History({ store, navigation }) {
   const [isLoadButton, setLoadButton] = React.useState(false)
   const [isData, setData] = React.useState([])
   const [isAllData, setAllData] = React.useState([])
-
   //
   const { signOut } = React.useContext(AuthContext)
 
@@ -328,6 +327,7 @@ function History({ store, navigation }) {
             onPressWork={navigation.navigate}
             Secret="تنظيم"
             userId={store.data.qr.id}
+            calendarIds={store.CalendarMainIDs}
           />
         </View>
         <View style={styles.Container}>

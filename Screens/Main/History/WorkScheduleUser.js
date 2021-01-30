@@ -157,7 +157,7 @@ function WorkScheduleUser({ route, store }) {
             })
 
             setDays(newDaysObject)
-
+            store.removeCalendarIds(store.CalendarMainIDs, eventId)
             setLoading(false)
             return
           } else if (response.data.check === 'fail') {

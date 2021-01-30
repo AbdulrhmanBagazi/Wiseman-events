@@ -1,6 +1,6 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText, GrayColor, LightText } from '../../../Config/ColorPalette'
+import { PrimaryColor, SecondaryText, LightText } from '../../../Config/ColorPalette'
 
 const styles = StyleSheet.create({
   container: {
@@ -106,6 +106,14 @@ const styles = StyleSheet.create({
   },
   and: {
     color: SecondaryText,
+  },
+  closebutton: {
+    // backgroundColor: PrimaryColor,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    alignSelf: 'flex-start',
+    marginLeft: 10,
   },
 })
 

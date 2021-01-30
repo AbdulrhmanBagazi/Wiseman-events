@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Animated, View, Keyboard, TextInput, Text, I18nManager } from 'react-native'
+import { TouchableOpacity, Animated, View, TextInput, Text, I18nManager } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import styles from './Style'
 import { LightText } from '../../../Config/ColorPalette'
@@ -17,23 +17,23 @@ function AnimatedIcon(props) {
 
   const MatchColor = Match.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
+    outputRange: ['#CCCCCC', '#25AC71'],
   })
   const MatchLengthColor = MatchLength.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
+    outputRange: ['#CCCCCC', '#25AC71'],
   })
   const MatchUpperColor = MatchUpper.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
+    outputRange: ['#CCCCCC', '#25AC71'],
   })
   const MatchLowerColor = MatchLower.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
+    outputRange: ['#CCCCCC', '#25AC71'],
   })
   const MatchNumberColor = MatchNumber.interpolate({
     inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
+    outputRange: ['#CCCCCC', '#25AC71'],
   })
 
   const toggleHide = async (value) => {

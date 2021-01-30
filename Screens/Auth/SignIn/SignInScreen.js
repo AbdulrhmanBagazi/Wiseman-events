@@ -1,5 +1,4 @@
 import React from 'react'
-import * as Analytics from 'expo-firebase-analytics'
 import { View, TouchableOpacity, Text, Keyboard, ActivityIndicator } from 'react-native'
 import { AuthContext } from '../../../Hooks/Context'
 import { inject, observer } from 'mobx-react'
@@ -12,7 +11,7 @@ import InputPhone from '../../Components/PhoneInput/Phone'
 import debounce from 'lodash/debounce'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
-import { width, height } from '../../../Config/Layout'
+import { width } from '../../../Config/Layout'
 
 function SignIn({ navigation, store }) {
   const { Load, Notification, Verify, Profile, signIn } = React.useContext(AuthContext)

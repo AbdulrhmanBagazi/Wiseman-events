@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Keyboard,
-  Linking,
   I18nManager,
 } from 'react-native'
 import styles from './Style'
@@ -22,12 +21,16 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { Entypo } from '@expo/vector-icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
-import { width, height } from '../../../Config/Layout'
+import { width } from '../../../Config/Layout'
+import Web from './Web'
 
 function SignUp({ navigation }) {
   const { Verify } = React.useContext(AuthContext)
   const [isLoading, setLoading] = React.useState(false)
   const [isError, setError] = React.useState(' ')
+  const [isURL, setURL] = React.useState('')
+  const [isURLShow, setURLShow] = React.useState(false)
+
   //
   const [data, setData] = React.useState({
     Phone: '',
@@ -42,24 +45,14 @@ function SignUp({ navigation }) {
   const [isPhoneCheck, setPhoneCheck] = React.useState('')
   const [isAgreeCheck, setAgreeCheck] = React.useState(false)
   const [Agree] = React.useState(new Animated.Value(0))
-  const [AgreeText] = React.useState(new Animated.Value(0))
   const AgreeColor = Agree.interpolate({
     inputRange: [0, 100],
     outputRange: ['#F8F8F9', PrimaryColor],
-  })
-  const AgreeColorText = AgreeText.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['#E8505B', '#25AC71'],
   })
 
   const AgreeHandler = async () => {
     Animated.parallel([
       Animated.timing(Agree, {
-        toValue: !isAgreeCheck === false ? 0 : 100,
-        duration: 500,
-        useNativeDriver: false,
-      }),
-      Animated.timing(AgreeText, {
         toValue: !isAgreeCheck === false ? 0 : 100,
         duration: 500,
         useNativeDriver: false,
@@ -231,15 +224,14 @@ function SignUp({ navigation }) {
     return
   }
 
-  // React.useEffect(() => {
-  //   if (isRegister) {
-  //     Verify()
+  const openweb = async (val) => {
+    setURL(val)
+    setURLShow(true)
+  }
 
-  //     return
-  //   }
-
-  //   return
-  // }, [isRegister])
+  const closeweb = async () => {
+    setURLShow(false)
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -321,26 +313,26 @@ function SignUp({ navigation }) {
             <Text>{Register.Iagreeto}</Text>
             <TouchableOpacity
               onPress={() =>
-                Linking.openURL(
+                openweb(
                   I18nManager.isRTL
                     ? 'https://organize.wiseman.app/termsofservicear'
                     : 'https://organize.wiseman.app/termsofserviceen'
                 )
               }>
-              <Animated.Text style={{ color: AgreeColorText, textDecorationLine: 'underline' }}>
+              <Animated.Text style={{ color: PrimaryColor, textDecorationLine: 'underline' }}>
                 {' ' + Register.Terms}
               </Animated.Text>
             </TouchableOpacity>
             <Text style={styles.and}> & </Text>
             <TouchableOpacity
               onPress={() =>
-                Linking.openURL(
+                openweb(
                   I18nManager.isRTL
                     ? 'https://organize.wiseman.app/privacypolicyar'
                     : 'https://organize.wiseman.app/privacypolicyen'
                 )
               }>
-              <Animated.Text style={{ color: AgreeColorText, textDecorationLine: 'underline' }}>
+              <Animated.Text style={{ color: PrimaryColor, textDecorationLine: 'underline' }}>
                 {Register.Privacy}
               </Animated.Text>
             </TouchableOpacity>
@@ -362,6 +354,7 @@ function SignUp({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      <Web OpenModal={isURLShow} URL={isURL} close={() => closeweb()} />
     </KeyboardAwareScrollView>
   )
 }

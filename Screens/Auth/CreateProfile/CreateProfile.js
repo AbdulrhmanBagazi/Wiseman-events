@@ -319,6 +319,7 @@ function CreateProfile({ store }) {
   //   console.log(store.data)
   // })
 
+  console.log(data.BirthText)
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
@@ -359,7 +360,7 @@ function CreateProfile({ store }) {
 
         <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
           {date ? (
-            <Text>{data.BirthText}</Text>
+            <Text style={{ color: '#000' }}>{data.BirthText}</Text>
           ) : (
             <Text style={styles.inputDateText}>{ProfileStrings.Birth}</Text>
           )}

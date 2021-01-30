@@ -33,8 +33,6 @@ function Home({ store, navigation }) {
   const [isSoon, setSoon] = React.useState(false)
   const [isRefresh, setRefresh] = React.useState(false)
   const [isStatus, setStatus] = React.useState(false)
-  const responseListener = React.useRef()
-  const notificationListener = React.useRef()
   const appState = React.useRef(AppState.currentState)
   //
   const { signOut, Load } = React.useContext(AuthContext)
@@ -67,27 +65,36 @@ function Home({ store, navigation }) {
             store.updageNotificationMain(store.NotificationMainNumber + 1, true)
 
             return
+          } else if (notification.request.content.data.data === 'Calendar') {
+            store.setCalendarIds(store.CalendarMainIDs, notification.request.content.data.eventId)
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
           }
+
           return
         } else {
           return
         }
       } else {
-        if (notification.request.content.data.body.data) {
-          if (notification.request.content.data.body.data === 'Earnings') {
+        Notifications.dismissAllNotificationsAsync()
+
+        if (notification.request.content.data.data) {
+          if (notification.request.content.data.data === 'Earnings') {
             store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
 
             return
-          } else if (notification.request.content.data.body.data === 'History') {
+          } else if (notification.request.content.data.data === 'History') {
             store.setHistoryPageBack()
             store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
 
             return
-          } else if (notification.request.content.data.body.data === 'NotificationMain') {
+          } else if (notification.request.content.data.data === 'NotificationMain') {
             store.setNotificationMainPageBack()
             store.updageNotificationMain(store.NotificationMainNumber + 1, true)
 
             return
+          } else if (notification.request.content.data.data === 'Calendar') {
+            store.setCalendarIds(store.CalendarMainIDs, notification.request.content.data.eventId)
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
           }
           return
         } else {
@@ -98,49 +105,60 @@ function Home({ store, navigation }) {
     return () => subscription.remove()
   }, [])
 
+  const lastNotificationResponse = Notifications.useLastNotificationResponse()
+
   React.useEffect(() => {
-    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+    if (lastNotificationResponse) {
       navigation.navigate('Home')
 
       if (Platform.OS === 'android') {
         Notifications.dismissAllNotificationsAsync()
-        if (response.notification.request.content.data.data) {
-          if (response.notification.request.content.data.data === 'Earnings') {
+        if (lastNotificationResponse.notification.request.content.data.data) {
+          if (lastNotificationResponse.notification.request.content.data.data === 'Earnings') {
             store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
-          } else if (response.notification.request.content.data.data === 'History') {
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'History') {
             store.setHistoryPageBack()
             store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
-          } else if (response.notification.request.content.data.data === 'NotificationMain') {
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'NotificationMain') {
             store.setNotificationMainPageBack()
             store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'Calendar') {
+            store.setCalendarIds(
+              store.CalendarMainIDs,
+              lastNotificationResponse.notification.request.content.data.eventId
+            )
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
           }
           return
         } else {
           return
         }
       } else {
-        if (response.notification.request.content.data.body.data) {
-          if (response.notification.request.content.data.body.data === 'Earnings') {
+        if (lastNotificationResponse.notification.request.content.data.data) {
+          if (lastNotificationResponse.notification.request.content.data.data === 'Earnings') {
             store.updEarningsBadgeage(store.EarningsBadgeNumber + 1, true)
-          } else if (response.notification.request.content.data.body.data === 'History') {
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'History') {
             store.setHistoryPageBack()
             store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
-          } else if (response.notification.request.content.data.body.data === 'NotificationMain') {
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'NotificationMain') {
             store.setNotificationMainPageBack()
             store.updageNotificationMain(store.NotificationMainNumber + 1, true)
+          } else if (lastNotificationResponse.notification.request.content.data.data === 'Calendar') {
+            store.setCalendarIds(
+              store.CalendarMainIDs,
+              lastNotificationResponse.notification.request.content.data.eventId
+            )
+            store.updageHistoryBadge(store.HistoryBadgeNumber + 1, true)
           }
           return
         } else {
           return
         }
       }
-    })
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener)
-      Notifications.removeNotificationSubscription(responseListener)
     }
-  }, [])
+
+    return
+  }, [lastNotificationResponse])
 
   const _handleAppStateChange = async (nextAppState) => {
     if (appState.current.match(/inactive|background/) && nextAppState === 'active') {

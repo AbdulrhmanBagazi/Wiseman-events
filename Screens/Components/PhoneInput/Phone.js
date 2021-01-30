@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Animated, View, TextInput, Text, I18nManager } from 'react-native'
+import { Animated, TextInput } from 'react-native'
 import { width } from '../../../Config/Layout'
 
 function AnimatedPhone(props) {
