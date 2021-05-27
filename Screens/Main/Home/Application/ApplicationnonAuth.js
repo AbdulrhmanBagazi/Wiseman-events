@@ -1,6 +1,5 @@
 import React from 'react'
-import * as Analytics from 'expo-firebase-analytics'
-import { View, Text, Alert, ScrollView, FlatList, I18nManager, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, FlatList, I18nManager } from 'react-native'
 import styles from './Style'
 import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../../Config/Strings'
 import ModalApplication from './ModalApplication'
@@ -8,15 +7,12 @@ import AnimatedButton from './AnimatedButton'
 import AnimatedButtonSelect from './AnimatedButtonSelect'
 import LoadingModal from '../../../Components/Loading/LoadingModal'
 import DisabledButton from '../../../Components/DisabledButton/DisabledButton'
-import { URL } from '../../../../Config/Config'
-import axios from 'axios'
 import { inject, observer } from 'mobx-react'
 //
 import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
 import moment from 'moment'
 
-function Application({ navigation, route, store }) {
+function ApplicationnonAuth({ navigation, route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null)
   const [isTime, setTime] = React.useState(null)
   const [isAttendance, setAttendance] = React.useState(null)
@@ -52,119 +48,6 @@ function Application({ navigation, route, store }) {
       setCanApply(true)
     }
     return
-  }
-
-  const Apply = async () => {
-    setLoading(true)
-    axios
-      .post(
-        URL + '/user/ApplyToJob',
-        {
-          eventshiftId: isShiftId,
-          eventId: item.id,
-          Organizer: isOrganizer,
-          Supervisor: isSupervisor,
-        },
-        {
-          headers: {
-            Authorization: store.token,
-          },
-        }
-      )
-      .then(async (response) => {
-        if (response.status === 200) {
-          if (response.data.check === 'exists') {
-            setLoading(false)
-            Alert.alert(
-              '',
-              I18nManager.isRTL ? 'لا يمكنك التقديم على نفس الوردية' : 'You cannot apply to the same shift',
-              [{ text: 'OK', onPress: () => setLoading(false) }],
-              {
-                cancelable: false,
-              }
-            )
-          } else if (response.data.check === 'success') {
-            // await store.ReloadData()
-            Analytics.logEvent('Apply success')
-            await store.setHistoryPageBack()
-            await store.setResetPages()
-            setTimeout(() => {
-              setLoading(false)
-              setShow(true)
-            }, 500)
-            return
-          } else if (response.data.check === 'fail') {
-            Analytics.logEvent('Apply fail')
-
-            setLoading(false)
-            Alert.alert(
-              '',
-              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-              [{ text: 'OK', onPress: () => setLoading(false) }],
-              {
-                cancelable: false,
-              }
-            )
-
-            return
-          } else {
-            Analytics.logEvent('Apply fail')
-            setLoading(false)
-            Alert.alert(
-              '',
-              I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-              [{ text: 'OK', onPress: () => setLoading(false) }],
-              {
-                cancelable: false,
-              }
-            )
-
-            return
-          }
-        }
-      })
-      .catch(async (error) => {
-        setLoading(false)
-        if (error.response) {
-          if (error.response.status) {
-            if (error.response.status === 401) {
-              await UserTokenRemove()
-              Alert.alert(
-                '',
-                I18nManager.isRTL
-                  ? 'انتهت الجلسة ، يرجى إعادة تسجيل الدخول'
-                  : 'the session ended, please re-login',
-                [{ text: 'OK', onPress: () => signOut() }],
-                {
-                  cancelable: false,
-                }
-              )
-
-              return
-            } else {
-              Alert.alert(
-                '',
-                I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-                [{ text: 'OK', onPress: () => setLoading(false) }],
-                {
-                  cancelable: false,
-                }
-              )
-              return
-            }
-          }
-        } else {
-          Alert.alert(
-            '',
-            I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
-            [{ text: 'OK', onPress: () => setLoading(false) }],
-            {
-              cancelable: false,
-            }
-          )
-          return
-        }
-      })
   }
 
   const SelectType = async (val, check) => {
@@ -303,14 +186,14 @@ function Application({ navigation, route, store }) {
         <LoadingModal Loading={isLoading} />
       </ScrollView>
       <View style={styles.ButtonView}>
-        {/* <TouchableOpacity style={styles.Button} onPress={() => setShow(true)} disabled={true}>
-          <Text style={styles.ButtonText}>{SingleJobStrings.Apply}</Text>
-        </TouchableOpacity> */}
-
-        <DisabledButton TextValue={SingleJobStrings.Apply} Check={canApply} onPress={() => Apply()} />
+        <DisabledButton
+          TextValue={SingleJobStrings.Goto}
+          Check={true}
+          onPress={() => navigation.navigate('SignIn')}
+        />
       </View>
     </View>
   )
 }
 
-export default inject('store')(observer(Application))
+export default inject('store')(observer(ApplicationnonAuth))

@@ -31,6 +31,7 @@ function Splash({ store }) {
   const checkingNetwork = async (Token) => {
     var info = await Network.getNetworkStateAsync()
     var QRcode = await QrGet()
+
     if (info) {
       if (info.isConnected) {
         axios
@@ -120,6 +121,7 @@ function Splash({ store }) {
 
     CheckLanguage()
   }, [isReload])
+
   const R = async () => {
     setReload(!isReload)
     setShowqr(false)
@@ -136,7 +138,7 @@ function Splash({ store }) {
         alignItems: 'center',
       }}>
       {isShowqr ? <Icon name="wifi-off" size={40} color={PrimaryColor} /> : null}
-      {isShowqr ? (
+      {isShowqr && isqr ? (
         <View style={{ marginVertical: 20 }}>
           <QRCode value={[{ data: isqr, mode: 'byte' }]} size={width - 30} />
         </View>

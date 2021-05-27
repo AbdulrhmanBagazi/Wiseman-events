@@ -17,7 +17,9 @@ function CalHours(props) {
       total = total + data[i].TotalHours
     }
 
-    var mills = total * 60000
+    var Hours = total / 60
+    var minuts = Math.round(Hours - 0.3) * 60
+    var mills = minuts * 60000
 
     setTotal(mills)
     setLoading(false)

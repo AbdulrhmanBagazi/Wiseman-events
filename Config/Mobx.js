@@ -109,6 +109,11 @@ class Store {
     return
   }
 
+  setBanner = async (Data) => {
+    this.banner = Data
+    return
+  }
+
   updateimage = async (Data) => {
     this.profileImage = Data
 
@@ -209,6 +214,7 @@ decorate(Store, {
   getLanguge: action,
   data: observable.ref,
   setData: action,
+  setBanner: action,
   token: observable,
   setToken: action,
   banner: observable.ref,

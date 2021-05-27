@@ -53,11 +53,20 @@ import CompleteDetails from './Screens/Main/History/CompleteDetails'
 import ChangePassword from './Screens/Main/Profile/Settings/ChangePassword'
 //
 import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
+//
+import nonAuth from './Screens/Redirect/nonAuth/nonAuth'
+import goToLogin from './Screens/Redirect/nonAuth/goToLogin'
+import noalert from './Screens/Redirect/nonAuth/noalert'
+import noProfile from './Screens/Redirect/nonAuth/noProfile'
+import AllJobsnonauth from './Screens/Main/Home/AllJobs/AllJobsnonauth'
+import ApplicationnonAuth from './Screens/Main/Home/Application/ApplicationnonAuth'
+import WorkSchedulenonAuth from './Screens/Main/Home/SingleJob/WorkSchedulenonAuth'
 
 Sentry.init({
   dsn: 'https://5caff191c9cb4fd5be537ab3eeac1907@o489391.ingest.sentry.io/5551545',
   enableNative: false,
   debug: false, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
+  enableInExpoDevelopment: false,
 })
 
 const TransitionScreenOptions = {
@@ -459,6 +468,7 @@ const TabsScreens = () => {
       tabBarOptions={{
         activeTintColor: PrimaryColor,
         inactiveTintColor: SecondaryText,
+        showLabel: false,
         style: {
           backgroundColor: '#fff',
           shadowColor: '#000',
@@ -473,22 +483,22 @@ const TabsScreens = () => {
         },
       }}>
       <Tabs.Screen
-        options={{ title: HeaderTitles.Home, headerBackTitleVisible: false }}
+        options={{ headerBackTitleVisible: false }} //title: HeaderTitles.Home,
         name="Home"
         component={HomeScreens}
       />
       <Tabs.Screen
-        options={{ title: HeaderTitles.History, headerBackTitleVisible: false }}
+        options={{ headerBackTitleVisible: false }} //title: HeaderTitles.History,
         name="History"
         component={HistoryScreens}
       />
       <Tabs.Screen
-        options={{ title: HeaderTitles.Notifications, headerBackTitleVisible: false }}
+        options={{ headerBackTitleVisible: false }} //title: HeaderTitles.Notifications,
         name="NotificationMain"
         component={NotificationMainScreens}
       />
       <Tabs.Screen
-        options={{ title: HeaderTitles.Profile, headerBackTitleVisible: false }}
+        options={{ headerBackTitleVisible: false }} //title: HeaderTitles.Profile,
         name="Profile"
         component={ProfileScreens}
       />
@@ -496,16 +506,202 @@ const TabsScreens = () => {
   )
 }
 
+const HomenonAuthStack = createStackNavigator()
+const HomenonAuthScreens = () => {
+  return (
+    <HomenonAuthStack.Navigator screenOptions={TransitionScreenOptions}>
+      <HomenonAuthStack.Screen
+        options={{ headerTitle: (props) => <LogoTitle {...props} />, headerBackTitleVisible: false }}
+        name="Home"
+        component={nonAuth}
+      />
+      <HomenonAuthStack.Screen
+        options={{
+          title: HeaderTitles.AllJobs,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+        }}
+        name="AllJobs"
+        component={AllJobsnonauth}
+      />
+    </HomenonAuthStack.Navigator>
+  )
+}
+
+const ProfilenonAuthStack = createStackNavigator()
+const ProfilenonAuthScreens = () => {
+  return (
+    <ProfilenonAuthStack.Navigator>
+      <ProfilenonAuthStack.Screen options={{ headerShown: false }} name="Profile" component={noProfile} />
+    </ProfilenonAuthStack.Navigator>
+  )
+}
+
+const NotificationnonAuthMaintack = createStackNavigator()
+const NotificationnonAuthMainScreens = () => {
+  return (
+    <NotificationnonAuthMaintack.Navigator>
+      <NotificationnonAuthMaintack.Screen
+        options={{ title: HeaderTitles.Notifications }}
+        name="NotificationMain"
+        component={noalert}
+      />
+    </NotificationnonAuthMaintack.Navigator>
+  )
+}
+
+const HistorynonAuthStack = createStackNavigator()
+const HistorynonAuthScreens = () => {
+  return (
+    <HistorynonAuthStack.Navigator>
+      <HistorynonAuthStack.Screen
+        options={{ title: HeaderTitles.History }}
+        name="History"
+        component={goToLogin}
+      />
+    </HistorynonAuthStack.Navigator>
+  )
+}
+
+const TabsnonAuth = createBottomTabNavigator()
+const TabsnonAuthScreens = () => {
+  return (
+    <TabsnonAuth.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, size }) => {
+          let iconName
+          let color
+
+          if (route.name === 'Home') {
+            iconName = 'home'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'History') {
+            iconName = 'clipboard'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'NotificationMain') {
+            iconName = 'bell'
+            color = focused ? PrimaryColor : SecondaryText
+          } else if (route.name === 'Profile') {
+            iconName = 'user'
+            color = focused ? PrimaryColor : SecondaryText
+          }
+
+          // You can return any component that you like here!
+          return <TabIcon name={iconName} size={size} color={color} />
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: PrimaryColor,
+        inactiveTintColor: SecondaryText,
+        showLabel: false,
+        style: {
+          backgroundColor: '#fff',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 12,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 16.0,
+          elevation: 12,
+          borderColor: '#fff',
+        },
+      }}>
+      <Tabs.Screen options={{ headerBackTitleVisible: false }} name="Home" component={HomenonAuthScreens} />
+      <Tabs.Screen
+        options={{ headerBackTitleVisible: false }}
+        name="History"
+        component={HistorynonAuthScreens}
+      />
+      <Tabs.Screen
+        options={{ headerBackTitleVisible: false }}
+        name="NotificationMain"
+        component={NotificationnonAuthMainScreens}
+      />
+      <Tabs.Screen
+        options={{ headerBackTitleVisible: false, headerShown: false }}
+        name="Profile"
+        component={ProfilenonAuthScreens}
+      />
+    </TabsnonAuth.Navigator>
+  )
+}
+
 const AuthStack = createStackNavigator()
 const AuthScreens = () => {
   return (
     <AuthStack.Navigator screenOptions={TransitionScreenOptions}>
+      {/* new non auth routs */}
+      <AuthStack.Screen
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+        }}
+        name="nonAuth"
+        component={TabsnonAuthScreens}
+      />
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.SingleJobs,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="SingleJob"
+        component={SingleJob}
+      />
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.WorkSchedule,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="WorkSchedule"
+        component={WorkSchedulenonAuth}
+      />
+      {/* <AuthStack.Screen
+        options={{
+          title: HeaderTitles.AllJobs,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+        }}
+        name="AllJobs"
+        component={AllJobsnonauth}
+      /> */}
+      <AuthStack.Screen
+        options={{
+          title: HeaderTitles.Application,
+          headerTintColor: 'black',
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }}
+        name="ApplyToJob"
+        component={ApplicationnonAuth}
+      />
+      {/* new non auth routs */}
       <AuthStack.Screen
         options={{
           headerShown: true,
           title: '',
           headerStyle: { backgroundColor: '#fff', elevation: 0, shadowOpacity: 0 },
           headerTintColor: 'black',
+          headerBackTitleVisible: false,
         }}
         name="SignIn"
         component={SignIn}

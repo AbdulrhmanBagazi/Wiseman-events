@@ -43,13 +43,15 @@ function Paymentdata(props) {
         Fees = Fees + 1
       }
     }
+    var totalLate = total_Late_organizer + total_Late_supervisor
+    var LateSec = totalLate * 60000
 
     setBonus(Bonus)
     setDeduction(Deduction)
     setPaid(Paid)
     setabsence(total_absence_organizer + total_absence_supervisor)
     setincomplete(total_incomplete_organizer + total_incomplete_supervisor)
-    setLate((total_Late_organizer + total_Late_supervisor) * 60000)
+    setLate(LateSec)
     setFees(Fees * 8.05)
     setLoading(false)
   }, [props.Values])

@@ -50,6 +50,24 @@ function SignUp({ navigation }) {
     outputRange: ['#F8F8F9', PrimaryColor],
   })
 
+  //prevent back on loading
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      if (isLoading) {
+        // Prevent default behavior of leaving the screen
+        e.preventDefault()
+        return
+      }
+
+      return
+    })
+
+    return unsubscribe
+  }, [navigation, isLoading])
+
+  //
+
   const AgreeHandler = async () => {
     Animated.parallel([
       Animated.timing(Agree, {
