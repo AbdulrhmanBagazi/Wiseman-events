@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Animated, TouchableOpacity, ActivityIndicator, Alert, I18nManager } from 'react-native'
 import styles from './Style'
 import * as FileSystem from 'expo-file-system'
 import shorthash from 'shorthash'
@@ -13,15 +13,30 @@ function AnimatedImageProfile(props) {
   const [isLoading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    Load()
+    ensureDirExists()
   }, [props.filename])
+
+  // Checks if gif directory exists. If not, creates it
+  const ensureDirExists = async () => {
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+    const dirInfo = await FileSystem.getInfoAsync(gifDir)
+    // await FileSystem.deleteAsync(gifDir)
+    // return
+    if (!dirInfo.exists) {
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true })
+      return Load()
+    }
+
+    return Load()
+  }
 
   const Load = async () => {
     const filename = props.filename
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
 
     if (filename) {
       const name = await shorthash.unique(filename)
-      const path = `${FileSystem.cacheDirectory}${name}`
+      const path = gifDir + `${name}`
       const image = await FileSystem.getInfoAsync(path)
 
       if (image.exists) {
@@ -47,7 +62,6 @@ function AnimatedImageProfile(props) {
           .then(async (response) => {
             if (response.data.check === 'success') {
               const newImage = await FileSystem.downloadAsync(response.data.url, path)
-
               setUrl({
                 uri: newImage.uri,
               })

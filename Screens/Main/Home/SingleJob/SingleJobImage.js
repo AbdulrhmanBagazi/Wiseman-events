@@ -11,13 +11,29 @@ function SingleJobImage(props) {
   const [isLoading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    Load()
+    ensureDirExists()
   }, [])
+
+  // Checks if gif directory exists. If not, creates it
+  const ensureDirExists = async () => {
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+    const dirInfo = await FileSystem.getInfoAsync(gifDir)
+    // await FileSystem.deleteAsync(gifDir)
+    // return
+    if (!dirInfo.exists) {
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true })
+      return Load()
+    }
+
+    return Load()
+  }
 
   const Load = async () => {
     const { uri } = props.source
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+
     const name = await shorthash.unique(uri)
-    const path = `${FileSystem.cacheDirectory}${name}`
+    const path = gifDir + `${name}`
     const image = await FileSystem.getInfoAsync(path)
 
     if (image.exists) {

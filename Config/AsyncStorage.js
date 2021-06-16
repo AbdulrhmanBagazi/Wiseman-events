@@ -44,6 +44,16 @@ const QrGet = async () => {
   return QR
 }
 
+const setFilesystemresettime = async (time) => {
+  await AsyncStorage.setItem('@Wiseman-events:eventimagesresetTime', time)
+  return
+}
+
+const getFilesystemresettime = async () => {
+  var time = await AsyncStorage.getItem('@Wiseman-events:eventimagesresetTime')
+  return time
+}
+
 export {
   LanguageStore,
   LanguageGet,
@@ -54,4 +64,6 @@ export {
   UserPhoneOTPGet,
   QrStore,
   QrGet,
+  setFilesystemresettime,
+  getFilesystemresettime,
 }

@@ -145,6 +145,8 @@ function CompleteDetails({ route, store }) {
         return 'rgba(249, 177, 21, 0.25)'
       case 'not-paid':
         return 'rgba(229, 83, 83, 0.25)'
+      case 'partially-paid':
+        return 'rgba(249, 177, 21, 0.25)'
     }
   }
 
@@ -182,7 +184,9 @@ function CompleteDetails({ route, store }) {
       case 'paid':
         return 'مدفوع'
       case 'not-paid':
-        return 'لم يتم الدفع'
+        return 'غير مدفوع'
+      case 'partially-paid':
+        return 'مدفوعة جزئيا'
     }
   }
 

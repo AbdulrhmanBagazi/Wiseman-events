@@ -39,8 +39,10 @@ function Card(props) {
         return 'مدفوع'
       case 'not-paid':
         return 'غير مدفوع'
+      case 'partially-paid':
+        return 'مدفوعة جزئيا'
       default:
-        return 'partial-payment'
+        return ''
     }
   }
   return (

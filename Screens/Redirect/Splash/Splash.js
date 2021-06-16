@@ -1,8 +1,14 @@
 import React from 'react'
-import { View, Animated } from 'react-native'
+import { View, Animated, AsyncStorage } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { AuthContext } from '../../../Hooks/Context'
-import { UserTokenGet, UserTokenRemove, QrGet } from '../../../Config/AsyncStorage'
+import {
+  UserTokenGet,
+  UserTokenRemove,
+  QrGet,
+  setFilesystemresettime,
+  getFilesystemresettime,
+} from '../../../Config/AsyncStorage'
 import { URL } from '../../../Config/Config'
 import axios from 'axios'
 import Svg, { G, Path } from 'react-native-svg'
@@ -12,6 +18,8 @@ import QRCode from 'react-native-qrcode-svg'
 import Icon from '../../../Config/Icons'
 import { PrimaryColor } from '../../../Config/ColorPalette'
 import RefreshButton from '../../Components/RefreshButton/RefreshButton'
+import * as FileSystem from 'expo-file-system'
+import moment from 'moment'
 
 function Splash({ store }) {
   const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
@@ -31,6 +39,32 @@ function Splash({ store }) {
   const checkingNetwork = async (Token) => {
     var info = await Network.getNetworkStateAsync()
     var QRcode = await QrGet()
+    var Time = await getFilesystemresettime()
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+    const dirInfo = await FileSystem.getInfoAsync(gifDir)
+    // await FileSystem.deleteAsync(gifDir)
+    // return
+
+    if (!dirInfo.exists) {
+      console.log(1)
+
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true })
+    }
+
+    // await AsyncStorage.removeItem('@Wiseman-events:eventimagesresetTime')
+
+    if (!Time) {
+      var savetime = await moment().toISOString()
+      await setFilesystemresettime(savetime)
+    } else {
+      var checktime = await moment(Time)
+      var current = await moment()
+      var duration = await moment(current).diff(checktime, 'days')
+      if (duration >= 20) {
+        const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+        await FileSystem.deleteAsync(gifDir)
+      }
+    }
 
     if (info) {
       if (info.isConnected) {
