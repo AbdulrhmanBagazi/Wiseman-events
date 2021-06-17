@@ -1,12 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width } from '../../../../Config/Layout';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -160,6 +154,44 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 5,
   },
-})
+  AnimatedView: {
+    backgroundColor: '#fff',
+    height: 45,
+    width: width - 20,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+  },
+  ViewJustify: { justifyContent: 'center', alignItems: 'center' },
+  AnimatedViewName: {
+    backgroundColor: '#fff',
+    height: 45,
+    width: width - 20,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  paddingButton: { padding: 5 },
+  ViewRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width,
+    marginTop: 40,
+  },
+  ViewRowCenter: { justifyContent: 'center', alignItems: 'center' },
+  ViewRowSpace: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  flexAlign: { flex: 1, textAlign: 'right' },
+});
 
-export default styles
+export default styles;

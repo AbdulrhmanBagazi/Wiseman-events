@@ -1,6 +1,10 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import { PrimaryColor, SecondaryText, LightText } from '../../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width, height } from '../../../../Config/Layout';
+import {
+  PrimaryColor,
+  SecondaryText,
+  LightText,
+} from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
   shift: {
     fontSize: 14,
     fontWeight: '600',
+    color: '#666666',
   },
   TimeandA: {
     fontSize: 14,
@@ -77,9 +82,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 8,
     marginVertical: 10,
+    borderColor: '#cccccc',
+    backgroundColor: '#cccccc',
   },
   ShiftButtonSelect: {
     padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   SelectViewPoints: {
     width,
@@ -234,6 +244,9 @@ const styles = StyleSheet.create({
     // borderColor: '#fff',
     // borderWidth: 2,
   },
-})
+  BlackText: { color: '#000' },
+  AlignSelfScroll: { alignSelf: 'flex-start' },
+  FlexRow: { flexDirection: 'row' },
+});
 
-export default styles
+export default styles;

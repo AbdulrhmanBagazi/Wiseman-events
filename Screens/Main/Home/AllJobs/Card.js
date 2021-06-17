@@ -1,9 +1,15 @@
-import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager } from 'react-native'
-import styles from '../Style'
-import Icon from '../../../../Config/Icons'
-import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad'
-import { SingleJobStrings } from '../../../../Config/Strings'
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  I18nManager,
+} from 'react-native';
+import styles from '../Style';
+import Icon from '../../../../Config/Icons';
+import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad';
+import { SingleJobStrings } from '../../../../Config/Strings';
 
 function Card(props) {
   return (
@@ -13,7 +19,10 @@ function Card(props) {
         showsVerticalScrollIndicator={false}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
-          <TouchableOpacity style={styles.SingleAllJob} onPress={() => props.click('SingleJob', { item })}>
+          <TouchableOpacity
+            style={styles.SingleAllJob}
+            onPress={() => props.click('SingleJob', { item })}
+          >
             <AnimatedCardImageLoad
               source={{
                 uri: item.ImageURL,
@@ -24,7 +33,9 @@ function Card(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={{ color: '#000' }}>{I18nManager.isRTL ? item.DateAr : item.Date}</Text>
+                <Text style={styles.BlackColor}>
+                  {I18nManager.isRTL ? item.DateAr : item.Date}
+                </Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.TitleAr : item.Title}
@@ -41,15 +52,23 @@ function Card(props) {
                   <Text style={styles.SingleJobDetailsSectionsValue}>{item.Employees}</Text>
                 </View> */}
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shifts}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshifts.length}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {SingleJobStrings.Shifts}
+                  </Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>
+                    {item.eventshifts.length}
+                  </Text>
                 </View>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Salary}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {SingleJobStrings.Salary}
+                  </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     {item.Salary + '-' + item.SalarySupervisor}
                     {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.Hour}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
+                    <Text style={styles.Hour}>
+                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -59,7 +78,7 @@ function Card(props) {
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
-  )
+  );
 }
 
-export default Card
+export default Card;

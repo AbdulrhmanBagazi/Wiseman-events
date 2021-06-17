@@ -1,13 +1,5 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
 
-export default styles
+export default styles;

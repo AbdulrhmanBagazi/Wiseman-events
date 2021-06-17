@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native'
-import { SecondaryColor, LightText, PrimaryColor, GrayColor } from '../../../Config/ColorPalette'
-import { width } from '../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import {
+  SecondaryColor,
+  LightText,
+  PrimaryColor,
+  GrayColor,
+} from '../../../Config/ColorPalette';
+import { width } from '../../../Config/Layout';
 
 const styles = StyleSheet.create({
   modal: {
@@ -127,6 +132,6 @@ const styles = StyleSheet.create({
     color: PrimaryColor,
     marginBottom: 20,
   },
-})
+});
 
-export default styles
+export default styles;

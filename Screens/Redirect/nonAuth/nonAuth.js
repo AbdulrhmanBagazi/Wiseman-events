@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,39 +8,39 @@ import {
   I18nManager,
   Alert,
   RefreshControl,
-} from 'react-native'
-import { inject, observer } from 'mobx-react'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import { HomePageStrings } from '../../../Config/Strings'
-import { URL } from '../../../Config/Config'
-import styles from './Style'
-import TopCard from '../../Main/Home/TopCard'
-import JobCard from '../../Main/Home/JobCard'
-import axios from 'axios'
-import RefreshButton from '../../Components/RefreshButton/RefreshButton'
-import Icon from '../../../Config/Icons'
+} from 'react-native';
+import { inject, observer } from 'mobx-react';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import { HomePageStrings } from '../../../Config/Strings';
+import { URL } from '../../../Config/Config';
+import styles from './Style';
+import TopCard from '../../Main/Home/TopCard';
+import JobCard from '../../Main/Home/JobCard';
+import axios from 'axios';
+import RefreshButton from '../../Components/RefreshButton/RefreshButton';
+import Icon from '../../../Config/Icons';
 //
 
-function nonAuth({ store, navigation }) {
-  const [isLoading, setLoading] = React.useState(true)
-  const [isError, setError] = React.useState(true)
-  const [isSoon, setSoon] = React.useState(false)
-  const [isRefresh, setRefresh] = React.useState(false)
-  const [isStatus, setStatus] = React.useState(false)
+function NonAuth({ store, navigation }) {
+  const [isLoading, setLoading] = React.useState(true);
+  const [isError, setError] = React.useState(true);
+  const [isSoon, setSoon] = React.useState(false);
+  const [isRefresh, setRefresh] = React.useState(false);
+  const [isStatus, setStatus] = React.useState(false);
   //
 
   React.useEffect(() => {
-    setLoading(true)
-    setError(true)
-    setSoon(false)
+    setLoading(true);
+    setError(true);
+    setSoon(false);
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.data.status === null) {
-        setStatus(true)
+        setStatus(true);
       } else {
-        setStatus(false)
+        setStatus(false);
       }
-      return
-    })
+      return;
+    });
 
     axios
       .get(URL + '/user/mainPageJobsnonAuth')
@@ -49,28 +49,28 @@ function nonAuth({ store, navigation }) {
           if (response.data.check === 'success') {
             if (response.data.data.length === 0) {
               setTimeout(() => {
-                setError(false)
-                setSoon(true)
-                setLoading(false)
-              }, 500)
+                setError(false);
+                setSoon(true);
+                setLoading(false);
+              }, 500);
             } else {
-              await store.setfewevents(response.data.data)
-              await store.setBanner(response.data.banner)
+              await store.setfewevents(response.data.data);
+              await store.setBanner(response.data.banner);
               setTimeout(() => {
-                setLoading(false)
-              }, 500)
+                setLoading(false);
+              }, 500);
             }
 
-            return
+            return;
           } else if (response.data.check === 'fail') {
-            setError(false)
-            return
+            setError(false);
+            return;
           }
         }
       })
       .catch(async (error) => {
         // console.log(error)
-        setError(false)
+        setError(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
@@ -81,9 +81,9 @@ function nonAuth({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -92,8 +92,8 @@ function nonAuth({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -104,16 +104,16 @@ function nonAuth({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
+      });
 
-    return unsubscribe
-  }, [isRefresh, navigation])
+    return unsubscribe;
+  }, [isRefresh, navigation]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.nonAuthFlex}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -122,15 +122,16 @@ function nonAuth({ store, navigation }) {
             onRefresh={() => (isLoading ? null : setRefresh(!isRefresh))}
             tintColor={PrimaryColor}
           />
-        }>
+        }
+      >
         <View style={styles.Container}>
           <TopCard Data={store.banner} />
           {isLoading ? (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
+            <View style={styles.nonAuthLoaidngView}>
               <ActivityIndicator size="small" color={PrimaryColor} />
             </View>
           ) : !isError ? (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 177 }}>
+            <View style={styles.nonAuthLoaidngView}>
               {isSoon ? (
                 <View>
                   <Text style={styles.soon}>{HomePageStrings.Soon}</Text>
@@ -157,26 +158,33 @@ function nonAuth({ store, navigation }) {
                   Loading={store.feweventsloading}
                   FadeIn={isLoading}
                 />
-              )
+              );
             })
           )}
         </View>
       </ScrollView>
       {isStatus ? (
         <View style={styles.Notify}>
-          <View style={{ flex: 4 }}>
+          <View style={styles.nonAuthFlexFour}>
             <Text style={styles.NotifyText}>{HomePageStrings.Status}</Text>
           </View>
 
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={styles.NotifyButton} onPress={() => navigation.navigate('Status')}>
-              <Icon name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'} size={24} color={PrimaryColor} />
+          <View style={styles.nonAuthFlex}>
+            <TouchableOpacity
+              style={styles.NotifyButton}
+              onPress={() => navigation.navigate('Status')}
+            >
+              <Icon
+                name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
+                size={24}
+                color={PrimaryColor}
+              />
             </TouchableOpacity>
           </View>
         </View>
       ) : null}
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(nonAuth))
+export default inject('store')(observer(NonAuth));

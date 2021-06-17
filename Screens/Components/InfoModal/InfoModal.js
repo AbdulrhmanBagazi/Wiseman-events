@@ -1,33 +1,33 @@
-import React from 'react'
-import { View, Modal, Text, TouchableOpacity, I18nManager } from 'react-native'
-import styles from './Style'
-import { WorkScheduleUserString } from '../../../Config/Strings'
-import moment from 'moment-timezone'
+import React from 'react';
+import { View, Modal, Text, TouchableOpacity, I18nManager } from 'react-native';
+import styles from './Style';
+import { WorkScheduleUserString } from '../../../Config/Strings';
+import moment from 'moment-timezone';
 
 function InfoModal(props) {
-  const [isStart, setStart] = React.useState(null)
-  const [isEnd, setEnd] = React.useState(null)
-  const [isStatus, setStatus] = React.useState(null)
+  const [isStart, setStart] = React.useState(null);
+  const [isEnd, setEnd] = React.useState(null);
+  const [isStatus, setStatus] = React.useState(null);
 
   React.useEffect(() => {
-    var S = props.Data.Start
-    var E = props.Data.End
-    var T = props.Data.Status
+    var S = props.Data.Start;
+    var E = props.Data.End;
+    var T = props.Data.Status;
 
     if (S) {
-      var Sdate = moment(S)
-      var start = moment.tz(Sdate, 'Asia/Riyadh').format('hh:mm a')
-      setStart(start)
+      var Sdate = moment(S);
+      var start = moment.tz(Sdate, 'Asia/Riyadh').format('hh:mm a');
+      setStart(start);
     } else {
-      setStart(WorkScheduleUserString.noInfo)
+      setStart(WorkScheduleUserString.noInfo);
     }
 
     if (E) {
-      var Edate = moment(E)
-      var end = moment.tz(Edate, 'Asia/Riyadh').format('hh:mm a')
-      setEnd(end)
+      var Edate = moment(E);
+      var end = moment.tz(Edate, 'Asia/Riyadh').format('hh:mm a');
+      setEnd(end);
     } else {
-      setEnd(WorkScheduleUserString.noInfo)
+      setEnd(WorkScheduleUserString.noInfo);
     }
 
     if (T) {
@@ -40,12 +40,12 @@ function InfoModal(props) {
           ? WorkScheduleUserString.incomplete
           : T === 'completed'
           ? WorkScheduleUserString.CompletedStatus
-          : WorkScheduleUserString.pendingStatus
-      setStatus(String)
+          : WorkScheduleUserString.pendingStatus;
+      setStatus(String);
     } else {
-      setStatus(WorkScheduleUserString.Info)
+      setStatus(WorkScheduleUserString.Info);
     }
-  }, [props.Data])
+  }, [props.Data]);
 
   return (
     <Modal animationType="fade" transparent={true} visible={props.OpenModal}>
@@ -62,19 +62,23 @@ function InfoModal(props) {
                   <Text style={styles.InfoTime}>{isStart}</Text>
                 </View>
                 <View style={styles.InfoTwo}>
-                  <Text style={styles.InfoTitle}>{props.TakeAttendenceEnd}</Text>
+                  <Text style={styles.InfoTitle}>
+                    {props.TakeAttendenceEnd}
+                  </Text>
                   <Text style={styles.InfoTime}>{isEnd}</Text>
                 </View>
               </View>
             </View>
             <TouchableOpacity style={styles.Button} onPress={props.onPress}>
-              <Text style={styles.ButtonText}>{I18nManager.isRTL ? 'حسنا' : 'Ok'}</Text>
+              <Text style={styles.ButtonText}>
+                {I18nManager.isRTL ? 'حسنا' : 'Ok'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </Modal>
-  )
+  );
 }
 
-export default InfoModal
+export default InfoModal;

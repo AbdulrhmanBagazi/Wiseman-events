@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,48 +8,58 @@ import {
   I18nManager,
   Alert,
   ActivityIndicator,
-} from 'react-native'
-import styles from './Style'
-import { AuthContext } from '../../../../Hooks/Context'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
-import Icon from '../../../../Config/Icons'
-import * as ImagePicker from 'expo-image-picker'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import { inject, observer } from 'mobx-react'
-import { ProfileImageStrings } from '../../../../Config/Strings'
+} from 'react-native';
+import styles from './Style';
+import { AuthContext } from '../../../../Hooks/Context';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import Icon from '../../../../Config/Icons';
+import * as ImagePicker from 'expo-image-picker';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import { inject, observer } from 'mobx-react';
+import { ProfileImageStrings } from '../../../../Config/Strings';
 
 function ProfileImage(props) {
-  const { signOut } = React.useContext(AuthContext)
-  const [image, setImage] = React.useState(null)
-  const [isLoading, setLoading] = React.useState(false)
-  const [isEnd, setEnd] = React.useState(false)
+  const { signOut } = React.useContext(AuthContext);
+  const [image, setImage] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isEnd, setEnd] = React.useState(false);
 
   React.useEffect(() => {
-    setImage(null)
-    setLoading(false)
-    setEnd(false)
-  }, [props.close])
+    setImage(null);
+    setLoading(false);
+    setEnd(false);
+  }, [props.close]);
 
   let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync()
+    let permissionResult =
+      await ImagePicker.requestCameraRollPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!')
-      return
+      Alert.alert(
+        '',
+        I18nManager.isRTL
+          ? 'إذن للوصول إلى ألبوم الكاميرا مطلوب!'
+          : 'Permission to access camera roll is required!',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        }
+      );
+      return;
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 0.5,
-    })
+    });
 
     if (!pickerResult.cancelled) {
-      setImage(pickerResult)
+      setImage(pickerResult);
       // console.log(pickerResult)
     }
-  }
+  };
 
   const updateImage = async (name) => {
     axios
@@ -67,11 +77,11 @@ function ProfileImage(props) {
       )
       .then(async (response) => {
         if (response.data === 'success') {
-          props.store.updateimage(name)
-          setLoading(false)
-          setEnd(true)
+          props.store.updateimage(name);
+          setLoading(false);
+          setEnd(true);
 
-          return
+          return;
         } else {
           Alert.alert(
             '',
@@ -80,15 +90,15 @@ function ProfileImage(props) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -98,9 +108,9 @@ function ProfileImage(props) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -109,8 +119,8 @@ function ProfileImage(props) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -121,20 +131,20 @@ function ProfileImage(props) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
-  const UploadImage = async (URL, name, imageuri) => {
-    const xhr = new XMLHttpRequest()
+  const UploadImage = async (url, name, imageuri) => {
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           // Successfully uploaded the file.
-          updateImage(name)
-          return
+          updateImage(name);
+          return;
         } else {
           // The file could not be uploaded.
           Alert.alert(
@@ -144,17 +154,17 @@ function ProfileImage(props) {
             {
               cancelable: false,
             }
-          )
+          );
         }
       }
-    }
-    xhr.open('PUT', URL)
-    xhr.setRequestHeader('Content-Type', 'image/jpeg')
-    xhr.send({ uri: imageuri, type: 'image/jpeg', name: name })
-  }
+    };
+    xhr.open('PUT', url);
+    xhr.setRequestHeader('Content-Type', 'image/jpeg');
+    xhr.send({ uri: imageuri, type: 'image/jpeg', name: name });
+  };
 
   const Uploade = async () => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get(URL + '/user/PresignedURLPut', {
         headers: {
@@ -164,7 +174,7 @@ function ProfileImage(props) {
       })
       .then(async (response) => {
         if (response.data.check === 'success') {
-          return UploadImage(response.data.url, response.data.name, image.uri)
+          return UploadImage(response.data.url, response.data.name, image.uri);
         } else {
           Alert.alert(
             '',
@@ -173,15 +183,15 @@ function ProfileImage(props) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -191,9 +201,9 @@ function ProfileImage(props) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -202,8 +212,8 @@ function ProfileImage(props) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -214,11 +224,11 @@ function ProfileImage(props) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   return (
     <Modal animationType="fade" transparent={true} visible={props.open}>
@@ -228,32 +238,50 @@ function ProfileImage(props) {
             <TouchableOpacity
               style={styles.Image}
               onPress={() => openImagePickerAsync()}
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               {image ? (
-                <Image style={styles.tinyLogo} resizeMode="cover" source={{ uri: image.uri }} />
+                <Image
+                  style={styles.tinyLogo}
+                  resizeMode="cover"
+                  source={{ uri: image.uri }}
+                />
               ) : (
                 <Icon name="image" size={50} color="#fff" />
               )}
             </TouchableOpacity>
 
             {isEnd ? (
-              <TouchableOpacity onPress={props.close} style={styles.Button} disabled={isLoading}>
+              <TouchableOpacity
+                onPress={props.close}
+                style={styles.Button}
+                disabled={isLoading}
+              >
                 <Icon name="check" size={20} color="#fff" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 onPress={() => Uploade()}
-                style={image || isLoading ? styles.Button : styles.ButtonDisable}
-                disabled={image || isLoading ? false : true}>
+                style={
+                  image || isLoading ? styles.Button : styles.ButtonDisable
+                }
+                disabled={image || isLoading ? false : true}
+              >
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
-                  <Text style={styles.ButtonText}>{ProfileImageStrings.Upload}</Text>
+                  <Text style={styles.ButtonText}>
+                    {ProfileImageStrings.Upload}
+                  </Text>
                 )}
               </TouchableOpacity>
             )}
 
-            <TouchableOpacity onPress={props.close} style={styles.closebutton} disabled={isLoading}>
+            <TouchableOpacity
+              onPress={props.close}
+              style={styles.closebutton}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
@@ -264,7 +292,7 @@ function ProfileImage(props) {
         </View>
       </View>
     </Modal>
-  )
+  );
 }
 
-export default inject('store')(observer(ProfileImage))
+export default inject('store')(observer(ProfileImage));

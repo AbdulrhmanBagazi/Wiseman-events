@@ -1,14 +1,13 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import { PrimaryColor, LightText, SecondaryColor, GrayColor } from '../../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../../Config/Layout';
+import {
+  PrimaryColor,
+  LightText,
+  SecondaryColor,
+  GrayColor,
+} from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
-  Container: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    width,
-    alignSelf: 'center',
-  },
   modal: {
     backgroundColor: 'rgba(	15	,20	,50, 0.5)',
     flex: 1,
@@ -135,6 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default styles
+export default styles;

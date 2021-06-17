@@ -1,6 +1,6 @@
-import React from 'react'
-import * as Notifications from 'expo-notifications'
-import * as Permissions from 'expo-permissions'
+import React from 'react';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import {
   View,
   Text,
@@ -10,35 +10,40 @@ import {
   Linking,
   Alert,
   I18nManager,
-} from 'react-native'
-import styles from './Style'
-import { NotificationStrings, ErrorsStrings } from '../../../Config/Strings'
-import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
-import debounce from 'lodash/debounce'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import Constants from 'expo-constants'
-import { AuthContext } from '../../../Hooks/Context'
+  Platform,
+} from 'react-native';
+import styles from './Style';
+import { NotificationStrings, ErrorsStrings } from '../../../Config/Strings';
+import { inject, observer } from 'mobx-react';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
+import debounce from 'lodash/debounce';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import Constants from 'expo-constants';
+import { AuthContext } from '../../../Hooks/Context';
 
 function Notification({ navigation, store }) {
-  const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState(' ')
-  const { Load } = React.useContext(AuthContext)
+  const [isLoading, setLoading] = React.useState(false);
+  const [isError, setError] = React.useState(' ');
+  const { Load } = React.useContext(AuthContext);
 
   const registerForPushNotificationsAsync = async () => {
-    setLoading(true)
+    setLoading(true);
     //
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-      let finalStatus = existingStatus
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-        finalStatus = status
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
       }
       if (finalStatus !== 'granted') {
         // alert('Failed to get push token for push notification!')
-        setLoading(false)
+        setLoading(false);
 
         Alert.alert(
           '',
@@ -56,14 +61,26 @@ function Notification({ navigation, store }) {
             },
           ],
           { cancelable: false }
-        )
+        );
 
-        return
+        return;
       }
     } else {
-      alert('Must use physical device for Push Notifications')
-      setLoading(false)
-      return
+      Alert.alert(
+        '',
+        I18nManager.isRTL
+          ? 'يجب استخدام جهاز حقيقي لإشعارات'
+          : 'Must use physical device for Push Notifications',
+        [
+          {
+            text: I18nManager.isRTL ? 'تم' : 'ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false }
+      );
+      setLoading(false);
+      return;
     }
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
@@ -71,12 +88,12 @@ function Notification({ navigation, store }) {
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: '#FF231F7C',
-      })
+      });
     }
 
     //
 
-    var token = (await Notifications.getExpoPushTokenAsync()).data
+    var token = (await Notifications.getExpoPushTokenAsync()).data;
 
     if (token) {
       axios
@@ -92,30 +109,30 @@ function Notification({ navigation, store }) {
         )
         .then((response) => {
           if (response.data === 'success') {
-            setLoading(false)
-            Load()
-            return
+            setLoading(false);
+            Load();
+            return;
           } else {
-            setError(ErrorsStrings.ErrorOccurred)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.ErrorOccurred);
+            setLoading(false);
+            return;
           }
         })
         .catch((error) => {
-          setError(ErrorsStrings.ErrorOccurred)
-          setLoading(false)
-          return
-        })
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
+        });
     }
 
-    return
-  }
+    return;
+  };
 
   const notNow = async () => {
     if (isLoading) {
-      return
+      return;
     }
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         URL + '/user/addnotifications',
@@ -129,26 +146,29 @@ function Notification({ navigation, store }) {
       )
       .then((response) => {
         if (response.data === 'success') {
-          setLoading(false)
-          Load()
-          return
+          setLoading(false);
+          Load();
+          return;
         } else {
-          setError(ErrorsStrings.ErrorOccurred)
-          setLoading(false)
-          return
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
         }
       })
       .catch((error) => {
-        setError(ErrorsStrings.ErrorOccurred)
-        setLoading(false)
-        return
-      })
-  }
+        setError(ErrorsStrings.ErrorOccurred);
+        setLoading(false);
+        return;
+      });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.Logo}>
-        <Image style={styles.tinyLogo} source={require('../../../assets/notificationillustration.png')} />
+        <Image
+          style={styles.tinyLogo}
+          source={require('../../../assets/notificationillustration.png')}
+        />
       </View>
       <Text style={styles.Title}>{NotificationStrings.Title}</Text>
       <Text style={styles.Slogan}>{NotificationStrings.Slogan}</Text>
@@ -161,17 +181,25 @@ function Notification({ navigation, store }) {
           </View>
         ) : (
           <View style={styles.ButtonView}>
-            <TouchableOpacity style={styles.NotButton} onPress={debounce(() => notNow(), 200)}>
-              <Text style={styles.NotButtonText}>{NotificationStrings.Not}</Text>
+            <TouchableOpacity
+              style={styles.NotButton}
+              onPress={debounce(() => notNow(), 200)}
+            >
+              <Text style={styles.NotButtonText}>
+                {NotificationStrings.Not}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Button} onPress={() => registerForPushNotificationsAsync()}>
+            <TouchableOpacity
+              style={styles.Button}
+              onPress={() => registerForPushNotificationsAsync()}
+            >
               <Text style={styles.ButtonText}>{NotificationStrings.Allow}</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(Notification))
+export default inject('store')(observer(Notification));

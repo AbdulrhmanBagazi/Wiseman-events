@@ -1,7 +1,7 @@
-import React from 'react'
-import { View, Modal, ActivityIndicator } from 'react-native'
-import styles from './Style'
-import { PrimaryColor } from '../../../Config/ColorPalette'
+import React from 'react';
+import { View, Modal, ActivityIndicator } from 'react-native';
+import styles from './Style';
+import { PrimaryColor } from '../../../Config/ColorPalette';
 
 function LoadingModal(props) {
   return (
@@ -10,7 +10,7 @@ function LoadingModal(props) {
         <ActivityIndicator size="large" color={PrimaryColor} />
       </View>
     </Modal>
-  )
+  );
 }
 
-export default LoadingModal
+export default LoadingModal;

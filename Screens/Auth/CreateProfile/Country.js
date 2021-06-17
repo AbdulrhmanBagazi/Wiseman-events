@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
-import { TouchableOpacity, View, I18nManager } from 'react-native'
-import { ProfileStrings } from '../../../Config/Strings'
-import { Entypo } from '@expo/vector-icons'
-import CountryPicker, { FlagButton, CountryFilter } from 'react-native-country-picker-modal'
+import React, { useState } from 'react';
+import { TouchableOpacity, View, I18nManager, StyleSheet } from 'react-native';
+import { ProfileStrings } from '../../../Config/Strings';
+import { Entypo } from '@expo/vector-icons';
+import CountryPicker, {
+  FlagButton,
+  CountryFilter,
+} from 'react-native-country-picker-modal';
 
 export default function CountryUI(props) {
-  const [isvisible, setvisible] = useState(false)
+  const [isvisible, setvisible] = useState(false);
 
   const OpenClose = async (val) => {
-    setvisible(val)
-  }
+    setvisible(val);
+  };
 
   return (
     <CountryPicker
-      containerButtonStyle={{ marginBottom: 5 }}
+      containerButtonStyle={styles.Margin}
       placeholder={ProfileStrings.Nationality}
       onClose={() => OpenClose(false)}
       theme={{
@@ -24,11 +27,17 @@ export default function CountryUI(props) {
       translation={I18nManager.isRTL ? 'ara' : 'common'}
       visible={isvisible}
       renderFlagButton={(flagData) => (
-        <TouchableOpacity style={props.style} onPress={() => OpenClose(true)} activeOpacity={0.7}>
-          <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={props.style}
+          onPress={() => OpenClose(true)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.Flex}>
             <FlagButton
               {...flagData}
-              placeholder={I18nManager.isRTL ? 'اختر جنسية' : 'Select a nationality'}
+              placeholder={
+                I18nManager.isRTL ? 'اختر جنسية' : 'Select a nationality'
+              }
             />
           </View>
           <Entypo name="chevron-down" size={24} />
@@ -36,13 +45,7 @@ export default function CountryUI(props) {
       )}
       renderCountryFilter={(modalData) => (
         <CountryFilter
-          style={{
-            textAlign: 'right',
-            borderBottomColor: '#000',
-            borderBottomWidth: 1,
-            flex: 0.9,
-            padding: 5,
-          }}
+          style={styles.Filter}
           {...modalData}
           placeholder={I18nManager.isRTL ? 'بحث' : 'Search'}
         />
@@ -53,5 +56,17 @@ export default function CountryUI(props) {
       countryCode={props.countryCode}
       onSelect={props.onSelect}
     />
-  )
+  );
 }
+
+const styles = StyleSheet.create({
+  Filter: {
+    textAlign: 'right',
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    flex: 0.9,
+    padding: 5,
+  },
+  Margin: { marginBottom: 5 },
+  Flex: { flex: 1 },
+});

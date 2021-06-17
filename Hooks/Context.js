@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
-export const AuthContext = React.createContext()
-export const MatchContext = React.createContext()
+export const AuthContext = React.createContext();
+export const MatchContext = React.createContext();

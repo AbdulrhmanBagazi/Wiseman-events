@@ -1,36 +1,36 @@
-import React from 'react'
-import { View, I18nManager, Text, TouchableOpacity } from 'react-native'
-import { inject, observer } from 'mobx-react'
-import * as Updates from 'expo-updates'
-import { LanguageStore } from '../../../Config/AsyncStorage'
-import { LanguageChangeStrings } from '../../../Config/Strings'
-import styles from './Style'
-import AnimatedButton from './AnimatedButton'
+import React from 'react';
+import { View, I18nManager, Text, TouchableOpacity } from 'react-native';
+import { inject, observer } from 'mobx-react';
+import * as Updates from 'expo-updates';
+import { LanguageStore } from '../../../Config/AsyncStorage';
+import { LanguageChangeStrings } from '../../../Config/Strings';
+import styles from './Style';
+import AnimatedButton from './AnimatedButton';
 
-LanguageChange = ({ store }) => {
-  const [isLanguage, setLanguage] = React.useState('')
+function LanguageChange() {
+  const [isLanguage, setLanguage] = React.useState('');
 
   const ChangeLanguage = async (val) => {
-    setLanguage(val)
-  }
+    setLanguage(val);
+  };
 
   const LanguageChangeHandler = async (val) => {
     if (val === 'ar') {
-      I18nManager.allowRTL(true)
-      I18nManager.forceRTL(true)
-      await LanguageStore(val)
-      Updates.reloadAsync()
-      return
+      I18nManager.allowRTL(true);
+      I18nManager.forceRTL(true);
+      await LanguageStore(val);
+      Updates.reloadAsync();
+      return;
     } else if (val === 'en') {
-      I18nManager.allowRTL(false)
-      I18nManager.forceRTL(false)
-      await LanguageStore(val)
-      Updates.reloadAsync()
-      return
+      I18nManager.allowRTL(false);
+      I18nManager.forceRTL(false);
+      await LanguageStore(val);
+      Updates.reloadAsync();
+      return;
     } else {
-      return
+      return;
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -40,11 +40,14 @@ LanguageChange = ({ store }) => {
         onPressArabic={() => ChangeLanguage('ar')}
         onPressEnglish={() => ChangeLanguage('en')}
       />
-      <TouchableOpacity style={styles.Button} onPress={() => LanguageChangeHandler(isLanguage)}>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => LanguageChangeHandler(isLanguage)}
+      >
         <Text style={styles.ButtonText}>{LanguageChangeStrings.Done}</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(LanguageChange))
+export default inject('store')(observer(LanguageChange));

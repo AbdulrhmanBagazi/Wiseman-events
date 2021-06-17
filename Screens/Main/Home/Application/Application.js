@@ -1,37 +1,48 @@
-import React from 'react'
-import * as Analytics from 'expo-firebase-analytics'
-import { View, Text, Alert, ScrollView, FlatList, I18nManager, ActivityIndicator } from 'react-native'
-import styles from './Style'
-import { SingleJobStrings, AnimatedButtonSelectStrings } from '../../../../Config/Strings'
-import ModalApplication from './ModalApplication'
-import AnimatedButton from './AnimatedButton'
-import AnimatedButtonSelect from './AnimatedButtonSelect'
-import LoadingModal from '../../../Components/Loading/LoadingModal'
-import DisabledButton from '../../../Components/DisabledButton/DisabledButton'
-import { URL } from '../../../../Config/Config'
-import axios from 'axios'
-import { inject, observer } from 'mobx-react'
+import React from 'react';
+import * as Analytics from 'expo-firebase-analytics';
+import {
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  FlatList,
+  I18nManager,
+  Platform,
+} from 'react-native';
+import styles from './Style';
+import {
+  SingleJobStrings,
+  AnimatedButtonSelectStrings,
+} from '../../../../Config/Strings';
+import ModalApplication from './ModalApplication';
+import AnimatedButton from './AnimatedButton';
+import AnimatedButtonSelect from './AnimatedButtonSelect';
+import LoadingModal from '../../../Components/Loading/LoadingModal';
+import DisabledButton from '../../../Components/DisabledButton/DisabledButton';
+import { URL } from '../../../../Config/Config';
+import axios from 'axios';
+import { inject, observer } from 'mobx-react';
 //
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import moment from 'moment'
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import moment from 'moment';
 
 function Application({ navigation, route, store }) {
-  const [selectedShift, setselectedShift] = React.useState(null)
-  const [isTime, setTime] = React.useState(null)
-  const [isAttendance, setAttendance] = React.useState(null)
-  const [isShiftId, setShiftId] = React.useState(null)
-  const [canApply, setCanApply] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
-  const [isShow, setShow] = React.useState(false)
-  const [isOrganizer, setOrganizer] = React.useState(false)
-  const [isSupervisor, setSupervisor] = React.useState(false)
-  const [isHours, setHours] = React.useState(0)
+  const [selectedShift, setselectedShift] = React.useState(null);
+  const [isTime, setTime] = React.useState(null);
+  const [isAttendance, setAttendance] = React.useState(null);
+  const [isShiftId, setShiftId] = React.useState(null);
+  const [canApply, setCanApply] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isShow, setShow] = React.useState(false);
+  const [isOrganizer, setOrganizer] = React.useState(false);
+  const [isSupervisor, setSupervisor] = React.useState(false);
+  const [isHours, setHours] = React.useState(0);
 
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
 
-  const { item, shifts } = route.params
+  const { item, shifts } = route.params;
 
   const Select = async (val) => {
     var Time = I18nManager.isRTL
@@ -40,22 +51,24 @@ function Application({ navigation, route, store }) {
         moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
       : moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
         ' To ' +
-        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
-    setselectedShift(item.eventshifts[val].shift)
-    setTime(Time)
-    setAttendance(moment(item.eventshifts[val].attendance, 'hh:mm').format('hh:mma'))
-    setShiftId(item.eventshifts[val].id)
-    setHours(item.eventshifts[val].totalhours)
+        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma');
+    setselectedShift(item.eventshifts[val].shift);
+    setTime(Time);
+    setAttendance(
+      moment(item.eventshifts[val].attendance, 'hh:mm').format('hh:mma')
+    );
+    setShiftId(item.eventshifts[val].id);
+    setHours(item.eventshifts[val].totalhours);
     if (isOrganizer === false && isSupervisor === false) {
-      setCanApply(false)
+      setCanApply(false);
     } else if (isOrganizer === true || isSupervisor === true) {
-      setCanApply(true)
+      setCanApply(true);
     }
-    return
-  }
+    return;
+  };
 
   const Apply = async () => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         URL + '/user/ApplyToJob',
@@ -74,29 +87,31 @@ function Application({ navigation, route, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'exists') {
-            setLoading(false)
+            setLoading(false);
             Alert.alert(
               '',
-              I18nManager.isRTL ? 'لا يمكنك التقديم على نفس الوردية' : 'You cannot apply to the same shift',
+              I18nManager.isRTL
+                ? 'لا يمكنك التقديم على نفس الوردية'
+                : 'You cannot apply to the same shift',
               [{ text: 'OK', onPress: () => setLoading(false) }],
               {
                 cancelable: false,
               }
-            )
+            );
           } else if (response.data.check === 'success') {
             // await store.ReloadData()
-            Analytics.logEvent('Apply success')
-            await store.setHistoryPageBack()
-            await store.setResetPages()
+            Analytics.logEvent('Apply success');
+            await store.setHistoryPageBack();
+            await store.setResetPages();
             setTimeout(() => {
-              setLoading(false)
-              setShow(true)
-            }, 500)
-            return
+              setLoading(false);
+              setShow(true);
+            }, 500);
+            return;
           } else if (response.data.check === 'fail') {
-            Analytics.logEvent('Apply fail')
+            Analytics.logEvent('Apply fail');
 
-            setLoading(false)
+            setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -104,12 +119,12 @@ function Application({ navigation, route, store }) {
               {
                 cancelable: false,
               }
-            )
+            );
 
-            return
+            return;
           } else {
-            Analytics.logEvent('Apply fail')
-            setLoading(false)
+            Analytics.logEvent('Apply fail');
+            setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -117,18 +132,18 @@ function Application({ navigation, route, store }) {
               {
                 cancelable: false,
               }
-            )
+            );
 
-            return
+            return;
           }
         }
       })
       .catch(async (error) => {
-        setLoading(false)
+        setLoading(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -138,9 +153,9 @@ function Application({ navigation, route, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -149,8 +164,8 @@ function Application({ navigation, route, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -161,49 +176,49 @@ function Application({ navigation, route, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const SelectType = async (val, check) => {
     if (val === 0) {
-      await setOrganizer(check)
+      await setOrganizer(check);
 
       if (check === false) {
         if (isSupervisor === true && selectedShift !== null) {
-          setCanApply(true)
+          setCanApply(true);
         } else {
-          setCanApply(false)
+          setCanApply(false);
         }
       } else {
         if (check === true && selectedShift !== null) {
-          setCanApply(true)
+          setCanApply(true);
         } else {
-          setCanApply(false)
+          setCanApply(false);
         }
       }
     } else {
-      await setSupervisor(check)
+      await setSupervisor(check);
 
       if (check === false) {
         if (isOrganizer === true && selectedShift !== null) {
-          setCanApply(true)
+          setCanApply(true);
         } else {
-          setCanApply(false)
+          setCanApply(false);
         }
       } else {
         if (check === true && selectedShift !== null) {
-          setCanApply(true)
+          setCanApply(true);
         } else {
-          setCanApply(false)
+          setCanApply(false);
         }
       }
     }
 
-    return
-  }
+    return;
+  };
 
   return (
     <View style={styles.Container}>
@@ -216,7 +231,9 @@ function Application({ navigation, route, store }) {
                 showsHorizontalScrollIndicator={false}
                 data={shifts}
                 horizontal={true}
-                inverted={I18nManager.isRTL && Platform.OS !== 'ios' ? true : false}
+                inverted={
+                  I18nManager.isRTL && Platform.OS !== 'ios' ? true : false
+                }
                 renderItem={({ item, index }) => (
                   <AnimatedButton
                     Shift={selectedShift}
@@ -232,19 +249,24 @@ function Application({ navigation, route, store }) {
 
             <Text style={styles.TimeandA}>
               {SingleJobStrings.ShiftTime}{' '}
-              <Text style={{ color: 'black' }}>
-                {isTime ? isTime + ` (${isHours} ${I18nManager.isRTL ? 'ساعات' : 'Hours'})` : null}
+              <Text style={styles.BlackText}>
+                {isTime
+                  ? isTime +
+                    ` (${isHours} ${I18nManager.isRTL ? 'ساعات' : 'Hours'})`
+                  : null}
               </Text>
             </Text>
             <Text style={styles.TimeandA}>
-              {SingleJobStrings.ShiftAtta} <Text style={{ color: 'black' }}>{isAttendance}</Text>
+              {SingleJobStrings.ShiftAtta}{' '}
+              <Text style={styles.BlackText}>{isAttendance}</Text>
             </Text>
 
             <Text style={styles.titleS}>{SingleJobStrings.Applyingfor}</Text>
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal={true}
-              style={{ alignSelf: 'flex-start' }}>
+              style={styles.AlignSelfScroll}
+            >
               <AnimatedButtonSelect
                 Shift={isOrganizer}
                 onPress={() => SelectType(0, !isOrganizer)}
@@ -296,8 +318,8 @@ function Application({ navigation, route, store }) {
           ShowModal={isShow}
           onPress={() => setShow(false)}
           onPressHome={() => {
-            setShow(false)
-            navigation.navigate('Home')
+            setShow(false);
+            navigation.navigate('Home');
           }}
         />
         <LoadingModal Loading={isLoading} />
@@ -307,10 +329,14 @@ function Application({ navigation, route, store }) {
           <Text style={styles.ButtonText}>{SingleJobStrings.Apply}</Text>
         </TouchableOpacity> */}
 
-        <DisabledButton TextValue={SingleJobStrings.Apply} Check={canApply} onPress={() => Apply()} />
+        <DisabledButton
+          TextValue={SingleJobStrings.Apply}
+          Check={canApply}
+          onPress={() => Apply()}
+        />
       </View>
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(Application))
+export default inject('store')(observer(Application));

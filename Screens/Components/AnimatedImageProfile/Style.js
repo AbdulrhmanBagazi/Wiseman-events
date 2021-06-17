@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { PrimaryColor } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { PrimaryColor } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Image: {
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: PrimaryColor,
   },
-})
+});
 
-export default styles
+export default styles;

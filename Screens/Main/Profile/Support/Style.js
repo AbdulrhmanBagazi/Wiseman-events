@@ -1,6 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import { PrimaryColor, LightText } from '../../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width, height } from '../../../../Config/Layout';
+import { PrimaryColor, LightText } from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
     height: height / 10,
     resizeMode: 'contain',
   },
-})
+});
 
-export default styles
+export default styles;

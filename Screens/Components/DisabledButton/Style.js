@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import { width } from '../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
 
 const styles = StyleSheet.create({
   Button: {
@@ -22,6 +21,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-})
+});
 
-export default styles
+export default styles;

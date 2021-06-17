@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Modal,
@@ -8,69 +8,64 @@ import {
   TextInput,
   FlatList,
   I18nManager,
-} from 'react-native'
-import styles from './Style'
-import { ProfileStrings } from '../../../Config/Strings'
-import { Entypo } from '@expo/vector-icons'
-import CitiesData from './cities.json'
+} from 'react-native';
+import styles from './Style';
+import { ProfileStrings } from '../../../Config/Strings';
+import { Entypo } from '@expo/vector-icons';
+import CitiesData from './cities.json';
 
 export default function CitiesModal(props) {
-  const [modalVisible, setModalVisible] = React.useState(false)
-  const [isDATA, setData] = React.useState(false)
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [isDATA, setData] = React.useState(false);
 
-  const DATA = CitiesData
+  const DATA = CitiesData;
 
   React.useEffect(() => {
-    setData(DATA)
+    setData(DATA);
     if (modalVisible) {
-      setModalVisible(!modalVisible)
+      setModalVisible(!modalVisible);
     }
-  }, [props.CityValue])
+  }, [props.CityValue]);
 
   const onChangeText = async (text) => {
-    var trim = await text.trim()
+    var trim = await text.trim();
 
     if (I18nManager.isRTL) {
       const newData = DATA.filter((item) => {
-        const itemData = `${item.name_ar.toUpperCase()}`
-        const textData = trim.toUpperCase()
+        const itemData = `${item.name_ar.toUpperCase()}`;
+        const textData = trim.toUpperCase();
 
-        return itemData.indexOf(textData) > -1
-      })
-      setData(newData)
+        return itemData.indexOf(textData) > -1;
+      });
+      setData(newData);
     } else {
       const newData = DATA.filter((item) => {
-        const itemData = `${item.name_en.toUpperCase()}`
-        const textData = trim.toUpperCase()
+        const itemData = `${item.name_en.toUpperCase()}`;
+        const textData = trim.toUpperCase();
 
-        return itemData.indexOf(textData) > -1
-      })
-      setData(newData)
+        return itemData.indexOf(textData) > -1;
+      });
+      setData(newData);
     }
 
-    return
-  }
+    return;
+  };
 
   return (
     <View>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <SafeAreaView style={styles.CitiesView}>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.CitiesModalViewContainer}>
             <TouchableOpacity
-              style={{
-                ...styles.openButton,
-                width: 62,
-                height: 48,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              style={styles.CitiesModalTouch}
               onPress={() => {
-                setModalVisible(!modalVisible)
-              }}>
+                setModalVisible(!modalVisible);
+              }}
+            >
               <Text style={styles.textStyle}>X</Text>
             </TouchableOpacity>
             <TextInput
-              style={{ width: 48, width: '70%', fontSize: 16 }}
+              style={styles.CitiesModalInput}
               placeholder={ProfileStrings.Search}
               onChangeText={(text) => onChangeText(text)}
             />
@@ -90,8 +85,9 @@ export default function CitiesModal(props) {
       <TouchableOpacity
         style={styles.inputDate}
         onPress={() => {
-          setModalVisible(true)
-        }}>
+          setModalVisible(true);
+        }}
+      >
         {ProfileStrings.City === props.CityValue ? (
           <Text>{ProfileStrings.City}</Text>
         ) : (
@@ -100,5 +96,5 @@ export default function CitiesModal(props) {
         <Entypo name="chevron-down" size={24} />
       </TouchableOpacity>
     </View>
-  )
+  );
 }

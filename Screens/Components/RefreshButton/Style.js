@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { PrimaryColor } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { PrimaryColor } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Button: {
@@ -10,6 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default styles
+export default styles;

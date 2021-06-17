@@ -1,7 +1,7 @@
-import React from 'react'
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, I18nManager, Image } from 'react-native'
-import styles from './Style'
-import { LevelsPageStrings } from '../../../../Config/Strings'
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import styles from './Style';
+import { LevelsPageStrings } from '../../../../Config/Strings';
 function Levels() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -29,7 +29,7 @@ function Levels() {
         </View>
       </View>
     </ScrollView>
-  )
+  );
 }
 
-export default Levels
+export default Levels;

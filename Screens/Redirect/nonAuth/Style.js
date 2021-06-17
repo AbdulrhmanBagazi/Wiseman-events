@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../Config/Layout'
-import { PrimaryColor, LightText } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { PrimaryColor, LightText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width,
     flex: 1,
-    width,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -447,6 +446,14 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
-})
+  nonAuthFlex: { flex: 1 },
+  nonAuthFlexFour: { flex: 4 },
+  nonAuthLoaidngView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 177,
+  },
+});
 
-export default styles
+export default styles;

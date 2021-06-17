@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,38 +8,38 @@ import {
   Modal,
   ActivityIndicator,
   Alert,
-} from 'react-native'
-import styles from './Style'
-import { inject, observer } from 'mobx-react'
-import { StatusPageStrings } from '../../../../Config/Strings'
-import { width } from '../../../../Config/Layout'
-import StatusPicker from './StatusPicker'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import { URL } from '../../../../Config/Config'
-import axios from 'axios'
+} from 'react-native';
+import styles from './Style';
+import { inject, observer } from 'mobx-react';
+import { StatusPageStrings } from '../../../../Config/Strings';
+import { width } from '../../../../Config/Layout';
+import StatusPicker from './StatusPicker';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import { URL } from '../../../../Config/Config';
+import axios from 'axios';
 //
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 
 function Status({ store }) {
-  const [Show, setShow] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
-  const [TimeStart, setTimeStart] = React.useState(null)
-  const [TimeEnd, setTimeEnd] = React.useState(null)
-  const [textAr, setTextAr] = React.useState('')
-  const [textarTime, setTextarTime] = React.useState('')
-  const [isReload, setReload] = React.useState(false)
+  const [Show, setShow] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
+  const [TimeStart, setTimeStart] = React.useState(null);
+  const [TimeEnd, setTimeEnd] = React.useState(null);
+  const [textAr, setTextAr] = React.useState('');
+  const [textarTime, setTextarTime] = React.useState('');
+  const [isReload, setReload] = React.useState(false);
 
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
 
   const [Day, setDay] = React.useState({
     Start: null,
     End: null,
-  })
-  const [Stat, setStat] = React.useState(null)
+  });
+  const [Stat, setStat] = React.useState(null);
   const SetStatus = async () => {
-    setLoading(true)
+    setLoading(true);
     if (Stat === 'Full-Time') {
       axios
         .post(
@@ -63,18 +63,18 @@ function Status({ store }) {
                   status: Stat,
                   time: null,
                   days: null,
-                }
+                };
               } else {
-                store.data.status = response.data.status
+                store.data.status = response.data.status;
               }
               setTimeout(() => {
-                setLoading(false)
-                setShow(false)
-                setReload(!isReload)
-              }, 500)
-              return
+                setLoading(false);
+                setShow(false);
+                setReload(!isReload);
+              }, 500);
+              return;
             } else if (response.data.check === 'fail') {
-              setLoading(false)
+              setLoading(false);
 
               Alert.alert(
                 '',
@@ -83,10 +83,10 @@ function Status({ store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             } else {
-              setLoading(false)
+              setLoading(false);
 
               Alert.alert(
                 '',
@@ -95,18 +95,18 @@ function Status({ store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             }
           }
         })
         .catch(async (error) => {
-          setLoading(false)
+          setLoading(false);
           if (error.response) {
             if (error.response.status) {
               if (error.response.status === 401) {
-                await UserTokenRemove()
+                await UserTokenRemove();
                 Alert.alert(
                   '',
                   I18nManager.isRTL
@@ -116,9 +116,9 @@ function Status({ store }) {
                   {
                     cancelable: false,
                   }
-                )
+                );
 
-                return
+                return;
               } else {
                 Alert.alert(
                   '',
@@ -127,8 +127,8 @@ function Status({ store }) {
                   {
                     cancelable: false,
                   }
-                )
-                return
+                );
+                return;
               }
             }
           } else {
@@ -139,13 +139,18 @@ function Status({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
-        })
-    } else if (Day.Start === null || Day.End === null || TimeStart === null || TimeEnd === null) {
+        });
+    } else if (
+      Day.Start === null ||
+      Day.End === null ||
+      TimeStart === null ||
+      TimeEnd === null
+    ) {
       // console.log(Day.Start, Day.End, TimeStart, TimeEnd)
-      setLoading(false)
+      setLoading(false);
       Alert.alert(
         '',
         I18nManager.isRTL ? 'جميع الحقول مطلوبة!' : 'All fields required!',
@@ -153,9 +158,9 @@ function Status({ store }) {
         {
           cancelable: false,
         }
-      )
+      );
 
-      return
+      return;
     } else if (
       Stat !== null &&
       Day.Start !== null &&
@@ -185,18 +190,18 @@ function Status({ store }) {
                   status: Stat,
                   time: TimeStart + ' - ' + TimeEnd,
                   days: Day.Start + ' - ' + Day.End,
-                }
+                };
               } else {
-                store.data.status = response.data.status
+                store.data.status = response.data.status;
               }
               setTimeout(() => {
-                setLoading(false)
-                setShow(false)
-                setReload(!isReload)
-              }, 500)
-              return
+                setLoading(false);
+                setShow(false);
+                setReload(!isReload);
+              }, 500);
+              return;
             } else if (response.data.check === 'fail') {
-              setLoading(false)
+              setLoading(false);
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -204,10 +209,10 @@ function Status({ store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             } else {
-              setLoading(false)
+              setLoading(false);
               Alert.alert(
                 '',
                 I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -215,18 +220,18 @@ function Status({ store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             }
           }
         })
         .catch(async (error) => {
-          setLoading(false)
+          setLoading(false);
           if (error.response) {
             if (error.response.status) {
               if (error.response.status === 401) {
-                await UserTokenRemove()
+                await UserTokenRemove();
                 Alert.alert(
                   '',
                   I18nManager.isRTL
@@ -236,9 +241,9 @@ function Status({ store }) {
                   {
                     cancelable: false,
                   }
-                )
+                );
 
-                return
+                return;
               } else {
                 Alert.alert(
                   '',
@@ -247,8 +252,8 @@ function Status({ store }) {
                   {
                     cancelable: false,
                   }
-                )
-                return
+                );
+                return;
               }
             }
           } else {
@@ -259,72 +264,76 @@ function Status({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
-        })
-      return
+        });
+      return;
     }
-  }
+  };
 
   React.useEffect(() => {
     if (store.data.status !== null) {
-      if (store.data.status.days !== null && store.data.status.time !== null && I18nManager.isRTL) {
-        var String = store.data.status.time
-        var str = store.data.status.days
-        var res = str.split('to')
-        var arone = getArabic(res[0].trim())
-        var artwo = getArabic(res[1].trim())
-        setTextAr(arone + ' إلى ' + artwo)
+      if (
+        store.data.status.days !== null &&
+        store.data.status.time !== null &&
+        I18nManager.isRTL
+      ) {
+        var String = store.data.status.time;
+        var str = store.data.status.days;
+        var res = str.split('to');
+        var arone = getArabic(res[0].trim());
+        var artwo = getArabic(res[1].trim());
+        setTextAr(arone + ' إلى ' + artwo);
 
         if (String !== null && I18nManager.isRTL) {
-          var res = String.split('to')
-          var arone = res[0].trim()
-          var artwo = res[1].trim()
+          var res = String.split('to');
+          var arone = res[0].trim();
+          var artwo = res[1].trim();
 
           if (arone.indexOf('am') >= 0) {
-            var newArone = arone.replace('am', 'صباحا')
+            var newArone = arone.replace('am', 'صباحا');
           } else {
-            var newArone = arone.replace('pm', 'مساء')
+            var newArone = arone.replace('pm', 'مساء');
           }
 
           if (artwo.indexOf('am') >= 0) {
-            var newArtwo = artwo.replace('am', 'صباحا')
+            var newArtwo = artwo.replace('am', 'صباحا');
           } else {
-            var newArtwo = artwo.replace('pm', 'مساء')
+            var newArtwo = artwo.replace('pm', 'مساء');
           }
 
-          setTextarTime(newArone + ' إلى ' + newArtwo)
-          return
+          setTextarTime(newArone + ' إلى ' + newArtwo);
+          return;
         }
 
-        return
+        return;
       } else {
-        setTextAr(store.data.status.days)
-        setTextarTime(store.data.status.time)
-        return
+        setTextAr(store.data.status.days);
+        setTextarTime(store.data.status.time);
+        return;
       }
     }
-  }, [isReload])
+  }, [isReload]);
 
   const getArabic = (day) => {
     switch (day) {
       case 'Saturday':
-        return 'السبت'
+        return 'السبت';
       case 'Sunday':
-        return 'الآحد'
+        return 'الآحد';
       case 'Monday':
-        return 'الإثنين'
+        return 'الإثنين';
       case 'Tuesday':
-        return 'الثلاثاء'
+        return 'الثلاثاء';
       case 'Wednesday':
-        return 'الآربعاء'
+        return 'الآربعاء';
       case 'Thursday':
-        return 'الخميس'
+        return 'الخميس';
       default:
-        return 'الجمعة'
+        return 'الجمعة';
     }
-  }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -334,12 +343,18 @@ function Status({ store }) {
           justifyContent: 'space-between',
           width,
           marginTop: 40,
-        }}>
+        }}
+      >
         <Text style={styles.Title}>{StatusPageStrings.Status}</Text>
         {Show ? (
           <TouchableOpacity
-            style={{ padding: 5, justifyContent: 'center', alignItems: 'center' }}
-            onPress={() => setShow(false)}>
+            style={{
+              padding: 5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => setShow(false)}
+          >
             <Text style={styles.Cancel}>{StatusPageStrings.Cancel}</Text>
           </TouchableOpacity>
         ) : null}
@@ -360,10 +375,24 @@ function Status({ store }) {
         ) : (
           <View style={styles.View}>
             <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 0.5, alignItems: 'flex-start', justifyContent: 'center' }}>
-                <Text style={styles.ViewText}>{I18nManager.isRTL ? 'الحالة' : 'Status'}</Text>
+              <View
+                style={{
+                  flex: 0.5,
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={styles.ViewText}>
+                  {I18nManager.isRTL ? 'الحالة' : 'Status'}
+                </Text>
               </View>
-              <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
+                }}
+              >
                 {I18nManager.isRTL ? (
                   <Text
                     style={{
@@ -371,7 +400,8 @@ function Status({ store }) {
                       fontSize: 16,
                       fontWeight: '500',
                       color: store.data.status === null ? '#E8505B' : '#000',
-                    }}>
+                    }}
+                  >
                     {store.data.status === null
                       ? StatusPageStrings.notspecifiedyet
                       : store.data.status.status === 'Full-Time'
@@ -387,7 +417,8 @@ function Status({ store }) {
                       fontSize: 16,
                       fontWeight: '500',
                       color: store.data.status === null ? '#E8505B' : '#000',
-                    }}>
+                    }}
+                  >
                     {store.data.status === null
                       ? StatusPageStrings.notspecifiedyet
                       : store.data.status.status}
@@ -395,34 +426,64 @@ function Status({ store }) {
                 )}
               </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+              }}
+            >
               <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
-                <Text style={styles.ViewText}>{I18nManager.isRTL ? 'أيام العمل' : 'Work days'}</Text>
+                <Text style={styles.ViewText}>
+                  {I18nManager.isRTL ? 'أيام العمل' : 'Work days'}
+                </Text>
               </View>
-              <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
+                }}
+              >
                 <Text
                   style={{
                     textAlign: 'right',
                     fontSize: 16,
                     fontWeight: '500',
                     color: store.data.status === null ? '#E8505B' : '#000',
-                  }}>
+                  }}
+                >
                   {store.data.status === null ? '' : textAr}
                 </Text>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+              }}
+            >
               <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
-                <Text style={styles.ViewText}>{I18nManager.isRTL ? 'وقت العمل' : 'Work time'}</Text>
+                <Text style={styles.ViewText}>
+                  {I18nManager.isRTL ? 'وقت العمل' : 'Work time'}
+                </Text>
               </View>
-              <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
+                }}
+              >
                 <Text
                   style={{
                     textAlign: 'right',
                     fontSize: 16,
                     fontWeight: '500',
                     color: store.data.status === null ? '#E8505B' : '#000',
-                  }}>
+                  }}
+                >
                   {store.data.status === null ? '' : textarTime}
                 </Text>
               </View>
@@ -431,11 +492,17 @@ function Status({ store }) {
         )}
 
         {Show ? (
-          <TouchableOpacity style={styles.ButtonAdd} onPress={() => SetStatus()}>
+          <TouchableOpacity
+            style={styles.ButtonAdd}
+            onPress={() => SetStatus()}
+          >
             <Text style={styles.ButtonText}>{StatusPageStrings.Save}</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.AddButton} onPress={() => setShow(true)}>
+          <TouchableOpacity
+            style={styles.AddButton}
+            onPress={() => setShow(true)}
+          >
             <Text style={styles.AddButtonText}>{StatusPageStrings.New}</Text>
           </TouchableOpacity>
         )}
@@ -447,7 +514,7 @@ function Status({ store }) {
         </View>
       </Modal>
     </ScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(Status))
+export default inject('store')(observer(Status));

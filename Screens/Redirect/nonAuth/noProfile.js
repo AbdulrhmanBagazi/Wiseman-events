@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -7,23 +7,29 @@ import {
   I18nManager,
   Share,
   SafeAreaView,
-  Image,
-} from 'react-native'
-import Icon from '../../../Config/Icons'
-import styles from './Style'
-import { Entypo } from '@expo/vector-icons'
-import { ProfilePageStrings, NonAuthStrings } from '../../../Config/Strings'
-import { inject, observer } from 'mobx-react'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import { width } from '../../../Config/Layout'
-import { LanguageStore } from '../../../Config/AsyncStorage'
-import * as Updates from 'expo-updates'
-import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
+  Alert,
+  StyleSheet,
+} from 'react-native';
+import Icon from '../../../Config/Icons';
+import styles from './Style';
+import { Entypo } from '@expo/vector-icons';
+import { ProfilePageStrings, NonAuthStrings } from '../../../Config/Strings';
+import { inject, observer } from 'mobx-react';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import { width } from '../../../Config/Layout';
+import { LanguageStore } from '../../../Config/AsyncStorage';
+import * as Updates from 'expo-updates';
+import Svg, { Defs, G, Path } from 'react-native-svg';
 
 function LogoTitle() {
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 300 300">
-      <Defs></Defs>
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="70"
+      height="70"
+      viewBox="0 0 300 300"
+    >
+      <Defs />
 
       <G transform="translate(-597.908 -352.154)">
         <Path
@@ -39,7 +45,7 @@ function LogoTitle() {
         />
       </G>
     </Svg>
-  )
+  );
 }
 
 function noProfile({ store, navigation }) {
@@ -47,7 +53,7 @@ function noProfile({ store, navigation }) {
     try {
       const result = await Share.share({
         message: 'www.google.com',
-      })
+      });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
@@ -58,27 +64,34 @@ function noProfile({ store, navigation }) {
         // dismissed
       }
     } catch (error) {
-      alert(error.message)
+      Alert.alert(
+        '',
+        I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        }
+      );
     }
-  }
+  };
 
   const LanguageChangeHandler = async (val) => {
     if (val === 'ar') {
-      I18nManager.allowRTL(true)
-      I18nManager.forceRTL(true)
-      await LanguageStore(val)
-      Updates.reloadAsync()
-      return
+      I18nManager.allowRTL(true);
+      I18nManager.forceRTL(true);
+      await LanguageStore(val);
+      Updates.reloadAsync();
+      return;
     } else if (val === 'en') {
-      I18nManager.allowRTL(false)
-      I18nManager.forceRTL(false)
-      await LanguageStore(val)
-      Updates.reloadAsync()
-      return
+      I18nManager.allowRTL(false);
+      I18nManager.forceRTL(false);
+      await LanguageStore(val);
+      Updates.reloadAsync();
+      return;
     } else {
-      return
+      return;
     }
-  }
+  };
 
   return (
     <View style={styles.Containerprofile}>
@@ -86,8 +99,13 @@ function noProfile({ store, navigation }) {
         <SafeAreaView style={styles.safe}>
           <TouchableOpacity
             style={styles.iconButton}
-            onPress={() => LanguageChangeHandler(I18nManager.isRTL ? 'en' : 'ar')}>
-            <Text style={styles.leftTextArEn}>{I18nManager.isRTL ? 'English' : 'عربي'}</Text>
+            onPress={() =>
+              LanguageChangeHandler(I18nManager.isRTL ? 'en' : 'ar')
+            }
+          >
+            <Text style={styles.leftTextArEn}>
+              {I18nManager.isRTL ? 'English' : 'عربي'}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.Image} disabled={true}>
             <LogoTitle />
@@ -95,25 +113,27 @@ function noProfile({ store, navigation }) {
         </SafeAreaView>
       </View>
       <View style={styles.info}>
-        <Text style={styles.name} numberOfLines={2}></Text>
-        <Text style={styles.rating} numberOfLines={2}></Text>
+        <Text style={styles.name} numberOfLines={2} />
+        <Text style={styles.rating} numberOfLines={2} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.about}>
           <View style={styles.aboutE}>
             <Text style={styles.aboutT}>
-              {I18nManager.isRTL ? 'معلومات الملف الشخصي' : 'Profile information'}
+              {I18nManager.isRTL
+                ? 'معلومات الملف الشخصي'
+                : 'Profile information'}
             </Text>
           </View>
 
           <View style={styles.aboutB}>
             <TouchableOpacity style={styles.aboutButton} disabled={true}>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftTextDisabled}>{ProfilePageStrings.status}</Text>
+              <View style={stylesmain.ViewStart}>
+                <Text style={styles.leftTextDisabled}>
+                  {ProfilePageStrings.status}
+                </Text>
               </View>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View style={stylesmain.ViewEnd}>
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -122,12 +142,12 @@ function noProfile({ store, navigation }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutButton} disabled={true}>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftTextDisabled}>{ProfilePageStrings.Earnings}</Text>
+              <View style={stylesmain.ViewStart}>
+                <Text style={styles.leftTextDisabled}>
+                  {ProfilePageStrings.Earnings}
+                </Text>
               </View>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View style={stylesmain.ViewEnd}>
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -136,12 +156,12 @@ function noProfile({ store, navigation }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutButton} disabled={true}>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftTextDisabled}>{ProfilePageStrings.IBAN}</Text>
+              <View style={stylesmain.ViewStart}>
+                <Text style={styles.leftTextDisabled}>
+                  {ProfilePageStrings.IBAN}
+                </Text>
               </View>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View style={stylesmain.ViewEnd}>
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -150,23 +170,24 @@ function noProfile({ store, navigation }) {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.aboutButton} onPress={() => onShare()}>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+            <TouchableOpacity
+              style={styles.aboutButton}
+              onPress={() => onShare()}
+            >
+              <View style={stylesmain.ViewStart}>
                 <Text style={styles.leftText}>{ProfilePageStrings.Invite}</Text>
               </View>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View style={stylesmain.ViewEnd}>
                 <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutButton} disabled={true}>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                <Text style={styles.leftTextDisabled}>{ProfilePageStrings.Support}</Text>
+              <View style={stylesmain.ViewStart}>
+                <Text style={styles.leftTextDisabled}>
+                  {ProfilePageStrings.Support}
+                </Text>
               </View>
-              <View
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+              <View style={stylesmain.ViewEnd}>
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -179,22 +200,39 @@ function noProfile({ store, navigation }) {
       </ScrollView>
       <TouchableOpacity
         onPress={() => navigation.navigate('SignIn')}
-        style={{
-          backgroundColor: 'transparent',
-          flexDirection: 'row',
-          width,
-          borderRadius: 5,
-          marginBottom: 12,
-          height: 50,
-          padding: 5,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 30,
-        }}>
-        <Text style={{ color: PrimaryColor, fontWeight: 'bold', fontSize: 14 }}>{NonAuthStrings.Goto}</Text>
+        style={stylesmain.SingUpbutton}
+      >
+        <Text style={stylesmain.SingUpText}>{NonAuthStrings.Goto}</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(noProfile))
+export default inject('store')(observer(noProfile));
+
+const stylesmain = StyleSheet.create({
+  ViewStart: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  ViewEnd: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+  SingUpbutton: {
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    width,
+    borderRadius: 5,
+    height: 50,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  SingUpText: { color: PrimaryColor, fontWeight: 'bold', fontSize: 14 },
+});

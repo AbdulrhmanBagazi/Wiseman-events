@@ -1,20 +1,14 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../../Config/Layout';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    width,
+    alignItems: 'center',
     alignSelf: 'center',
+    width,
+    backgroundColor: '#F8F8F9',
   },
   View: {
     alignSelf: 'center',
@@ -149,6 +143,40 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#868991',
   },
-})
+  MainView: {
+    width: width - 33,
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderColor: '#868991',
+  },
+  ViewAlignContent: { alignItems: 'flex-start', justifyContent: 'center' },
+  ShowMoreView: {
+    width,
+    marginVertical: 5,
+  },
+  PickerView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#868991',
+    marginHorizontal: 16,
+  },
+  ViewRow: { flexDirection: 'row' },
+  SelectView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#868991',
+    marginHorizontal: 16,
+  },
+  MarginV: {
+    width,
+    marginVertical: 5,
+  },
+  FlexOne: { flex: 1 },
+  TextFont: { fontWeight: '600', fontSize: 16 },
+});
 
-export default styles
+export default styles;

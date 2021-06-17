@@ -1,79 +1,89 @@
-import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Keyboard } from 'react-native'
-import styles from './Style'
-import { ResetPasswordString, ErrorsStrings } from '../../../Config/Strings'
-import Inputpassowrd from '../../Components/PasswordInput/Password'
-import axios from 'axios'
-import debounce from 'lodash/debounce'
-import { URL } from '../../../Config/Config'
-import { UserPhoneOTPGet } from '../../../Config/AsyncStorage'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import React from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
+import styles from './Style';
+import { ResetPasswordString, ErrorsStrings } from '../../../Config/Strings';
+import Inputpassowrd from '../../Components/PasswordInput/Password';
+import axios from 'axios';
+import debounce from 'lodash/debounce';
+import { URL } from '../../../Config/Config';
+import { UserPhoneOTPGet } from '../../../Config/AsyncStorage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 function GetCode({ navigation }) {
   const [data, setData] = React.useState({
     Code: '',
     Password: '', //Aa123123 Aa123122
     RePassword: '',
-  })
-  const [isCheck, setCheck] = React.useState('')
-  const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState(' ')
+  });
+  const [isCheck, setCheck] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
+  const [isError, setError] = React.useState(' ');
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632
-    })
-  }
+      return d.charCodeAt(0) - 1632;
+    });
+  };
 
   const CodeInput = async (val) => {
-    var Code = await convertToArabicNumber(val)
+    var Code = await convertToArabicNumber(val);
     setData({
       ...data,
       Code: Code,
-    })
-  }
+    });
+  };
 
   const PasswordInput = async (val) => {
-    var Pss = await convertToArabicNumber(val)
+    var Pss = await convertToArabicNumber(val);
 
     setData({
       ...data,
       Password: Pss,
-    })
+    });
     if (val === '') {
-      setCheck('')
+      setCheck('');
     } else if (data.RePassword === Pss) {
-      setCheck('Success')
+      setCheck('Success');
     } else {
-      setCheck('Error')
+      setCheck('Error');
     }
-  }
+  };
 
   const RePasswordInput = async (val) => {
-    var RePss = await convertToArabicNumber(val)
+    var RePss = await convertToArabicNumber(val);
 
     setData({
       ...data,
       RePassword: RePss,
-    })
+    });
     if (val === '') {
-      setCheck('')
+      setCheck('');
     }
     if (data.Password === RePss) {
-      setCheck('Success')
+      setCheck('Success');
     } else {
-      setCheck('Error')
+      setCheck('Error');
     }
-  }
+  };
 
   const ResetPassword = async (val) => {
-    await Keyboard.dismiss()
-    var OTPphone = await UserPhoneOTPGet()
+    await Keyboard.dismiss();
+    var OTPphone = await UserPhoneOTPGet();
     if (isLoading) {
-      return
+      return;
     }
-    setLoading(true)
-    if (val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) && isCheck === 'Success') {
+    setLoading(true);
+    if (
+      val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
+      isCheck === 'Success'
+    ) {
       axios
         .post(URL + '/user/changePassword', {
           code: val.Code,
@@ -82,33 +92,34 @@ function GetCode({ navigation }) {
         })
         .then((response) => {
           if (response.data === 'success') {
-            setLoading(false)
-            navigation.navigate('ResetSuccess')
-            return
+            setLoading(false);
+            navigation.navigate('ResetSuccess');
+            return;
           } else {
-            setError(ErrorsStrings.WrongCode)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.WrongCode);
+            setLoading(false);
+            return;
           }
         })
         .catch((error) => {
-          setError(ErrorsStrings.WrongCodeCheck)
-          setLoading(false)
-          return
-        })
+          setError(ErrorsStrings.WrongCodeCheck);
+          setLoading(false);
+          return;
+        });
     } else {
-      setError(ErrorsStrings.Required)
-      setLoading(false)
-      return
+      setError(ErrorsStrings.Required);
+      setLoading(false);
+      return;
     }
-  }
+  };
 
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
       showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled">
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.container}>
         <Text style={styles.TitleCode}>{ResetPasswordString.CodeTitle}</Text>
         <Text style={styles.Slogan}>{ResetPasswordString.CodeSlogan}</Text>
@@ -142,16 +153,22 @@ function GetCode({ navigation }) {
 
         <TouchableOpacity
           style={styles.Button}
-          onPress={debounce(() => (!isLoading ? ResetPassword(data) : null), 200)}>
+          onPress={debounce(
+            () => (!isLoading ? ResetPassword(data) : null),
+            200
+          )}
+        >
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
-            <Text style={styles.ButtonText}>{ResetPasswordString.Resetbutton}</Text>
+            <Text style={styles.ButtonText}>
+              {ResetPasswordString.Resetbutton}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
-  )
+  );
 }
 
-export default GetCode
+export default GetCode;

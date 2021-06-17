@@ -1,33 +1,39 @@
-import React from 'react'
-import { View, Text, FlatList, I18nManager, Alert, ActivityIndicator, RefreshControl } from 'react-native'
-import styles from './Style'
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import Card from './Card'
+import React from 'react';
+import {
+  View,
+  FlatList,
+  I18nManager,
+  Alert,
+  RefreshControl,
+} from 'react-native';
+import styles from './Style';
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import { inject, observer } from 'mobx-react';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import Card from './Card';
 
 function Earnings({ store, navigation }) {
-  const [isLoading, setLoading] = React.useState(true)
-  const { signOut } = React.useContext(AuthContext)
-  const [isData, setData] = React.useState([])
-  const [isReload, setReload] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(true);
+  const { signOut } = React.useContext(AuthContext);
+  const [isData, setData] = React.useState([]);
+  const [isReload, setReload] = React.useState(false);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (isLoading) {
         // Prevent default behavior of leaving the screen
-        e.preventDefault()
-        return
+        e.preventDefault();
+        return;
       }
 
-      return
-    })
+      return;
+    });
 
-    return unsubscribe
-  }, [navigation, isLoading])
+    return unsubscribe;
+  }, [navigation, isLoading]);
 
   React.useEffect(() => {
     axios
@@ -40,12 +46,12 @@ function Earnings({ store, navigation }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            setData(response.data.payments)
-            setLoading(false)
-            store.updEarningsBadgeage(0, false)
+            setData(response.data.payments);
+            setLoading(false);
+            store.updEarningsBadgeage(0, false);
 
             // console.log(response.data.payments)
-            return
+            return;
           } else if (response.data.check === 'fail') {
             Alert.alert(
               '',
@@ -54,8 +60,8 @@ function Earnings({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
             Alert.alert(
               '',
@@ -64,8 +70,8 @@ function Earnings({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
           Alert.alert(
@@ -75,15 +81,15 @@ function Earnings({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -93,9 +99,9 @@ function Earnings({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -104,8 +110,8 @@ function Earnings({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -116,11 +122,11 @@ function Earnings({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }, [isReload])
+      });
+  }, [isReload]);
 
   return (
     <View style={styles.Container}>
@@ -136,11 +142,11 @@ function Earnings({ store, navigation }) {
             tintColor={PrimaryColor}
           />
         }
-        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
+        contentContainerStyle={styles.PaddingContent}
         renderItem={({ item, index }) => <Card Data={item} />}
       />
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(Earnings))
+export default inject('store')(observer(Earnings));

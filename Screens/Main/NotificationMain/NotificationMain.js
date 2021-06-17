@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -9,31 +9,31 @@ import {
   RefreshControl,
   Alert,
   Linking,
-} from 'react-native'
-import styles from './Style'
-import Icon from '../../../Config/Icons'
-import { FontAwesome } from '@expo/vector-icons'
-import moment from 'moment'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
-import { AuthContext } from '../../../Hooks/Context'
-import { UserTokenRemove } from '../../../Config/AsyncStorage'
-import { AlertStrings } from '../../../Config/Strings'
-import { Ionicons } from '@expo/vector-icons'
+} from 'react-native';
+import styles from './Style';
+import Icon from '../../../Config/Icons';
+import { FontAwesome } from '@expo/vector-icons';
+import moment from 'moment';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import { inject, observer } from 'mobx-react';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
+import { AuthContext } from '../../../Hooks/Context';
+import { UserTokenRemove } from '../../../Config/AsyncStorage';
+import { AlertStrings } from '../../../Config/Strings';
+import { Ionicons } from '@expo/vector-icons';
 
 function NotificationMain({ navigation, store }) {
-  const [isLoading, setLoading] = React.useState(false)
-  const [refreshing, setrefreshing] = React.useState(false)
-  const { signOut } = React.useContext(AuthContext)
-  const [isLoadingAlert, setLoadingAlert] = React.useState(false)
-  const [isData, setData] = React.useState([])
+  const [isLoading, setLoading] = React.useState(false);
+  const [refreshing, setrefreshing] = React.useState(false);
+  const { signOut } = React.useContext(AuthContext);
+  const [isLoadingAlert, setLoadingAlert] = React.useState(false);
+  const [isData, setData] = React.useState([]);
 
-  const [count, setcount] = React.useState(0)
-  const [ispage, setpage] = React.useState(0)
-  const [showMore, setshowmore] = React.useState(false)
-  const [LoadFooter, setLoadFooter] = React.useState(false)
+  const [count, setcount] = React.useState(0);
+  const [ispage, setpage] = React.useState(0);
+  const [showMore, setshowmore] = React.useState(false);
+  const [LoadFooter, setLoadFooter] = React.useState(false);
 
   moment.updateLocale('en', {
     relativeTime: {
@@ -54,48 +54,50 @@ function NotificationMain({ navigation, store }) {
       y: 'a year',
       yy: '%d years',
     },
-  })
+  });
 
   React.useEffect(() => {
-    const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e) => {
-      // Do something
-      if (store.NotificationMainPage) {
-        RefreshMiddle()
-        setLoading(false)
+    const unsubscribe = navigation
+      .dangerouslyGetParent()
+      .addListener('tabPress', (e) => {
+        // Do something
+        if (store.NotificationMainPage) {
+          RefreshMiddle();
+          setLoading(false);
 
-        return
-      }
+          return;
+        }
 
-      return
-    })
+        return;
+      });
 
-    return unsubscribe
-  }, [navigation])
+    return unsubscribe;
+  }, [navigation]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.NotificationMainPage) {
-        RefreshMiddle()
-        setLoading(false)
-        return
+        RefreshMiddle();
+        setLoading(false);
+        return;
       } else {
-        store.updageNotificationMain(0, false)
-        return
+        store.updageNotificationMain(0, false);
+        return;
       }
-    })
+    });
 
-    return unsubscribe
-  }, [navigation, store.NotificationMainPage])
+    return unsubscribe;
+  }, [navigation, store.NotificationMainPage]);
 
   const Start = () => {
-    setLoading(true)
-    return
-  }
+    setLoading(true);
+    return;
+  };
 
   const RefreshMiddle = async () => {
-    setrefreshing(true)
-    setLoading(false)
-    setshowmore(false)
+    setrefreshing(true);
+    setLoading(false);
+    setshowmore(false);
     axios
       .get(URL + '/user/getAlerts', {
         headers: {
@@ -106,20 +108,20 @@ function NotificationMain({ navigation, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            setData(response.data.alerts.rows)
-            setcount(response.data.alerts.count)
-            await store.setNotificationMainPage()
-            setrefreshing(false)
-            setLoading(true)
-            setpage(0)
-            store.updageNotificationMain(0, false)
+            setData(response.data.alerts.rows);
+            setcount(response.data.alerts.count);
+            await store.setNotificationMainPage();
+            setrefreshing(false);
+            setLoading(true);
+            setpage(0);
+            store.updageNotificationMain(0, false);
 
-            Start()
+            Start();
 
-            return
+            return;
           } else if (response.data.check === 'fail') {
-            setrefreshing(false)
-            setLoading(true)
+            setrefreshing(false);
+            setLoading(true);
 
             Alert.alert(
               '',
@@ -128,11 +130,11 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
-            setrefreshing(false)
-            setLoading(true)
+            setrefreshing(false);
+            setLoading(true);
 
             Alert.alert(
               '',
@@ -141,12 +143,12 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
-          setrefreshing(false)
-          setLoading(true)
+          setrefreshing(false);
+          setLoading(true);
 
           Alert.alert(
             '',
@@ -155,19 +157,19 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         // console.log(error)
-        setrefreshing(false)
-        setLoading(true)
+        setrefreshing(false);
+        setLoading(true);
 
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -177,9 +179,9 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -188,8 +190,8 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -200,14 +202,14 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const AcceptDeclinePromot = async (id, value, applicationId) => {
-    setLoadingAlert(true)
+    setLoadingAlert(true);
     axios
       .post(
         URL + '/user/acceptDeclinePromot',
@@ -225,12 +227,12 @@ function NotificationMain({ navigation, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data === 'success') {
-            setLoadingAlert(false)
+            setLoadingAlert(false);
 
-            RefreshMiddle()
-            store.setHistoryPageBack()
+            RefreshMiddle();
+            store.setHistoryPageBack();
 
-            return
+            return;
           } else if (response.data === 'fail') {
             Alert.alert(
               '',
@@ -239,19 +241,21 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
+            );
 
-            return
+            return;
           } else if (response.data === 'revoke') {
-            setLoadingAlert(false)
+            setLoadingAlert(false);
             Alert.alert(
               '',
-              I18nManager.isRTL ? 'تم إلغاء الطلب!' : 'the request has been canceled!',
+              I18nManager.isRTL
+                ? 'تم إلغاء الطلب!'
+                : 'the request has been canceled!',
               [{ text: 'OK', onPress: () => RefreshMiddle() }],
               {
                 cancelable: false,
               }
-            )
+            );
           }
         } else {
           Alert.alert(
@@ -261,15 +265,15 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -279,9 +283,9 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -290,8 +294,8 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -302,14 +306,14 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const AcceptDeclineTransfer = async (id, value, applicationId) => {
-    setLoadingAlert(true)
+    setLoadingAlert(true);
     axios
       .post(
         URL + '/user/acceptDeclineTransfer',
@@ -327,10 +331,10 @@ function NotificationMain({ navigation, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data === 'success') {
-            setLoadingAlert(false)
+            setLoadingAlert(false);
 
-            RefreshMiddle()
-            return
+            RefreshMiddle();
+            return;
           } else if (response.data === 'fail') {
             Alert.alert(
               '',
@@ -339,19 +343,21 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
+            );
 
-            return
+            return;
           } else if (response.data === 'revoke') {
-            setLoadingAlert(false)
+            setLoadingAlert(false);
             Alert.alert(
               '',
-              I18nManager.isRTL ? 'تم إلغاء الطلب!' : 'the request has been canceled!',
+              I18nManager.isRTL
+                ? 'تم إلغاء الطلب!'
+                : 'the request has been canceled!',
               [{ text: 'OK', onPress: () => RefreshMiddle() }],
               {
                 cancelable: false,
               }
-            )
+            );
           }
         } else {
           Alert.alert(
@@ -361,15 +367,15 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -379,9 +385,9 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -390,8 +396,8 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -402,15 +408,15 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const LoadMore = async () => {
-    setshowmore(false)
-    setLoadFooter(true)
+    setshowmore(false);
+    setLoadFooter(true);
     axios
       .post(
         URL + '/user/getAlertsPages',
@@ -426,13 +432,13 @@ function NotificationMain({ navigation, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            setData([...isData, ...response.data.alerts.rows])
-            setcount(response.data.alerts.count)
-            setpage(ispage + 1)
-            setLoadFooter(false)
-            return
+            setData([...isData, ...response.data.alerts.rows]);
+            setcount(response.data.alerts.count);
+            setpage(ispage + 1);
+            setLoadFooter(false);
+            return;
           } else if (response.data.check === 'fail') {
-            setLoadFooter(false)
+            setLoadFooter(false);
 
             Alert.alert(
               '',
@@ -441,10 +447,10 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
-            setLoadFooter(false)
+            setLoadFooter(false);
 
             Alert.alert(
               '',
@@ -453,11 +459,11 @@ function NotificationMain({ navigation, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
-          setLoadFooter(false)
+          setLoadFooter(false);
 
           Alert.alert(
             '',
@@ -466,17 +472,17 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
-        setLoadFooter(false)
+        setLoadFooter(false);
 
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -486,9 +492,9 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -497,8 +503,8 @@ function NotificationMain({ navigation, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -509,14 +515,14 @@ function NotificationMain({ navigation, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.Flexone}>
       <FlatList
         data={isData}
         showsVerticalScrollIndicator={false}
@@ -525,18 +531,30 @@ function NotificationMain({ navigation, store }) {
         }}
         keyExtractor={(item) => item.id.toString()}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={RefreshMiddle}
+            tintColor={PrimaryColor}
+          />
         }
         onEndReachedThreshold={0} // Tried 0, 0.01, 0.1, 0.7, 50, 100, 700
         onEndReached={() => {
-          isData.length < count ? setshowmore(true) : null
+          isData.length < count ? setshowmore(true) : null;
         }}
-        contentContainerStyle={{ paddingBottom: 20, paddingTop: 0 }}
+        contentContainerStyle={styles.paddingContent}
         ListFooterComponent={
           LoadFooter ? (
-            <ActivityIndicator style={{ marginVertical: 10 }} size="large" color={PrimaryColor} />
+            <ActivityIndicator
+              style={styles.MarginLoading}
+              size="large"
+              color={PrimaryColor}
+            />
           ) : showMore ? (
-            <TouchableOpacity style={styles.ShowMoreButton} disabled={refreshing} onPress={() => LoadMore()}>
+            <TouchableOpacity
+              style={styles.ShowMoreButton}
+              disabled={refreshing}
+              onPress={() => LoadMore()}
+            >
               <Text style={styles.ShowMoreButtonText}>
                 {I18nManager.isRTL ? 'تحميل المزيد' : 'Load More'}
               </Text>
@@ -545,7 +563,13 @@ function NotificationMain({ navigation, store }) {
         }
         renderItem={({ item, index }) => (
           <TouchableOpacity disabled={true}>
-            <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+            <View
+              style={
+                index === 0
+                  ? styles.NotificationBoxFirst
+                  : styles.NotificationBox
+              }
+            >
               <View style={styles.IconView}>
                 {item.type === 'payment' ? (
                   <FontAwesome name="dollar" size={30} color="#9CA2B0" />
@@ -580,7 +604,8 @@ function NotificationMain({ navigation, store }) {
                         ? '#9CA2B0'
                         : item.TransferShift.replied === false
                         ? '#9CA2B0'
-                        : item.TransferShift.replied === true && item.TransferShift.replyvalue === 'accept'
+                        : item.TransferShift.replied === true &&
+                          item.TransferShift.replyvalue === 'accept'
                         ? '#45a164'
                         : '#d16767'
                     }
@@ -591,15 +616,21 @@ function NotificationMain({ navigation, store }) {
               </View>
               <View style={styles.CenterView}>
                 <View style={styles.TimeView}>
-                  <Text style={styles.title}>{I18nManager.isRTL ? item.titleAr : item.title}</Text>
+                  <Text style={styles.title}>
+                    {I18nManager.isRTL ? item.titleAr : item.title}
+                  </Text>
                   {isLoading ? (
-                    <Text style={styles.TimeText}>{moment(item.createdAt).fromNow()}</Text>
+                    <Text style={styles.TimeText}>
+                      {moment(item.createdAt).fromNow()}
+                    </Text>
                   ) : (
                     <ActivityIndicator size="small" color={PrimaryColor} />
                   )}
                 </View>
                 <View style={styles.BodyTextView}>
-                  <Text style={styles.bodyText}>{I18nManager.isRTL ? item.messageAr : item.message}</Text>
+                  <Text style={styles.bodyText}>
+                    {I18nManager.isRTL ? item.messageAr : item.message}
+                  </Text>
                   {item.type === 'location' ? (
                     <Text style={styles.bodyTextTime}>
                       {I18nManager.isRTL
@@ -622,7 +653,13 @@ function NotificationMain({ navigation, store }) {
             </View>
 
             {item.type === 'promote' && item.replied === false ? (
-              <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+              <View
+                style={
+                  index === 0
+                    ? styles.NotificationBoxFirst
+                    : styles.NotificationBox
+                }
+              >
                 {isLoadingAlert ? (
                   <ActivityIndicator size="small" color={PrimaryColor} />
                 ) : (
@@ -630,15 +667,33 @@ function NotificationMain({ navigation, store }) {
                     <TouchableOpacity
                       disabled={refreshing}
                       style={styles.Accept}
-                      onPress={() => AcceptDeclinePromot(item.id, 'Accept', item.applicationId)}>
-                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Accept}</Text>
+                      onPress={() =>
+                        AcceptDeclinePromot(
+                          item.id,
+                          'Accept',
+                          item.applicationId
+                        )
+                      }
+                    >
+                      <Text style={styles.AcceptDeclinetext}>
+                        {AlertStrings.Accept}
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                       disabled={refreshing}
                       style={styles.Decline}
-                      onPress={() => AcceptDeclinePromot(item.id, 'Decline', item.applicationId)}>
-                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
+                      onPress={() =>
+                        AcceptDeclinePromot(
+                          item.id,
+                          'Decline',
+                          item.applicationId
+                        )
+                      }
+                    >
+                      <Text style={styles.AcceptDeclinetext}>
+                        {AlertStrings.Decline}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -649,17 +704,22 @@ function NotificationMain({ navigation, store }) {
                   <TouchableOpacity
                     disabled={refreshing}
                     style={styles.Accept}
-                    onPress={() => Linking.openURL(item.location)}>
-                    <Text style={styles.AcceptDeclinetext}>{AlertStrings.Location}</Text>
+                    onPress={() => Linking.openURL(item.location)}
+                  >
+                    <Text style={styles.AcceptDeclinetext}>
+                      {AlertStrings.Location}
+                    </Text>
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={styles.Contact}
                     disabled={refreshing}
                     onPress={() =>
-                      Linking.openURL('whatsapp://send?phone=+966' + Number(item.phone))
+                      Linking.openURL(
+                        'whatsapp://send?phone=+966' + Number(item.phone)
+                      )
                         .then((data) => {
-                          return null
+                          return null;
                         })
                         .catch(() => {
                           Alert.alert(
@@ -670,11 +730,12 @@ function NotificationMain({ navigation, store }) {
                             {
                               cancelable: false,
                             }
-                          )
+                          );
 
-                          return null
+                          return null;
                         })
-                    }>
+                    }
+                  >
                     <Ionicons name="logo-whatsapp" size={20} color="#fff" />
                   </TouchableOpacity>
                 </View>
@@ -684,7 +745,13 @@ function NotificationMain({ navigation, store }) {
             {item.type === 'transfer' &&
             item.TransferShift !== null &&
             item.TransferShift.replied === false ? (
-              <View style={index === 0 ? styles.NotificationBoxFirst : styles.NotificationBox}>
+              <View
+                style={
+                  index === 0
+                    ? styles.NotificationBoxFirst
+                    : styles.NotificationBox
+                }
+              >
                 {isLoadingAlert ? (
                   <ActivityIndicator size="small" color={PrimaryColor} />
                 ) : (
@@ -698,8 +765,11 @@ function NotificationMain({ navigation, store }) {
                           'Accept',
                           item.TransferShift.applicationId
                         )
-                      }>
-                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Accept}</Text>
+                      }
+                    >
+                      <Text style={styles.AcceptDeclinetext}>
+                        {AlertStrings.Accept}
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -711,8 +781,11 @@ function NotificationMain({ navigation, store }) {
                           'Decline',
                           item.TransferShift.applicationId
                         )
-                      }>
-                      <Text style={styles.AcceptDeclinetext}>{AlertStrings.Decline}</Text>
+                      }
+                    >
+                      <Text style={styles.AcceptDeclinetext}>
+                        {AlertStrings.Decline}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -724,7 +797,7 @@ function NotificationMain({ navigation, store }) {
 
       {}
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(NotificationMain))
+export default inject('store')(observer(NotificationMain));

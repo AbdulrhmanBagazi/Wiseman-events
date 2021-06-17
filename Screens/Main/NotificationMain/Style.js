@@ -1,12 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import {
-  PrimaryColor,
-  SecondaryText,
-  GrayColor,
-  LightText,
-  PrimaryBorder,
-} from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { PrimaryColor } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   NotificationBoxFirst: {
@@ -135,6 +129,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-})
+  Flexone: { flex: 1 },
+  paddingContent: { paddingBottom: 20, paddingTop: 0 },
+  MarginLoading: { marginVertical: 10 },
+});
 
-export default styles
+export default styles;

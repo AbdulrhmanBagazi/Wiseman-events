@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../Config/Layout'
-import { SecondaryText } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { SecondaryText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   HidePassword: {
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
   },
-})
+});
 
-export default styles
+export default styles;

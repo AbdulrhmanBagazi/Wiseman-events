@@ -1,41 +1,48 @@
-import React from 'react'
-import { Animated, TouchableOpacity, View, I18nManager, Platform } from 'react-native'
-import styles from './Style'
-import { PrimaryColor, SecondaryColor } from '../../../Config/ColorPalette'
+import React from 'react';
+import {
+  Animated,
+  TouchableOpacity,
+  View,
+  I18nManager,
+  Platform,
+} from 'react-native';
+import styles from './Style';
+import { PrimaryColor, SecondaryColor } from '../../../Config/ColorPalette';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 function DisabledButton(props) {
-  const [First] = React.useState(new Animated.Value(100))
-  const [Second] = React.useState(new Animated.Value(100))
-  const [Third] = React.useState(new Animated.Value(100))
+  const [First] = React.useState(new Animated.Value(100));
+  const [Second] = React.useState(new Animated.Value(100));
+  const [Third] = React.useState(new Animated.Value(100));
 
   const FirstBorder = First.interpolate({
     inputRange: [0, 100],
     outputRange: [SecondaryColor, PrimaryColor],
-  })
+  });
   const FirstTextColor = First.interpolate({
     inputRange: [0, 100],
     outputRange: ['#868991', PrimaryColor],
-  })
+  });
 
   const SecondBorder = Second.interpolate({
     inputRange: [0, 100],
     outputRange: [SecondaryColor, PrimaryColor],
-  })
+  });
   const SecondTextColor = Second.interpolate({
     inputRange: [0, 100],
     outputRange: ['#868991', PrimaryColor],
-  })
+  });
 
   const ThirdBorder = Third.interpolate({
     inputRange: [0, 100],
     outputRange: [SecondaryColor, PrimaryColor],
-  })
+  });
   const ThirdTextColor = Third.interpolate({
     inputRange: [0, 100],
     outputRange: ['#868991', PrimaryColor],
-  })
+  });
 
   React.useEffect(() => {
     if (Platform.OS === 'android') {
@@ -56,7 +63,7 @@ function DisabledButton(props) {
             duration: 250,
             useNativeDriver: false,
           }),
-        ]).start()
+        ]).start();
       } else {
         Animated.parallel([
           Animated.timing(First, {
@@ -74,7 +81,7 @@ function DisabledButton(props) {
             duration: 250,
             useNativeDriver: false,
           }),
-        ]).start()
+        ]).start();
       }
     } else {
       Animated.parallel([
@@ -93,37 +100,46 @@ function DisabledButton(props) {
           duration: 250,
           useNativeDriver: false,
         }),
-      ]).start()
+      ]).start();
     }
-  }, [props.Value])
+  }, [props.Value]);
 
   return (
     <View style={styles.ButtonsView}>
       <AnimatedTouchableOpacity
         onPress={props.onPressOne}
-        style={[styles.TouchableOpacityButton, { borderColor: FirstBorder }]}>
-        <Animated.Text style={[styles.TouchableOpacityText, { color: FirstTextColor }]}>
+        style={[styles.TouchableOpacityButton, { borderColor: FirstBorder }]}
+      >
+        <Animated.Text
+          style={[styles.TouchableOpacityText, { color: FirstTextColor }]}
+        >
           {I18nManager.isRTL ? 'نشطة' : 'Active'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
       <AnimatedTouchableOpacity
         onPress={props.onPressTwo}
-        style={[styles.TouchableOpacityButton, { borderColor: SecondBorder }]}>
-        <Animated.Text style={[styles.TouchableOpacityText, { color: SecondTextColor }]}>
+        style={[styles.TouchableOpacityButton, { borderColor: SecondBorder }]}
+      >
+        <Animated.Text
+          style={[styles.TouchableOpacityText, { color: SecondTextColor }]}
+        >
           {I18nManager.isRTL ? 'طلبات العمل' : 'Job requests'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
       <AnimatedTouchableOpacity
         onPress={props.onPressThird}
-        style={[styles.TouchableOpacityButton, { borderColor: ThirdBorder }]}>
-        <Animated.Text style={[styles.TouchableOpacityText, { color: ThirdTextColor }]}>
+        style={[styles.TouchableOpacityButton, { borderColor: ThirdBorder }]}
+      >
+        <Animated.Text
+          style={[styles.TouchableOpacityText, { color: ThirdTextColor }]}
+        >
           {I18nManager.isRTL ? 'مكتملة' : 'Completed'}
         </Animated.Text>
       </AnimatedTouchableOpacity>
     </View>
-  )
+  );
 }
 
-export default DisabledButton
+export default DisabledButton;
 
 //onPress={() => setShow(true)} disabled={true}

@@ -1,13 +1,13 @@
-import React from 'react'
-import { Animated, TextInput } from 'react-native'
-import { width } from '../../../Config/Layout'
+import React from 'react';
+import { Animated, TextInput } from 'react-native';
+import { width } from '../../../Config/Layout';
 
 function AnimatedPhone(props) {
-  const [Match] = React.useState(new Animated.Value(0))
+  const [Match] = React.useState(new Animated.Value(0));
   const PhoneCheck = Match.interpolate({
     inputRange: [0, 50, 100],
     outputRange: ['#4C4F56', '#E8505B', '#25AC71'],
-  })
+  });
 
   React.useEffect(() => {
     if (props.CheckPhone === 'Success') {
@@ -15,21 +15,21 @@ function AnimatedPhone(props) {
         toValue: 100,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else if (props.CheckPhone === 'Error') {
       Animated.timing(Match, {
         toValue: 50,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
-  }, [props.CheckPhone])
+  }, [props.CheckPhone]);
 
   return (
     <Animated.View
@@ -43,10 +43,11 @@ function AnimatedPhone(props) {
         padding: 5,
         marginBottom: 10,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <TextInput {...props} />
     </Animated.View>
-  )
+  );
 }
 
-export default AnimatedPhone
+export default AnimatedPhone;

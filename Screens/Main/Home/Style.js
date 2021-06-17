@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../Config/Layout'
-import { PrimaryColor, LightText } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { PrimaryColor, LightText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width,
     flex: 1,
-    width,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -315,6 +314,16 @@ const styles = StyleSheet.create({
     left: 5,
     zIndex: 99,
   },
-})
+  BlackColor: { color: '#000' },
+  FlexOne: { flex: 1 },
+  LoadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 177,
+  },
+  FlexFour: { flex: 4 },
+  alignSelfLoading: { alignSelf: 'center' },
+});
 
-export default styles
+export default styles;

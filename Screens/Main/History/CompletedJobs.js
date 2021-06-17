@@ -1,91 +1,98 @@
-import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Image } from 'react-native'
-import styles from './Style'
-import Icon from '../../../Config/Icons'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad'
-import { SingleJobStrings } from '../../../Config/Strings'
-import moment from 'moment'
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  I18nManager,
+  ActivityIndicator,
+} from 'react-native';
+import styles from './Style';
+import Icon from '../../../Config/Icons';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad';
+import { SingleJobStrings } from '../../../Config/Strings';
+import moment from 'moment';
 
 function CompletedJobs(props) {
-  const [isData, setData] = React.useState([])
+  const [isData, setData] = React.useState([]);
 
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
       // console.log(item.attendances.length)
-      return item.Status === 'completed'
+      return item.Status === 'completed';
       // return item.Status !== 'approved' && item.attendances.length >= 1
-    })
+    });
 
-    setData(newArray)
-  }, [props.Data])
+    setData(newArray);
+  }, [props.Data]);
 
   const getColor = (status) => {
     switch (status) {
       case 'approved':
-        return 'rgba(46, 184, 92, 0.25)'
+        return 'rgba(46, 184, 92, 0.25)';
       case 'wait-list':
-        return 'rgba(50, 31, 219, 0.25)'
+        return 'rgba(50, 31, 219, 0.25)';
       case 'pending':
-        return 'rgba(249, 177, 21, 0.25)'
+        return 'rgba(249, 177, 21, 0.25)';
       case 'inactive':
-        return 'rgba(229, 83, 83, 0.25)'
+        return 'rgba(229, 83, 83, 0.25)';
       case 'canceled':
-        return 'rgba(229, 83, 83, 0.25)'
+        return 'rgba(229, 83, 83, 0.25)';
       case 'terminated':
-        return 'rgba(229, 83, 83, 0.25)'
+        return 'rgba(229, 83, 83, 0.25)';
       case 'completed':
-        return 'rgba(46, 184, 92, 0.25)'
+        return 'rgba(46, 184, 92, 0.25)';
       case 'withdrawal':
-        return 'rgba(229, 83, 83, 0.25)'
+        return 'rgba(229, 83, 83, 0.25)';
     }
-  }
+  };
 
   const getColorBorder = (status) => {
     switch (status) {
       case 'approved':
-        return '#2eb85c'
+        return '#2eb85c';
       case 'wait-list':
-        return '#321fdb'
+        return '#321fdb';
       case 'pending':
-        return '#f9b115'
+        return '#f9b115';
       case 'inactive':
-        return '#e55353'
+        return '#e55353';
       case 'declined':
-        return '#e55353'
+        return '#e55353';
       case 'canceled':
-        return '#e55353'
+        return '#e55353';
       case 'completed':
-        return '#2eb85c'
+        return '#2eb85c';
       case 'terminated':
-        return '#e55353'
+        return '#e55353';
       case 'withdrawal':
-        return '#e55353'
+        return '#e55353';
     }
-  }
+  };
 
   const getArabic = (status) => {
     switch (status) {
       case 'approved':
-        return 'تمت الموافقة'
+        return 'تمت الموافقة';
       case 'wait-list':
-        return 'قائمة الإنتظار'
+        return 'قائمة الإنتظار';
       case 'pending':
-        return 'قيد الانتظار'
+        return 'قيد الانتظار';
       case 'inactive':
-        return 'غير نشط'
+        return 'غير نشط';
       case 'canceled':
-        return 'ألغيت'
+        return 'ألغيت';
       case 'completed':
-        return 'منجز'
+        return 'منجز';
       case 'declined':
-        return 'مرفوض'
+        return 'مرفوض';
       case 'terminated':
-        return 'ألغيت'
+        return 'ألغيت';
       case 'withdrawal':
-        return 'إنسحاب'
+        return 'إنسحاب';
     }
-  }
+  };
 
   return (
     <View style={styles.AllJobCard}>
@@ -98,7 +105,7 @@ function CompletedJobs(props) {
         data={isData}
         showsVerticalScrollIndicator={false}
         refreshControl={props.refreshControl}
-        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
+        contentContainerStyle={styles.PaddingTopBottom}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
           <TouchableOpacity style={styles.SingleAllJob} disabled={true}>
@@ -112,7 +119,7 @@ function CompletedJobs(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={{ color: '#000' }}>
+                <Text style={styles.BlackText}>
                   {I18nManager.isRTL ? item.event.DateAr : item.event.Date}
                 </Text>
               </Text>
@@ -122,34 +129,54 @@ function CompletedJobs(props) {
               <View style={styles.SingleJobDetailsLocationView}>
                 <Icon name="map-pin" size={14} color="#000" />
                 <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
-                  {I18nManager.isRTL ? item.event.LocationAr : item.event.Location}
+                  {I18nManager.isRTL
+                    ? item.event.LocationAr
+                    : item.event.Location}
                 </Text>
               </View>
               <View style={styles.SingleJobDetailsDataView}>
                 <View style={styles.DataSections}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Shift}</Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>{item.eventshift.shift}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {SingleJobStrings.Shift}
+                  </Text>
+                  <Text style={styles.SingleJobDetailsSectionsValue}>
+                    {item.eventshift.shift}
+                  </Text>
                 </View>
                 <View style={styles.DataSectionsTime}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Time}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {SingleJobStrings.Time}
+                  </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     {I18nManager.isRTL
-                      ? moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')
-                      : moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')}{' '}
+                      ? moment(item.eventshift.timeEnd, 'hh:mm').format(
+                          'hh:mma'
+                        )
+                      : moment(item.eventshift.timeStart, 'hh:mm').format(
+                          'hh:mma'
+                        )}{' '}
                     {I18nManager.isRTL ? (
                       <Icon name="arrow-left" size={14} color="black" />
                     ) : (
                       <Icon name="arrow-right" size={14} color="black" />
                     )}{' '}
                     {I18nManager.isRTL
-                      ? moment(item.eventshift.timeStart, 'hh:mm').format('hh:mma')
-                      : moment(item.eventshift.timeEnd, 'hh:mm').format('hh:mma')}
+                      ? moment(item.eventshift.timeStart, 'hh:mm').format(
+                          'hh:mma'
+                        )
+                      : moment(item.eventshift.timeEnd, 'hh:mm').format(
+                          'hh:mma'
+                        )}
                   </Text>
                 </View>
                 <View style={styles.DataSectionsAta}>
-                  <Text style={styles.SingleJobDetailsSections}>{SingleJobStrings.Attendance}</Text>
+                  <Text style={styles.SingleJobDetailsSections}>
+                    {SingleJobStrings.Attendance}
+                  </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {moment(item.eventshift.attendance, 'hh:mm').format('hh:mma')}
+                    {moment(item.eventshift.attendance, 'hh:mm').format(
+                      'hh:mma'
+                    )}
                   </Text>
                 </View>
               </View>
@@ -162,17 +189,37 @@ function CompletedJobs(props) {
                   <View
                     style={[
                       styles.StatusBox,
-                      { backgroundColor: getColor(item.Status), borderColor: getColorBorder(item.Status) },
-                    ]}>
-                    <Text style={[styles.StatuText, { color: getColorBorder(item.Status) }]}>
+                      {
+                        backgroundColor: getColor(item.Status),
+                        borderColor: getColorBorder(item.Status),
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.StatuText,
+                        { color: getColorBorder(item.Status) },
+                      ]}
+                    >
                       {I18nManager.isRTL ? getArabic(item.Status) : item.Status}
                     </Text>
                   </View>
 
                   <TouchableOpacity
-                    onPress={() => props.Details('CompleteDetails', { item: item })}
-                    style={[styles.StatusBox, { backgroundColor: PrimaryColor, borderColor: PrimaryColor }]}>
-                    <Text style={[styles.StatuText, { color: '#fff' }]}>{SingleJobStrings.Details}</Text>
+                    onPress={() =>
+                      props.Details('CompleteDetails', { item: item })
+                    }
+                    style={[
+                      styles.StatusBox,
+                      {
+                        backgroundColor: PrimaryColor,
+                        borderColor: PrimaryColor,
+                      },
+                    ]}
+                  >
+                    <Text style={styles.StatuTextWhite}>
+                      {SingleJobStrings.Details}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -182,7 +229,7 @@ function CompletedJobs(props) {
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
-  )
+  );
 }
 
-export default CompletedJobs
+export default CompletedJobs;

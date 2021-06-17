@@ -1,18 +1,33 @@
-import React from 'react'
-import { View, ActivityIndicator, I18nManager, Alert, TouchableOpacity, Text, Modal } from 'react-native'
-import { CalendarList } from 'react-native-calendars'
-import { PrimaryColor, PrimaryText, LightText, PrimaryBorder } from '../../../Config/ColorPalette'
-import { LocaleConfig } from 'react-native-calendars'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
-import { inject, observer } from 'mobx-react'
-import styles from './Style'
-import { WorkScheduleUserString } from '../../../Config/Strings'
-import InfoModal from '../../Components/InfoModal/InfoModal'
+import React from 'react';
+import {
+  View,
+  ActivityIndicator,
+  I18nManager,
+  Alert,
+  TouchableOpacity,
+  Text,
+  Modal,
+} from 'react-native';
+import { CalendarList } from 'react-native-calendars';
+import {
+  PrimaryColor,
+  PrimaryText,
+  LightText,
+  PrimaryBorder,
+} from '../../../Config/ColorPalette';
+import { LocaleConfig } from 'react-native-calendars';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
+import { inject, observer } from 'mobx-react';
+import styles from './Style';
+import { WorkScheduleUserString } from '../../../Config/Strings';
+import InfoModal from '../../Components/InfoModal/InfoModal';
+import { UserTokenRemove } from '../../../Config/AsyncStorage';
+import { AuthContext } from '../../../Hooks/Context';
 
 //Config
 //#11865B
-LocaleConfig.locales['ar'] = {
+LocaleConfig.locales.ar = {
   monthNames: [
     'يناير',
     'فبراير',
@@ -27,7 +42,15 @@ LocaleConfig.locales['ar'] = {
     'نوفمبر',
     'ديسمبر',
   ],
-  dayNames: ['الآحد', 'الإثنين', 'الثلاثاء', 'الآربعاء', 'الخميس', 'الجمعة', 'السبت'],
+  dayNames: [
+    'الآحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الآربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ],
   monthNamesShort: [
     'يناير',
     'فبراير',
@@ -42,11 +65,19 @@ LocaleConfig.locales['ar'] = {
     'نوفمبر',
     'ديسمبر',
   ],
-  dayNamesShort: ['الآحد', 'الإثنين', 'الثلاثاء', 'الآربعاء', 'الخميس', 'الجمعة', 'السبت'],
+  dayNamesShort: [
+    'الآحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الآربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ],
   today: 'اليوم',
-}
+};
 
-LocaleConfig.locales['en'] = {
+LocaleConfig.locales.en = {
   monthNames: [
     'January',
     'February',
@@ -61,7 +92,15 @@ LocaleConfig.locales['en'] = {
     'November',
     'December',
   ],
-  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  dayNames: [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ],
   monthNamesShort: [
     'Jan.',
     'Feb.',
@@ -78,23 +117,24 @@ LocaleConfig.locales['en'] = {
   ],
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'],
   today: 'Today',
-}
-LocaleConfig.defaultLocale = I18nManager.isRTL ? 'ar' : 'en'
+};
+LocaleConfig.defaultLocale = I18nManager.isRTL ? 'ar' : 'en';
 //Config
 
 function WorkScheduleUser({ route, store }) {
-  const [isLoading, setLoading] = React.useState(true)
-  const [refreshing, setrefreshing] = React.useState(false)
-  const [isDays, setDays] = React.useState({})
-  const [isShow, setShow] = React.useState(false)
-  const [isData, setData] = React.useState([])
-  const [isShowInfo, setShowInfo] = React.useState(false)
-  const [isDataInfo, setDataInfo] = React.useState({})
+  const { signOut } = React.useContext(AuthContext);
+  const [isLoading, setLoading] = React.useState(true);
+  // const [refreshing, setrefreshing] = React.useState(false);
+  const [isDays, setDays] = React.useState({});
+  const [isShow, setShow] = React.useState(false);
+  const [isData, setData] = React.useState([]);
+  const [isShowInfo, setShowInfo] = React.useState(false);
+  const [isDataInfo, setDataInfo] = React.useState({});
 
-  const { eventId, applicationId } = route.params
+  const { eventId, applicationId } = route.params;
 
   React.useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         URL + '/user/getEventDaysUser',
@@ -111,21 +151,21 @@ function WorkScheduleUser({ route, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            var Days = response.data.days
-            var Attendance = response.data.Attendance
-            setData(response.data.Attendance)
-            let newAttendanceObject = {}
+            var Days = response.data.days;
+            var Attendance = response.data.Attendance;
+            setData(response.data.Attendance);
+            let newAttendanceObject = {};
             await Attendance.map((item) => {
               newAttendanceObject = {
                 ...newAttendanceObject,
                 [item.eventday.start]: item.Status,
-              }
-            })
+              };
+            });
 
-            let newDaysObject = {}
+            let newDaysObject = {};
             await Days.map((item) => {
               if (newAttendanceObject[item.date]) {
-                var value = newAttendanceObject[item.date]
+                var value = newAttendanceObject[item.date];
                 newDaysObject = {
                   ...newDaysObject,
                   [item.date]: {
@@ -143,25 +183,26 @@ function WorkScheduleUser({ route, store }) {
                         : '#bb2124',
                     dotColor: PrimaryColor,
                   },
-                }
+                };
               } else {
                 newDaysObject = {
                   ...newDaysObject,
                   [item.date]: {
                     selected: true,
                     marked: item.date === response.data.SA,
-                    selectedColor: item.date === response.data.SA ? '#5bc0de' : LightText,
+                    selectedColor:
+                      item.date === response.data.SA ? '#5bc0de' : LightText,
                   },
-                }
+                };
               }
-            })
+            });
 
-            setDays(newDaysObject)
-            store.removeCalendarIds(store.CalendarMainIDs, eventId)
-            setLoading(false)
-            return
+            setDays(newDaysObject);
+            store.removeCalendarIds(store.CalendarMainIDs, eventId);
+            setLoading(false);
+            return;
           } else if (response.data.check === 'fail') {
-            setLoading(false)
+            setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -169,8 +210,8 @@ function WorkScheduleUser({ route, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
             Alert.alert(
               '',
@@ -179,8 +220,8 @@ function WorkScheduleUser({ route, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
           Alert.alert(
@@ -190,16 +231,16 @@ function WorkScheduleUser({ route, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
-        setLoading(false)
+        setLoading(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -209,9 +250,9 @@ function WorkScheduleUser({ route, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -220,8 +261,8 @@ function WorkScheduleUser({ route, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -232,29 +273,29 @@ function WorkScheduleUser({ route, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }, [refreshing])
+      });
+  }, []);
 
   const ViewDay = async (val) => {
-    var a = await isData.find((e) => e.eventday.start === val.dateString)
+    var a = await isData.find((e) => e.eventday.start === val.dateString);
 
     if (a) {
-      setShowInfo(true)
-      setDataInfo(a)
+      setShowInfo(true);
+      setDataInfo(a);
 
-      return
+      return;
     }
 
-    return
-  }
+    return;
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.FlexOne}>
       {isLoading ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.WorkSchedule}>
           <ActivityIndicator size="large" color={PrimaryColor} />
         </View>
       ) : (
@@ -264,7 +305,7 @@ function WorkScheduleUser({ route, store }) {
           markedDates={{ ...isDays }}
           enableSwipeMonths={true}
           onDayPress={(day) => {
-            ViewDay(day)
+            ViewDay(day);
           }}
           theme={{
             'stylesheet.calendar.header': {
@@ -292,19 +333,31 @@ function WorkScheduleUser({ route, store }) {
       </TouchableOpacity>
 
       <Modal animationType="fade" transparent={true} visible={isShow}>
-        <TouchableOpacity style={styles.modal} onPress={() => setShow(false)} activeOpacity={0.5}>
+        <TouchableOpacity
+          style={styles.modal}
+          onPress={() => setShow(false)}
+          activeOpacity={0.5}
+        >
           <View style={styles.modalContainer}>
             <View style={[styles.InfoBox, { backgroundColor: LightText }]}>
-              <Text style={styles.InfoBoxText}>{WorkScheduleUserString.Work}</Text>
+              <Text style={styles.InfoBoxText}>
+                {WorkScheduleUserString.Work}
+              </Text>
             </View>
-            <View style={[styles.InfoBox, { backgroundColor: '#22bb33' }]}>
-              <Text style={styles.InfoBoxText}>{WorkScheduleUserString.active}</Text>
+            <View style={styles.InfoBox}>
+              <Text style={styles.InfoBoxText}>
+                {WorkScheduleUserString.active}
+              </Text>
             </View>
-            <View style={[styles.InfoBox, { backgroundColor: '#bb2124' }]}>
-              <Text style={styles.InfoBoxText}>{WorkScheduleUserString.Absence}</Text>
+            <View style={styles.InfoBox}>
+              <Text style={styles.InfoBoxText}>
+                {WorkScheduleUserString.Absence}
+              </Text>
             </View>
-            <View style={[styles.InfoBox, { backgroundColor: '#f0ad4e' }]}>
-              <Text style={styles.InfoBoxText}>{WorkScheduleUserString.incomplete}</Text>
+            <View style={styles.InfoBox}>
+              <Text style={styles.InfoBoxText}>
+                {WorkScheduleUserString.incomplete}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -318,7 +371,7 @@ function WorkScheduleUser({ route, store }) {
         Data={isDataInfo}
       />
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(WorkScheduleUser))
+export default inject('store')(observer(WorkScheduleUser));

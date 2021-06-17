@@ -1,5 +1,5 @@
-import React from 'react'
-import * as Analytics from 'expo-firebase-analytics'
+import React from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import {
   View,
   Text,
@@ -8,28 +8,28 @@ import {
   ActivityIndicator,
   Keyboard,
   I18nManager,
-} from 'react-native'
-import styles from './Style'
-import { Register, ErrorsStrings } from '../../../Config/Strings'
-import Inputpassowrd from '../../Components/PasswordInput/Password'
-import InputPhone from '../../Components/PhoneInput/Phone'
-import { AuthContext } from '../../../Hooks/Context'
-import { URL } from '../../../Config/Config'
-import axios from 'axios'
-import store from '../../../Config/Mobx'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import { Entypo } from '@expo/vector-icons'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
-import { width } from '../../../Config/Layout'
-import Web from './Web'
+} from 'react-native';
+import styles from './Style';
+import { Register, ErrorsStrings } from '../../../Config/Strings';
+import Inputpassowrd from '../../Components/PasswordInput/Password';
+import InputPhone from '../../Components/PhoneInput/Phone';
+import { AuthContext } from '../../../Hooks/Context';
+import { URL } from '../../../Config/Config';
+import axios from 'axios';
+import store from '../../../Config/Mobx';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { Entypo } from '@expo/vector-icons';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import Svg, { Defs, Rect, G, Path } from 'react-native-svg';
+import { width } from '../../../Config/Layout';
+import Web from './Web';
 
 function SignUp({ navigation }) {
-  const { Verify } = React.useContext(AuthContext)
-  const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState(' ')
-  const [isURL, setURL] = React.useState('')
-  const [isURLShow, setURLShow] = React.useState(false)
+  const { Verify } = React.useContext(AuthContext);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isError, setError] = React.useState(' ');
+  const [isURL, setURL] = React.useState('');
+  const [isURLShow, setURLShow] = React.useState(false);
 
   //
   const [data, setData] = React.useState({
@@ -37,18 +37,18 @@ function SignUp({ navigation }) {
     Password: '',
     RePassword: '',
     nId: '',
-  })
+  });
   //
-  const [isnIdheck, setnIdCheck] = React.useState('')
+  const [isnIdheck, setnIdCheck] = React.useState('');
   //
-  const [isCheck, setCheck] = React.useState('')
-  const [isPhoneCheck, setPhoneCheck] = React.useState('')
-  const [isAgreeCheck, setAgreeCheck] = React.useState(false)
-  const [Agree] = React.useState(new Animated.Value(0))
+  const [isCheck, setCheck] = React.useState('');
+  const [isPhoneCheck, setPhoneCheck] = React.useState('');
+  const [isAgreeCheck, setAgreeCheck] = React.useState(false);
+  const [Agree] = React.useState(new Animated.Value(0));
   const AgreeColor = Agree.interpolate({
     inputRange: [0, 100],
     outputRange: ['#F8F8F9', PrimaryColor],
-  })
+  });
 
   //prevent back on loading
 
@@ -56,15 +56,15 @@ function SignUp({ navigation }) {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (isLoading) {
         // Prevent default behavior of leaving the screen
-        e.preventDefault()
-        return
+        e.preventDefault();
+        return;
       }
 
-      return
-    })
+      return;
+    });
 
-    return unsubscribe
-  }, [navigation, isLoading])
+    return unsubscribe;
+  }, [navigation, isLoading]);
 
   //
 
@@ -75,111 +75,111 @@ function SignUp({ navigation }) {
         duration: 500,
         useNativeDriver: false,
       }),
-    ]).start()
+    ]).start();
 
     if (isAgreeCheck === true) {
-      setAgreeCheck(false)
+      setAgreeCheck(false);
     } else {
-      setAgreeCheck(true)
+      setAgreeCheck(true);
     }
 
-    return
-  }
+    return;
+  };
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632
-    })
-  }
+      return d.charCodeAt(0) - 1632;
+    });
+  };
 
   const NidInput = async (val) => {
-    var ID = await convertToArabicNumber(val)
+    var ID = await convertToArabicNumber(val);
     setData({
       ...data,
       nId: ID.trim(),
-    })
+    });
     if (ID === '') {
-      setnIdCheck('')
-      return
+      setnIdCheck('');
+      return;
     }
     if (isNaN(ID) === true && ID.length < 10) {
-      setnIdCheck('Error')
-      return
+      setnIdCheck('Error');
+      return;
     }
     if (ID.length > 10 || ID.length < 10) {
-      setnIdCheck('Error')
-      return
+      setnIdCheck('Error');
+      return;
     }
     if (isNaN(ID) === false && ID.length === 10) {
-      setnIdCheck('Success')
-      return
+      setnIdCheck('Success');
+      return;
     }
-    return
-  }
+    return;
+  };
 
   const PhoneInput = async (val) => {
-    var phone = await convertToArabicNumber(val)
+    var phone = await convertToArabicNumber(val);
     setData({
       ...data,
       Phone: phone.trim(),
-    })
+    });
     if (phone === '') {
-      setPhoneCheck('')
-      return
+      setPhoneCheck('');
+      return;
     }
     if (isNaN(phone) === true && phone.length < 10) {
-      setPhoneCheck('Error')
-      return
+      setPhoneCheck('Error');
+      return;
     }
     if (phone.length > 10 || phone.length < 10) {
-      setPhoneCheck('Error')
-      return
+      setPhoneCheck('Error');
+      return;
     }
     if (isNaN(phone) === false && phone.length === 10) {
-      setPhoneCheck('Success')
-      return
+      setPhoneCheck('Success');
+      return;
     }
-    return
-  }
+    return;
+  };
   const PasswordInput = async (val) => {
-    var pass = await convertToArabicNumber(val)
+    var pass = await convertToArabicNumber(val);
     setData({
       ...data,
       Password: pass,
-    })
+    });
     if (val === '') {
-      setCheck('')
+      setCheck('');
     } else if (data.RePassword === pass) {
-      setCheck('Success')
+      setCheck('Success');
     } else {
-      setCheck('Error')
+      setCheck('Error');
     }
-    return
-  }
+    return;
+  };
   const RePasswordInput = async (val) => {
-    var pass = await convertToArabicNumber(val)
+    var pass = await convertToArabicNumber(val);
     setData({
       ...data,
       RePassword: pass,
-    })
+    });
     if (val === '') {
-      setCheck('')
+      setCheck('');
     }
     if (data.Password === pass) {
-      setCheck('Success')
+      setCheck('Success');
     } else {
-      setCheck('Error')
+      setCheck('Error');
     }
-    return
-  }
+    return;
+  };
 
   //Aa123123
   const RegisterAccount = async (val) => {
-    await Keyboard.dismiss()
+    await Keyboard.dismiss();
     if (isLoading) {
-      return
+      return;
     }
-    await setLoading(true)
+    await setLoading(true);
     if (
       val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
       isCheck === 'Success' &&
@@ -196,70 +196,71 @@ function SignUp({ navigation }) {
         .then((response) => {
           if (response.data.error === 'exists') {
             // console.log(response.data.error)
-            setError(ErrorsStrings.MobileUsed)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.MobileUsed);
+            setLoading(false);
+            return;
           } else if (response.data.error === 'existsID') {
             // console.log(response.data.error)
-            setError(ErrorsStrings.nIDUsed)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.nIDUsed);
+            setLoading(false);
+            return;
           } else if (response.data.error === 'error') {
-            setError(ErrorsStrings.ErrorOccurred)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.ErrorOccurred);
+            setLoading(false);
+            return;
           } else if (response.data.check === 'success') {
-            setError(' ')
-            store.setDataSignup(response.data.user)
-            store.setToken(response.data.token)
-            Analytics.logEvent('SignUp', 'SignUp')
-            Verify()
-            return
+            setError(' ');
+            store.setDataSignup(response.data.user);
+            store.setToken(response.data.token);
+            Analytics.logEvent('SignUp', 'SignUp');
+            Verify();
+            return;
           }
         })
         .catch((error) => {
           if (error.response) {
             if (error.response.status) {
               if (error.response.status === 401) {
-                setError(ErrorsStrings.LoginError)
-                setLoading(false)
-                return
+                setError(ErrorsStrings.LoginError);
+                setLoading(false);
+                return;
               } else {
-                setError(ErrorsStrings.ErrorOccurred)
-                setLoading(false)
-                return
+                setError(ErrorsStrings.ErrorOccurred);
+                setLoading(false);
+                return;
               }
             }
           } else {
-            setError(ErrorsStrings.ErrorOccurred)
-            setLoading(false)
-            return
+            setError(ErrorsStrings.ErrorOccurred);
+            setLoading(false);
+            return;
           }
-        })
+        });
     }
 
-    await setLoading(false)
-    return
-  }
+    await setLoading(false);
+    return;
+  };
 
   const openweb = async (val) => {
-    setURL(val)
-    setURLShow(true)
-  }
+    setURL(val);
+    setURLShow(true);
+  };
 
   const closeweb = async () => {
-    setURLShow(false)
-  }
+    setURLShow(false);
+  };
 
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
       showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled">
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.container}>
         <Svg width={width / 2} height="200" viewBox="0 0 300 300">
-          <Defs></Defs>
+          <Defs />
           <Rect fill="#fff" class="a" width="300" height="300" rx="70" />
           <G transform="translate(-597.908 -352.154)">
             <Path
@@ -311,23 +312,13 @@ function SignUp({ navigation }) {
           <View>
             <TouchableOpacity onPress={() => AgreeHandler()}>
               <Animated.View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  flexDirection: 'row',
-                  alignSelf: 'flex-start',
-                  padding: 2,
-                  borderRadius: 2,
-                  borderWidth: 1,
-                  // borderColor: AgreeColor,
-                  backgroundColor: AgreeColor,
-                  marginHorizontal: 5,
-                }}>
+                style={[styles.checkIconView, { backgroundColor: AgreeColor }]}
+              >
                 <Entypo name="check" size={14} color="#F8F8F9" />
               </Animated.View>
             </TouchableOpacity>
           </View>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1, textAlign: 'left' }}>
+          <View style={styles.warview}>
             <Text>{Register.Iagreeto}</Text>
             <TouchableOpacity
               onPress={() =>
@@ -336,8 +327,9 @@ function SignUp({ navigation }) {
                     ? 'https://organize.wiseman.app/termsofservicear'
                     : 'https://organize.wiseman.app/termsofserviceen'
                 )
-              }>
-              <Animated.Text style={{ color: PrimaryColor, textDecorationLine: 'underline' }}>
+              }
+            >
+              <Animated.Text style={styles.removeUnderline}>
                 {' ' + Register.Terms}
               </Animated.Text>
             </TouchableOpacity>
@@ -349,15 +341,19 @@ function SignUp({ navigation }) {
                     ? 'https://organize.wiseman.app/privacypolicyar'
                     : 'https://organize.wiseman.app/privacypolicyen'
                 )
-              }>
-              <Animated.Text style={{ color: PrimaryColor, textDecorationLine: 'underline' }}>
+              }
+            >
+              <Animated.Text style={styles.removeUnderline}>
                 {Register.Privacy}
               </Animated.Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.Button} onPress={() => RegisterAccount(data)}>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => RegisterAccount(data)}
+        >
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
@@ -374,7 +370,7 @@ function SignUp({ navigation }) {
       </View>
       <Web OpenModal={isURLShow} URL={isURL} close={() => closeweb()} />
     </KeyboardAwareScrollView>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

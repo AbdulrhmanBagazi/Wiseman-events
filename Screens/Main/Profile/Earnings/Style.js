@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../../Config/Layout';
 import {
   PrimaryColor,
   SecondaryText,
   GrayColor,
   LightText,
-  PrimaryBorder,
-  SecondaryColor,
-} from '../../../../Config/ColorPalette'
+} from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -96,6 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-})
+  PaddingContent: { paddingBottom: 30, paddingTop: 0 },
+});
 
-export default styles
+export default styles;

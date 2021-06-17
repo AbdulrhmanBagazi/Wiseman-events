@@ -1,50 +1,59 @@
-import React from 'react'
-import { Animated, TouchableOpacity, ActivityIndicator, Alert, I18nManager } from 'react-native'
-import styles from './Style'
-import * as FileSystem from 'expo-file-system'
-import shorthash from 'shorthash'
-import Icon from '../../../Config/Icons'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
+import React from 'react';
+import {
+  Animated,
+  TouchableOpacity,
+  ActivityIndicator,
+  I18nManager,
+  Alert,
+} from 'react-native';
+import styles from './Style';
+import * as FileSystem from 'expo-file-system';
+import shorthash from 'shorthash';
+import Icon from '../../../Config/Icons';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
+import { UserTokenRemove } from '../../../Config/AsyncStorage';
+import { AuthContext } from '../../../Hooks/Context';
 
 function AnimatedImageProfile(props) {
-  const [ImageLoad] = React.useState(new Animated.Value(0))
-  const [isUrl, setUrl] = React.useState(null)
-  const [isLoading, setLoading] = React.useState(true)
+  const { signOut } = React.useContext(AuthContext);
+  const [ImageLoad] = React.useState(new Animated.Value(0));
+  const [isUrl, setUrl] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    ensureDirExists()
-  }, [props.filename])
+    ensureDirExists();
+  }, [props.filename]);
 
   // Checks if gif directory exists. If not, creates it
   const ensureDirExists = async () => {
-    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
-    const dirInfo = await FileSystem.getInfoAsync(gifDir)
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/';
+    const dirInfo = await FileSystem.getInfoAsync(gifDir);
     // await FileSystem.deleteAsync(gifDir)
     // return
     if (!dirInfo.exists) {
-      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true })
-      return Load()
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
+      return Load();
     }
 
-    return Load()
-  }
+    return Load();
+  };
 
   const Load = async () => {
-    const filename = props.filename
-    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
+    const filename = props.filename;
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/';
 
     if (filename) {
-      const name = await shorthash.unique(filename)
-      const path = gifDir + `${name}`
-      const image = await FileSystem.getInfoAsync(path)
+      const name = await shorthash.unique(filename);
+      const path = gifDir + `${name}`;
+      const image = await FileSystem.getInfoAsync(path);
 
       if (image.exists) {
         setUrl({
           uri: image.uri,
-        })
-        setLoading(false)
-        return
+        });
+        setLoading(false);
+        return;
       } else {
         axios
           .post(
@@ -61,13 +70,16 @@ function AnimatedImageProfile(props) {
           )
           .then(async (response) => {
             if (response.data.check === 'success') {
-              const newImage = await FileSystem.downloadAsync(response.data.url, path)
+              const newImage = await FileSystem.downloadAsync(
+                response.data.url,
+                path
+              );
               setUrl({
                 uri: newImage.uri,
-              })
-              setLoading(false)
+              });
+              setLoading(false);
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -76,15 +88,15 @@ function AnimatedImageProfile(props) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           })
           .catch(async (error) => {
             if (error.response) {
               if (error.response.status) {
                 if (error.response.status === 401) {
-                  await UserTokenRemove()
+                  await UserTokenRemove();
                   Alert.alert(
                     '',
                     I18nManager.isRTL
@@ -94,9 +106,9 @@ function AnimatedImageProfile(props) {
                     {
                       cancelable: false,
                     }
-                  )
+                  );
 
-                  return
+                  return;
                 } else {
                   Alert.alert(
                     '',
@@ -105,8 +117,8 @@ function AnimatedImageProfile(props) {
                     {
                       cancelable: false,
                     }
-                  )
-                  return
+                  );
+                  return;
                 }
               }
             } else {
@@ -117,23 +129,23 @@ function AnimatedImageProfile(props) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
-          })
+          });
 
-        return
+        return;
       }
     }
-  }
+  };
 
   const Start = async () => {
     Animated.timing(ImageLoad, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true,
-    }).start()
-  }
+    }).start();
+  };
 
   return (
     <TouchableOpacity style={styles.Image} onPress={props.onPress}>
@@ -150,7 +162,7 @@ function AnimatedImageProfile(props) {
         />
       )}
     </TouchableOpacity>
-  )
+  );
 }
 
-export default AnimatedImageProfile
+export default AnimatedImageProfile;

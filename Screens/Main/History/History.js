@@ -1,95 +1,104 @@
-import React from 'react'
-import { View, ScrollView, RefreshControl, Alert, I18nManager } from 'react-native'
-import styles from './Style'
-import { inject, observer } from 'mobx-react'
-import { width, height } from '../../../Config/Layout'
-import AnimatedTopTab from './AnimatedTopTab'
-import Card from './Card'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
+import React from 'react';
+import {
+  View,
+  ScrollView,
+  RefreshControl,
+  Alert,
+  I18nManager,
+  Platform,
+} from 'react-native';
+import styles from './Style';
+import { inject, observer } from 'mobx-react';
+import { width } from '../../../Config/Layout';
+import AnimatedTopTab from './AnimatedTopTab';
+import Card from './Card';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
 //
-import { AuthContext } from '../../../Hooks/Context'
-import { UserTokenRemove } from '../../../Config/AsyncStorage'
+import { AuthContext } from '../../../Hooks/Context';
+import { UserTokenRemove } from '../../../Config/AsyncStorage';
 //
-import Activejob from './Activejob'
-import CompletedJobs from './CompletedJobs'
+import Activejob from './Activejob';
+import CompletedJobs from './CompletedJobs';
 
 function History({ store, navigation }) {
-  const Scroll = React.useRef(null)
-  const [isSelected, setSelected] = React.useState(0)
-  const [refreshing, setrefreshing] = React.useState(false)
-  const [isLoadButton, setLoadButton] = React.useState(false)
-  const [isData, setData] = React.useState([])
-  const [isAllData, setAllData] = React.useState([])
+  const Scroll = React.useRef(null);
+  const [isSelected, setSelected] = React.useState(0);
+  const [refreshing, setrefreshing] = React.useState(false);
+  const [isLoadButton, setLoadButton] = React.useState(false);
+  const [isData, setData] = React.useState([]);
+  const [isAllData, setAllData] = React.useState([]);
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
 
   const check = async (event) => {
-    const xOffset = event.nativeEvent.contentOffset.x + 10
-    const currentPage = await Math.floor(xOffset / width)
+    const xOffset = event.nativeEvent.contentOffset.x + 10;
+    const currentPage = await Math.floor(xOffset / width);
 
     if (currentPage === -1) {
-      return
+      return;
     }
     if (currentPage !== isSelected) {
-      setSelected(currentPage)
-      return
+      setSelected(currentPage);
+      return;
     }
 
-    return
-  }
+    return;
+  };
 
   const ScrollTo = async (val) => {
-    const currentPage = await Math.floor(val * (width + 20))
-    const xOffset = currentPage
-    const currentPagetwo = await Math.floor(xOffset / width)
+    const currentPage = await Math.floor(val * (width + 20));
+    const xOffset = currentPage;
+    const currentPagetwo = await Math.floor(xOffset / width);
 
     if (currentPagetwo === -1) {
-      return
+      return;
     }
     if (currentPagetwo !== isSelected) {
       // console.log(currentPagetwo)
-      Scroll.current.scrollTo({ x: currentPage })
-      return
+      Scroll.current.scrollTo({ x: currentPage });
+      return;
     }
 
-    return
-  }
+    return;
+  };
 
   React.useEffect(() => {
-    const unsubscribe = navigation.dangerouslyGetParent().addListener('tabPress', (e) => {
-      // Do something
-      if (store.HistoryPage) {
-        RefreshMiddle()
-        return
-      }
+    const unsubscribe = navigation
+      .dangerouslyGetParent()
+      .addListener('tabPress', (e) => {
+        // Do something
+        if (store.HistoryPage) {
+          RefreshMiddle();
+          return;
+        }
 
-      return
-    })
+        return;
+      });
 
-    return unsubscribe
-  }, [navigation])
+    return unsubscribe;
+  }, [navigation]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (store.HistoryPage) {
-        RefreshMiddle()
+        RefreshMiddle();
 
-        return
+        return;
       } else {
-        store.updageHistoryBadge(0, false)
+        store.updageHistoryBadge(0, false);
 
-        return
+        return;
       }
-    })
+    });
 
-    return unsubscribe
-  }, [navigation, store.HistoryPage])
+    return unsubscribe;
+  }, [navigation, store.HistoryPage]);
 
   //getApplication
   const RefreshMiddle = async () => {
-    setrefreshing(true)
+    setrefreshing(true);
     axios
       .get(URL + '/user/getApplication', {
         headers: {
@@ -101,24 +110,24 @@ function History({ store, navigation }) {
         if (response.status === 200) {
           if (response.data.check === 'success') {
             // await store.setHistoryData(response.data.application)
-            await store.setHistoryPage()
+            await store.setHistoryPage();
 
-            setrefreshing(false)
+            setrefreshing(false);
 
             var newArray = response.data.application.filter((item) => {
               // console.log(item)
-              return item.Status !== 'completed'
-            })
+              return item.Status !== 'completed';
+            });
 
-            setData(newArray)
+            setData(newArray);
 
-            setAllData(response.data.application)
+            setAllData(response.data.application);
 
-            store.updageHistoryBadge(0, false)
+            store.updageHistoryBadge(0, false);
 
-            return
+            return;
           } else if (response.data.check === 'fail') {
-            setrefreshing(false)
+            setrefreshing(false);
 
             Alert.alert(
               '',
@@ -127,10 +136,10 @@ function History({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
-            setrefreshing(false)
+            setrefreshing(false);
 
             Alert.alert(
               '',
@@ -139,11 +148,11 @@ function History({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
-          setrefreshing(false)
+          setrefreshing(false);
 
           Alert.alert(
             '',
@@ -152,17 +161,17 @@ function History({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         // console.log(error)
-        setrefreshing(false)
+        setrefreshing(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -172,9 +181,9 @@ function History({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -183,8 +192,8 @@ function History({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -195,14 +204,14 @@ function History({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const Withdrawalapply = async (id, userId, eventId) => {
-    setLoadButton(true)
+    setLoadButton(true);
     axios
       .post(
         URL + '/user/Withdrawalappli',
@@ -220,10 +229,10 @@ function History({ store, navigation }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            setLoadButton(false)
+            setLoadButton(false);
 
-            RefreshMiddle()
-            return
+            RefreshMiddle();
+            return;
           } else if (response.data.check === 'fail') {
             Alert.alert(
               '',
@@ -232,8 +241,8 @@ function History({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
             Alert.alert(
               '',
@@ -242,8 +251,8 @@ function History({ store, navigation }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
           Alert.alert(
@@ -253,15 +262,15 @@ function History({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -271,9 +280,9 @@ function History({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -282,8 +291,8 @@ function History({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -294,19 +303,23 @@ function History({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.FlexOne}>
       <AnimatedTopTab
         Value={isSelected}
-        onPressOne={() => ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 2 : 0)}
+        onPressOne={() =>
+          ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 2 : 0)
+        }
         onPressTwo={() => ScrollTo(1)}
-        onPressThird={() => ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 0 : 2)}
+        onPressThird={() =>
+          ScrollTo(Platform.OS === 'android' && I18nManager.isRTL ? 0 : 2)
+        }
       />
 
       <ScrollView
@@ -315,13 +328,18 @@ function History({ store, navigation }) {
         horizontal={true}
         onScroll={(e) => check(e)}
         ref={Scroll}
-        style={{ flex: 1, marginTop: 50 }}
+        style={styles.FlexMargin}
         directionalLockEnabled={true}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+      >
         <View style={styles.Container}>
           <Activejob
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={RefreshMiddle}
+                tintColor={PrimaryColor}
+              />
             }
             Data={isAllData}
             onPressWork={navigation.navigate}
@@ -336,14 +354,22 @@ function History({ store, navigation }) {
             Withdrawalapply={Withdrawalapply}
             LoadButton={isLoadButton}
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={RefreshMiddle}
+                tintColor={PrimaryColor}
+              />
             }
           />
         </View>
         <View style={styles.Container}>
           <CompletedJobs
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={RefreshMiddle} tintColor={PrimaryColor} />
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={RefreshMiddle}
+                tintColor={PrimaryColor}
+              />
             }
             Data={isAllData}
             Details={navigation.navigate}
@@ -351,7 +377,7 @@ function History({ store, navigation }) {
         </View>
       </ScrollView>
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(History))
+export default inject('store')(observer(History));

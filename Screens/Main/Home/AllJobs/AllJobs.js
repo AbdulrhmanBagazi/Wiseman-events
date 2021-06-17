@@ -1,42 +1,42 @@
-import React from 'react'
-import { View, ActivityIndicator, Text, TouchableOpacity, Alert, I18nManager } from 'react-native'
-import { inject, observer } from 'mobx-react'
-import Card from './Card'
-import styles from '../Style'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
-import RefreshButton from '../../../Components/RefreshButton/RefreshButton'
+import React from 'react';
+import { View, ActivityIndicator, Alert, I18nManager } from 'react-native';
+import { inject, observer } from 'mobx-react';
+import Card from './Card';
+import styles from '../Style';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import RefreshButton from '../../../Components/RefreshButton/RefreshButton';
 //
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 
 function AllJobs({ route, store, navigation }) {
-  const [isLoading, setLoading] = React.useState(false)
-  const [isData, setData] = React.useState([])
-  const [isError, setError] = React.useState(false)
-  const [isRefresh, setRefresh] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false);
+  const [isData, setData] = React.useState([]);
+  const [isError, setError] = React.useState(false);
+  const [isRefresh, setRefresh] = React.useState(false);
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
 
-  const { id } = route.params
+  const { id } = route.params;
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (isLoading) {
         // Prevent default behavior of leaving the screen
-        e.preventDefault()
+        e.preventDefault();
 
-        return
+        return;
       }
 
-      return
-    })
+      return;
+    });
 
-    return unsubscribe
-  }, [navigation, isLoading])
+    return unsubscribe;
+  }, [navigation, isLoading]);
 
   React.useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get(URL + '/user/getJobs/' + id, {
         headers: {
@@ -47,27 +47,27 @@ function AllJobs({ route, store, navigation }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            await setData(response.data.data)
+            await setData(response.data.data);
             setTimeout(() => {
-              setLoading(false)
-            }, 500)
-            return
+              setLoading(false);
+            }, 500);
+            return;
           } else if (response.data.check === 'fail') {
-            setError(true)
-            setLoading(false)
+            setError(true);
+            setLoading(false);
 
-            return
+            return;
           }
         }
       })
       .catch(async (error) => {
         // console.log(error)
-        setError(true)
-        setLoading(false)
+        setError(true);
+        setLoading(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -77,9 +77,9 @@ function AllJobs({ route, store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -88,8 +88,8 @@ function AllJobs({ route, store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -100,28 +100,36 @@ function AllJobs({ route, store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
+      });
 
-    return
-  }, [isRefresh])
+    return;
+  }, [isRefresh]);
 
   return (
     <View style={styles.AllJobsContainer}>
       {/* <Card /> */}
       {isLoading ? (
-        <ActivityIndicator size="large" color="#AF0029" style={{ alignSelf: 'center' }} />
+        <ActivityIndicator
+          size="large"
+          color="#AF0029"
+          style={styles.alignSelfLoading}
+        />
       ) : isError ? (
         <View>
           <RefreshButton onPress={() => setRefresh(!isRefresh)} />
         </View>
       ) : (
-        <Card Data={isData} PushJob={() => navigation.navigate('SingleJob')} click={navigation.navigate} />
+        <Card
+          Data={isData}
+          PushJob={() => navigation.navigate('SingleJob')}
+          click={navigation.navigate}
+        />
       )}
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(AllJobs))
+export default inject('store')(observer(AllJobs));

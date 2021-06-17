@@ -1,33 +1,41 @@
-import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, I18nManager, Linking, Image, Modal } from 'react-native'
-import styles from './Style'
-import Icon from '../../../Config/Icons'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import moment from 'moment'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import QrcodeGen from './QrcodeGen'
-import CalHours from './CalHours'
-import CalSalary from './CalSalay'
-import { HistoryPageStrings } from '../../../Config/Strings'
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  I18nManager,
+  Linking,
+  Modal,
+} from 'react-native';
+import styles from './Style';
+import Icon from '../../../Config/Icons';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import moment from 'moment';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import QrcodeGen from './QrcodeGen';
+import CalHours from './CalHours';
+import CalSalary from './CalSalay';
+import { HistoryPageStrings } from '../../../Config/Strings';
 
 function Activejob(props) {
-  const [isData, setData] = React.useState([])
-  const [isShow, setShow] = React.useState(false)
-  const [isTrue, setTrue] = React.useState(false)
+  const [isData, setData] = React.useState([]);
+  const [isShow, setShow] = React.useState(false);
+  const [isTrue, setTrue] = React.useState(false);
 
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
-      return item.Status === 'approved'
-    })
+      return item.Status === 'approved';
+    });
 
-    setData(newArray)
-  }, [props.Data])
+    setData(newArray);
+  }, [props.Data]);
 
   React.useEffect(() => {
-    var Check = props.calendarIds.indexOf(1) < 0 ? false : true
+    var Check = props.calendarIds.indexOf(1) < 0 ? false : true;
 
-    setTrue(Check)
-  }, [props.calendarIds])
+    setTrue(Check);
+  }, [props.calendarIds]);
 
   return (
     <View style={styles.AllJobCard}>
@@ -40,22 +48,26 @@ function Activejob(props) {
         data={isData}
         showsVerticalScrollIndicator={false}
         refreshControl={props.refreshControl}
-        contentContainerStyle={{ paddingBottom: 30, paddingTop: 0 }}
+        contentContainerStyle={styles.PaddingTopBottom}
         style={styles.AllJobFlatlist}
         renderItem={({ item, index }) => (
           <View style={styles.ActivejobView}>
             <View style={styles.ActivejobHeader}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={styles.Image}></View>
-                <View style={styles.spaceActive}></View>
+              <View style={styles.ViewRowCenter}>
+                <View style={styles.Image} />
+                <View style={styles.spaceActive} />
                 <Text style={styles.ActivejobHeaderTextLight}>
                   {I18nManager.isRTL ? item.event.NameAr : item.event.Name}
                 </Text>
               </View>
               <Text style={styles.ActivejobHeaderText}>
-                {item.Type === 'organizer' ? item.event.Salary : item.event.SalarySupervisor}
+                {item.Type === 'organizer'
+                  ? item.event.Salary
+                  : item.event.SalarySupervisor}
                 {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                <Text style={styles.ActivejobHeaderTextLight}>/{I18nManager.isRTL ? 'الساعة' : 'Hour'}</Text>
+                <Text style={styles.ActivejobHeaderTextLight}>
+                  /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                </Text>
               </Text>
             </View>
             <View style={styles.ActivejobBody}>
@@ -65,10 +77,16 @@ function Activejob(props) {
                 </Text>
                 <TouchableOpacity
                   style={styles.SingleJobDetailsLocationView}
-                  onPress={() => Linking.openURL(item.event.LocationURL)}>
+                  onPress={() => Linking.openURL(item.event.LocationURL)}
+                >
                   <Icon name="map-pin" size={14} color="#000" />
-                  <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
-                    {I18nManager.isRTL ? item.event.LocationAr : item.event.Location}
+                  <Text
+                    style={styles.SingleJobDetailsLocation}
+                    numberOfLines={1}
+                  >
+                    {I18nManager.isRTL
+                      ? item.event.LocationAr
+                      : item.event.Location}
                   </Text>
                   <Icon name="external-link" size={14} color={PrimaryColor} />
                 </TouchableOpacity>
@@ -77,8 +95,12 @@ function Activejob(props) {
                 <TouchableOpacity
                   style={styles.calendarButton}
                   onPress={() =>
-                    props.onPressWork('WorkScheduleUser', { eventId: item.eventId, applicationId: item.id })
-                  }>
+                    props.onPressWork('WorkScheduleUser', {
+                      eventId: item.eventId,
+                      applicationId: item.id,
+                    })
+                  }
+                >
                   <Icon
                     name="calendar"
                     size={40}
@@ -93,28 +115,7 @@ function Activejob(props) {
                       }
                     }
                   />
-                  {isTrue ? (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        backgroundColor: '#ffff00',
-                        borderRadius: 20 / 2,
-                        width: 20,
-                        height: 20,
-                        // padding: 5,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 2,
-                        elevation: 2,
-                        opacity: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        left: 25,
-                        bottom: 5,
-                      }}></View>
-                  ) : null}
+                  {isTrue ? <View style={styles.AbsoluteView} /> : null}
                 </TouchableOpacity>
               </View>
             </View>
@@ -122,8 +123,12 @@ function Activejob(props) {
               <View style={styles.ActivejobBox}>
                 <View style={styles.ActivejobBoxTop}>
                   <View style={styles.Activejobsplit}>
-                    <Text style={styles.GrayColorText}>{I18nManager.isRTL ? 'الوردية' : 'Shift'}</Text>
-                    <Text style={styles.dataTextActive}>{item.eventshift.shift}</Text>
+                    <Text style={styles.GrayColorText}>
+                      {I18nManager.isRTL ? 'الوردية' : 'Shift'}
+                    </Text>
+                    <Text style={styles.dataTextActive}>
+                      {item.eventshift.shift}
+                    </Text>
                   </View>
 
                   <View style={styles.Activejobsplit}>
@@ -131,7 +136,9 @@ function Activejob(props) {
                       {I18nManager.isRTL ? 'وقت الحضور' : 'Attendance Time'}
                     </Text>
                     <Text style={styles.dataTextActive}>
-                      {moment(item.eventshift.attendance, 'hh:mm').format('hh:mma')}
+                      {moment(item.eventshift.attendance, 'hh:mm').format(
+                        'hh:mma'
+                      )}
                     </Text>
                   </View>
                 </View>
@@ -163,10 +170,14 @@ function Activejob(props) {
                       <Text style={styles.GrayColorText}>
                         {I18nManager.isRTL ? 'اليوم الأول' : 'First day'}
                       </Text>
-                      <Text style={styles.dataTextActive}>{moment(item.Start).format('D MMMM, YYYY')}</Text>
+                      <Text style={styles.dataTextActive}>
+                        {moment(item.Start).format('D MMMM, YYYY')}
+                      </Text>
                     </View>
                   ) : (
-                    <Text style={styles.NoDateSetText}>{HistoryPageStrings.Soon}</Text>
+                    <Text style={styles.NoDateSetText}>
+                      {HistoryPageStrings.Soon}
+                    </Text>
                   )}
 
                   {item.Start && item.End ? (
@@ -174,7 +185,9 @@ function Activejob(props) {
                       <Text style={styles.GrayColorText}>
                         {I18nManager.isRTL ? 'اليوم الأخير' : 'Last day'}
                       </Text>
-                      <Text style={styles.dataTextActive}>{moment(item.End).format('D MMMM, YYYY')}</Text>
+                      <Text style={styles.dataTextActive}>
+                        {moment(item.End).format('D MMMM, YYYY')}
+                      </Text>
                     </View>
                   ) : null}
                 </View>
@@ -186,7 +199,11 @@ function Activejob(props) {
       />
 
       <Modal animationType="fade" transparent={true} visible={isShow}>
-        <TouchableOpacity style={styles.modal} onPress={() => setShow(false)} activeOpacity={0.5}>
+        <TouchableOpacity
+          style={styles.modal}
+          onPress={() => setShow(false)}
+          activeOpacity={0.5}
+        >
           <View style={styles.modalContainer}>
             <QrcodeGen value={props.Secret + ',' + props.userId} />
           </View>
@@ -199,7 +216,7 @@ function Activejob(props) {
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
 
-export default Activejob
+export default Activejob;

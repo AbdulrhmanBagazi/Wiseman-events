@@ -1,12 +1,19 @@
-import React from 'react'
-import { View, Text, Modal, I18nManager, TouchableOpacity, StyleSheet, Platform, Picker } from 'react-native'
-import { width } from '../../../../Config/Layout'
-import RNPickerSelect from 'react-native-picker-select'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import styles from './Style'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import moment from 'moment'
-import { StatusPageStrings } from '../../../../Config/Strings'
+import React from 'react';
+import {
+  View,
+  Text,
+  Modal,
+  I18nManager,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import styles from './Style';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import { StatusPageStrings } from '../../../../Config/Strings';
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -25,7 +32,7 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     color: PrimaryColor,
   },
-})
+});
 
 const Days = I18nManager.isRTL
   ? [
@@ -45,7 +52,7 @@ const Days = I18nManager.isRTL
       { label: 'Wednesday', value: 'Wednesday' },
       { label: 'Thursday', value: 'Thursday' },
       { label: 'Friday', value: 'Friday' },
-    ]
+    ];
 
 const Stat = I18nManager.isRTL
   ? [
@@ -57,127 +64,116 @@ const Stat = I18nManager.isRTL
       { label: 'Full-Time', value: 'Full-Time' },
       { label: 'Student', value: 'Student' },
       { label: 'Employed', value: 'Employed' },
-    ]
+    ];
 
 function StatusPicker(props) {
-  const [show, setShow] = React.useState(false)
-  const [showModal, setShowModal] = React.useState(false)
-  const [DateValue] = React.useState(new Date())
-  const [TimeFrom, setTimeFrom] = React.useState(new Date())
-  const [TimeTo, setTimeTo] = React.useState(new Date())
-  const [Check, setCheck] = React.useState(null)
-  const [From, setFrom] = React.useState('')
-  const [To, setTo] = React.useState('')
+  const [show, setShow] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  // const [DateValue] = React.useState(new Date());
+  const [TimeFrom, setTimeFrom] = React.useState(new Date());
+  const [TimeTo, setTimeTo] = React.useState(new Date());
+  const [Check, setCheck] = React.useState(null);
+  const [From, setFrom] = React.useState('');
+  const [To, setTo] = React.useState('');
 
   const showDatepickerIOS = () => {
     if (Platform.OS === 'ios') {
-      setShow(true)
-      setShowModal(true)
-      setCheck(1)
-      return
+      setShow(true);
+      setShowModal(true);
+      setCheck(1);
+      return;
     } else {
-      setShow(true)
-      setShowModal(false)
-      setCheck(1)
-      return
+      setShow(true);
+      setShowModal(false);
+      setCheck(1);
+      return;
     }
-  }
+  };
 
   const showDatepickerIOSTWO = () => {
     if (Platform.OS === 'ios') {
-      setShow(true)
-      setShowModal(true)
-      setCheck(2)
-      return
+      setShow(true);
+      setShowModal(true);
+      setCheck(2);
+      return;
     } else {
-      setShow(true)
-      setShowModal(false)
-      setCheck(2)
-      return
+      setShow(true);
+      setShowModal(false);
+      setCheck(2);
+      return;
     }
-  }
+  };
 
   const onChange = async (event, selectedTime) => {
     if (Platform.OS === 'ios') {
-      var Time = await moment(selectedTime).format('hh:mm a')
+      var Time = await moment(selectedTime).format('hh:mm a');
       if (Check === 1) {
-        setTimeFrom(selectedTime)
-        setFrom(Time)
-        props.getTimeStart(Time)
+        setTimeFrom(selectedTime);
+        setFrom(Time);
+        props.getTimeStart(Time);
 
-        return
+        return;
       } else {
-        setTimeTo(selectedTime)
-        setTo(Time)
-        props.getTimeEnd(Time)
+        setTimeTo(selectedTime);
+        setTo(Time);
+        props.getTimeEnd(Time);
 
-        return
+        return;
       }
     } else {
-      var Time = await moment(selectedTime).format('hh:mm a')
+      var Time = await moment(selectedTime).format('hh:mm a');
       if (event.type === 'dismissed') {
-        setShow(false)
-        setShowModal(false)
-        setCheck(null)
+        setShow(false);
+        setShowModal(false);
+        setCheck(null);
       } else if (event.type === 'set') {
-        setShow(false)
-        setShowModal(false)
-        setCheck(null)
+        setShow(false);
+        setShowModal(false);
+        setCheck(null);
         if (Check === 1) {
-          setTimeFrom(selectedTime)
-          setFrom(Time)
-          props.getTimeStart(Time)
+          setTimeFrom(selectedTime);
+          setFrom(Time);
+          props.getTimeStart(Time);
 
-          return
+          return;
         } else {
-          setTimeTo(selectedTime)
-          setTo(Time)
-          props.getTimeEnd(Time)
+          setTimeTo(selectedTime);
+          setTo(Time);
+          props.getTimeEnd(Time);
 
-          return
+          return;
         }
       }
     }
-  }
+  };
 
   const ClosePicker = async () => {
-    setShow(false)
-    setShowModal(false)
-    setCheck(null)
+    setShow(false);
+    setShowModal(false);
+    setCheck(null);
     if (Check === 1) {
-      var Time = await moment(TimeFrom).format('hh:mm a')
-      setTimeFrom(TimeFrom)
-      setFrom(Time)
-      props.getTimeStart(Time)
-      return
+      var Time = await moment(TimeFrom).format('hh:mm a');
+      setTimeFrom(TimeFrom);
+      setFrom(Time);
+      props.getTimeStart(Time);
+      return;
     } else {
-      var Time = await moment(TimeTo).format('hh:mm a')
-      setTimeTo(TimeTo)
-      setTo(Time)
-      props.getTimeEnd(Time)
+      var Time = await moment(TimeTo).format('hh:mm a');
+      setTimeTo(TimeTo);
+      setTo(Time);
+      props.getTimeEnd(Time);
 
-      return
+      return;
     }
-  }
+  };
 
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        width,
-        backgroundColor: '#F8F8F9',
-      }}>
-      <View
-        style={{
-          width: width - 33,
-          marginVertical: 5,
-          borderBottomWidth: 1,
-          borderColor: '#868991',
-        }}>
-        <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Text style={styles.ViewTextPickerFirst}>{I18nManager.isRTL ? 'الحالة' : 'Status'}</Text>
+    <View style={styles.Container}>
+      <View style={styles.MainView}>
+        <View style={styles.ViewAlignContent}>
+          <Text style={styles.ViewTextPickerFirst}>
+            {I18nManager.isRTL ? 'الحالة' : 'Status'}
+          </Text>
         </View>
         <RNPickerSelect
           onValueChange={props.onValueChangeStat}
@@ -194,24 +190,14 @@ function StatusPicker(props) {
       </View>
 
       {props.ShowMore === false ? null : (
-        <View
-          style={{
-            width,
-            marginVertical: 5,
-          }}>
-          <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-            <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'أيام العمل' : 'Work days'}</Text>
+        <View style={styles.ShowMoreView}>
+          <View style={styles.ViewAlignContent}>
+            <Text style={styles.ViewTextPicker}>
+              {I18nManager.isRTL ? 'أيام العمل' : 'Work days'}
+            </Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderBottomWidth: 1,
-                borderColor: '#868991',
-                marginHorizontal: 16,
-              }}>
+          <View style={styles.ViewRow}>
+            <View style={styles.PickerView}>
               <RNPickerSelect
                 onValueChange={props.onValueChangeDayFrom}
                 style={{
@@ -225,15 +211,7 @@ function StatusPicker(props) {
                 Icon={() => null}
               />
             </View>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderBottomWidth: 1,
-                borderColor: '#868991',
-                marginHorizontal: 16,
-              }}>
+            <View style={styles.SelectView}>
               <RNPickerSelect
                 onValueChange={props.onValueChangeDayTo}
                 style={{
@@ -252,36 +230,44 @@ function StatusPicker(props) {
       )}
 
       {props.ShowMore === false ? null : (
-        <View
-          style={{
-            width,
-            marginVertical: 5,
-          }}>
-          <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-            <Text style={styles.ViewTextPicker}>{I18nManager.isRTL ? 'وقت العمل' : 'Work time'}</Text>
+        <View style={styles.MarginV}>
+          <View style={styles.ViewAlignContent}>
+            <Text style={styles.ViewTextPicker}>
+              {I18nManager.isRTL ? 'وقت العمل' : 'Work time'}
+            </Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOS}>
+          <View style={styles.ViewRow}>
+            <View style={styles.FlexOne}>
+              <TouchableOpacity
+                style={styles.inputTime}
+                onPress={showDatepickerIOS}
+              >
                 <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 16,
-                    color: From === '' ? '#c7c7cd' : PrimaryColor,
-                  }}>
+                  style={[
+                    styles.TextFont,
+                    {
+                      color: From === '' ? '#c7c7cd' : PrimaryColor,
+                    },
+                  ]}
+                >
                   {From !== '' ? From : I18nManager.isRTL ? 'من...' : 'From...'}
                 </Text>
               </TouchableOpacity>
             </View>
 
             <View style={{ flex: 1 }}>
-              <TouchableOpacity style={styles.inputTime} onPress={showDatepickerIOSTWO}>
+              <TouchableOpacity
+                style={styles.inputTime}
+                onPress={showDatepickerIOSTWO}
+              >
                 <Text
-                  style={{
-                    fontWeight: '600',
-                    fontSize: 16,
-                    color: To === '' ? '#c7c7cd' : PrimaryColor,
-                  }}>
+                  style={[
+                    styles.TextFont,
+                    {
+                      color: To === '' ? '#c7c7cd' : PrimaryColor,
+                    },
+                  ]}
+                >
                   {To !== '' ? To : I18nManager.isRTL ? 'إلى...' : 'To...'}
                 </Text>
                 {/* {Platform.OS === 'ios' ? null : <FontAwesome name="caret-down" size={15} color="#747474" />} */}
@@ -337,8 +323,13 @@ function StatusPicker(props) {
                     />
                   )}
 
-                  <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
-                    <Text style={styles.ButtonText}>{StatusPageStrings.Done}</Text>
+                  <TouchableOpacity
+                    style={styles.ModalButton}
+                    onPress={() => ClosePicker()}
+                  >
+                    <Text style={styles.ButtonText}>
+                      {StatusPageStrings.Done}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -347,7 +338,7 @@ function StatusPicker(props) {
         </View>
       )}
     </View>
-  )
+  );
 }
 
-export default StatusPicker
+export default StatusPicker;

@@ -1,6 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText, GrayColor } from '../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width, height } from '../../../Config/Layout';
+import { PrimaryColor, SecondaryText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -153,6 +153,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
   },
   TouchableOpacityFirst: {
     height: 50,
@@ -161,6 +163,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
   },
   CitiesView: {
     flex: 1,
@@ -175,6 +179,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.25,
     borderColor: '#ccc',
   },
-})
+  ViewSpace: {
+    height: 25,
+  },
+  CustomeFontSize: { fontSize: 16 },
+  CustomeFontColor: { color: '#000' },
+  CitiesModalViewContainer: { flexDirection: 'row' },
+  CitiesModalInput: { width: '70%', fontSize: 16 },
+  CitiesModalTouch: {
+    width: 62,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
-export default styles
+export default styles;

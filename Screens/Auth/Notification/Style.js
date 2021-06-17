@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryColor, SecondaryText, LightText } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width, height } from '../../../Config/Layout';
+import {
+  PrimaryColor,
+  SecondaryColor,
+  SecondaryText,
+  LightText,
+} from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -165,6 +170,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default styles
+export default styles;

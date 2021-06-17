@@ -1,6 +1,11 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText, LightText, PrimaryBorder } from '../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width, height } from '../../../Config/Layout';
+import {
+  PrimaryColor,
+  SecondaryText,
+  LightText,
+  PrimaryBorder,
+} from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -128,6 +133,6 @@ const styles = StyleSheet.create({
   Scroll: {
     flex: 1,
   },
-})
+});
 
-export default styles
+export default styles;

@@ -1,13 +1,10 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../../Config/Layout';
 import {
   PrimaryColor,
   SecondaryText,
-  GrayColor,
   LightText,
-  PrimaryBorder,
-  LightBorder,
-} from '../../../../Config/ColorPalette'
+} from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   Container: {
@@ -305,6 +302,8 @@ const styles = StyleSheet.create({
     left: 5,
     zIndex: 99,
   },
-})
+  FlexOne: { flex: 1 },
+  ViewCenter: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+});
 
-export default styles
+export default styles;

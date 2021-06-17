@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -10,17 +10,18 @@ import {
   I18nManager,
   Alert,
   ActivityIndicator,
-} from 'react-native'
-import styles from './Style'
-import { SupportPageStrings, ErrorsStrings } from '../../../../Config/Strings'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import RNPickerSelect from 'react-native-picker-select'
-import { width } from '../../../../Config/Layout'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import { AuthContext } from '../../../../Hooks/Context'
-import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
+} from 'react-native';
+import styles from './Style';
+import { SupportPageStrings, ErrorsStrings } from '../../../../Config/Strings';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import RNPickerSelect from 'react-native-picker-select';
+import { width } from '../../../../Config/Layout';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import { AuthContext } from '../../../../Hooks/Context';
+import { inject, observer } from 'mobx-react';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -48,14 +49,14 @@ const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     color: '#000',
   },
-})
+});
 
 function Support({ store }) {
-  const { signOut } = React.useContext(AuthContext)
-  const [isText, setText] = React.useState('')
-  const [isShow, setShow] = React.useState(false)
-  const [istype, settype] = React.useState('')
-  const [isLoading, setLoading] = React.useState(false)
+  const { signOut } = React.useContext(AuthContext);
+  const [isText, setText] = React.useState('');
+  const [isShow, setShow] = React.useState(false);
+  const [istype, settype] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
 
   const TPicker = I18nManager.isRTL
     ? [
@@ -69,15 +70,20 @@ function Support({ store }) {
         { label: 'Profile', value: 'Profile' },
         { label: 'Technical', value: 'Technical' },
         { label: 'Other', value: 'Other' },
-      ]
+      ];
 
   const RequestSupport = async () => {
-    setLoading(true)
+    setLoading(true);
     if (istype.length < 1 || isText.length < 1) {
-      Alert.alert('', ErrorsStrings.Required, [{ text: 'OK', onPress: () => setLoading(false) }], {
-        cancelable: false,
-      })
-      return
+      Alert.alert(
+        '',
+        ErrorsStrings.Required,
+        [{ text: 'OK', onPress: () => setLoading(false) }],
+        {
+          cancelable: false,
+        }
+      );
+      return;
     } else {
       axios
         .post(
@@ -92,15 +98,15 @@ function Support({ store }) {
         )
         .then((response) => {
           if (response.data.check === 'success') {
-            setLoading(false)
+            setLoading(false);
 
             setTimeout(() => {
-              setShow(true)
-            }, 500)
+              setShow(true);
+            }, 500);
 
-            return
+            return;
           } else {
-            setLoading(false)
+            setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -108,15 +114,15 @@ function Support({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         })
         .catch(async (error) => {
           if (error.response) {
             if (error.response.status) {
               if (error.response.status === 401) {
-                await UserTokenRemove()
+                await UserTokenRemove();
 
                 Alert.alert(
                   '',
@@ -127,9 +133,9 @@ function Support({ store }) {
                   {
                     cancelable: false,
                   }
-                )
+                );
 
-                return
+                return;
               } else {
                 Alert.alert(
                   '',
@@ -138,8 +144,8 @@ function Support({ store }) {
                   {
                     cancelable: false,
                   }
-                )
-                return
+                );
+                return;
               }
             }
           } else {
@@ -150,18 +156,19 @@ function Support({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
-        })
+        });
     }
-  }
+  };
 
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
-      showsVerticalScrollIndicator={false}>
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.Container}>
         <Text style={styles.Title}>{SupportPageStrings.Title}</Text>
         {/* <Text style={styles.About}>{SupportPageStrings.About}</Text> */}
@@ -191,7 +198,10 @@ function Support({ store }) {
           onChangeText={(text) => setText(text)}
           value={isText}
         />
-        <TouchableOpacity style={styles.Button} onPress={() => RequestSupport(true)}>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => RequestSupport(true)}
+        >
           <Text style={styles.ButtonText}>{SupportPageStrings.Send}</Text>
         </TouchableOpacity>
       </View>
@@ -200,11 +210,17 @@ function Support({ store }) {
         <View style={styles.modal}>
           <View style={styles.modalContainer}>
             <View style={styles.Logo}>
-              <Image style={styles.tinyLogo} source={require('../../../../assets/supportIcon.png')} />
+              <Image
+                style={styles.tinyLogo}
+                source={require('../../../../assets/supportIcon.png')}
+              />
             </View>
             <Text style={styles.Slogan}>{SupportPageStrings.ModalAbout}</Text>
 
-            <TouchableOpacity style={styles.ModalButton} onPress={() => setShow(false)}>
+            <TouchableOpacity
+              style={styles.ModalButton}
+              onPress={() => setShow(false)}
+            >
               <Text style={styles.ButtonText}>{SupportPageStrings.Done}</Text>
             </TouchableOpacity>
           </View>
@@ -217,7 +233,7 @@ function Support({ store }) {
         </View>
       </Modal>
     </KeyboardAwareScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(Support))
+export default inject('store')(observer(Support));

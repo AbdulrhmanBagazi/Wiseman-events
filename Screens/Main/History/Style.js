@@ -1,12 +1,11 @@
-import { StyleSheet } from 'react-native'
-import { width, height } from '../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import { width, height } from '../../../Config/Layout';
 import {
   PrimaryColor,
   SecondaryText,
   GrayColor,
   LightText,
-  SecondaryColor,
-} from '../../../Config/ColorPalette'
+} from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   ButtonsView: {
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width,
     flex: 1,
-    width: width - 30,
+    // width: width - 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -136,7 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width,
     flex: 1,
-    width,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -237,10 +235,34 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
+  StatusBoxWithdrawBorderColor: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    // backgroundColor: '#FFF4F5',
+    marginHorizontal: 5,
+    marginVertical: 20,
+    flex: 1,
+    borderWidth: 1,
+    // borderColor: '#E8505B',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+    backgroundColor: '#e55353',
+    borderColor: '#e55353',
+  },
   StatuText: {
     fontSize: 14,
     fontWeight: '500',
     // color: '#fff',
+  },
+  StatuTextWhite: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff',
   },
   Logo: {
     width,
@@ -317,18 +339,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: SecondaryText,
-  },
-  SingleJobDetailsLocationView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginVertical: 10,
-  },
-  SingleJobDetailsLocation: {
-    fontWeight: '500',
-    fontSize: 14,
-    marginHorizontal: 10,
-    color: LightText,
   },
   ActivejobBoxContainer: {
     width: width - 10,
@@ -587,12 +597,39 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     width: width - 20,
+    backgroundColor: '#22bb33',
   },
   InfoBoxText: {
     fontWeight: '600',
     fontSize: 16,
     color: '#fff',
   },
-})
+  FlexOne: { flex: 1 },
+  WorkSchedule: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  PaddingTopBottom: { paddingBottom: 30, paddingTop: 0 },
+  ViewRowCenter: { flexDirection: 'row', alignItems: 'center' },
+  AbsoluteView: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    borderRadius: 20 / 2,
+    width: 20,
+    height: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
+    opacity: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 25,
+    bottom: 5,
+  },
+  BlackText: { color: '#000' },
+  ViewAlignSelf: { flex: 1, alignSelf: 'center' },
+  FlexEnd: { flex: 1, alignItems: 'flex-end' },
+  FlexTwo: { flex: 2 },
+  FlexMargin: { flex: 1, marginTop: 50 },
+});
 
-export default styles
+export default styles;

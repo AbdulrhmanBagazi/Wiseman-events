@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../Config/Layout'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
 
 const styles = StyleSheet.create({
   Container: {
@@ -104,6 +104,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     color: '#859881',
   },
-})
+});
 
-export default styles
+export default styles;

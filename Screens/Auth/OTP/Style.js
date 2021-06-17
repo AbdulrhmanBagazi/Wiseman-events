@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, LightText } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { PrimaryColor, LightText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,6 +53,25 @@ const styles = StyleSheet.create({
   Scroll: {
     flex: 1,
   },
-})
+  inputView: {
+    backgroundColor: '#fff',
+    height: 45,
+    width,
+    borderColor: '#AF0029',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainer: { width, height: 45, textAlign: 'center' },
+  ltrView: { direction: 'ltr' },
+  digittyle: { backgroundColor: 'transparent' },
+  digittext: { color: '#AF0029' },
+  flexContainer: {
+    flex: 1,
+  },
+});
 
-export default styles
+export default styles;

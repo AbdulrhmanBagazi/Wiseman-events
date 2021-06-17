@@ -1,12 +1,12 @@
-import * as SplashScreen from 'expo-splash-screen'
-import * as React from 'react'
+// import * as SplashScreen from 'expo-splash-screen';
+import * as React from 'react';
 
 export default function useCachedResources() {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false)
+  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
-    loadResourcesAndDataAsync = async () => {
+    var loadResourcesAndDataAsync = async () => {
       try {
         // SplashScreen.preventAutoHideAsync()
         // Load fonts
@@ -19,12 +19,12 @@ export default function useCachedResources() {
         // We might want to provide this error information to an error reporting service
         // console.log(e)
       } finally {
-        setLoadingComplete(true)
+        setLoadingComplete(true);
       }
-    }
+    };
 
-    loadResourcesAndDataAsync()
-  }, [])
+    loadResourcesAndDataAsync();
+  }, []);
 
-  return isLoadingComplete
+  return isLoadingComplete;
 }

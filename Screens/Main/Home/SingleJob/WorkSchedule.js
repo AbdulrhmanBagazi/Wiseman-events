@@ -1,14 +1,21 @@
-import React from 'react'
-import { View, ActivityIndicator, I18nManager, Alert } from 'react-native'
-import { CalendarList } from 'react-native-calendars'
-import { PrimaryColor, PrimaryBorder, PrimaryText } from '../../../../Config/ColorPalette'
-import { LocaleConfig } from 'react-native-calendars'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
-import { inject, observer } from 'mobx-react'
+import React from 'react';
+import { View, ActivityIndicator, I18nManager, Alert } from 'react-native';
+import { CalendarList } from 'react-native-calendars';
+import {
+  PrimaryColor,
+  PrimaryBorder,
+  PrimaryText,
+} from '../../../../Config/ColorPalette';
+import { LocaleConfig } from 'react-native-calendars';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import { inject, observer } from 'mobx-react';
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import styles from './Style';
 
 //Config
-LocaleConfig.locales['ar'] = {
+LocaleConfig.locales.ar = {
   monthNames: [
     'يناير',
     'فبراير',
@@ -23,7 +30,15 @@ LocaleConfig.locales['ar'] = {
     'نوفمبر',
     'ديسمبر',
   ],
-  dayNames: ['الآحد', 'الإثنين', 'الثلاثاء', 'الآربعاء', 'الخميس', 'الجمعة', 'السبت'],
+  dayNames: [
+    'الآحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الآربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ],
   monthNamesShort: [
     'يناير',
     'فبراير',
@@ -38,11 +53,19 @@ LocaleConfig.locales['ar'] = {
     'نوفمبر',
     'ديسمبر',
   ],
-  dayNamesShort: ['الآحد', 'الإثنين', 'الثلاثاء', 'الآربعاء', 'الخميس', 'الجمعة', 'السبت'],
+  dayNamesShort: [
+    'الآحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الآربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ],
   today: 'اليوم',
-}
+};
 
-LocaleConfig.locales['en'] = {
+LocaleConfig.locales.en = {
   monthNames: [
     'January',
     'February',
@@ -57,7 +80,15 @@ LocaleConfig.locales['en'] = {
     'November',
     'December',
   ],
-  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  dayNames: [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ],
   monthNamesShort: [
     'Jan.',
     'Feb.',
@@ -74,19 +105,19 @@ LocaleConfig.locales['en'] = {
   ],
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'],
   today: 'Today',
-}
-LocaleConfig.defaultLocale = I18nManager.isRTL ? 'ar' : 'en'
+};
+LocaleConfig.defaultLocale = I18nManager.isRTL ? 'ar' : 'en';
 //Config
 
 function WorkSchedule({ route, store }) {
-  const [isLoading, setLoading] = React.useState(true)
-  const [refreshing, setrefreshing] = React.useState(false)
-  const [isDays, setDays] = React.useState({})
+  const [isLoading, setLoading] = React.useState(true);
+  const [isDays, setDays] = React.useState({});
+  const { signOut } = React.useContext(AuthContext);
 
-  const { eventId } = route.params
+  const { eventId } = route.params;
 
   React.useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         URL + '/user/getEventDays',
@@ -102,8 +133,8 @@ function WorkSchedule({ route, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            var Days = response.data.days.rows
-            let newDaysObject = {}
+            var Days = response.data.days.rows;
+            let newDaysObject = {};
 
             await Days.map((item) => {
               newDaysObject = {
@@ -112,15 +143,15 @@ function WorkSchedule({ route, store }) {
                   selected: true,
                   marked: item.start === response.data.SA,
                 },
-              }
-            })
+              };
+            });
 
-            setDays(newDaysObject)
+            setDays(newDaysObject);
 
-            setLoading(false)
-            return
+            setLoading(false);
+            return;
           } else if (response.data.check === 'fail') {
-            setLoading(false)
+            setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -128,8 +159,8 @@ function WorkSchedule({ route, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
             Alert.alert(
               '',
@@ -138,8 +169,8 @@ function WorkSchedule({ route, store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         } else {
           Alert.alert(
@@ -149,16 +180,16 @@ function WorkSchedule({ route, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
       })
       .catch(async (error) => {
-        setLoading(false)
+        setLoading(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -168,9 +199,9 @@ function WorkSchedule({ route, store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -179,8 +210,8 @@ function WorkSchedule({ route, store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -191,15 +222,16 @@ function WorkSchedule({ route, store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }, [refreshing])
+      });
+  }, []);
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.FlexOne}>
       {isLoading ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.ViewCenter}>
           <ActivityIndicator size="large" color={PrimaryColor} />
         </View>
       ) : (
@@ -230,7 +262,7 @@ function WorkSchedule({ route, store }) {
         />
       )}
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(WorkSchedule))
+export default inject('store')(observer(WorkSchedule));

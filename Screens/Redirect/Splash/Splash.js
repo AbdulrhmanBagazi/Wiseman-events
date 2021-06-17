@@ -1,68 +1,68 @@
-import React from 'react'
-import { View, Animated, AsyncStorage } from 'react-native'
-import { inject, observer } from 'mobx-react'
-import { AuthContext } from '../../../Hooks/Context'
+import React from 'react';
+import { View, Animated, StyleSheet } from 'react-native';
+import { inject, observer } from 'mobx-react';
+import { AuthContext } from '../../../Hooks/Context';
 import {
   UserTokenGet,
   UserTokenRemove,
   QrGet,
   setFilesystemresettime,
   getFilesystemresettime,
-} from '../../../Config/AsyncStorage'
-import { URL } from '../../../Config/Config'
-import axios from 'axios'
-import Svg, { G, Path } from 'react-native-svg'
-import { width, height } from '../../../Config/Layout'
-import * as Network from 'expo-network'
-import QRCode from 'react-native-qrcode-svg'
-import Icon from '../../../Config/Icons'
-import { PrimaryColor } from '../../../Config/ColorPalette'
-import RefreshButton from '../../Components/RefreshButton/RefreshButton'
-import * as FileSystem from 'expo-file-system'
-import moment from 'moment'
+} from '../../../Config/AsyncStorage';
+import { URL } from '../../../Config/Config';
+import axios from 'axios';
+import Svg, { G, Path } from 'react-native-svg';
+import { width, height } from '../../../Config/Layout';
+import * as Network from 'expo-network';
+import QRCode from 'react-native-qrcode-svg';
+import Icon from '../../../Config/Icons';
+import { PrimaryColor } from '../../../Config/ColorPalette';
+import RefreshButton from '../../Components/RefreshButton/RefreshButton';
+import * as FileSystem from 'expo-file-system';
+import moment from 'moment';
 
 function Splash({ store }) {
-  const { signOut, selectLanguage, Verify, Profile, signIn, Notification } = React.useContext(AuthContext)
-  const [ImageLoad] = React.useState(new Animated.Value(0))
-  const [isqr, setqr] = React.useState('')
-  const [isShowqr, setShowqr] = React.useState(false)
-  const [isReload, setReload] = React.useState(false)
+  const { signOut, selectLanguage, Verify, Profile, signIn, Notification } =
+    React.useContext(AuthContext);
+  const [ImageLoad] = React.useState(new Animated.Value(0));
+  const [isqr, setqr] = React.useState('');
+  const [isShowqr, setShowqr] = React.useState(false);
+  const [isReload, setReload] = React.useState(false);
 
   const Start = async () => {
     Animated.timing(ImageLoad, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true,
-    }).start()
-  }
+    }).start();
+  };
 
   const checkingNetwork = async (Token) => {
-    var info = await Network.getNetworkStateAsync()
-    var QRcode = await QrGet()
-    var Time = await getFilesystemresettime()
-    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
-    const dirInfo = await FileSystem.getInfoAsync(gifDir)
+    var info = await Network.getNetworkStateAsync();
+    var QRcode = await QrGet();
+    var Time = await getFilesystemresettime();
+    const gifDir = FileSystem.cacheDirectory + 'eventsappimages/';
+    const dirInfo = await FileSystem.getInfoAsync(gifDir);
     // await FileSystem.deleteAsync(gifDir)
     // return
 
     if (!dirInfo.exists) {
-      console.log(1)
+      console.log(1);
 
-      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true })
+      await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
     }
 
     // await AsyncStorage.removeItem('@Wiseman-events:eventimagesresetTime')
 
     if (!Time) {
-      var savetime = await moment().toISOString()
-      await setFilesystemresettime(savetime)
+      var savetime = await moment().toISOString();
+      await setFilesystemresettime(savetime);
     } else {
-      var checktime = await moment(Time)
-      var current = await moment()
-      var duration = await moment(current).diff(checktime, 'days')
+      var checktime = await moment(Time);
+      var current = await moment();
+      var duration = await moment(current).diff(checktime, 'days');
       if (duration >= 20) {
-        const gifDir = FileSystem.cacheDirectory + 'eventsappimages/'
-        await FileSystem.deleteAsync(gifDir)
+        await FileSystem.deleteAsync(gifDir);
       }
     }
 
@@ -78,31 +78,31 @@ function Splash({ store }) {
           .then(async (response) => {
             // console.log(response.data)
             if (response.status === 200) {
-              await store.setData(response.data)
-              await store.setToken(Token)
+              await store.setData(response.data);
+              await store.setToken(Token);
               // await UserTokenRemove()
 
               // console.log(response.data.user.qr)
               if (!response.data.user.verify) {
                 setTimeout(() => {
-                  Verify()
-                }, 1000)
-                return
+                  Verify();
+                }, 1000);
+                return;
               } else if (!response.data.user.profile) {
                 setTimeout(() => {
-                  Profile()
-                }, 1000)
-                return
+                  Profile();
+                }, 1000);
+                return;
               } else if (!response.data.user.notification) {
                 setTimeout(() => {
-                  Notification()
-                }, 1000)
-                return
+                  Notification();
+                }, 1000);
+                return;
               } else {
                 setTimeout(() => {
-                  signIn()
-                }, 1000)
-                return
+                  signIn();
+                }, 1000);
+                return;
               }
             }
           })
@@ -111,76 +111,73 @@ function Splash({ store }) {
             if (error.response) {
               if (error.response.status) {
                 if (error.response.status === 401) {
-                  await UserTokenRemove()
-                  signOut()
-                  return
+                  await UserTokenRemove();
+                  signOut();
+                  return;
                 } else {
-                  await UserTokenRemove()
-                  signOut()
-                  return
+                  await UserTokenRemove();
+                  signOut();
+                  return;
                 }
               }
             } else {
-              await UserTokenRemove()
-              signOut()
-              return
+              await UserTokenRemove();
+              signOut();
+              return;
             }
-          })
+          });
       } else {
-        await setqr(QRcode)
-        setShowqr(true)
-        return
+        await setqr(QRcode);
+        setShowqr(true);
+        return;
       }
     }
-  }
+  };
 
   React.useEffect(() => {
-    Start()
-    CheckLanguage = async () => {
-      await store.getLanguge()
-      var Token = await UserTokenGet()
+    Start();
+    const CheckLanguage = async () => {
+      await store.getLanguge();
+      var Token = await UserTokenGet();
       if (store.Language === null) {
-        selectLanguage()
+        selectLanguage();
 
-        return
+        return;
       } else if (Token) {
-        checkingNetwork(Token)
-        return
+        checkingNetwork(Token);
+        return;
       } else if (!Token) {
-        await UserTokenRemove()
-        signOut()
-        return
+        await UserTokenRemove();
+        signOut();
+        return;
       }
-    }
+    };
 
-    CheckLanguage()
-  }, [isReload])
+    CheckLanguage();
+  }, [isReload]);
 
   const R = async () => {
-    setReload(!isReload)
-    setShowqr(false)
+    setReload(!isReload);
+    setShowqr(false);
 
-    return
-  }
+    return;
+  };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      {isShowqr ? <Icon name="wifi-off" size={40} color={PrimaryColor} /> : null}
+    <View style={styles.Container}>
+      {isShowqr ? (
+        <Icon name="wifi-off" size={40} color={PrimaryColor} />
+      ) : null}
       {isShowqr && isqr ? (
-        <View style={{ marginVertical: 20 }}>
+        <View style={styles.Margin}>
           <QRCode value={[{ data: isqr, mode: 'byte' }]} size={width - 30} />
         </View>
       ) : (
         <Animated.View
           style={{
             opacity: ImageLoad,
-          }}>
+          }}
+        >
           <Svg width={width / 2} height={height / 2} viewBox="0 0 300 300">
             <G transform="translate(-597.908 -352.154)">
               <Path
@@ -201,7 +198,17 @@ function Splash({ store }) {
 
       {isShowqr ? <RefreshButton onPress={() => R()} /> : null}
     </View>
-  )
+  );
 }
 
-export default inject('store')(observer(Splash))
+export default inject('store')(observer(Splash));
+
+const styles = StyleSheet.create({
+  Container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Margin: { marginVertical: 20 },
+});

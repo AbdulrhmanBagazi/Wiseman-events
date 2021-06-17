@@ -1,80 +1,87 @@
-import React from 'react'
-import { View, TouchableOpacity, Text, Keyboard, ActivityIndicator } from 'react-native'
-import { AuthContext } from '../../../Hooks/Context'
-import { inject, observer } from 'mobx-react'
-import styles from './Style'
-import { SignInStrings, ErrorsStrings } from '../../../Config/Strings'
-import AnimatedIcon from './HidePassword'
-import axios from 'axios'
-import { URL } from '../../../Config/Config'
-import InputPhone from '../../Components/PhoneInput/Phone'
-import debounce from 'lodash/debounce'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import Svg, { Defs, Rect, G, Path } from 'react-native-svg'
-import { width } from '../../../Config/Layout'
+import React from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
+import { AuthContext } from '../../../Hooks/Context';
+import { inject, observer } from 'mobx-react';
+import styles from './Style';
+import { SignInStrings, ErrorsStrings } from '../../../Config/Strings';
+import AnimatedIcon from './HidePassword';
+import axios from 'axios';
+import { URL } from '../../../Config/Config';
+import InputPhone from '../../Components/PhoneInput/Phone';
+import debounce from 'lodash/debounce';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import Svg, { Defs, Rect, G, Path } from 'react-native-svg';
+import { width } from '../../../Config/Layout';
 
 function SignIn({ navigation, store }) {
-  const { Load, Notification, Verify, Profile, signIn } = React.useContext(AuthContext)
-  const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState(' ')
-  const [isPhoneCheck, setPhoneCheck] = React.useState('')
+  const { Notification, Verify, Profile, signIn } =
+    React.useContext(AuthContext);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isError, setError] = React.useState(' ');
+  const [isPhoneCheck, setPhoneCheck] = React.useState('');
 
   const [data, setData] = React.useState({
     UserName: '',
     Password: '', //Aa123123
-  })
+  });
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632
-    })
-  }
+      return d.charCodeAt(0) - 1632;
+    });
+  };
 
   const PhoneInput = async (val) => {
-    var phone = await convertToArabicNumber(val)
+    var phone = await convertToArabicNumber(val);
     setData({
       ...data,
       UserName: phone.trim(),
-    })
+    });
     if (phone === '') {
-      setPhoneCheck('')
-      return
+      setPhoneCheck('');
+      return;
     }
     if (isNaN(phone) === true && phone.length < 10) {
-      setPhoneCheck('Error')
-      return
+      setPhoneCheck('Error');
+      return;
     }
     if (phone.length > 10 || phone.length < 10) {
-      setPhoneCheck('Error')
-      return
+      setPhoneCheck('Error');
+      return;
     }
     if (isNaN(phone) === false && phone.length === 10) {
-      setPhoneCheck('Success')
-      return
+      setPhoneCheck('Success');
+      return;
     }
-    return
-  }
+    return;
+  };
 
   const PasswordInput = (val) => {
     setData({
       ...data,
       Password: val.trim(),
-    })
-  }
+    });
+  };
 
   const Login = async (val) => {
-    await Keyboard.dismiss()
+    await Keyboard.dismiss();
 
-    setLoading(true)
-    setError(' ')
+    setLoading(true);
+    setError(' ');
 
     if (isPhoneCheck !== 'Success' || data.Password.length < 1) {
-      setLoading(false)
-      setError(ErrorsStrings.Required)
-      return
+      setLoading(false);
+      setError(ErrorsStrings.Required);
+      return;
     }
 
-    var pass = await convertToArabicNumber(val.Password)
+    var pass = await convertToArabicNumber(val.Password);
 
     axios
       .post(URL + '/user/signin', {
@@ -83,34 +90,34 @@ function SignIn({ navigation, store }) {
       })
       .then(async (response) => {
         if (response.status === 200) {
-          await store.setData(response.data)
-          await store.setToken(response.data.token)
+          await store.setData(response.data);
+          await store.setToken(response.data.token);
 
           if (!response.data.user.verify) {
-            setLoading(false)
+            setLoading(false);
 
-            Verify()
-            return
+            Verify();
+            return;
           } else if (!response.data.user.profile) {
-            setLoading(false)
+            setLoading(false);
 
-            Profile()
-            return
+            Profile();
+            return;
           } else if (!response.data.user.notification) {
-            setLoading(false)
+            setLoading(false);
 
-            Notification()
-            return
+            Notification();
+            return;
           } else {
-            setLoading(false)
+            setLoading(false);
 
-            signIn()
-            return
+            signIn();
+            return;
           }
         } else {
-          setError(ErrorsStrings.ErrorOccurred)
-          setLoading(false)
-          return
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
         }
       })
       .catch((error) => {
@@ -118,32 +125,33 @@ function SignIn({ navigation, store }) {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              setError(ErrorsStrings.LoginError)
-              setLoading(false)
-              return
+              setError(ErrorsStrings.LoginError);
+              setLoading(false);
+              return;
             } else {
-              setError(ErrorsStrings.ErrorOccurred)
-              setLoading(false)
-              return
+              setError(ErrorsStrings.ErrorOccurred);
+              setLoading(false);
+              return;
             }
           }
         } else {
-          setError(ErrorsStrings.ErrorOccurred)
-          setLoading(false)
-          return
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
         }
-      })
-  }
+      });
+  };
 
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
       showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled">
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.container}>
         <Svg width={width / 2} height="200" viewBox="0 0 300 300">
-          <Defs></Defs>
+          <Defs />
           <Rect fill="#fff" class="a" width="300" height="300" rx="70" />
           <G transform="translate(-597.908 -352.154)">
             <Path
@@ -176,13 +184,16 @@ function SignIn({ navigation, store }) {
           onChangeText={(text) => PasswordInput(text)}
         />
         <View style={styles.ForgotContainer}>
-          <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('Reset') : null)}>
+          <TouchableOpacity
+            onPress={() => (!isLoading ? navigation.navigate('Reset') : null)}
+          >
             <Text style={styles.ForgotText}>{SignInStrings.Forgot}</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={styles.Button}
-          onPress={debounce(() => (!isLoading ? Login(data) : null), 200)}>
+          onPress={debounce(() => (!isLoading ? Login(data) : null), 200)}
+        >
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
@@ -191,7 +202,9 @@ function SignIn({ navigation, store }) {
         </TouchableOpacity>
         <View style={styles.Register}>
           <Text style={styles.Member}>{SignInStrings.Member}</Text>
-          <TouchableOpacity onPress={() => (!isLoading ? navigation.navigate('SignUp') : null)}>
+          <TouchableOpacity
+            onPress={() => (!isLoading ? navigation.navigate('SignUp') : null)}
+          >
             <Text style={styles.RegisterText}>{SignInStrings.Register}</Text>
           </TouchableOpacity>
         </View>
@@ -207,7 +220,7 @@ function SignIn({ navigation, store }) {
         </TouchableOpacity>
       </View> */}
     </KeyboardAwareScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(SignIn))
+export default inject('store')(observer(SignIn));

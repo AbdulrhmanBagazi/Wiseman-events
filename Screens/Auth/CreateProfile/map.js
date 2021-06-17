@@ -1,15 +1,26 @@
-import React from 'react'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Modal, View, SafeAreaView, TouchableOpacity, Text } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
-import { width } from '../../../Config/Layout'
-import { PrimaryColor, GrayColor } from '../../../Config/ColorPalette'
-import { ProfileStrings } from '../../../Config/Strings'
+import React from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import {
+  StyleSheet,
+  Modal,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import { width } from '../../../Config/Layout';
+import { PrimaryColor, GrayColor } from '../../../Config/ColorPalette';
+import { ProfileStrings } from '../../../Config/Strings';
 
 export default function MapUI(props) {
   return (
     <View>
-      <Modal animationType="slide" transparent={true} visible={props.MapmodalVisible}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={props.MapmodalVisible}
+      >
         <View style={styles.modal}>
           <View style={styles.container}>
             <SafeAreaView style={styles.close}>
@@ -21,9 +32,14 @@ export default function MapUI(props) {
               style={styles.mapStyle}
               provider={PROVIDER_GOOGLE}
               initialRegion={props.region}
-              onPress={props.onRegionChange}>
+              onPress={props.onRegionChange}
+            >
               {props.coordinate === null ? null : (
-                <Marker key={1} coordinate={props.coordinate} pinColor={PrimaryColor}></Marker>
+                <Marker
+                  key={1}
+                  coordinate={props.coordinate}
+                  pinColor={PrimaryColor}
+                />
               )}
             </MapView>
 
@@ -36,7 +52,7 @@ export default function MapUI(props) {
         </View>
       </Modal>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -116,4 +132,4 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: GrayColor,
   },
-})
+});

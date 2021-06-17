@@ -1,6 +1,10 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../Config/Layout'
-import { PrimaryColor, SecondaryText, LightText } from '../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width, height } from '../../../Config/Layout';
+import {
+  PrimaryColor,
+  SecondaryText,
+  LightText,
+} from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -115,6 +119,25 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 10,
   },
-})
+  checkIconView: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    padding: 2,
+    borderRadius: 2,
+    borderWidth: 1,
+    // borderColor: AgreeColor,
+    marginHorizontal: 5,
+  },
+  warview: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    textAlign: 'left',
+  },
+  removeUnderline: { color: PrimaryColor, textDecorationLine: 'underline' },
+  webView: { marginTop: 10 },
+});
 
-export default styles
+export default styles;

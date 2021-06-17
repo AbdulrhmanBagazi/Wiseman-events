@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width } from '../../../Config/Layout'
-import { BackgroundColor, PrimaryColor } from '../../../Config/ColorPalette'
+import { StyleSheet } from 'react-native';
+import { width } from '../../../Config/Layout';
+import { BackgroundColor, PrimaryColor } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0,
-    shadowRadius: 0,
-    elevation: 0,
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 2,
   },
   Circle: {
     width: 25,
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-})
+});
 
-export default styles
+export default styles;

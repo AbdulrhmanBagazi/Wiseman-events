@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -11,18 +11,18 @@ import {
   Modal,
   Animated,
   StyleSheet,
-} from 'react-native'
-import styles from './Style'
-import { IBANPageStrings } from '../../../../Config/Strings'
-import { inject, observer } from 'mobx-react'
-import { URL } from '../../../../Config/Config'
-import axios from 'axios'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import { width } from '../../../../Config/Layout'
+} from 'react-native';
+import styles from './Style';
+import { IBANPageStrings } from '../../../../Config/Strings';
+import { inject, observer } from 'mobx-react';
+import { URL } from '../../../../Config/Config';
+import axios from 'axios';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import { width } from '../../../../Config/Layout';
 //
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import RNPickerSelect from 'react-native-picker-select'
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import RNPickerSelect from 'react-native-picker-select';
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -54,77 +54,77 @@ const pickerSelectStyles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
   },
-})
+});
 
 function IBAN({ store }) {
-  const [one] = React.useState(new Animated.Value(0))
-  const [two] = React.useState(new Animated.Value(0))
-  const [Match] = React.useState(new Animated.Value(0))
-  const [Show, setShow] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
+  const [one] = React.useState(new Animated.Value(0));
+  const [two] = React.useState(new Animated.Value(0));
+  const [Match] = React.useState(new Animated.Value(0));
+  const [Show, setShow] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
 
   const MatchColor = Match.interpolate({
     inputRange: [0, 100],
     outputRange: ['#E8505B', '#25AC71'],
-  })
+  });
   const IBANColor = one.interpolate({
     inputRange: [0, 100],
     outputRange: ['#4C4F56', '#E8505B'],
-  })
+  });
 
   const NameColor = two.interpolate({
     inputRange: [0, 100],
     outputRange: ['#4C4F56', '#E8505B'],
-  })
+  });
 
   const [Data, setData] = React.useState({
     IBAN: '',
     ReIBAN: '',
     AcountName: '',
     Bank: '',
-  })
+  });
 
   const IBAMInput = (val) => {
     setData({
       ...Data,
       IBAN: val.trim(),
-    })
-  }
+    });
+  };
 
   const AcountNameInput = (val) => {
     setData({
       ...Data,
       AcountName: val,
-    })
-  }
+    });
+  };
 
   const ReIBANInput = (val) => {
     setData({
       ...Data,
       ReIBAN: val.trim(),
-    })
+    });
     if (Data.IBAN === val) {
       Animated.timing(Match, {
         toValue: 100,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(Match, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
-  }
+  };
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632
-    })
-  }
+      return d.charCodeAt(0) - 1632;
+    });
+  };
 
   const Add = async () => {
     if (Data.IBAN.length < 22 || Data.IBAN.length > 22) {
@@ -132,13 +132,13 @@ function IBAN({ store }) {
         toValue: 100,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(one, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
 
     if (Data.IBAN !== Data.ReIBAN) {
@@ -146,13 +146,13 @@ function IBAN({ store }) {
         toValue: 100,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(one, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
 
     if (Data.AcountName.length < 1) {
@@ -160,13 +160,13 @@ function IBAN({ store }) {
         toValue: 100,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     } else {
       Animated.timing(two, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }).start()
+      }).start();
     }
 
     if (
@@ -175,9 +175,9 @@ function IBAN({ store }) {
       Data.IBAN === Data.ReIBAN &&
       Data.Bank.length > 1
     ) {
-      setLoading(true)
+      setLoading(true);
 
-      var IBANen = await convertToArabicNumber(Data.IBAN)
+      var IBANen = await convertToArabicNumber(Data.IBAN);
       axios
         .post(
           URL + '/user/AddIBAN',
@@ -195,18 +195,18 @@ function IBAN({ store }) {
         .then(async (response) => {
           if (response.status === 200) {
             if (response.data.check === 'success') {
-              store.data.iban = response.data.iban
+              store.data.iban = response.data.iban;
               setTimeout(() => {
-                setLoading(false)
-                setShow(false)
+                setLoading(false);
+                setShow(false);
                 setData({
                   ...Data,
                   ReIBAN: '',
-                })
-              }, 500)
-              return
+                });
+              }, 500);
+              return;
             } else if (response.data.check === 'fail') {
-              setLoading(false)
+              setLoading(false);
 
               Alert.alert(
                 '',
@@ -215,10 +215,10 @@ function IBAN({ store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             } else {
-              setLoading(false)
+              setLoading(false);
 
               Alert.alert(
                 '',
@@ -227,18 +227,18 @@ function IBAN({ store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             }
           }
         })
         .catch(async (error) => {
-          setLoading(false)
+          setLoading(false);
           if (error.response) {
             if (error.response.status) {
               if (error.response.status === 401) {
-                await UserTokenRemove()
+                await UserTokenRemove();
                 Alert.alert(
                   '',
                   I18nManager.isRTL
@@ -248,9 +248,9 @@ function IBAN({ store }) {
                   {
                     cancelable: false,
                   }
-                )
+                );
 
-                return
+                return;
               } else {
                 Alert.alert(
                   '',
@@ -259,8 +259,8 @@ function IBAN({ store }) {
                   {
                     cancelable: false,
                   }
-                )
-                return
+                );
+                return;
               }
             }
           } else {
@@ -271,14 +271,14 @@ function IBAN({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
-        })
+        });
 
-      return
+      return;
     }
-  }
+  };
 
   React.useEffect(() => {
     if (store.data.iban !== null) {
@@ -286,69 +286,87 @@ function IBAN({ store }) {
         IBAN: store.data.iban.IBAN.substring(2),
         AcountName: store.data.iban.AccountName,
         Bank: store.data.iban.Bank,
-      })
+      });
     }
-  }, [])
+  }, []);
 
   // console.log(store.data)
 
   const getArabic = (status) => {
     switch (status) {
       case 'The National Commercial Bank':
-        return 'البنك الأهلي التجاري'
+        return 'البنك الأهلي التجاري';
       case 'The Saudi British Bank (SABB)':
-        return 'بنك ساب'
+        return 'بنك ساب';
       case 'Saudi Investment Bank':
-        return 'البنك السعودي للاستثمار'
+        return 'البنك السعودي للاستثمار';
       case 'Alinma bank':
-        return 'مصرف الإنماء'
+        return 'مصرف الإنماء';
       case 'Banque Saudi Fransi':
-        return 'البنك السعودي الفرنسي'
+        return 'البنك السعودي الفرنسي';
       case 'Riyad Bank':
-        return 'بنك الرياض'
+        return 'بنك الرياض';
       case 'Samba Financial Group (Samba)':
-        return 'مجموعة سامبا المالية (سامبا)'
+        return 'مجموعة سامبا المالية (سامبا)';
       case 'Alawwal bank':
-        return 'البنك الأول'
+        return 'البنك الأول';
       case 'Al Rajhi Bank':
-        return 'مصرف الراجحي'
+        return 'مصرف الراجحي';
       case 'Arab National Bank':
-        return 'البنك العربي الوطني'
+        return 'البنك العربي الوطني';
       case 'Bank AlBilad':
-        return 'بنك البلاد'
+        return 'بنك البلاد';
       case 'Bank AlJazira':
-        return 'بنك الجزيرة'
+        return 'بنك الجزيرة';
       case 'Gulf International Bank Saudi Arabia (GIB-SA)':
-        return 'بنك الخليج الدولي'
+        return 'بنك الخليج الدولي';
       default:
-        return ''
+        return '';
     }
-  }
+  };
 
   const Banks = I18nManager.isRTL
     ? [
-        { label: 'البنك الأهلي التجاري', value: 'The National Commercial Bank' },
+        {
+          label: 'البنك الأهلي التجاري',
+          value: 'The National Commercial Bank',
+        },
         { label: 'بنك ساب', value: 'The Saudi British Bank (SABB)' },
         { label: 'البنك السعودي للاستثمار', value: 'Saudi Investment Bank' },
         { label: 'مصرف الإنماء', value: 'Alinma bank' },
         { label: 'البنك السعودي الفرنسي', value: 'Banque Saudi Fransi' },
         { label: 'بنك الرياض', value: 'Riyad Bank' },
-        { label: 'مجموعة سامبا المالية (سامبا)', value: 'Samba Financial Group (Samba)' },
+        {
+          label: 'مجموعة سامبا المالية (سامبا)',
+          value: 'Samba Financial Group (Samba)',
+        },
         { label: 'البنك الأول', value: 'Alawwal bank' },
         { label: 'مصرف الراجحي', value: 'Al Rajhi Bank' },
         { label: 'البنك العربي الوطني', value: 'Arab National Bank' },
         { label: 'بنك البلاد', value: 'Bank AlBilad' },
         { label: 'بنك الجزيرة', value: 'Bank AlJazira' },
-        { label: 'بنك الخليج الدولي', value: 'Gulf International Bank Saudi Arabia (GIB-SA)' },
+        {
+          label: 'بنك الخليج الدولي',
+          value: 'Gulf International Bank Saudi Arabia (GIB-SA)',
+        },
       ]
     : [
-        { label: 'The National Commercial Bank', value: 'The National Commercial Bank' },
-        { label: 'The Saudi British Bank (SABB)', value: 'The Saudi British Bank (SABB)' },
+        {
+          label: 'The National Commercial Bank',
+          value: 'The National Commercial Bank',
+        },
+        {
+          label: 'The Saudi British Bank (SABB)',
+          value: 'The Saudi British Bank (SABB)',
+        },
         { label: 'Saudi Investment Bank', value: 'Saudi Investment Bank' },
         { label: 'Alinma bank', value: 'Alinma bank' },
         { label: 'Banque Saudi Fransi', value: 'Banque Saudi Fransi' },
         { label: 'Riyad Bank', value: 'Riyad Bank' },
-        { label: 'Samba Financial Group (Samba)', value: 'Samba Financial Group (Samba)' },
+        {
+          label: 'Samba Financial Group (Samba)',
+          value: 'Samba Financial Group (Samba)',
+        },
         { label: 'Alawwal bank', value: 'Alawwal bank' },
         { label: 'Al Rajhi Bank', value: 'Al Rajhi Bank' },
         { label: 'Arab National Bank', value: 'Arab National Bank' },
@@ -358,7 +376,7 @@ function IBAN({ store }) {
           label: 'Gulf International Bank Saudi Arabia (GIB-SA)',
           value: 'Gulf International Bank Saudi Arabia (GIB-SA)',
         },
-      ]
+      ];
 
   return (
     <ScrollView>
@@ -367,7 +385,10 @@ function IBAN({ store }) {
           <View style={styles.Container}>
             <Text style={styles.Title}>{IBANPageStrings.Title}</Text>
             <Text style={styles.About}>{IBANPageStrings.About}</Text>
-            <TouchableOpacity style={styles.Button} onPress={() => setShow(true)}>
+            <TouchableOpacity
+              style={styles.Button}
+              onPress={() => setShow(true)}
+            >
               <Text style={styles.ButtonText}>{IBANPageStrings.Button}</Text>
             </TouchableOpacity>
           </View>
@@ -376,20 +397,14 @@ function IBAN({ store }) {
             <Text style={styles.TitleAdd}>{IBANPageStrings.Title}</Text>
 
             <Animated.View
-              style={{
-                backgroundColor: '#fff',
-                height: 45,
-                width: width - 20,
-                borderColor: IBANColor,
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 5,
-                marginBottom: 10,
-                justifyContent: 'center',
-                alignSelf: 'center',
-                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              }}>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              style={[
+                styles.AnimatedView,
+                {
+                  borderColor: IBANColor,
+                },
+              ]}
+            >
+              <View style={styles.ViewJustify}>
                 <Text>SA</Text>
               </View>
               <TextInput
@@ -402,20 +417,14 @@ function IBAN({ store }) {
             </Animated.View>
 
             <Animated.View
-              style={{
-                backgroundColor: '#fff',
-                height: 45,
-                width: width - 20,
-                borderColor: IBANColor,
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 5,
-                marginBottom: 10,
-                justifyContent: 'center',
-                alignSelf: 'center',
-                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-              }}>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              style={[
+                styles.AnimatedView,
+                {
+                  borderColor: IBANColor,
+                },
+              ]}
+            >
+              <View style={styles.ViewJustify}>
                 <Text>SA</Text>
               </View>
               <TextInput
@@ -428,22 +437,19 @@ function IBAN({ store }) {
               />
             </Animated.View>
             <View style={styles.CheckMatch}>
-              <Animated.Text style={{ color: MatchColor }}>{IBANPageStrings.Match}</Animated.Text>
+              <Animated.Text style={{ color: MatchColor }}>
+                {IBANPageStrings.Match}
+              </Animated.Text>
             </View>
 
             <Animated.View
-              style={{
-                backgroundColor: '#fff',
-                height: 45,
-                width: width - 20,
-                borderColor: NameColor,
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 5,
-                marginBottom: 10,
-                justifyContent: 'center',
-                alignSelf: 'center',
-              }}>
+              style={[
+                styles.AnimatedViewName,
+                {
+                  borderColor: NameColor,
+                },
+              ]}
+            >
               <TextInput
                 placeholder={IBANPageStrings.AccountName}
                 style={styles.inputName}
@@ -478,34 +484,24 @@ function IBAN({ store }) {
         )
       ) : Show ? (
         <View style={styles.Container}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width,
-              marginTop: 40,
-            }}>
+          <View style={styles.ViewRow}>
             <Text style={styles.TitleTwo}>{IBANPageStrings.Title}</Text>
-            <TouchableOpacity style={{ padding: 5 }} onPress={() => setShow(false)}>
+            <TouchableOpacity
+              style={styles.paddingButton}
+              onPress={() => setShow(false)}
+            >
               <Text style={styles.Cancel}>{IBANPageStrings.Cancel}</Text>
             </TouchableOpacity>
           </View>
           <Animated.View
-            style={{
-              backgroundColor: '#fff',
-              height: 45,
-              width: width - 20,
-              borderColor: IBANColor,
-              borderWidth: 1,
-              borderRadius: 5,
-              padding: 5,
-              marginBottom: 10,
-              justifyContent: 'center',
-              alignSelf: 'center',
-              marginTop: 10,
-              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-            }}>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            style={[
+              styles.AnimatedView,
+              {
+                borderColor: IBANColor,
+              },
+            ]}
+          >
+            <View style={styles.ViewJustify}>
               <Text>SA</Text>
             </View>
             <TextInput
@@ -517,20 +513,14 @@ function IBAN({ store }) {
             />
           </Animated.View>
           <Animated.View
-            style={{
-              backgroundColor: '#fff',
-              height: 45,
-              width: width - 20,
-              borderColor: IBANColor,
-              borderWidth: 1,
-              borderRadius: 5,
-              padding: 5,
-              marginBottom: 10,
-              justifyContent: 'center',
-              alignSelf: 'center',
-              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-            }}>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            style={[
+              styles.AnimatedView,
+              {
+                borderColor: IBANColor,
+              },
+            ]}
+          >
+            <View style={styles.ViewJustify}>
               <Text>SA</Text>
             </View>
             <TextInput
@@ -543,22 +533,19 @@ function IBAN({ store }) {
             />
           </Animated.View>
           <View style={styles.CheckMatch}>
-            <Animated.Text style={{ color: MatchColor }}>{IBANPageStrings.Match}</Animated.Text>
+            <Animated.Text style={{ color: MatchColor }}>
+              {IBANPageStrings.Match}
+            </Animated.Text>
           </View>
 
           <Animated.View
-            style={{
-              backgroundColor: '#fff',
-              height: 45,
-              width: width - 20,
-              borderColor: NameColor,
-              borderWidth: 1,
-              borderRadius: 5,
-              padding: 5,
-              marginBottom: 10,
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
+            style={[
+              styles.AnimatedViewName,
+              {
+                borderColor: NameColor,
+              },
+            ]}
+          >
             <TextInput
               placeholder={IBANPageStrings.AccountName}
               style={styles.inputName}
@@ -595,23 +582,36 @@ function IBAN({ store }) {
           <Text style={styles.Title}>{IBANPageStrings.Title}</Text>
 
           <View style={styles.View}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.ViewText}>{I18nManager.isRTL ? 'الآيبان' : 'IBAN'}</Text>
-              <Text style={{ flex: 1, textAlign: 'right' }}>{store.data.iban.IBAN}</Text>
+            <View style={styles.ViewRowCenter}>
+              <Text style={styles.ViewText}>
+                {I18nManager.isRTL ? 'الآيبان' : 'IBAN'}
+              </Text>
+              <Text style={styles.flexAlign}>{store.data.iban.IBAN}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-              <Text style={styles.ViewText}>{I18nManager.isRTL ? 'الإسم' : 'Name'}</Text>
-              <Text style={{ flex: 1, textAlign: 'right' }}>{store.data.iban.AccountName}</Text>
+            <View style={styles.ViewRowSpace}>
+              <Text style={styles.ViewText}>
+                {I18nManager.isRTL ? 'الإسم' : 'Name'}
+              </Text>
+              <Text style={styles.flexAlign}>
+                {store.data.iban.AccountName}
+              </Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-              <Text style={styles.ViewText}>{I18nManager.isRTL ? 'البنك' : 'Bank'}</Text>
-              <Text style={{ flex: 1, textAlign: 'right' }}>
-                {I18nManager.isRTL ? getArabic(store.data.iban.Bank) : store.data.iban.Bank}
+            <View style={styles.ViewRowSpace}>
+              <Text style={styles.ViewText}>
+                {I18nManager.isRTL ? 'البنك' : 'Bank'}
+              </Text>
+              <Text style={styles.flexAlign}>
+                {I18nManager.isRTL
+                  ? getArabic(store.data.iban.Bank)
+                  : store.data.iban.Bank}
               </Text>
             </View>
           </View>
 
-          <TouchableOpacity style={styles.AddButton} onPress={() => setShow(true)}>
+          <TouchableOpacity
+            style={styles.AddButton}
+            onPress={() => setShow(true)}
+          >
             <Text style={styles.AddButtonText}>{IBANPageStrings.New}</Text>
           </TouchableOpacity>
         </View>
@@ -629,7 +629,9 @@ function IBAN({ store }) {
 
       <Text style={styles.WarnningText}>
         {I18nManager.isRTL
-          ? '\u2022' + ' ' + 'سيتم تضمين رقم الحوالة لكل دفعة مستلمة في صفحة الأرباح.'
+          ? '\u2022' +
+            ' ' +
+            'سيتم تضمين رقم الحوالة لكل دفعة مستلمة في صفحة الأرباح.'
           : '\u2022' +
             ' ' +
             'The transfer number for each payment received will be included on the earnings page.'}
@@ -647,7 +649,7 @@ function IBAN({ store }) {
         </View>
       </Modal>
     </ScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(IBAN))
+export default inject('store')(observer(IBAN));

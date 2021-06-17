@@ -1,150 +1,150 @@
-import { observable, decorate, action } from 'mobx'
-import { LanguageGet } from './AsyncStorage'
-import { UserTokenStore } from './AsyncStorage'
-import { URL } from './Config'
-import axios from 'axios'
-import { UserTokenGet, UserTokenRemove } from './AsyncStorage'
+import { observable, decorate, action } from 'mobx';
+import { LanguageGet } from './AsyncStorage';
+import { UserTokenStore } from './AsyncStorage';
+import { URL } from './Config';
+import axios from 'axios';
+import { UserTokenGet } from './AsyncStorage';
 
 class Store {
-  Language = null
-  data = []
-  history = []
-  alerts = []
-  banner = []
-  fewevents = []
-  token = null
-  profileImage = null
+  Language = null;
+  data = [];
+  history = [];
+  alerts = [];
+  banner = [];
+  fewevents = [];
+  token = null;
+  profileImage = null;
 
-  HistoryPage = true
-  NotificationMainPage = true
-  MainPage = true
+  HistoryPage = true;
+  NotificationMainPage = true;
+  MainPage = true;
 
-  EarningsBadge = false
-  HistoryBadge = false
-  NotificationMain = false
+  EarningsBadge = false;
+  HistoryBadge = false;
+  NotificationMain = false;
 
-  EarningsBadgeNumber = 0
-  HistoryBadgeNumber = 0
-  NotificationMainNumber = 0
-  CalendarMainIDs = []
+  EarningsBadgeNumber = 0;
+  HistoryBadgeNumber = 0;
+  NotificationMainNumber = 0;
+  CalendarMainIDs = [];
 
-  resetDate = null
+  resetDate = null;
 
   setCalendarIds = async (old, val) => {
-    this.CalendarMainIDs = [...old, val]
+    this.CalendarMainIDs = [...old, val];
 
-    return
-  }
+    return;
+  };
 
   removeCalendarIds = async (old, val) => {
-    arr = old.filter((item) => item !== val)
+    var arr = old.filter((item) => item !== val);
 
-    this.CalendarMainIDs = [...arr]
+    this.CalendarMainIDs = [...arr];
 
-    return
-  }
+    return;
+  };
 
   updEarningsBadgeage = async (num, val) => {
-    this.EarningsBadge = val
-    this.EarningsBadgeNumber = num
+    this.EarningsBadge = val;
+    this.EarningsBadgeNumber = num;
 
-    return
-  }
+    return;
+  };
 
   updageHistoryBadge = async (num, val) => {
-    this.HistoryBadge = val
-    this.HistoryBadgeNumber = num
+    this.HistoryBadge = val;
+    this.HistoryBadgeNumber = num;
 
-    return
-  }
+    return;
+  };
 
   updageNotificationMain = async (num, val) => {
-    this.NotificationMain = val
-    this.NotificationMainNumber = num
+    this.NotificationMain = val;
+    this.NotificationMainNumber = num;
 
-    return
-  }
+    return;
+  };
 
   setNotificationMainPage = async () => {
-    this.NotificationMainPage = false
+    this.NotificationMainPage = false;
 
-    return
-  }
+    return;
+  };
 
   setNotificationMainPageBack = async () => {
-    this.NotificationMainPage = true
+    this.NotificationMainPage = true;
 
-    return
-  }
+    return;
+  };
 
   setHistoryPage = async () => {
-    this.HistoryPage = false
+    this.HistoryPage = false;
 
-    return
-  }
+    return;
+  };
 
   setHistoryPageBack = async () => {
-    this.HistoryPage = true
+    this.HistoryPage = true;
 
-    return
-  }
+    return;
+  };
 
   setResetPages = async () => {
-    this.HistoryPage = true
-    this.NotificationMainPage = true
-    this.MainPage = true
+    this.HistoryPage = true;
+    this.NotificationMainPage = true;
+    this.MainPage = true;
 
-    return
-  }
+    return;
+  };
 
   setData = async (Data) => {
-    this.data = Data.user
+    this.data = Data.user;
     // this.history = Data.user.applications
     // this.alerts = Data.user.alerts.reverse()
     if (Data.user.profile) {
-      this.profileImage = Data.user.profile.profile_image
+      this.profileImage = Data.user.profile.profile_image;
     }
 
-    this.banner = Data.banner
-    return
-  }
+    this.banner = Data.banner;
+    return;
+  };
 
   setBanner = async (Data) => {
-    this.banner = Data
-    return
-  }
+    this.banner = Data;
+    return;
+  };
 
   updateimage = async (Data) => {
-    this.profileImage = Data
+    this.profileImage = Data;
 
-    return
-  }
+    return;
+  };
 
   setDataSignup = async (Data) => {
-    this.data = Data.user
-    return
-  }
+    this.data = Data.user;
+    return;
+  };
 
   setfewevents = async (Data) => {
-    this.fewevents = Data
+    this.fewevents = Data;
 
-    return
-  }
+    return;
+  };
 
   setToken = async (token) => {
-    this.token = token
-    await UserTokenStore(token)
-    return
-  }
+    this.token = token;
+    await UserTokenStore(token);
+    return;
+  };
 
   getLanguge = async () => {
-    var getLanguage = await LanguageGet()
-    this.Language = getLanguage
-    return
-  }
+    var getLanguage = await LanguageGet();
+    this.Language = getLanguage;
+    return;
+  };
 
   ReloadData = async () => {
-    var Token = await UserTokenGet()
+    var Token = await UserTokenGet();
 
     axios
       .get(URL + '/user/getApplication', {
@@ -156,57 +156,57 @@ class Store {
         // console.log(response)
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            this.history = response.data.application
+            this.history = response.data.application;
 
-            return
+            return;
           } else if (response.data.check === 'fail') {
-            return
+            return;
           }
         } else {
-          return
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              return
+              return;
             } else {
-              return
+              return;
             }
           }
         } else {
-          return
+          return;
         }
-      })
-  }
+      });
+  };
 
   setHistoryData = async (data) => {
-    this.history = data
-    return
-  }
+    this.history = data;
+    return;
+  };
 
   setAlertsData = async (data) => {
-    this.alerts = data.reverse()
-    return
-  }
+    this.alerts = data.reverse();
+    return;
+  };
 
   setProfile = async (data, profile) => {
-    var data = data
+    var data = data;
 
-    data.profile = profile
+    data.profile = profile;
 
-    this.data = data
-    return
-  }
+    this.data = data;
+    return;
+  };
 
   setresetDate = async () => {
-    var date = new Date()
+    var date = new Date();
 
-    this.resetDate = date
+    this.resetDate = date;
 
-    return
-  }
+    return;
+  };
 }
 
 decorate(Store, {
@@ -249,8 +249,8 @@ decorate(Store, {
   CalendarMainIDs: observable.ref,
   setCalendarIds: action,
   removeCalendarIds: action,
-})
+});
 
-const store = new Store()
+const store = new Store();
 
-export default store
+export default store;
