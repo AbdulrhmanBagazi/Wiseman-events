@@ -4,10 +4,10 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
   I18nManager,
   Alert,
   ActivityIndicator,
+  Modal,
 } from 'react-native';
 import styles from './Style';
 import { AuthContext } from '../../../../Hooks/Context';
@@ -33,7 +33,7 @@ function ProfileImage(props) {
 
   let openImagePickerAsync = async () => {
     let permissionResult =
-      await ImagePicker.requestCameraRollPermissionsAsync();
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
       Alert.alert(
@@ -238,7 +238,7 @@ function ProfileImage(props) {
             <TouchableOpacity
               style={styles.Image}
               onPress={() => openImagePickerAsync()}
-              disabled={isLoading}
+              disabled={isLoading || isEnd}
             >
               {image ? (
                 <Image

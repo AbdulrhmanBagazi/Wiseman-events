@@ -55,7 +55,7 @@ import NotificationSettings from './Screens/Main/Profile/Settings/NotificationSe
 import CompleteDetails from './Screens/Main/History/CompleteDetails';
 import ChangePassword from './Screens/Main/Profile/Settings/ChangePassword';
 //
-import Svg, { Defs, Rect, G, Path } from 'react-native-svg';
+import Svg, { Defs, G, Path } from 'react-native-svg';
 //
 import NonAuth from './Screens/Redirect/nonAuth/nonAuth';
 import goToLogin from './Screens/Redirect/nonAuth/goToLogin';
@@ -1091,7 +1091,7 @@ export default () => {
                 // The line below uses the expo-firebase-analytics tracker
                 // https://docs.expo.io/versions/latest/sdk/firebase-analytics/
                 // Change this line to use another Mobile analytics SDK
-                // Analytics.setCurrentScreen(currentRouteName, currentRouteName)
+                Analytics.setCurrentScreen(currentRouteName, currentRouteName);
               }
 
               // Save the current route name for later comparision
