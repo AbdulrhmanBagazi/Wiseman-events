@@ -254,6 +254,34 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </Text>
                 </View>
+              ) : (
+                <View style={styles.CompleteDetailsHeaderViewSalary}>
+                  <Text style={styles.CompleteDetailsHeaderViewText}>
+                    {CompleteDetailsStrings.Salary}
+                  </Text>
+                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
+                    {item.event.SalarySupervisor}
+                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                    <Text style={styles.CompleteDetailsHeaderViewText}>
+                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+                    </Text>
+                  </Text>
+                </View>
+              )}
+
+              {!item.event.ProvideAmeal ? (
+                <View style={styles.CompleteDetailsHeaderViewSalary}>
+                  <Text style={styles.CompleteDetailsHeaderViewText}>
+                    {CompleteDetailsStrings.Totalmeal}
+                  </Text>
+                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
+                    {item.event.ProvideAnAllowance}
+                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+                    <Text style={styles.CompleteDetailsHeaderViewText}>
+                      /{I18nManager.isRTL ? 'يوم عمل' : 'Work day'}
+                    </Text>
+                  </Text>
+                </View>
               ) : null}
             </View>
 
@@ -358,6 +386,42 @@ function CompleteDetails({ route, store }) {
                 <View style={styles.CompleteDetailsbodyContainerData}>
                   <View style={styles.FlexOne}>
                     <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                      {CompleteDetailsStrings.Total}
+                    </Text>
+                  </View>
+                  <View style={styles.FlexEnd}>
+                    <CalSalary
+                      Values={item.attendances}
+                      Rate={item}
+                      Meal={item.event.ProvideAmeal}
+                      MealPlus={item.event.ProvideAnAllowance}
+                      Val="Earning"
+                    />
+                  </View>
+                </View>
+
+                {!item.event.ProvideAmeal ? (
+                  <View style={styles.CompleteDetailsbodyContainerData}>
+                    <View style={styles.FlexOne}>
+                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                        {CompleteDetailsStrings.Totalmeal}
+                      </Text>
+                    </View>
+                    <View style={styles.FlexEnd}>
+                      <CalSalary
+                        Values={item.attendances}
+                        Rate={item}
+                        Meal={item.event.ProvideAmeal}
+                        MealPlus={item.event.ProvideAnAllowance}
+                        Val="Meal"
+                      />
+                    </View>
+                  </View>
+                ) : null}
+
+                <View style={styles.CompleteDetailsbodyContainerData}>
+                  <View style={styles.FlexOne}>
+                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
                       {CompleteDetailsStrings.Totalearning}
                     </Text>
                   </View>
@@ -367,6 +431,7 @@ function CompleteDetails({ route, store }) {
                       Rate={item}
                       Meal={item.event.ProvideAmeal}
                       MealPlus={item.event.ProvideAnAllowance}
+                      Val="Total"
                     />
                   </View>
                 </View>

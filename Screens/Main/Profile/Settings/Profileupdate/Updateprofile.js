@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -11,26 +11,27 @@ import {
   I18nManager,
   StyleSheet,
   Alert,
-} from 'react-native'
-import styles from './Style'
-import { ProfileStrings, ErrorsStrings } from '../../../../../Config/Strings'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { AuthContext } from '../../../../../Hooks/Context'
-import { inject, observer } from 'mobx-react'
-import debounce from 'lodash/debounce'
-import axios from 'axios'
-import { URL } from '../../../../../Config/Config'
-import CountryUI from './Country'
-import CitiesModal from './CitiesModal'
-import { Feather } from '@expo/vector-icons'
-import moment from 'moment'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
-import MapUI from './map'
-import { width, height } from '../../../../../Config/Layout'
-import RNPickerSelect from 'react-native-picker-select'
-import { PrimaryColor } from '../../../../../Config/ColorPalette'
+} from 'react-native';
+import styles from './Style';
+import { ProfileStrings, ErrorsStrings } from '../../../../../Config/Strings';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { AuthContext } from '../../../../../Hooks/Context';
+import { inject, observer } from 'mobx-react';
+import debounce from 'lodash/debounce';
+import axios from 'axios';
+import { URL } from '../../../../../Config/Config';
+import CountryUI from './Country';
+import CitiesModal from './CitiesModal';
+import { Feather } from '@expo/vector-icons';
+import moment from 'moment';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import MapUI from './map';
+import { width, height } from '../../../../../Config/Layout';
+import RNPickerSelect from 'react-native-picker-select';
+import { PrimaryColor } from '../../../../../Config/ColorPalette';
+import { UserTokenRemove } from '../../../../../Config/AsyncStorage';
 
-const ASPECT_RATIO = width / height
+const ASPECT_RATIO = width / height;
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -57,7 +58,7 @@ const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     color: '#000',
   },
-})
+});
 
 const Stat = I18nManager.isRTL
   ? [
@@ -69,7 +70,7 @@ const Stat = I18nManager.isRTL
       { label: 'Beginner', value: 'Beginner' },
       { label: 'Intermediate', value: 'Intermediate' },
       { label: 'Fluent', value: 'Fluent' },
-    ]
+    ];
 
 const GenderPicker = I18nManager.isRTL
   ? [
@@ -79,22 +80,26 @@ const GenderPicker = I18nManager.isRTL
   : [
       { label: 'Male', value: 'male' },
       { label: 'Female', value: 'female' },
-    ]
+    ];
 
 //beginner, intermediate,  fluent
 
 function UpdateProfile({ store, navigation }) {
-  const { signOut } = React.useContext(AuthContext)
-  const [countryCode, setCountryCode] = React.useState(store.data.profile.nationality)
-  const [show, setShow] = React.useState(false)
-  const [showModal, setShowModal] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
-  const [isError, setError] = React.useState('')
-  const [isShowMap, setShowMap] = React.useState(false)
+  const { signOut } = React.useContext(AuthContext);
+  const [countryCode, setCountryCode] = React.useState(
+    store.data.profile.nationality
+  );
+  const [show, setShow] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
+  // const [isError, setError] = React.useState('');
+  const [isShowMap, setShowMap] = React.useState(false);
   //values
-  const [Gender, setGender] = React.useState(store.data.profile.gender)
-  const [date, setDate] = React.useState(true)
-  const [DateValue, setDateValue] = React.useState(new Date(store.data.profile.birthdate))
+  const [Gender, setGender] = React.useState(store.data.profile.gender);
+  const [date, setDate] = React.useState(true);
+  const [DateValue, setDateValue] = React.useState(
+    new Date(store.data.profile.birthdate)
+  );
   const [data, setData] = React.useState({
     first_name: store.data.profile.first_name,
     last_name: store.data.profile.last_name,
@@ -107,48 +112,48 @@ function UpdateProfile({ store, navigation }) {
     height: store.data.profile.height,
     Latitude: '',
     Longitude: '',
-  })
-  const [CityDataEn, setCityDataEn] = React.useState(store.data.profile.city)
+  });
+  const [CityDataEn, setCityDataEn] = React.useState(store.data.profile.city);
   //Map
-  const [isSelectMapValue, setSelectMapValue] = React.useState(true)
+  const [isSelectMapValue, setSelectMapValue] = React.useState(true);
   const [region, setregion] = React.useState({
     latitude: 24.774265,
     longitude: 46.738586,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0922 * ASPECT_RATIO,
-  })
-  const [Cord, setCord] = React.useState(null)
+  });
+  const [Cord, setCord] = React.useState(null);
 
   const onDragMapPress = async (e) => {
     setCord({
       latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
-    })
+    });
     setData({
       ...data,
       Latitude: e.nativeEvent.coordinate.latitude,
       Longitude: e.nativeEvent.coordinate.longitude,
-    })
-  }
+    });
+  };
   const DoneButton = () => {
-    setSelectMapValue(true)
-    setShowMap(false)
-    return
-  }
+    setSelectMapValue(true);
+    setShowMap(false);
+    return;
+  };
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632
-    })
-  }
+      return d.charCodeAt(0) - 1632;
+    });
+  };
 
   const HandleCreateProfile = async () => {
-    await Keyboard.dismiss()
-    setError('')
-    var convHight = await convertToArabicNumber(data.height)
+    await Keyboard.dismiss();
+    // setError('');
+    var convHight = await convertToArabicNumber(data.height);
 
     if (isLoading) {
-      return
+      return;
     }
     if (
       data.first_name.length < 1 ||
@@ -161,13 +166,18 @@ function UpdateProfile({ store, navigation }) {
       data.height.length < 1 ||
       isSelectMapValue === false
     ) {
-      Alert.alert('', ErrorsStrings.Required, [{ text: 'OK', onPress: () => setLoading(false) }], {
-        cancelable: false,
-      })
-      return
+      Alert.alert(
+        '',
+        ErrorsStrings.Required,
+        [{ text: 'OK', onPress: () => setLoading(false) }],
+        {
+          cancelable: false,
+        }
+      );
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         URL + '/user/updateprofile',
@@ -198,18 +208,20 @@ function UpdateProfile({ store, navigation }) {
             location: data.Latitude + ',' + data.Longitude,
             english: data.English,
             height: convHight,
-          }
+          };
 
-          await store.setProfile(store.data, profile)
+          await store.setProfile(store.data, profile);
           Alert.alert(
             '',
-            I18nManager.isRTL ? 'تم تحديث ملفك الشخصي' : 'Your profile has been updated',
+            I18nManager.isRTL
+              ? 'تم تحديث ملفك الشخصي'
+              : 'Your profile has been updated',
             [{ text: 'OK', onPress: () => setLoading(false) }],
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         } else {
           Alert.alert(
             '',
@@ -218,16 +230,16 @@ function UpdateProfile({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
+          );
 
-          return
+          return;
         }
       })
       .catch(async (error) => {
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -237,9 +249,9 @@ function UpdateProfile({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -248,8 +260,8 @@ function UpdateProfile({ store, navigation }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -260,140 +272,141 @@ function UpdateProfile({ store, navigation }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   const onChange = async (event, selectedDate) => {
     if (Platform.OS === 'ios') {
-      const currentDate = selectedDate || date
-      var MomentDate = await moment(currentDate).format('YYYY-MM-DD')
-      setShow(Platform.OS === 'ios')
-      setDate(true)
-      setDateValue(currentDate)
+      const currentDate = selectedDate || date;
+      var MomentDate = await moment(currentDate).format('YYYY-MM-DD');
+      setShow(Platform.OS === 'ios');
+      setDate(true);
+      setDateValue(currentDate);
       setData({
         ...data,
         Birth: MomentDate.toString(),
         BirthText: MomentDate.toString(),
-      })
+      });
     } else {
       if (event.type === 'dismissed') {
-        setShow(false)
-        setShowModal(false)
+        setShow(false);
+        setShowModal(false);
       } else if (event.type === 'set') {
-        const currentDate = selectedDate || date
-        var MomentDate = await moment(currentDate).format('YYYY-MM-DD')
+        const currentDate = selectedDate || date;
+        var MomentDate = await moment(currentDate).format('YYYY-MM-DD');
 
-        setShow(false)
-        setShowModal(false)
-        setShow(Platform.OS === 'ios')
-        setDate(true)
-        setDateValue(currentDate)
+        setShow(false);
+        setShowModal(false);
+        setShow(Platform.OS === 'ios');
+        setDate(true);
+        setDateValue(currentDate);
         setData({
           ...data,
           Birth: MomentDate.toString(),
           BirthText: MomentDate.toString(),
-        })
+        });
       }
     }
 
-    return
-  }
+    return;
+  };
 
   const showDatepickerIOS = () => {
     if (Platform.OS === 'ios') {
-      setShow(true)
-      setShowModal(true)
+      setShow(true);
+      setShowModal(true);
     } else {
-      setShow(true)
-      setShowModal(false)
+      setShow(true);
+      setShowModal(false);
     }
-  }
+  };
 
   const ClosePicker = async () => {
-    const currentDate = DateValue
-    var MomentDate = await moment(currentDate).format('YYYY-MM-DD')
-    setShow(false)
-    setShowModal(false)
-    setDate(true)
-    setDateValue(currentDate)
+    const currentDate = DateValue;
+    var MomentDate = await moment(currentDate).format('YYYY-MM-DD');
+    setShow(false);
+    setShowModal(false);
+    setDate(true);
+    setDateValue(currentDate);
     setData({
       ...data,
       Birth: MomentDate.toString(),
       BirthText: MomentDate.toString(),
-    })
-  }
+    });
+  };
 
   //Country
   const onSelect = (country) => {
-    setCountryCode(country.cca2)
+    setCountryCode(country.cca2);
     setData({
       ...data,
       Nationality: country.cca2,
-    })
-  }
+    });
+  };
   //City
   const onSelectCity = async (city) => {
     if (I18nManager.isRTL) {
       setData({
         ...data,
         City: city.name_ar,
-      })
-      setCityDataEn(city.name_en)
+      });
+      setCityDataEn(city.name_en);
     } else {
       setData({
         ...data,
         City: city.name_en,
-      })
-      setCityDataEn(city.name_en)
+      });
+      setCityDataEn(city.name_en);
     }
-  }
+  };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (isLoading) {
         // Prevent default behavior of leaving the screen
-        e.preventDefault()
+        e.preventDefault();
 
-        return
+        return;
       }
 
-      return
-    })
+      return;
+    });
 
-    return unsubscribe
-  }, [navigation, isLoading])
+    return unsubscribe;
+  }, [navigation, isLoading]);
 
   React.useEffect(() => {
-    var getlocation = store.data.profile.location
+    var getlocation = store.data.profile.location;
 
-    var Loc = getlocation.split(',')
+    var Loc = getlocation.split(',');
 
     setCord({
       latitude: Number(Loc[0]),
       longitude: Number(Loc[1]),
-    })
+    });
 
     setregion({
       ...region,
       latitude: Number(Loc[0]),
       longitude: Number(Loc[1]),
-    })
+    });
     setData({
       ...data,
       Latitude: Loc[0],
       Longitude: Loc[1],
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <KeyboardAwareScrollView
       automaticallyAdjustContentInsets={false}
       resetScrollToCoords={{ x: 0, y: 0 }}
       showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled">
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.container}>
         <TextInput
           style={styles.input}
@@ -421,7 +434,11 @@ function UpdateProfile({ store, navigation }) {
           // editable={false}
         />
 
-        <CountryUI style={styles.country} onSelect={(val) => onSelect(val)} countryCode={countryCode} />
+        <CountryUI
+          style={styles.country}
+          onSelect={(val) => onSelect(val)}
+          countryCode={countryCode}
+        />
 
         <TouchableOpacity style={styles.inputDate} onPress={showDatepickerIOS}>
           {date ? (
@@ -456,7 +473,10 @@ function UpdateProfile({ store, navigation }) {
                   onChange={onChange}
                 />
 
-                <TouchableOpacity style={styles.ModalButton} onPress={() => ClosePicker()}>
+                <TouchableOpacity
+                  style={styles.ModalButton}
+                  onPress={() => ClosePicker()}
+                >
                   <Text style={styles.ButtonText}>{ProfileStrings.Done}</Text>
                 </TouchableOpacity>
               </View>
@@ -484,15 +504,29 @@ function UpdateProfile({ store, navigation }) {
             <TouchableOpacity
               style={styles.citiesFlatlistItems}
               Value={item}
-              onPress={() => onSelectCity(item)}>
-              <Text style={{ fontSize: 16 }}>{I18nManager.isRTL ? item.name_ar : item.name_en}</Text>
+              onPress={() => onSelectCity(item)}
+            >
+              <Text style={{ fontSize: 16 }}>
+                {I18nManager.isRTL ? item.name_ar : item.name_en}
+              </Text>
             </TouchableOpacity>
           )}
         />
 
-        <TouchableOpacity style={styles.inputDate} onPress={() => setShowMap(true)}>
-          <Text>{isSelectMapValue ? ProfileStrings.locationup : ProfileStrings.location}</Text>
-          <Feather name="map" size={24} color={isSelectMapValue ? PrimaryColor : '#000'} />
+        <TouchableOpacity
+          style={styles.inputDate}
+          onPress={() => setShowMap(true)}
+        >
+          <Text>
+            {isSelectMapValue
+              ? ProfileStrings.locationup
+              : ProfileStrings.location}
+          </Text>
+          <Feather
+            name="map"
+            size={24}
+            color={isSelectMapValue ? PrimaryColor : '#000'}
+          />
         </TouchableOpacity>
 
         <TextInput
@@ -519,7 +553,9 @@ function UpdateProfile({ store, navigation }) {
             ...pickerSelectStyles,
           }}
           placeholder={{
-            label: I18nManager.isRTL ? 'حدد مستواك في اللغة الإنجليزية' : 'Select your english level',
+            label: I18nManager.isRTL
+              ? 'حدد مستواك في اللغة الإنجليزية'
+              : 'Select your english level',
             value: '',
           }}
           items={Stat}
@@ -527,7 +563,10 @@ function UpdateProfile({ store, navigation }) {
           value={data.English}
         />
 
-        <TouchableOpacity style={styles.Button} onPress={debounce(() => HandleCreateProfile(), 250)}>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={debounce(() => HandleCreateProfile(), 250)}
+        >
           <Text style={styles.ButtonText}>{ProfileStrings.Update}</Text>
         </TouchableOpacity>
       </View>
@@ -541,7 +580,7 @@ function UpdateProfile({ store, navigation }) {
         DoneButton={() => DoneButton()}
       />
 
-      <View style={{ height: 25 }}></View>
+      <View style={{ height: 25 }} />
 
       <Modal animationType="fade" transparent={true} visible={isLoading}>
         <View style={styles.modal}>
@@ -549,7 +588,7 @@ function UpdateProfile({ store, navigation }) {
         </View>
       </Modal>
     </KeyboardAwareScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(UpdateProfile))
+export default inject('store')(observer(UpdateProfile));

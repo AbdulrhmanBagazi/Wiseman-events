@@ -48,8 +48,20 @@ function CalSalary(props) {
     var salary = organizerSalary + supervisorSalary;
     var meal = daysCompleted * MealPlus;
 
-    setTotal(salary + meal);
-    setLoading(false);
+    if (props.Val === 'Meal') {
+      setTotal(meal);
+      setLoading(false);
+    }
+
+    if (props.Val === 'Earning') {
+      setTotal(salary);
+      setLoading(false);
+    }
+
+    if (props.Val === 'Total') {
+      setTotal(salary + meal);
+      setLoading(false);
+    }
   }, [props.Values]);
 
   return isLoading ? (

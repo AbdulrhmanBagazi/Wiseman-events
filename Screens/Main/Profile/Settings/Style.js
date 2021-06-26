@@ -1,6 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width } from '../../../../Config/Layout'
-import { PrimaryColor, SecondaryText } from '../../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width } from '../../../../Config/Layout';
+import { PrimaryColor, SecondaryText } from '../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   about: {
@@ -137,11 +137,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  ButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -190,30 +185,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     right: 10,
   },
-  Button: {
-    backgroundColor: PrimaryColor,
-    flexDirection: 'row',
-    width,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: PrimaryColor,
-    marginBottom: 12,
-    height: 50,
-    padding: 9,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
-    marginTop: 20,
-  },
-  ButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
   ForgotContainer: {
     width,
     alignItems: 'flex-end',
@@ -246,6 +217,18 @@ const styles = StyleSheet.create({
   Scroll: {
     flex: 1,
   },
-})
+  NotiView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  NotiViewEND: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+});
 
-export default styles
+export default styles;

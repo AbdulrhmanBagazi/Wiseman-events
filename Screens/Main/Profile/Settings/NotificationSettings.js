@@ -1,6 +1,5 @@
-import React from 'react'
-import * as Notifications from 'expo-notifications'
-import * as Permissions from 'expo-permissions'
+import React from 'react';
+import * as Notifications from 'expo-notifications';
 import {
   View,
   Text,
@@ -11,37 +10,39 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
-} from 'react-native'
-import styles from './Style'
-import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-import { URL } from '../../../../Config/Config'
-import { PrimaryColor } from '../../../../Config/ColorPalette'
-import { AuthContext } from '../../../../Hooks/Context'
-import { UserTokenRemove } from '../../../../Config/AsyncStorage'
-import Constants from 'expo-constants'
+  Platform,
+} from 'react-native';
+import styles from './Style';
+import { inject, observer } from 'mobx-react';
+import axios from 'axios';
+import { URL } from '../../../../Config/Config';
+import { PrimaryColor } from '../../../../Config/ColorPalette';
+import { AuthContext } from '../../../../Hooks/Context';
+import { UserTokenRemove } from '../../../../Config/AsyncStorage';
+import Constants from 'expo-constants';
 
 function NotificationSettings({ store }) {
-  const [isEnabled, setIsEnabled] = React.useState(false)
-  const [isShow, setShow] = React.useState(false)
+  const [isEnabled, setIsEnabled] = React.useState(false);
+  const [isShow, setShow] = React.useState(false);
   //
-  const { signOut } = React.useContext(AuthContext)
+  const { signOut } = React.useContext(AuthContext);
   // console.log(store.data.notification.notificationsID)
 
   const registerForPushNotificationsAsync = async () => {
-    await setIsEnabled((previousState) => !previousState)
-    setShow(true)
+    await setIsEnabled((previousState) => !previousState);
+    setShow(true);
 
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-      let finalStatus = existingStatus
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-        finalStatus = status
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
       }
       if (finalStatus !== 'granted') {
         // alert('Failed to get push token for push notification!')
-        setShow(false)
+        setShow(false);
 
         Alert.alert(
           '',
@@ -59,17 +60,17 @@ function NotificationSettings({ store }) {
             },
           ],
           { cancelable: false }
-        )
-        await setIsEnabled((previousState) => !previousState)
+        );
+        await setIsEnabled((previousState) => !previousState);
 
-        return
+        return;
       }
     } else {
-      alert('Must use physical device for Push Notifications')
-      setShow(false)
-      await setIsEnabled((previousState) => !previousState)
+      // alert('Must use physical device for Push Notifications');
+      setShow(false);
+      await setIsEnabled((previousState) => !previousState);
 
-      return
+      return;
     }
 
     if (Platform.OS === 'android') {
@@ -78,11 +79,11 @@ function NotificationSettings({ store }) {
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: '#FF231F7C',
-      })
+      });
     }
     //
 
-    var token = (await Notifications.getExpoPushTokenAsync()).data
+    var token = (await Notifications.getExpoPushTokenAsync()).data;
 
     if (token) {
       axios
@@ -99,14 +100,14 @@ function NotificationSettings({ store }) {
         .then((response) => {
           if (response.data === 'success') {
             if (store.data.notification.allow) {
-              store.data.notification.allow = !isEnabled
+              store.data.notification.allow = !isEnabled;
             } else if (!store.data.notification.allow) {
-              store.data.notification.allow = !isEnabled
+              store.data.notification.allow = !isEnabled;
             }
             setTimeout(() => {
-              setShow(false)
-            }, 500)
-            return
+              setShow(false);
+            }, 500);
+            return;
           } else {
             Alert.alert(
               '',
@@ -115,8 +116,8 @@ function NotificationSettings({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         })
         .catch((error) => {
@@ -128,17 +129,17 @@ function NotificationSettings({ store }) {
             {
               cancelable: false,
             }
-          )
-          return
-        })
+          );
+          return;
+        });
     }
 
-    return
-  }
+    return;
+  };
 
   const toggleSwitch = async () => {
-    await setIsEnabled((previousState) => !previousState)
-    setShow(true)
+    await setIsEnabled((previousState) => !previousState);
+    setShow(true);
     axios
       .post(
         URL + '/user/updatenotifications',
@@ -156,17 +157,17 @@ function NotificationSettings({ store }) {
         if (response.status === 200) {
           if (response.data === 'success') {
             if (store.data.notification.allow) {
-              store.data.notification.allow = !isEnabled
+              store.data.notification.allow = !isEnabled;
             } else if (!store.data.notification.allow) {
-              store.data.notification.allow = !isEnabled
+              store.data.notification.allow = !isEnabled;
             }
             setTimeout(() => {
-              setShow(false)
-            }, 500)
-            return
+              setShow(false);
+            }, 500);
+            return;
           } else if (response.data === 'fail') {
-            setIsEnabled((previousState) => !previousState)
-            setShow(false)
+            setIsEnabled((previousState) => !previousState);
+            setShow(false);
 
             Alert.alert(
               '',
@@ -175,11 +176,11 @@ function NotificationSettings({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           } else {
-            setIsEnabled((previousState) => !previousState)
-            setShow(false)
+            setIsEnabled((previousState) => !previousState);
+            setShow(false);
 
             Alert.alert(
               '',
@@ -188,19 +189,19 @@ function NotificationSettings({ store }) {
               {
                 cancelable: false,
               }
-            )
-            return
+            );
+            return;
           }
         }
       })
       .catch(async (error) => {
         // console.log(error)
-        setIsEnabled((previousState) => !previousState)
-        setShow(false)
+        setIsEnabled((previousState) => !previousState);
+        setShow(false);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
-              await UserTokenRemove()
+              await UserTokenRemove();
               Alert.alert(
                 '',
                 I18nManager.isRTL
@@ -210,9 +211,9 @@ function NotificationSettings({ store }) {
                 {
                   cancelable: false,
                 }
-              )
+              );
 
-              return
+              return;
             } else {
               Alert.alert(
                 '',
@@ -221,8 +222,8 @@ function NotificationSettings({ store }) {
                 {
                   cancelable: false,
                 }
-              )
-              return
+              );
+              return;
             }
           }
         } else {
@@ -233,34 +234,37 @@ function NotificationSettings({ store }) {
             {
               cancelable: false,
             }
-          )
-          return
+          );
+          return;
         }
-      })
-  }
+      });
+  };
 
   React.useEffect(() => {
     if (store.data.notification) {
-      setIsEnabled(store.data.notification.allow)
+      setIsEnabled(store.data.notification.allow);
     }
-  }, [])
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.about}>
-        <View style={styles.aboutE}></View>
+        <View style={styles.aboutE} />
         <View style={styles.aboutB}>
           <View style={styles.aboutButton}>
-            <View
-              style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-              <Text style={styles.leftText}>{I18nManager.isRTL ? 'إشعارات' : 'Notification'}</Text>
+            <View style={styles.NotiView}>
+              <Text style={styles.leftText}>
+                {I18nManager.isRTL ? 'إشعارات' : 'Notification'}
+              </Text>
             </View>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
+            <View style={styles.NotiViewEND}>
               <Switch
                 trackColor={{ false: '#767577', true: '#AF0029' }}
                 thumbColor={isEnabled ? '#FEF3F6' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
-                onValueChange={!isEnabled ? registerForPushNotificationsAsync : toggleSwitch}
+                onValueChange={
+                  !isEnabled ? registerForPushNotificationsAsync : toggleSwitch
+                }
                 value={isEnabled}
               />
             </View>
@@ -273,7 +277,7 @@ function NotificationSettings({ store }) {
         </View>
       </Modal>
     </ScrollView>
-  )
+  );
 }
 
-export default inject('store')(observer(NotificationSettings))
+export default inject('store')(observer(NotificationSettings));

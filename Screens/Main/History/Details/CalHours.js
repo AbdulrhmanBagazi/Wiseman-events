@@ -14,7 +14,7 @@ function CalHours(props) {
     var total = 0;
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Type === 'organizer') {
+      if (data[i].Type === 'organizer' && data[i].Status === 'completed') {
         total = total + data[i].TotalHours;
       }
     }

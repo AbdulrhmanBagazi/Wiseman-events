@@ -1,6 +1,6 @@
-import { StyleSheet, I18nManager } from 'react-native'
-import { width, height } from '../../../../../Config/Layout'
-import { PrimaryColor, SecondaryText, GrayColor } from '../../../../../Config/ColorPalette'
+import { StyleSheet, I18nManager } from 'react-native';
+import { width, height } from '../../../../../Config/Layout';
+import { PrimaryColor } from '../../../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
   container: {
@@ -176,6 +176,26 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.25,
     borderColor: '#ccc',
   },
-})
+  TCbutton: {
+    width: 62,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fxrow: {
+    flexDirection: 'row',
+  },
+  CitiesModalInput: { width: '70%', fontSize: 16 },
+  CountryF: {
+    textAlign: 'right',
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    flex: 0.9,
+    padding: 5,
+  },
+  Fone: {
+    flex: 1,
+  },
+});
 
-export default styles
+export default styles;

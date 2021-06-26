@@ -14,7 +14,7 @@ function CalHoursSuper(props) {
     var total = 0;
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].Type === 'supervisor') {
+      if (data[i].Type === 'supervisor' && data[i].Status === 'completed') {
         total = total + data[i].TotalHours;
       }
     }

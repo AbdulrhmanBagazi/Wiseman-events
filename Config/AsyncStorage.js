@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LanguageStore = async (Language) => {
   await AsyncStorage.setItem('@Wiseman-events:Language', Language);

@@ -355,7 +355,9 @@ const CompleteDetailsStrings = {
   TotalhoursS: I18nManager.isRTL
     ? 'إجمالي الساعات (مشرف)'
     : 'Total Hours (Supervisor)',
-  Totalearning: I18nManager.isRTL ? 'إجمالي الآرباح' : 'Total Earning',
+  Totalmeal: I18nManager.isRTL ? 'بدل وجبة' : 'Meal Allowance',
+  Total: I18nManager.isRTL ? 'الآرباح' : 'Earning',
+  Totalearning: I18nManager.isRTL ? 'الإجمالي' : 'Total',
   Paymentstatus: I18nManager.isRTL ? 'حالة الدفع' : 'Payment Status',
   Paymentmethod: I18nManager.isRTL ? 'طريقة الدفع او السداد' : 'Payment Method',
   Start: I18nManager.isRTL ? 'تاريخ البدء' : 'Event Started',
@@ -415,8 +417,11 @@ const WorkScheduleUserString = {
   TakeAttendence: I18nManager.isRTL ? 'تسجيل الحضور' : 'Check-in',
   TakeAttendenceEnd: I18nManager.isRTL ? 'تسجيل الإنصراف' : 'Check-out',
   Info: I18nManager.isRTL ? 'معلومات' : 'Info',
-  noInfo: I18nManager.isRTL ? 'لا يوجد معلومات' : 'No Information',
+  noInfo: I18nManager.isRTL ? 'لايوجد بيانات' : 'No data',
   dayoff: I18nManager.isRTL ? 'يوم عطلة' : 'day off',
+  noAttendInfo: I18nManager.isRTL
+    ? 'لا يوجد بيانات بخصوص سجلات الحضور!'
+    : 'No data regarding attendance records!',
 };
 
 const EarningsStrings = {

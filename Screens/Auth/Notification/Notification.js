@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import {
   View,
   Text,
@@ -22,7 +21,7 @@ import { PrimaryColor } from '../../../Config/ColorPalette';
 import Constants from 'expo-constants';
 import { AuthContext } from '../../../Hooks/Context';
 
-function Notification({ navigation, store }) {
+function Notification({ store }) {
   const [isLoading, setLoading] = React.useState(false);
   const [isError, setError] = React.useState(' ');
   const { Load } = React.useContext(AuthContext);
@@ -31,14 +30,11 @@ function Notification({ navigation, store }) {
     setLoading(true);
     //
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS
-        );
+        const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {

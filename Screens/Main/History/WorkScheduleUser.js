@@ -6,7 +6,10 @@ import {
   Alert,
   TouchableOpacity,
   Text,
-  Modal,
+  Animated,
+  FlatList,
+  StatusBar,
+  Platform,
 } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
 import {
@@ -24,6 +27,10 @@ import { WorkScheduleUserString } from '../../../Config/Strings';
 import InfoModal from '../../Components/InfoModal/InfoModal';
 import { UserTokenRemove } from '../../../Config/AsyncStorage';
 import { AuthContext } from '../../../Hooks/Context';
+import { Entypo } from '@expo/vector-icons';
+import { height } from '../../../Config/Layout';
+import { useHeaderHeight } from '@react-navigation/stack';
+import moment from 'moment-timezone';
 
 //Config
 //#11865B
@@ -126,10 +133,26 @@ function WorkScheduleUser({ route, store }) {
   const [isLoading, setLoading] = React.useState(true);
   // const [refreshing, setrefreshing] = React.useState(false);
   const [isDays, setDays] = React.useState({});
-  const [isShow, setShow] = React.useState(false);
   const [isData, setData] = React.useState([]);
   const [isShowInfo, setShowInfo] = React.useState(false);
   const [isDataInfo, setDataInfo] = React.useState({});
+  const [isList, setList] = React.useState(false);
+  const [heightChange] = React.useState(new Animated.Value(0));
+  const headerHeight = useHeaderHeight();
+  const Start = async (val) => {
+    setList(val);
+
+    var HeaderH =
+      Platform.OS === 'ios'
+        ? height - headerHeight
+        : height - headerHeight + StatusBar.currentHeight;
+
+    Animated.timing(heightChange, {
+      toValue: val ? HeaderH : 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const { eventId, applicationId } = route.params;
 
@@ -292,6 +315,40 @@ function WorkScheduleUser({ route, store }) {
     return;
   };
 
+  const getBadge = (status) => {
+    switch (status) {
+      case 'active':
+        return '#61C5FF';
+      case 'incomplete':
+        return '#D5000E';
+      case 'completed':
+        return '#2DB329';
+      case 'pending':
+        return '#FFAA00';
+      default:
+        return '#D5000E';
+    }
+  };
+
+  const getBadgeAr = (status) => {
+    switch (status) {
+      case 'active':
+        return 'نشط';
+      case 'incomplete':
+        return 'غير مكتمل';
+      case 'completed':
+        return 'مكتمل';
+      case 'didnotstart':
+        return ' ';
+      case 'absence':
+        return 'غياب';
+      case 'pending':
+        return 'قيد الانتظار';
+      default:
+        return 'تم رفع بلاغ';
+    }
+  };
+
   return (
     <View style={styles.FlexOne}>
       {isLoading ? (
@@ -299,69 +356,93 @@ function WorkScheduleUser({ route, store }) {
           <ActivityIndicator size="large" color={PrimaryColor} />
         </View>
       ) : (
-        <CalendarList
-          pastScrollRange={20}
-          futureScrollRange={20}
-          markedDates={{ ...isDays }}
-          enableSwipeMonths={true}
-          onDayPress={(day) => {
-            ViewDay(day);
-          }}
-          theme={{
-            'stylesheet.calendar.header': {
-              dayHeader: {
-                fontWeight: '600',
-                color: PrimaryColor,
+        <>
+          <CalendarList
+            pastScrollRange={20}
+            futureScrollRange={20}
+            markedDates={{ ...isDays }}
+            enableSwipeMonths={true}
+            onDayPress={(day) => {
+              ViewDay(day);
+            }}
+            theme={{
+              'stylesheet.calendar.header': {
+                dayHeader: {
+                  fontWeight: '600',
+                  color: PrimaryColor,
+                },
               },
-            },
-            'stylesheet.day.basic': {
-              today: {
-                borderColor: PrimaryBorder,
-                borderWidth: 0.8,
+              'stylesheet.day.basic': {
+                today: {
+                  borderColor: PrimaryBorder,
+                  borderWidth: 0.8,
+                },
+                todayText: {
+                  color: PrimaryText,
+                  fontWeight: '800',
+                },
               },
-              todayText: {
-                color: PrimaryText,
-                fontWeight: '800',
-              },
-            },
-          }}
-        />
+            }}
+          />
+          <Animated.View style={[styles.hiddinList, { height: heightChange }]}>
+            {isData.length >= 1 ? (
+              <FlatList
+                // data={isDays}
+                contentContainerStyle={styles.flatlistitems}
+                data={isData}
+                renderItem={({ item, index }) => (
+                  <View style={styles.item}>
+                    <Text style={styles.title}>{item.eventday.start}</Text>
+                    <Text style={styles.time}>
+                      {item.Start
+                        ? WorkScheduleUserString.TakeAttendence +
+                          ':  ' +
+                          moment.tz(item.Start, 'Asia/Riyadh').format('hh:mm a')
+                        : WorkScheduleUserString.TakeAttendence +
+                          ':  ' +
+                          WorkScheduleUserString.noInfo}
+                    </Text>
+                    <Text style={styles.time}>
+                      {item.End
+                        ? WorkScheduleUserString.TakeAttendenceEnd +
+                          ':   ' +
+                          moment.tz(item.End, 'Asia/Riyadh').format('hh:mm a')
+                        : WorkScheduleUserString.TakeAttendenceEnd +
+                          ':   ' +
+                          WorkScheduleUserString.noInfo}
+                    </Text>
+                    <View style={styles.StatusAtten}>
+                      <Text
+                        style={[
+                          styles.StatusAttenText,
+                          { color: getBadge(item.Status) },
+                        ]}
+                      >
+                        {I18nManager.isRTL
+                          ? getBadgeAr(item.Status)
+                          : item.Status}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            ) : (
+              <Text style={styles.noAttendlist}>
+                {WorkScheduleUserString.noAttendInfo}
+              </Text>
+            )}
+          </Animated.View>
+        </>
       )}
 
-      <TouchableOpacity style={styles.InfoHover} onPress={() => setShow(true)}>
-        <Text style={styles.InfoHoverText}>?</Text>
+      <TouchableOpacity style={styles.InfoHover} onPress={() => Start(!isList)}>
+        {isList ? (
+          <Entypo name="calendar" size={24} color="#fff" />
+        ) : (
+          <Entypo name="list" size={24} color="#fff" />
+        )}
       </TouchableOpacity>
-
-      <Modal animationType="fade" transparent={true} visible={isShow}>
-        <TouchableOpacity
-          style={styles.modal}
-          onPress={() => setShow(false)}
-          activeOpacity={0.5}
-        >
-          <View style={styles.modalContainer}>
-            <View style={[styles.InfoBox, { backgroundColor: LightText }]}>
-              <Text style={styles.InfoBoxText}>
-                {WorkScheduleUserString.Work}
-              </Text>
-            </View>
-            <View style={styles.InfoBox}>
-              <Text style={styles.InfoBoxText}>
-                {WorkScheduleUserString.active}
-              </Text>
-            </View>
-            <View style={styles.InfoBox}>
-              <Text style={styles.InfoBoxText}>
-                {WorkScheduleUserString.Absence}
-              </Text>
-            </View>
-            <View style={styles.InfoBox}>
-              <Text style={styles.InfoBoxText}>
-                {WorkScheduleUserString.incomplete}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </Modal>
 
       <InfoModal
         OpenModal={isShowInfo}
