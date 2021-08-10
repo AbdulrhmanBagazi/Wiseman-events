@@ -19,8 +19,8 @@ function CalHoursSuper(props) {
       }
     }
 
-    var Hours = total / 60;
-    var minuts = Math.round(Hours - 0.3) * 60;
+    // var Hours = total / 60;
+    var minuts = total;
     var mills = minuts * 60000;
 
     setTotal(mills);
@@ -32,7 +32,7 @@ function CalHoursSuper(props) {
   ) : (
     <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
       {humanizeDuration(Total, {
-        units: ['h'],
+        units: ['h', 'm'],
         round: true,
         language: I18nManager.isRTL ? 'ar' : 'en',
         fallbacks: ['en'],

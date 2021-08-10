@@ -38,13 +38,13 @@ function CalSalary(props) {
         }
       }
     }
-    var HoursSuper = Math.round(totalSuperHours - 0.3);
-    var HoursOrganizer = Math.round(totalHours - 0.3);
+    var HoursSuper = totalSuperHours;
+    var HoursOrganizer = totalHours;
 
     var organizerSalary = HoursOrganizer * rateHourOrganizer;
     var supervisorSalary = HoursSuper * rateHourSupervisor;
 
-    var salary = organizerSalary + supervisorSalary;
+    var salary = Math.round(organizerSalary + supervisorSalary);
     var meal = daysCompleted * MealPlus;
 
     setTotal(salary + meal);

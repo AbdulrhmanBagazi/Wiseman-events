@@ -14,11 +14,13 @@ function CalHours(props) {
     var total = 0;
 
     for (var i = 0; i < data.length; i++) {
-      total = total + data[i].TotalHours;
+      if (data[i].Status === 'completed') {
+        total = total + data[i].TotalHours;
+      }
     }
 
-    var Hours = total / 60;
-    var minuts = Math.round(Hours - 0.3) * 60;
+    // var Hours = total / 60;
+    var minuts = total;
     var mills = minuts * 60000;
 
     setTotal(mills);
@@ -32,7 +34,7 @@ function CalHours(props) {
       ) : (
         <Text>
           {humanizeDuration(Total, {
-            units: ['h'],
+            units: ['h', 'm'],
             round: true,
             language: I18nManager.isRTL ? 'ar' : 'en',
             fallbacks: ['en'],

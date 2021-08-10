@@ -288,7 +288,7 @@ function Application({ navigation, route, store }) {
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR)'
+                ? 'تآكد من تسجيل الحضور والإنصراف (عبر رمز  QR)'
                 : 'make sure to check-in and check-out (via QR code)'}
             </Text>
             <Text style={styles.TextSelect}>

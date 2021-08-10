@@ -74,7 +74,7 @@ function Card(props) {
           {I18nManager.isRTL ? 'الساعات (منظم): ' : 'Hours (Organizer): '}{' '}
           <Text style={styles.TextDateValue}>
             {humanizeDuration(props.Data.organizer_hours * 60000, {
-              units: ['h'],
+              units: ['h', 'm'],
               round: true,
               language: I18nManager.isRTL ? 'ar' : 'en',
               fallbacks: ['en'],
@@ -88,7 +88,7 @@ function Card(props) {
           {I18nManager.isRTL ? 'الساعات (مشرف): ' : 'Hours (Supervisor): '}{' '}
           <Text style={styles.TextDateValue}>
             {humanizeDuration(props.Data.supervisor_hours * 60000, {
-              units: ['h'],
+              units: ['h', 'm'],
               round: true,
               language: I18nManager.isRTL ? 'ar' : 'en',
               fallbacks: ['en'],

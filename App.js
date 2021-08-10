@@ -64,6 +64,8 @@ import noProfile from './Screens/Redirect/nonAuth/noProfile';
 import AllJobsnonauth from './Screens/Main/Home/AllJobs/AllJobsnonauth';
 import ApplicationnonAuth from './Screens/Main/Home/Application/ApplicationnonAuth';
 import WorkSchedulenonAuth from './Screens/Main/Home/SingleJob/WorkSchedulenonAuth';
+//
+import { StatusBar } from 'expo-status-bar';
 
 Sentry.init({
   dsn: 'https://5caff191c9cb4fd5be537ab3eeac1907@o489391.ingest.sentry.io/5551545',
@@ -1069,6 +1071,7 @@ export default () => {
   } else {
     return (
       <Provider store={Store}>
+        <StatusBar style="dark" />
         <AuthContext.Provider value={auth}>
           <NavigationContainer
             theme={{
