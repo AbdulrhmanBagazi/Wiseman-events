@@ -59,9 +59,11 @@ function OTP({ store }) {
           headers: { Authorization: store.token },
         }
       )
-      .then((response) => {
+      .then(async (response) => {
         if (response.data === 'success') {
-          Analytics.logEvent('Phone Verified', 'Phone Verified');
+          await Analytics.logEvent('phone_verified', {
+            screen: 'OTP',
+          });
           Profile();
           return;
         } else {

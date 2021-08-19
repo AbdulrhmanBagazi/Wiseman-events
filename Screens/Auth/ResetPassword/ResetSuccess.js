@@ -1,9 +1,16 @@
 import React from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './Style';
 import { ResetPasswordString } from '../../../Config/Strings';
 
 function ResetSuccess({ navigation }) {
+  React.useEffect(() => {
+    Analytics.logEvent('password_reset_success', {
+      screen: 'ResetSuccess',
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.Logo}>

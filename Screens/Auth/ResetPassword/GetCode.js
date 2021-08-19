@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import {
   View,
   Text,
@@ -90,8 +91,11 @@ function GetCode({ navigation }) {
           phone: OTPphone,
           password: val.Password,
         })
-        .then((response) => {
+        .then(async (response) => {
           if (response.data === 'success') {
+            await Analytics.logEvent('otp_code', {
+              screen: 'GetCode',
+            });
             setLoading(false);
             navigation.navigate('ResetSuccess');
             return;

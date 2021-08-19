@@ -188,15 +188,16 @@ function CreateProfile({ store }) {
           headers: { Authorization: store.token },
         }
       )
-      .then((response) => {
+      .then(async (response) => {
         if (response.data === 'success') {
           Notification();
-          Analytics.logEvent('Profile Created', 'Profile Created');
+          await Analytics.logEvent('profile_created', {
+            screen: 'CreateProfile',
+          });
           return;
         }
         if (response.data === 'exists') {
           Notification();
-          Analytics.logEvent('Profile Created', 'Profile Created');
           return;
         } else {
           setError(ErrorsStrings.ErrorOccurred);

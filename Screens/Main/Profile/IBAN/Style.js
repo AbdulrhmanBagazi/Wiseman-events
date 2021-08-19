@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   },
   View: {
     alignSelf: 'center',
-    alignItems: 'flex-start',
     backgroundColor: '#F8F8F9',
     width: width + 10,
     padding: 10,
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#868991',
     marginVertical: 5,
-
     marginHorizontal: 16,
   },
   AddButton: {
@@ -152,7 +150,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width,
     alignSelf: 'center',
-    marginVertical: 5,
+    marginVertical: 10,
+    marginHorizontal: 10,
   },
   AnimatedView: {
     backgroundColor: '#fff',

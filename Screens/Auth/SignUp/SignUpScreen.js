@@ -193,7 +193,7 @@ function SignUp({ navigation }) {
           password: val.Password,
           nID: val.nId,
         })
-        .then((response) => {
+        .then(async (response) => {
           if (response.data.error === 'exists') {
             // console.log(response.data.error)
             setError(ErrorsStrings.MobileUsed);
@@ -212,7 +212,9 @@ function SignUp({ navigation }) {
             setError(' ');
             store.setDataSignup(response.data.user);
             store.setToken(response.data.token);
-            Analytics.logEvent('SignUp', 'SignUp');
+            await Analytics.logEvent('sign_up', {
+              screen: 'SignUp',
+            });
             Verify();
             return;
           }

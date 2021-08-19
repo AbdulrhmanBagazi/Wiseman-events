@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import {
   View,
   TouchableOpacity,
@@ -92,6 +93,9 @@ function SignIn({ navigation, store }) {
         if (response.status === 200) {
           await store.setData(response.data);
           await store.setToken(response.data.token);
+          await Analytics.logEvent('login', {
+            screen: 'SignIn',
+          });
 
           if (!response.data.user.verify) {
             setLoading(false);

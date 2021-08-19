@@ -100,7 +100,9 @@ function Application({ navigation, route, store }) {
             );
           } else if (response.data.check === 'success') {
             // await store.ReloadData()
-            Analytics.logEvent('Apply success');
+            await Analytics.logEvent('apply_success', {
+              screen: 'ApplyToJob',
+            });
             await store.setHistoryPageBack();
             await store.setResetPages();
             setTimeout(() => {
@@ -109,7 +111,7 @@ function Application({ navigation, route, store }) {
             }, 500);
             return;
           } else if (response.data.check === 'fail') {
-            Analytics.logEvent('Apply fail');
+            // Analytics.logEvent('Apply fail');
 
             setLoading(false);
             Alert.alert(
@@ -123,7 +125,7 @@ function Application({ navigation, route, store }) {
 
             return;
           } else {
-            Analytics.logEvent('Apply fail');
+            // Analytics.logEvent('Apply fail');
             setLoading(false);
             Alert.alert(
               '',
