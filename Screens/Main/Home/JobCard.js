@@ -12,6 +12,9 @@ import Icon from '../../../Config/Icons';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad';
 import { SingleJobStrings } from '../../../Config/Strings';
+import { width } from '../../../Config/Layout';
+import moment from 'moment';
+import 'moment/locale/ar-sa'; // without this line it didn't work
 
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
@@ -34,6 +37,53 @@ function JobCard(props) {
 
     return;
   });
+
+  function getSalary(val) {
+    var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+    var last = val.jobs[val.jobs.length - 1].hourly_rate
+      ? val.jobs[val.jobs.length - 1].hourly_rate
+      : null;
+
+    return (
+      <Text style={styles.SingleJobDetailsSectionsValue}>
+        {Number(last)}
+        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+        {Number(first) ? ' - ' : null} {Number(first)}
+        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+        <Text style={styles.Hour}>
+          /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+        </Text>
+      </Text>
+    );
+  }
+
+  function getTime(val) {
+    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
+    var artimeStart = moment(val.Start).format('Do MMM');
+    var artimeEnd = moment(val.End).format('Do MMM');
+
+    moment.updateLocale('ar', {
+      months: [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ],
+    });
+
+    return (
+      <Text style={styles.BlackColor}>{artimeStart + ' - ' + artimeEnd}</Text>
+    );
+  }
+
   return (
     <View style={styles.JobCard}>
       <View style={styles.space} />
@@ -41,14 +91,14 @@ function JobCard(props) {
         <View style={styles.SectionTtitle}>
           <Text style={styles.SectionTitle}>
             {I18nManager.isRTL
-              ? 'وظائف فى' + ' ' + props.TitleAr
+              ? 'وظائف في' + ' ' + props.TitleAr
               : 'Jobs at' + ' ' + props.Title}
           </Text>
-          <Text style={styles.NumberOfJobs}>
+          {/* <Text style={styles.NumberOfJobs}>
             {I18nManager.isRTL
               ? 'وظيفة ' + props.Total
               : 'Jobs  ' + props.Total}
-          </Text>
+          </Text> */}
         </View>
         <View style={styles.SectionMore}>
           <TouchableOpacity
@@ -76,8 +126,14 @@ function JobCard(props) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <AnimatedTouchableOpacity
-            style={[styles.SingleJob, { opacity: Fade }]}
-            onPress={() => props.click('SingleJob', { item })}
+            style={[
+              styles.SingleJob,
+              {
+                opacity: Fade,
+                width: props.data.length > 1 ? width - 5 : width + 10,
+              },
+            ]}
+            onPress={() => props.click('SingleJob', { items: item })}
           >
             <AnimatedCardImageLoad
               source={{
@@ -89,9 +145,7 @@ function JobCard(props) {
             <View style={styles.SingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={styles.BlackColor}>
-                  {I18nManager.isRTL ? item.DateAr : item.Date}
-                </Text>
+                <Text style={styles.BlackColor}>{getTime(item)}</Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.TitleAr : item.Title}
@@ -119,13 +173,7 @@ function JobCard(props) {
                   <Text style={styles.SingleJobDetailsSections}>
                     {SingleJobStrings.Salary}
                   </Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {item.Salary + '-' + item.SalarySupervisor}
-                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.Hour}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
+                  {getSalary(item)}
                 </View>
               </View>
             </View>

@@ -175,11 +175,12 @@ function SignUp({ navigation }) {
 
   //Aa123123
   const RegisterAccount = async (val) => {
+    setLoading(true);
+
     await Keyboard.dismiss();
     if (isLoading) {
       return;
     }
-    await setLoading(true);
     if (
       val.Password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,24}$/) &&
       isCheck === 'Success' &&
@@ -215,7 +216,10 @@ function SignUp({ navigation }) {
             await Analytics.logEvent('sign_up', {
               screen: 'SignUp',
             });
-            Verify();
+
+            setTimeout(() => {
+              Verify();
+            }, 1000);
             return;
           }
         })
@@ -238,9 +242,10 @@ function SignUp({ navigation }) {
             return;
           }
         });
+    } else {
+      setLoading(false);
     }
 
-    await setLoading(false);
     return;
   };
 
@@ -288,6 +293,7 @@ function SignUp({ navigation }) {
           onChangeText={(text) => PhoneInput(text)}
           keyboardType={'number-pad'}
           CheckPhone={isPhoneCheck}
+          editable={!isLoading}
         />
 
         <InputPhone
@@ -296,6 +302,7 @@ function SignUp({ navigation }) {
           onChangeText={(text) => NidInput(text)}
           keyboardType={'number-pad'}
           CheckPhone={isnIdheck}
+          editable={!isLoading}
         />
 
         <Inputpassowrd
@@ -308,11 +315,14 @@ function SignUp({ navigation }) {
           MatchString={Register.Match}
           Check={isCheck}
           PasswordValue={data.Password}
+          // editable={!isLoading}
         />
 
         <View style={styles.Terms}>
           <View>
-            <TouchableOpacity onPress={() => AgreeHandler()}>
+            <TouchableOpacity
+              onPress={() => (isLoading ? null : AgreeHandler())}
+            >
               <Animated.View
                 style={[styles.checkIconView, { backgroundColor: AgreeColor }]}
               >

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { width } from '../../../Config/Layout';
+import { height, width } from '../../../Config/Layout';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
@@ -11,6 +11,40 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#E4E9F1',
+  },
+  NotificationBoxFirstTransfer: {
+    width: width + 20,
+    flexDirection: 'row',
+    padding: 10,
+  },
+  TransferCard: {
+    alignSelf: 'center',
+    position: 'absolute',
+    backgroundColor: PrimaryColor,
+    margin: 5,
+    borderRadius: 5,
+    // backgroundColor: '#F8F8F9',
+    zIndex: 99,
+  },
+  bodyTextTransfer: {
+    fontWeight: '500',
+    color: '#fff',
+    textAlign: 'left',
+  },
+  bodyTextTimeTransfer: {
+    fontWeight: '500',
+    color: '#fff',
+    textAlign: 'left',
+    marginTop: 5,
+  },
+  titleTransfer: {
+    fontWeight: '500',
+    color: '#fff',
+    marginVertical: 10,
+  },
+  TimeTextTransfer: {
+    fontWeight: '500',
+    color: '#fff',
   },
   NotificationBox: {
     width: width + 20,
@@ -132,6 +166,16 @@ const styles = StyleSheet.create({
   Flexone: { flex: 1 },
   paddingContent: { paddingBottom: 20, paddingTop: 0 },
   MarginLoading: { marginVertical: 10 },
+  Image: { height: height / 6, resizeMode: 'contain' },
+  MainView: {
+    width,
+    height: height / 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    zIndex: -99,
+    position: 'absolute',
+  },
 });
 
 export default styles;

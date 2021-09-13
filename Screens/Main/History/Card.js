@@ -14,7 +14,7 @@ import Icon from '../../../Config/Icons';
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad';
 import {
   SingleJobStrings,
-  AnimatedButtonSelectStrings,
+  // AnimatedButtonSelectStrings,
 } from '../../../Config/Strings';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import moment from 'moment';
@@ -86,6 +86,7 @@ function Card(props) {
         return 'إنسحاب';
     }
   };
+
   return (
     <View style={styles.AllJobCard}>
       {/* {props.Data.length <= 0 ? (
@@ -116,41 +117,28 @@ function Card(props) {
                 </Text>
               </Text> */}
               <View style={styles.TypeBadge}>
-                {item.Organizer || item.Type === 'organizer' ? (
-                  <View
-                    style={
-                      item.Type === 'organizer' ? styles.badgeS : styles.badgeO
-                    }
-                  >
-                    <Text
-                      style={
-                        item.Type === 'organizer'
-                          ? styles.BadgeTextS
-                          : styles.BadgeText
-                      }
-                    >
-                      {AnimatedButtonSelectStrings.organizer}
-                    </Text>
-                  </View>
-                ) : null}
-
-                {item.Supervisor || item.Type === 'supervisor' ? (
-                  <View
-                    style={
-                      item.Type === 'supervisor' ? styles.badgeS : styles.badgeO
-                    }
-                  >
-                    <Text
-                      style={
-                        item.Type === 'supervisor'
-                          ? styles.BadgeTextS
-                          : styles.BadgeText
-                      }
-                    >
-                      {AnimatedButtonSelectStrings.supervisor}
-                    </Text>
-                  </View>
-                ) : null}
+                {/* {item.jobapplications.map((e) => {
+                  if (e.Active === true) {
+                    return (
+                      <View
+                        key={e.id}
+                        style={
+                          e.Active === true ? styles.badgeS : styles.badgeO
+                        }
+                      >
+                        <Text
+                          style={
+                            e.Active === true
+                              ? styles.BadgeTextS
+                              : styles.BadgeText
+                          }
+                        >
+                          {I18nManager.isRTL ? e.job.title_ar : e.job.title}
+                        </Text>
+                      </View>
+                    );
+                  }
+                })} */}
               </View>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}

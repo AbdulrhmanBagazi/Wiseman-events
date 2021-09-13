@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Alert,
   Linking,
+  Image,
 } from 'react-native';
 import styles from './Style';
 import Icon from '../../../Config/Icons';
@@ -29,6 +30,7 @@ function NotificationMain({ navigation, store }) {
   const { signOut } = React.useContext(AuthContext);
   const [isLoadingAlert, setLoadingAlert] = React.useState(false);
   const [isData, setData] = React.useState([]);
+  const [isDataTransfer, setDataTransfer] = React.useState([]);
 
   const [count, setcount] = React.useState(0);
   const [ispage, setpage] = React.useState(0);
@@ -108,6 +110,8 @@ function NotificationMain({ navigation, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
+            // console.log(response.data.Transfer);
+            setDataTransfer(response.data.Transfer);
             setData(response.data.alerts.rows);
             setcount(response.data.alerts.count);
             await store.setNotificationMainPage();
@@ -162,7 +166,6 @@ function NotificationMain({ navigation, store }) {
         }
       })
       .catch(async (error) => {
-        // console.log(error)
         setrefreshing(false);
         setLoading(true);
 
@@ -329,6 +332,7 @@ function NotificationMain({ navigation, store }) {
         }
       )
       .then(async (response) => {
+        console.log(response.data);
         if (response.status === 200) {
           if (response.data === 'success') {
             setLoadingAlert(false);
@@ -372,6 +376,7 @@ function NotificationMain({ navigation, store }) {
         }
       })
       .catch(async (error) => {
+        console.log(error.response);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
@@ -523,13 +528,22 @@ function NotificationMain({ navigation, store }) {
 
   return (
     <View style={styles.Flexone}>
+      {isData.length <= 0 ? (
+        <View style={styles.MainView}>
+          <Image
+            style={styles.Image}
+            source={require('../../../assets/notificationillustration.png')}
+          />
+        </View>
+      ) : null}
+
       <FlatList
-        data={isData}
+        data={[...isDataTransfer, ...isData]}
         showsVerticalScrollIndicator={false}
         srtyle={{
           flex: 1,
         }}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => item.id.toString() + index.toString()}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -596,20 +610,7 @@ function NotificationMain({ navigation, store }) {
                 ) : item.type === 'calendar' ? (
                   <Icon name="calendar" size={30} color="#9CA2B0" />
                 ) : item.type === 'clock' ? (
-                  <Icon
-                    name="clock"
-                    size={30}
-                    color={
-                      item.TransferShift === null
-                        ? '#9CA2B0'
-                        : item.TransferShift.replied === false
-                        ? '#9CA2B0'
-                        : item.TransferShift.replied === true &&
-                          item.TransferShift.replyvalue === 'accept'
-                        ? '#45a164'
-                        : '#d16767'
-                    }
-                  />
+                  <Icon name="clock" size={30} color="#9CA2B0" />
                 ) : (
                   <Icon name="map-pin" size={30} color="#9CA2B0" />
                 )}
@@ -742,9 +743,7 @@ function NotificationMain({ navigation, store }) {
               </View>
             ) : null}
 
-            {item.type === 'transfer' &&
-            item.TransferShift !== null &&
-            item.TransferShift.replied === false ? (
+            {item.type === 'transfer' && item.replied === false ? (
               <View
                 style={
                   index === 0
@@ -761,9 +760,9 @@ function NotificationMain({ navigation, store }) {
                       disabled={refreshing}
                       onPress={() =>
                         AcceptDeclineTransfer(
-                          item.TransferShift.id,
+                          item.id,
                           'Accept',
-                          item.TransferShift.applicationId
+                          item.applicationId
                         )
                       }
                     >
@@ -777,9 +776,9 @@ function NotificationMain({ navigation, store }) {
                       disabled={refreshing}
                       onPress={() =>
                         AcceptDeclineTransfer(
-                          item.TransferShift.id,
+                          item.id,
                           'Decline',
-                          item.TransferShift.applicationId
+                          item.applicationId
                         )
                       }
                     >

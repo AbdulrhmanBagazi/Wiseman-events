@@ -47,7 +47,9 @@ function CalSalary(props) {
     var salary = Math.round(organizerSalary + supervisorSalary);
     var meal = daysCompleted * MealPlus;
 
-    setTotal(salary + meal);
+    var sumtotal = salary + meal;
+
+    setTotal(sumtotal ? sumtotal : 0);
     setLoading(false);
   }, [props.Values]);
 
@@ -56,7 +58,7 @@ function CalSalary(props) {
       {isLoading ? (
         <ActivityIndicator size="small" color={PrimaryColor} />
       ) : (
-        <Text>{I18nManager.isRTL ? Total + 'ريال ' : Total + ' SAR'}</Text>
+        <Text>{I18nManager.isRTL ? Total + ' ريال' : Total + ' SAR'}</Text>
       )}
     </View>
   );

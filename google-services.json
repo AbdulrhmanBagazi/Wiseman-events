@@ -29,6 +29,13 @@
             {
               "client_id": "35150018160-schslcopgo482i2a3030647hv0ahnvgb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "35150018160-rh9kc9f0v6nlh6jb9ui4hf85idgkh105.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wiseman.organizing"
+              }
             }
           ]
         }

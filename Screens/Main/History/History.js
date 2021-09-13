@@ -109,7 +109,7 @@ function History({ store, navigation }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            // await store.setHistoryData(response.data.application)
+            // console.log(response.data.application);
             await store.setHistoryPage();
 
             setrefreshing(false);
@@ -329,7 +329,7 @@ function History({ store, navigation }) {
         onScroll={(e) => check(e)}
         ref={Scroll}
         style={styles.FlexMargin}
-        directionalLockEnabled={true}
+        directionalLockEnabled={false}
         showsHorizontalScrollIndicator={false}
       >
         <View style={styles.Container}>

@@ -64,6 +64,7 @@ function NonAuth({ store, navigation }) {
             return;
           } else if (response.data.check === 'fail') {
             setError(false);
+            setLoading(false);
             return;
           }
         }
@@ -82,7 +83,7 @@ function NonAuth({ store, navigation }) {
                   cancelable: false,
                 }
               );
-
+              setLoading(false);
               return;
             } else {
               Alert.alert(
@@ -93,6 +94,8 @@ function NonAuth({ store, navigation }) {
                   cancelable: false,
                 }
               );
+              setLoading(false);
+
               return;
             }
           }
@@ -105,6 +108,8 @@ function NonAuth({ store, navigation }) {
               cancelable: false,
             }
           );
+          setLoading(false);
+
           return;
         }
       });

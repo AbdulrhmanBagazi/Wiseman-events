@@ -47,7 +47,7 @@ function Splash({ store }) {
     // return
 
     if (!dirInfo.exists) {
-      console.log(1);
+      // console.log(1);
 
       await FileSystem.makeDirectoryAsync(gifDir, { intermediates: true });
     }
@@ -61,7 +61,9 @@ function Splash({ store }) {
       var checktime = await moment(Time);
       var current = await moment();
       var duration = await moment(current).diff(checktime, 'days');
-      if (duration >= 20) {
+      if (duration >= 30) {
+        var savetime = await moment().toISOString();
+        await setFilesystemresettime(savetime);
         await FileSystem.deleteAsync(gifDir);
       }
     }

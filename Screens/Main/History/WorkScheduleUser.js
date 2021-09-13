@@ -361,7 +361,7 @@ function WorkScheduleUser({ route, store }) {
             pastScrollRange={20}
             futureScrollRange={20}
             markedDates={{ ...isDays }}
-            enableSwipeMonths={true}
+            enableSwipeMonths={false}
             onDayPress={(day) => {
               ViewDay(day);
             }}

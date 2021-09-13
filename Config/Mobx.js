@@ -109,6 +109,12 @@ class Store {
     return;
   };
 
+  setResetData = async () => {
+    this.data = [];
+
+    return;
+  };
+
   setBanner = async (Data) => {
     this.banner = Data;
     return;
@@ -249,6 +255,7 @@ decorate(Store, {
   CalendarMainIDs: observable.ref,
   setCalendarIds: action,
   removeCalendarIds: action,
+  setResetData: action,
 });
 
 const store = new Store();

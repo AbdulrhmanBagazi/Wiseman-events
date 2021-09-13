@@ -396,6 +396,7 @@ function CreateProfile({ store }) {
                   mode="date"
                   is24Hour={true}
                   display="spinner"
+                  textColor="black"
                   onChange={onChange}
                 />
 

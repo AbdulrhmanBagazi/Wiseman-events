@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
   },
   ShiftButtonSelect: {
     padding: 10,
+    marginHorizontal: 8,
+    marginVertical: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

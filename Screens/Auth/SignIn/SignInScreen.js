@@ -171,9 +171,9 @@ function SignIn({ navigation, store }) {
             />
           </G>
         </Svg>
-        <Text style={styles.Slogan}>
+        {/* <Text style={styles.Slogan}>
           It's great opportunity to work on part time job and earn extra money
-        </Text>
+        </Text> */}
         <Text style={styles.error}>{isError}</Text>
         <InputPhone
           placeholder={SignInStrings.Phone}

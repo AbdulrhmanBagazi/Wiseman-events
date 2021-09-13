@@ -61,10 +61,11 @@ function Activejob(props) {
                 </Text>
               </View>
               <Text style={styles.ActivejobHeaderText}>
-                {item.Type === 'organizer'
-                  ? item.event.Salary
-                  : item.event.SalarySupervisor}
+                {item.jobapplications.map((e) =>
+                  e.Active ? e.job.hourly_rate : null
+                )}
                 {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+
                 <Text style={styles.ActivejobHeaderTextLight}>
                   /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
                 </Text>
@@ -120,6 +121,23 @@ function Activejob(props) {
               </View>
             </View>
             <View style={styles.ActivejobBoxContainer}>
+              {item.jobapplications.map((e) => {
+                if (e.Active === true) {
+                  return (
+                    <View key={e.id} style={styles.badgeACTIVE}>
+                      <Text
+                        style={
+                          e.Active === true
+                            ? styles.BadgeTextS
+                            : styles.BadgeText
+                        }
+                      >
+                        {I18nManager.isRTL ? e.job.title_ar : e.job.title}
+                      </Text>
+                    </View>
+                  );
+                }
+              })}
               <View style={styles.ActivejobBox}>
                 <View style={styles.ActivejobBoxTop}>
                   <View style={styles.Activejobsplit}>

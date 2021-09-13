@@ -23,7 +23,7 @@ function AnimatedButtonSelect(props) {
 
   return (
     <View>
-      {!props.Disabled ? (
+      {props.Disabled ? (
         <AnimatedTouchableOpacity disabled={true} style={styles.ShiftButton}>
           <Animated.Text style={styles.shift}>{props.FullText}</Animated.Text>
         </AnimatedTouchableOpacity>

@@ -28,26 +28,26 @@ function SingleJob({ route, store, navigation }) {
   const [isShifts, setShifts] = React.useState([]);
 
   const Scroll = React.useRef(null);
-  const { item } = route.params;
+  const { items } = route.params;
 
   React.useEffect(() => {
     var Dpoints = I18nManager.isRTL
-      ? item.DescriptionPointsAr
-      : item.DescriptionPoints;
-    var Rpoints = I18nManager.isRTL ? item.RulesPointsAr : item.RulesPoints;
+      ? items.DescriptionPointsAr
+      : items.DescriptionPoints;
+    var Rpoints = I18nManager.isRTL ? items.RulesPointsAr : items.RulesPoints;
     var Tpoints = I18nManager.isRTL
-      ? item.TrainingPointsAr
-      : item.TrainingPoints;
+      ? items.TrainingPointsAr
+      : items.TrainingPoints;
     var D = Dpoints.split(',');
     var R = Rpoints.split(',');
     var T = Tpoints.split(',');
 
     setPoints({ D: D, R: R, T: T });
     if (I18nManager.isRTL && Platform.OS !== 'ios') {
-      var data = item.eventshifts.reverse();
+      var data = items.eventshifts.reverse();
       setShifts(data);
     } else {
-      setShifts(item.eventshifts);
+      setShifts(items.eventshifts);
     }
     setLoading(false);
     return;
@@ -85,17 +85,43 @@ function SingleJob({ route, store, navigation }) {
 
     return;
   };
+
+  function getSalary(val) {
+    var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+    var last = val.jobs[val.jobs.length - 1].hourly_rate
+      ? val.jobs[val.jobs.length - 1].hourly_rate
+      : null;
+
+    return (
+      <View style={{ flex: 1, alignItems: 'flex-start' }}>
+        <Text style={styles.SalarySpace}>
+          {Number(last)}
+          <Text style={styles.SingleSalaryTextData}>
+            {I18nManager.isRTL ? 'ريال' : 'SAR'}
+          </Text>
+          {Number(first) ? ' - ' : null} {Number(first)}
+          <Text style={styles.SingleSalaryTextData}>
+            {I18nManager.isRTL ? 'ريال' : 'SAR'}
+            <Text style={styles.Hour}>
+              /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+            </Text>
+          </Text>
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.TitleImage}>
           <SingleJobImage
             source={{
-              uri: item.ImageURL,
+              uri: items.ImageURL,
             }}
-            Name={I18nManager.isRTL ? item.NameAr : item.Name}
+            Name={I18nManager.isRTL ? items.NameAr : items.Name}
             onPressWork={() =>
-              navigation.navigate('WorkSchedule', { eventId: item.id })
+              navigation.navigate('WorkSchedule', { eventId: items.id })
             }
           />
         </View>
@@ -103,19 +129,19 @@ function SingleJob({ route, store, navigation }) {
           <Text style={styles.SingleJobDetailsTime}>
             {SingleJobStrings.date}
             <Text style={{ color: '#000' }}>
-              {I18nManager.isRTL ? item.DateAr : item.Date}
+              {I18nManager.isRTL ? items.DateAr : items.Date}
             </Text>
           </Text>
           <Text style={styles.SingleJobDetailsTitle}>
-            {I18nManager.isRTL ? item.TitleAr : item.Title}
+            {I18nManager.isRTL ? items.TitleAr : items.Title}
           </Text>
           <TouchableOpacity
             style={styles.SingleJobDetailsLocationView}
-            onPress={() => Linking.openURL(item.LocationURL)}
+            onPress={() => Linking.openURL(items.LocationURL)}
           >
             <Icon name="map-pin" size={14} color="#000" />
             <Text style={styles.SingleJobDetailsLocation} numberOfLines={1}>
-              {I18nManager.isRTL ? item.LocationAr : item.Location}
+              {I18nManager.isRTL ? items.LocationAr : items.Location}
             </Text>
             <Icon name="external-link" size={14} color={PrimaryColor} />
           </TouchableOpacity>
@@ -123,40 +149,17 @@ function SingleJob({ route, store, navigation }) {
             <Text style={styles.SingleSalaryText}>
               {SingleJobStrings.Salary}
             </Text>
-            <View style={styles.DataSectionsTop}>
-              <View style={{ flex: 1, alignItems: 'flex-start' }}>
-                <Text style={styles.SalarySpace}>
-                  {SingleJobStrings.supervisor + ': '}
-                  <Text style={styles.SingleSalaryTextData}>
-                    {item.SalarySupervisor} {I18nManager.isRTL ? 'ريال' : 'SAR'}
-                    <Text style={styles.Hour}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
-                </Text>
-              </View>
-              <View style={{ flex: 1, alignItems: 'flex-start' }}>
-                <Text>
-                  {SingleJobStrings.organizer + ': '}
-                  <Text style={styles.SingleSalaryTextData}>
-                    {item.Salary} {I18nManager.isRTL ? 'ريال' : 'SAR'}
-                    <Text style={styles.Hour}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
-                </Text>
-              </View>
-            </View>
+            <View style={styles.DataSectionsTop}>{getSalary(items)}</View>
             <View style={styles.DataSections}>
               <View style={{ flex: 1, alignItems: 'flex-start' }}>
                 <Text style={styles.SingleShiftText}>
-                  {SingleJobStrings.Shifts + ': ' + item.eventshifts.length}
+                  {SingleJobStrings.Shifts + ': ' + items.eventshifts.length}
                 </Text>
               </View>
               <View style={{ flex: 1, alignItems: 'flex-start' }}>
                 <Text style={styles.SingleShiftTextSpace}>
                   {SingleJobStrings.Meal + ': '}
-                  {item.ProvideAmeal === true
+                  {items.ProvideAmeal === true
                     ? I18nManager.isRTL
                       ? 'نعم'
                       : 'yes'
@@ -168,7 +171,7 @@ function SingleJob({ route, store, navigation }) {
             </View>
           </View>
 
-          {!item.ProvideAmeal ? (
+          {!items.ProvideAmeal ? (
             <View style={styles.NoteView}>
               <View style={styles.NoteViewContainer}>
                 <Text style={styles.NoteText}>
@@ -178,7 +181,7 @@ function SingleJob({ route, store, navigation }) {
                   {SingleJobStrings.Mealallowance}
                 </Text>
                 <Text style={styles.NoteText}>
-                  {' ' + item.ProvideAnAllowance}
+                  {' ' + items.ProvideAnAllowance}
                   {I18nManager.isRTL ? 'ريال' : 'SAR'}
                 </Text>
               </View>
@@ -207,7 +210,7 @@ function SingleJob({ route, store, navigation }) {
                     <Animated.Text
                       style={[
                         styles.SelectText,
-                        item.Training === '' && item.TrainingAr === ''
+                        items.Training === '' && items.TrainingAr === ''
                           ? { color: isSelected === 1 ? PrimaryColor : '#000' }
                           : { color: isSelected === 2 ? PrimaryColor : '#000' },
                       ]}
@@ -225,7 +228,7 @@ function SingleJob({ route, store, navigation }) {
                     <Animated.Text
                       style={[
                         styles.SelectText,
-                        item.Training === '' && item.TrainingAr === ''
+                        items.Training === '' && items.TrainingAr === ''
                           ? { color: isSelected === 0 ? PrimaryColor : '#000' }
                           : { color: isSelected === 1 ? PrimaryColor : '#000' },
                       ]}
@@ -234,7 +237,7 @@ function SingleJob({ route, store, navigation }) {
                     </Animated.Text>
                   </TouchableOpacity>
 
-                  {item.Training === '' && item.TrainingAr === '' ? null : (
+                  {items.Training === '' && items.TrainingAr === '' ? null : (
                     <TouchableOpacity
                       style={styles.SelectButtonFirst}
                       onPress={() => ScrollTo(2)}
@@ -279,7 +282,7 @@ function SingleJob({ route, store, navigation }) {
                     </Animated.Text>
                   </TouchableOpacity>
 
-                  {item.Training === '' && item.TrainingAr === '' ? null : (
+                  {items.Training === '' && items.TrainingAr === '' ? null : (
                     <TouchableOpacity
                       style={styles.SelectButtonFirst}
                       onPress={() => ScrollTo(2)}
@@ -306,19 +309,19 @@ function SingleJob({ route, store, navigation }) {
               >
                 <Description
                   Description={
-                    I18nManager.isRTL ? item.DescriptionAr : item.Description
+                    I18nManager.isRTL ? items.DescriptionAr : items.Description
                   }
                   Data={isPoints.D}
                 />
                 <Rules
-                  Rules={I18nManager.isRTL ? item.RulesAr : item.Rules}
+                  Rules={I18nManager.isRTL ? items.RulesAr : items.Rules}
                   Data={isPoints.R}
                 />
 
-                {item.Training === '' && item.TrainingAr === '' ? null : (
+                {items.Training === '' && items.TrainingAr === '' ? null : (
                   <Tranining
                     Training={
-                      I18nManager.isRTL ? item.TrainingAr : item.Training
+                      I18nManager.isRTL ? items.TrainingAr : items.Training
                     }
                     Data={isPoints.T}
                   />
@@ -330,11 +333,11 @@ function SingleJob({ route, store, navigation }) {
         </View>
       </ScrollView>
       <View style={styles.ButtonView}>
-        {item.Status === 'active' && !store.data.banned ? (
+        {items.Status === 'active' && !store.data.banned ? (
           <TouchableOpacity
             style={styles.Button}
             onPress={() =>
-              navigation.navigate('ApplyToJob', { item, shifts: isShifts })
+              navigation.navigate('ApplyToJob', { items, shifts: isShifts })
             }
           >
             <Text style={styles.ButtonText}>
@@ -349,7 +352,7 @@ function SingleJob({ route, store, navigation }) {
             ]}
             disabled={true}
             onPress={() =>
-              navigation.navigate('ApplyToJob', { item, shifts: isShifts })
+              navigation.navigate('ApplyToJob', { items, shifts: isShifts })
             }
           >
             <Text style={styles.ButtonText}>{SingleJobStrings.EventEnded}</Text>

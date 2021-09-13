@@ -80,6 +80,8 @@ function OTP({ store }) {
   };
 
   React.useEffect(() => {
+    setError(' ');
+
     if (isLoading) {
       return;
     }
@@ -97,9 +99,12 @@ function OTP({ store }) {
         if (response.data === 'success') {
           setShow(true);
           return;
+        } else if (response.data === 'sent') {
+          setShow(true);
+          return;
         } else {
           setError(ErrorsStrings.OTPCode);
-          setShow(true);
+          setShow(false);
           return;
         }
       })
@@ -121,6 +126,7 @@ function OTP({ store }) {
 
   const Logout = async () => {
     await UserTokenRemove();
+    await store.setResetData();
     signOut();
 
     return;
@@ -161,7 +167,7 @@ function OTP({ store }) {
             ) : (
               <View style={styles.ltrView}>
                 <CountDown
-                  until={120}
+                  until={1800}
                   digitStyle={styles.digittyle}
                   digitTxtStyle={styles.digittext}
                   onFinish={() => ChangeState()}

@@ -10,8 +10,56 @@ import styles from '../Style';
 import Icon from '../../../../Config/Icons';
 import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad';
 import { SingleJobStrings } from '../../../../Config/Strings';
+import moment from 'moment';
+import 'moment/locale/ar-sa'; // without this line it didn't work
 
 function Card(props) {
+  function getSalary(val) {
+    var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+    var last = val.jobs[val.jobs.length - 1].hourly_rate
+      ? val.jobs[val.jobs.length - 1].hourly_rate
+      : null;
+
+    return (
+      <Text style={styles.SingleJobDetailsSectionsValue}>
+        {Number(last)}
+        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+        {Number(first) ? ' - ' : null} {Number(first)}
+        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+        <Text style={styles.Hour}>
+          /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+        </Text>
+      </Text>
+    );
+  }
+
+  function getTime(val) {
+    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
+    var artimeStart = moment(val.Start).format('Do MMM');
+    var artimeEnd = moment(val.End).format('Do MMM');
+
+    moment.updateLocale('ar', {
+      months: [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ],
+    });
+
+    return (
+      <Text style={styles.BlackColor}>{artimeStart + ' - ' + artimeEnd}</Text>
+    );
+  }
+
   return (
     <View style={styles.AllJobCard}>
       <FlatList
@@ -21,7 +69,7 @@ function Card(props) {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={styles.SingleAllJob}
-            onPress={() => props.click('SingleJob', { item })}
+            onPress={() => props.click('SingleJob', { items: item })}
           >
             <AnimatedCardImageLoad
               source={{
@@ -33,9 +81,7 @@ function Card(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={styles.BlackColor}>
-                  {I18nManager.isRTL ? item.DateAr : item.Date}
-                </Text>
+                <Text style={styles.BlackColor}>{getTime(item)}</Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.TitleAr : item.Title}
@@ -63,13 +109,7 @@ function Card(props) {
                   <Text style={styles.SingleJobDetailsSections}>
                     {SingleJobStrings.Salary}
                   </Text>
-                  <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {item.Salary + '-' + item.SalarySupervisor}
-                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.Hour}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
+                  {getSalary(item)}
                 </View>
               </View>
             </View>

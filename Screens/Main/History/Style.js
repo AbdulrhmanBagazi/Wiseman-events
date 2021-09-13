@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   SingleJobDetailsLocationView: {
     flexDirection: 'row',
-    marginHorizontal: 10,
+    // marginHorizontal: 10,
     marginVertical: 10,
     alignItems: 'flex-start',
   },
@@ -522,15 +522,25 @@ const styles = StyleSheet.create({
     color: PrimaryColor,
   },
   TypeBadge: {
-    flexDirection: 'row',
     marginVertical: 5,
     marginHorizontal: 5,
+    width: width - 10,
+    padding: 5,
+    flex: 1,
   },
   badgeO: {
     backgroundColor: GrayColor,
     padding: 5,
     marginHorizontal: 5,
     borderRadius: 5,
+  },
+  badgeACTIVE: {
+    backgroundColor: PrimaryColor,
+    padding: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   badgeS: {
     backgroundColor: PrimaryColor,

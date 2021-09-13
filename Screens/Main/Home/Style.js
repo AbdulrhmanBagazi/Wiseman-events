@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   TopCardTitle: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 42,
+    fontSize: 32,
     marginTop: 20,
     marginHorizontal: 18,
     textAlign: 'left',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   TopCardTitleStatus: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 42,
+    fontSize: 32,
     marginHorizontal: 18,
     textAlign: 'left',
   },
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   //
   SingleJob: {
     backgroundColor: '#fff',
-    width: width - 5,
+    // width: width - 5,
     flex: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

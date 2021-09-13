@@ -213,7 +213,7 @@ const SingleJobStrings = {
     ? 'في حال قبولك، سيتم تحديد تاريخ المباشرة'
     : 'If accepted, the start date will be determined',
   Vacancy: I18nManager.isRTL ? 'العدد' : 'Vacancy',
-  Salary: I18nManager.isRTL ? 'راتب' : 'Salary',
+  Salary: I18nManager.isRTL ? 'الراتب' : 'Salary',
   Shifts: I18nManager.isRTL ? 'الورديات' : 'Shifts',
   About: I18nManager.isRTL ? 'عن العمل' : 'About the job',
   Responsibility: I18nManager.isRTL

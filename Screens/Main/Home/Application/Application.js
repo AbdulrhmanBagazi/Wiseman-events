@@ -10,10 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import styles from './Style';
-import {
-  SingleJobStrings,
-  AnimatedButtonSelectStrings,
-} from '../../../../Config/Strings';
+import { SingleJobStrings } from '../../../../Config/Strings';
 import ModalApplication from './ModalApplication';
 import AnimatedButton from './AnimatedButton';
 import AnimatedButtonSelect from './AnimatedButtonSelect';
@@ -35,35 +32,54 @@ function Application({ navigation, route, store }) {
   const [canApply, setCanApply] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [isShow, setShow] = React.useState(false);
-  const [isOrganizer, setOrganizer] = React.useState(false);
-  const [isSupervisor, setSupervisor] = React.useState(false);
   const [isHours, setHours] = React.useState(0);
+  const [isShiftIndex, setShiftIndex] = React.useState(-1);
+  //
 
+  const [istoggle, settoggle] = React.useState([]);
+  const toggle = (index) => {
+    const position = istoggle.indexOf(index);
+    let newDetails = istoggle.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...istoggle, index];
+    }
+
+    if (newDetails.length > 0) {
+      setCanApply(true);
+    } else {
+      setCanApply(false);
+    }
+
+    settoggle(newDetails);
+  };
   //
   const { signOut } = React.useContext(AuthContext);
 
-  const { item, shifts } = route.params;
+  const { items, shifts } = route.params;
 
   const Select = async (val) => {
+    setLoading(false);
+    settoggle([]);
+    setCanApply(false);
+    //
+    setShiftIndex(val);
     var Time = I18nManager.isRTL
-      ? moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+      ? moment(items.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
         ' إلى ' +
-        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
-      : moment(item.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+        moment(items.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
+      : moment(items.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
         ' To ' +
-        moment(item.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma');
-    setselectedShift(item.eventshifts[val].shift);
+        moment(items.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma');
+    setselectedShift(items.eventshifts[val].shift);
     setTime(Time);
     setAttendance(
-      moment(item.eventshifts[val].attendance, 'hh:mm').format('hh:mma')
+      moment(items.eventshifts[val].attendance, 'hh:mm').format('hh:mma')
     );
-    setShiftId(item.eventshifts[val].id);
-    setHours(item.eventshifts[val].totalhours);
-    if (isOrganizer === false && isSupervisor === false) {
-      setCanApply(false);
-    } else if (isOrganizer === true || isSupervisor === true) {
-      setCanApply(true);
-    }
+    setShiftId(items.eventshifts[val].id);
+    setHours(items.eventshifts[val].totalhours);
+
     return;
   };
 
@@ -74,9 +90,8 @@ function Application({ navigation, route, store }) {
         URL + '/user/ApplyToJob',
         {
           eventshiftId: isShiftId,
-          eventId: item.id,
-          Organizer: isOrganizer,
-          Supervisor: isSupervisor,
+          eventId: items.id,
+          jobs: istoggle,
         },
         {
           headers: {
@@ -184,44 +199,6 @@ function Application({ navigation, route, store }) {
       });
   };
 
-  const SelectType = async (val, check) => {
-    if (val === 0) {
-      await setOrganizer(check);
-
-      if (check === false) {
-        if (isSupervisor === true && selectedShift !== null) {
-          setCanApply(true);
-        } else {
-          setCanApply(false);
-        }
-      } else {
-        if (check === true && selectedShift !== null) {
-          setCanApply(true);
-        } else {
-          setCanApply(false);
-        }
-      }
-    } else {
-      await setSupervisor(check);
-
-      if (check === false) {
-        if (isOrganizer === true && selectedShift !== null) {
-          setCanApply(true);
-        } else {
-          setCanApply(false);
-        }
-      } else {
-        if (check === true && selectedShift !== null) {
-          setCanApply(true);
-        } else {
-          setCanApply(false);
-        }
-      }
-    }
-
-    return;
-  };
-
   return (
     <View style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -248,7 +225,6 @@ function Application({ navigation, route, store }) {
                 keyExtractor={(item) => item.id.toString()}
               />
             </View>
-
             <Text style={styles.TimeandA}>
               {SingleJobStrings.ShiftTime}{' '}
               <Text style={styles.BlackText}>
@@ -262,28 +238,39 @@ function Application({ navigation, route, store }) {
               {SingleJobStrings.ShiftAtta}{' '}
               <Text style={styles.BlackText}>{isAttendance}</Text>
             </Text>
-
-            <Text style={styles.titleS}>{SingleJobStrings.Applyingfor}</Text>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              style={styles.AlignSelfScroll}
-            >
-              <AnimatedButtonSelect
-                Shift={isOrganizer}
-                onPress={() => SelectType(0, !isOrganizer)}
-                Disabled={true}
-                FullText={SingleJobStrings.Full}
-                Value={AnimatedButtonSelectStrings.organizer}
+            <Text style={styles.titleS}>
+              {SingleJobStrings.Applyingfor + ' (' + istoggle.length + ')'}
+            </Text>
+            {isShiftIndex >= 0 ? (
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={items.eventshifts[isShiftIndex].jobshifts}
+                horizontal={true}
+                inverted={
+                  I18nManager.isRTL && Platform.OS !== 'ios' ? true : false
+                }
+                renderItem={({ item, index }) => (
+                  <AnimatedButtonSelect
+                    Shift={istoggle.includes(item.job.id)}
+                    onPress={() => toggle(item.job.id)}
+                    Disabled={item.Disabled}
+                    FullText={SingleJobStrings.Full}
+                    Value={
+                      I18nManager.isRTL
+                        ? item.job.title_ar +
+                          ' (' +
+                          Number(item.job.hourly_rate) +
+                          '/الساعة)'
+                        : item.job.title +
+                          ' (' +
+                          Number(item.job.hourly_rate) +
+                          '/hour)'
+                    }
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
               />
-              <AnimatedButtonSelect
-                Shift={isSupervisor}
-                onPress={() => SelectType(1, !isSupervisor)}
-                Disabled={true}
-                FullText={SingleJobStrings.Full}
-                Value={AnimatedButtonSelectStrings.supervisor}
-              />
-            </ScrollView>
+            ) : null}
           </View>
           <Text style={styles.titleSecond}>{SingleJobStrings.Impor}</Text>
           <View style={styles.SelectViewPoints}>
