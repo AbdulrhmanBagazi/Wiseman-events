@@ -31,6 +31,7 @@ function NotificationMain({ navigation, store }) {
   const [isLoadingAlert, setLoadingAlert] = React.useState(false);
   const [isData, setData] = React.useState([]);
   const [isDataTransfer, setDataTransfer] = React.useState([]);
+  const [isDataJob, setDataJob] = React.useState([]);
 
   const [count, setcount] = React.useState(0);
   const [ispage, setpage] = React.useState(0);
@@ -112,6 +113,7 @@ function NotificationMain({ navigation, store }) {
           if (response.data.check === 'success') {
             // console.log(response.data.Transfer);
             setDataTransfer(response.data.Transfer);
+            setDataJob(response.data.Jobs);
             setData(response.data.alerts.rows);
             setcount(response.data.alerts.count);
             await store.setNotificationMainPage();
@@ -211,7 +213,7 @@ function NotificationMain({ navigation, store }) {
       });
   };
 
-  const AcceptDeclinePromot = async (id, value, applicationId) => {
+  const AcceptDeclinePromot = async (id, value, applicationId, jobId) => {
     setLoadingAlert(true);
     axios
       .post(
@@ -220,6 +222,7 @@ function NotificationMain({ navigation, store }) {
           id,
           value,
           applicationId,
+          jobId,
         },
         {
           headers: {
@@ -332,7 +335,7 @@ function NotificationMain({ navigation, store }) {
         }
       )
       .then(async (response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.status === 200) {
           if (response.data === 'success') {
             setLoadingAlert(false);
@@ -376,7 +379,7 @@ function NotificationMain({ navigation, store }) {
         }
       })
       .catch(async (error) => {
-        console.log(error.response);
+        // console.log(error.response);
         if (error.response) {
           if (error.response.status) {
             if (error.response.status === 401) {
@@ -538,7 +541,7 @@ function NotificationMain({ navigation, store }) {
       ) : null}
 
       <FlatList
-        data={[...isDataTransfer, ...isData]}
+        data={[...isDataTransfer, ...isDataJob, ...isData]}
         showsVerticalScrollIndicator={false}
         srtyle={{
           flex: 1,
@@ -592,17 +595,7 @@ function NotificationMain({ navigation, store }) {
                 ) : item.type === 'warning' ? (
                   <Icon name="alert-triangle" size={30} color="#9CA2B0" />
                 ) : item.type === 'promote' ? (
-                  <Icon
-                    name="chevrons-up"
-                    size={30}
-                    color={
-                      item.replied === false
-                        ? '#9CA2B0'
-                        : item.replied === true && item.replyvalue === 'Accept'
-                        ? '#45a164'
-                        : '#d16767'
-                    }
-                  />
+                  <Icon name="chevrons-up" size={30} color={'#9CA2B0'} />
                 ) : item.type === 'demote' ? (
                   <Icon name="chevrons-down" size={30} color="#9CA2B0" />
                 ) : item.type === 'completed' ? (
@@ -672,7 +665,8 @@ function NotificationMain({ navigation, store }) {
                         AcceptDeclinePromot(
                           item.id,
                           'Accept',
-                          item.applicationId
+                          item.applicationId,
+                          item.newJob
                         )
                       }
                     >
@@ -688,7 +682,8 @@ function NotificationMain({ navigation, store }) {
                         AcceptDeclinePromot(
                           item.id,
                           'Decline',
-                          item.applicationId
+                          item.applicationId,
+                          item.newJob
                         )
                       }
                     >

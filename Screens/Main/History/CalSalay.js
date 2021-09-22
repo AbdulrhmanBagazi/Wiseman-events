@@ -10,41 +10,26 @@ function CalSalary(props) {
   React.useEffect(() => {
     setLoading(true);
     var data = props.Values;
-    var rateHourOrganizer = Number(props.Rate.event.Salary);
-    var rateHourSupervisor = Number(props.Rate.event.SalarySupervisor);
     var Meal = props.Meal;
     var MealPlus = props.MealPlus;
 
-    var totalHours = 0;
-    var totalSuperHours = 0;
+    var Salary = 0;
     var daysCompleted = 0;
 
     for (var i = 0; i < data.length; i++) {
       if (data[i].Status === 'completed') {
-        if (data[i].Type === 'organizer') {
-          var hours = data[i].TotalHours / 60;
+        var hours = data[i].TotalHours / 60;
+        var calsalary = hours * data[i].hourly_rate;
 
-          totalHours = totalHours + hours;
-          if (Meal === false) {
-            daysCompleted = daysCompleted + 1;
-          }
-        } else {
-          var hours = data[i].TotalHours / 60;
+        Salary = Salary + calsalary;
 
-          totalSuperHours = totalSuperHours + hours;
-          if (Meal === false) {
-            daysCompleted = daysCompleted + 1;
-          }
+        if (Meal === false) {
+          daysCompleted = daysCompleted + 1;
         }
       }
     }
-    var HoursSuper = totalSuperHours;
-    var HoursOrganizer = totalHours;
 
-    var organizerSalary = HoursOrganizer * rateHourOrganizer;
-    var supervisorSalary = HoursSuper * rateHourSupervisor;
-
-    var salary = Math.round(organizerSalary + supervisorSalary);
+    var salary = Math.round(Salary);
     var meal = daysCompleted * MealPlus;
 
     var sumtotal = salary + meal;
