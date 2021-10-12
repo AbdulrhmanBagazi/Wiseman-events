@@ -200,7 +200,7 @@ function Profile({ store, navigation }) {
                 />
               </View>
             </TouchableOpacity> */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.aboutButton}
               onPress={() => navigation.navigate('IBAN')}
             >
@@ -214,7 +214,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={styles.aboutButton}

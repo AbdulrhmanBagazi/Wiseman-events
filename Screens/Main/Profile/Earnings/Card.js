@@ -31,20 +31,28 @@ function Card(props) {
     }
   };
 
-  // const getArabic = (status) => {
-  //   switch (status) {
-  //     case 'pending':
-  //       return 'قيد الانتظار';
-  //     case 'paid':
-  //       return 'مدفوع';
-  //     case 'not-paid':
-  //       return 'غير مدفوع';
-  //     case 'partially-paid':
-  //       return 'مدفوعة جزئيا';
-  //     default:
-  //       return '';
-  //   }
-  // };
+  const [isDays, setDays] = React.useState([]);
+  const [isHours, setHours] = React.useState(false);
+
+  React.useEffect(() => {
+    var data = props.Data;
+    var Hours = 0;
+    var daysCompleted = 0;
+    var invoiceData = JSON.parse(data.payment_attendances);
+
+    for (var i = 0; i < invoiceData.length; i++) {
+      var hours = invoiceData[i].hours;
+
+      Hours = Hours + Number(hours);
+      daysCompleted = daysCompleted + Number(invoiceData[i].total_completed);
+    }
+
+    var HoursSec = Hours * 60000;
+
+    setDays(daysCompleted);
+    setHours(HoursSec);
+  }, [props.Data]);
+
   return (
     <View style={styles.CardContainer}>
       <View style={styles.DataViewTitle}>
@@ -66,36 +74,20 @@ function Card(props) {
         {I18nManager.isRTL ? props.Data.event.TitleAr : props.Data.event.Title}
       </Text>
       <Text style={styles.TextDate}>
-        {I18nManager.isRTL ? 'عدد الآيام: ' : 'Total Days: '}{' '}
-        <Text style={styles.TextDateValue}>{props.Data.total_completed}</Text>
+        {I18nManager.isRTL ? 'عدد الآيام: ' : 'Total Days: '}
+        <Text style={styles.TextDateValue}>{isDays}</Text>
       </Text>
-      {props.Data.organizer_hours > 0 ? (
-        <Text style={styles.TextTransfer}>
-          {I18nManager.isRTL ? 'الساعات (منظم): ' : 'Hours (Organizer): '}{' '}
-          <Text style={styles.TextDateValue}>
-            {humanizeDuration(props.Data.organizer_hours * 60000, {
-              units: ['h', 'm'],
-              round: true,
-              language: I18nManager.isRTL ? 'ar' : 'en',
-              fallbacks: ['en'],
-            })}
-          </Text>
+      <Text style={styles.TextTransfer}>
+        {I18nManager.isRTL ? 'الساعات: ' : 'Hours: '}
+        <Text style={styles.TextDateValue}>
+          {humanizeDuration(isHours, {
+            units: ['h', 'm'],
+            round: true,
+            language: I18nManager.isRTL ? 'ar' : 'en',
+            fallbacks: ['en'],
+          })}
         </Text>
-      ) : null}
-
-      {props.Data.supervisor_hours > 0 ? (
-        <Text style={styles.TextTransfer}>
-          {I18nManager.isRTL ? 'الساعات (مشرف): ' : 'Hours (Supervisor): '}{' '}
-          <Text style={styles.TextDateValue}>
-            {humanizeDuration(props.Data.supervisor_hours * 60000, {
-              units: ['h', 'm'],
-              round: true,
-              language: I18nManager.isRTL ? 'ar' : 'en',
-              fallbacks: ['en'],
-            })}
-          </Text>
-        </Text>
-      ) : null}
+      </Text>
 
       {props.Data.TransferID ? (
         <Text style={styles.TextTransfer}>

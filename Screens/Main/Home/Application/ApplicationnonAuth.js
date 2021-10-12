@@ -129,11 +129,11 @@ function ApplicationnonAuth({ navigation, route }) {
                         ? item.job.title_ar +
                           ' (' +
                           Number(item.job.hourly_rate) +
-                          '/الساعة)'
+                          'ريال/الساعة)'
                         : item.job.title +
                           ' (' +
                           Number(item.job.hourly_rate) +
-                          '/hour)'
+                          'SAR/hour)'
                     }
                   />
                 )}

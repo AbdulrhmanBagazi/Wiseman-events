@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  Image,
 } from 'react-native';
 import styles from './Style';
 import Icon from '../../../Config/Icons';
@@ -89,11 +90,12 @@ function Card(props) {
 
   return (
     <View style={styles.AllJobCard}>
-      {/* {props.Data.length <= 0 ? (
-        <View style={styles.Logo}>
-          <Image style={styles.tinyLogo} source={require('../../../assets/appliedjobillustration.png')} />
-        </View>
-      ) : null} */}
+      <View style={styles.Logo}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('../../../assets/appliedjobillustration.png')}
+        />
+      </View>
       <FlatList
         data={props.Data}
         showsVerticalScrollIndicator={false}

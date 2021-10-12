@@ -480,6 +480,32 @@ function IBAN({ store }) {
             <TouchableOpacity style={styles.ButtonAdd} onPress={() => Add()}>
               <Text style={styles.ButtonText}>{IBANPageStrings.Save}</Text>
             </TouchableOpacity>
+
+            <Text style={styles.WarnningText}>
+              {I18nManager.isRTL
+                ? '\u2022' +
+                  ' ' +
+                  'يرجى التآكد من كافة المعلومات المدخلة و المتعلقة بحسابكم الخاص، سيتم تحويل متسحقاتكم المالية بناء على البيانات التالية دون ادنى مسؤلية من قبلنا.'
+                : '\u2022' +
+                  ' ' +
+                  'Please confirm all entered information related to your account. Your financial dues will be transferred based on the following data without any responsibility on our part.'}
+            </Text>
+
+            {/* <Text style={styles.WarnningText}>
+              {I18nManager.isRTL
+                ? '\u2022' +
+                  ' ' +
+                  'سيتم تضمين رقم الحوالة لكل دفعة مستلمة في صفحة الأرباح.'
+                : '\u2022' +
+                  ' ' +
+                  'The transfer number for each payment received will be included on the earnings page.'}
+            </Text> */}
+
+            <Text style={styles.WarnningText}>
+              {I18nManager.isRTL
+                ? '\u2022' + ' ' + '8.05 ريال رسوم تحويل.'
+                : '\u2022' + ' ' + '8.05 SAR transfer fee.'}
+            </Text>
           </View>
         )
       ) : Show ? (
@@ -586,7 +612,7 @@ function IBAN({ store }) {
                 ' ' +
                 'Please confirm all entered information related to your account. Your financial dues will be transferred based on the following data without any responsibility on our part.'}
           </Text>
-
+          {/*
           <Text style={styles.WarnningText}>
             {I18nManager.isRTL
               ? '\u2022' +
@@ -595,7 +621,7 @@ function IBAN({ store }) {
               : '\u2022' +
                 ' ' +
                 'The transfer number for each payment received will be included on the earnings page.'}
-          </Text>
+          </Text> */}
 
           <Text style={styles.WarnningText}>
             {I18nManager.isRTL

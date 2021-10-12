@@ -12,54 +12,63 @@ function Paymentdata(props) {
   const [isPaid, setPaid] = React.useState(0);
   const [isabsence, setabsence] = React.useState(0);
   const [isincomplete, setincomplete] = React.useState(0);
+  const [iscomplete, setcomplete] = React.useState(0);
   const [isLate, setLate] = React.useState(0);
   const [isFees, setFees] = React.useState(0);
+  const [isHours, setHours] = React.useState(0);
 
   React.useEffect(() => {
-    var data = props.Values;
+    var data = props.data;
+
+    var paymentdata = props.Values;
+
+    var total_Late = 0;
+    var total_absence = 0;
+    var total_incomplete = 0;
+    var total_completed = 0;
+    var hours = 0;
+
+    for (var i = 0; i < data.length; i++) {
+      total_Late = total_Late + Number(data[i].Late);
+
+      if (data[i].Status === 'completed') {
+        total_completed = total_completed + 1;
+        hours = hours + Number(data[i].TotalHours);
+      }
+
+      if (data[i].Status === 'absence') {
+        total_absence = total_absence + 1;
+      }
+
+      if (data[i].Status === 'incomplete') {
+        total_incomplete = total_incomplete + 1;
+      }
+    }
+    var LateSec = total_Late * 60000;
+    var HoursSec = hours * 60000;
+    var Fees = 0;
     var Bonus = 0;
     var Deduction = 0;
     var Paid = 0;
-    var total_absence_organizer = 0;
-    var total_absence_supervisor = 0;
-    var total_incomplete_organizer = 0;
-    var total_incomplete_supervisor = 0;
-    var total_Late_organizer = 0;
-    var total_Late_supervisor = 0;
-    var Fees = 0;
+    for (var ii = 0; ii < paymentdata.length; ii++) {
+      Bonus = Bonus + Number(paymentdata[ii].Bonus);
+      Deduction = Deduction + Number(paymentdata[ii].Deduction);
+      Paid = Paid + Number(paymentdata[ii].Paid);
 
-    for (var i = 0; i < data.length; i++) {
-      Bonus = Bonus + Number(data[i].Bonus);
-      Deduction = Deduction + Number(data[i].Deduction);
-      Paid = Paid + Number(data[i].Paid);
-      total_absence_organizer =
-        total_absence_organizer + Number(data[i].total_absence_organizer);
-      total_absence_supervisor =
-        total_absence_supervisor + Number(data[i].total_absence_supervisor);
-      total_incomplete_organizer =
-        total_incomplete_organizer + Number(data[i].total_incomplete_organizer);
-      total_incomplete_supervisor =
-        total_incomplete_supervisor +
-        Number(data[i].total_incomplete_supervisor);
-      total_Late_organizer =
-        total_Late_organizer + Number(data[i].total_Late_organizer);
-      total_Late_supervisor =
-        total_Late_supervisor + Number(data[i].total_Late_supervisor);
-
-      if (data[i].PaymentMethod === 'bank') {
+      if (paymentdata[ii].PaymentMethod === 'bank') {
         Fees = Fees + 1;
       }
     }
-    var totalLate = total_Late_organizer + total_Late_supervisor;
-    var LateSec = totalLate * 60000;
 
     setBonus(Bonus);
     setDeduction(Deduction);
     setPaid(Paid);
-    setabsence(total_absence_organizer + total_absence_supervisor);
-    setincomplete(total_incomplete_organizer + total_incomplete_supervisor);
+    setabsence(total_absence);
+    setincomplete(total_incomplete);
     setLate(LateSec);
+    setcomplete(total_completed);
     setFees(Fees * 8.05);
+    setHours(HoursSec);
     setLoading(false);
   }, [props.Values]);
 
@@ -101,6 +110,19 @@ function Paymentdata(props) {
     <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
       {isFees}
       {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+    </Text>
+  ) : props.Completed ? (
+    <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
+      {iscomplete}
+    </Text>
+  ) : props.Hours ? (
+    <Text style={styles.CompleteDetailsbodyContainerDataTextValue}>
+      {humanizeDuration(isHours, {
+        units: ['h', 'm'],
+        round: true,
+        language: I18nManager.isRTL ? 'ar' : 'en',
+        fallbacks: ['en'],
+      })}
     </Text>
   ) : null;
 }

@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 15,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     flexWrap: 'wrap',
   },
   CompleteDetailsHeaderView: {
@@ -675,6 +675,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     color: LightText,
+    marginVertical: 7,
+  },
+  timeJob: {
+    fontWeight: '500',
+    fontSize: 14,
+    color: PrimaryColor,
     marginVertical: 7,
   },
   StatusAttenText: {

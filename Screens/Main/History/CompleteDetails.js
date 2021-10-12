@@ -6,13 +6,20 @@ import {
   I18nManager,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
+  Animated,
+  Platform,
+  StatusBar,
+  FlatList,
 } from 'react-native';
 import styles from './Style';
-import { CompleteDetailsStrings } from '../../../Config/Strings';
+import {
+  CompleteDetailsStrings,
+  WorkScheduleUserString,
+} from '../../../Config/Strings';
 import moment from 'moment';
-import CalHours from './Details/CalHours';
+// import CalHours from './Details/CalHours';
 import CalSalary from './Details/CalSalay';
-import CalHoursSuper from './Details/CalHoursSuper';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import axios from 'axios';
 import { URL } from '../../../Config/Config';
@@ -20,35 +27,28 @@ import { AuthContext } from '../../../Hooks/Context';
 import { UserTokenRemove } from '../../../Config/AsyncStorage';
 import { inject, observer } from 'mobx-react';
 import Paymentdata from './Details/Paymentdata';
+import { Entypo } from '@expo/vector-icons';
+import { height } from '../../../Config/Layout';
+import { useHeaderHeight } from '@react-navigation/stack';
+import humanizeDuration from 'humanize-duration';
 
 function CompleteDetails({ route, store }) {
   const { signOut } = React.useContext(AuthContext);
-  const [Super, setSuper] = React.useState([]);
-  const [Organizer, setOrganizer] = React.useState([]);
+  const [isAtt, setAtt] = React.useState([]);
   const [isData, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
+  const [isList, setList] = React.useState(false);
 
-  const { item } = route.params;
+  const { items } = route.params;
 
   React.useEffect(() => {
-    var data = item.attendances;
-    var newArrayO = data.filter((O) => {
-      // console.log(item.attendances.length)
-      return O.Type === 'organizer' && O.Status === 'completed';
-    });
-
-    var newArrayS = data.filter((O) => {
-      // console.log(item.attendances.length)
-      return O.Type === 'supervisor' && O.Status === 'completed';
-    });
-    setSuper(newArrayS);
-    setOrganizer(newArrayO);
-
+    var data = items.attendances;
+    setAtt(data);
     axios
       .post(
         URL + '/user/Getusersinglepayment',
         {
-          applicationId: item.id,
+          applicationId: items.id,
         },
         {
           headers: {
@@ -61,9 +61,7 @@ function CompleteDetails({ route, store }) {
         if (response.status === 200) {
           if (response.data.check === 'success') {
             setData(response.data.payments);
-            setTimeout(() => {
-              setLoading(false);
-            }, 500);
+            setLoading(false);
             // console.log(response.data.payments)
             return;
           } else if (response.data.check === 'fail') {
@@ -197,6 +195,58 @@ function CompleteDetails({ route, store }) {
     }
   };
 
+  const [heightChange] = React.useState(new Animated.Value(0));
+  const headerHeight = useHeaderHeight();
+
+  const getBadge = (status) => {
+    switch (status) {
+      case 'active':
+        return '#61C5FF';
+      case 'incomplete':
+        return '#D5000E';
+      case 'completed':
+        return '#2DB329';
+      case 'pending':
+        return '#FFAA00';
+      default:
+        return '#D5000E';
+    }
+  };
+
+  const getBadgeAr = (status) => {
+    switch (status) {
+      case 'active':
+        return 'نشط';
+      case 'incomplete':
+        return 'غير مكتمل';
+      case 'completed':
+        return 'مكتمل';
+      case 'didnotstart':
+        return ' ';
+      case 'absence':
+        return 'غياب';
+      case 'pending':
+        return 'قيد الانتظار';
+      default:
+        return 'تم رفع بلاغ';
+    }
+  };
+
+  const Start = async (val) => {
+    setList(val);
+
+    var HeaderH =
+      Platform.OS === 'ios'
+        ? height - headerHeight
+        : height - headerHeight + StatusBar.currentHeight;
+
+    Animated.timing(heightChange, {
+      toValue: val ? HeaderH : 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start();
+  };
+
   return (
     <View style={styles.FlexOne}>
       {isLoading ? (
@@ -212,7 +262,7 @@ function CompleteDetails({ route, store }) {
                   {CompleteDetailsStrings.Start}
                 </Text>
                 <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                  {moment(item.Start).format('D MMMM, YYYY')}
+                  {moment(items.Start).format('D MMMM, YYYY')}
                 </Text>
               </View>
               <View style={styles.CompleteDetailsHeaderView}>
@@ -220,62 +270,19 @@ function CompleteDetails({ route, store }) {
                   {CompleteDetailsStrings.Ended}
                 </Text>
                 <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                  {moment(item.End).format('D MMMM, YYYY')}
+                  {moment(items.End).format('D MMMM, YYYY')}
                 </Text>
               </View>
             </View>
 
             <View style={styles.CompleteDetailsHeaderHour}>
-              {Organizer.length >= 1 ? (
-                <View style={styles.CompleteDetailsHeaderViewSalary}>
-                  <Text style={styles.CompleteDetailsHeaderViewText}>
-                    {CompleteDetailsStrings.SalaryOrganizer}
-                  </Text>
-                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                    {item.event.Salary}
-                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.CompleteDetailsHeaderViewText}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
-                </View>
-              ) : null}
-
-              {Super.length >= 1 ? (
-                <View style={styles.CompleteDetailsHeaderViewSalary}>
-                  <Text style={styles.CompleteDetailsHeaderViewText}>
-                    {CompleteDetailsStrings.Salary}
-                  </Text>
-                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                    {item.event.SalarySupervisor}
-                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.CompleteDetailsHeaderViewText}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
-                </View>
-              ) : (
-                <View style={styles.CompleteDetailsHeaderViewSalary}>
-                  <Text style={styles.CompleteDetailsHeaderViewText}>
-                    {CompleteDetailsStrings.Salary}
-                  </Text>
-                  <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                    {item.event.SalarySupervisor}
-                    {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-                    <Text style={styles.CompleteDetailsHeaderViewText}>
-                      /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-                    </Text>
-                  </Text>
-                </View>
-              )}
-
-              {!item.event.ProvideAmeal ? (
+              {!items.event.ProvideAmeal ? (
                 <View style={styles.CompleteDetailsHeaderViewSalary}>
                   <Text style={styles.CompleteDetailsHeaderViewText}>
                     {CompleteDetailsStrings.Totalmeal}
                   </Text>
                   <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                    {item.event.ProvideAnAllowance}
+                    {items.event.ProvideAnAllowance}
                     {I18nManager.isRTL ? 'ريال ' : ' SAR'}
                     <Text style={styles.CompleteDetailsHeaderViewText}>
                       /{I18nManager.isRTL ? 'يوم عمل' : 'Work day'}
@@ -290,66 +297,6 @@ function CompleteDetails({ route, store }) {
                 {CompleteDetailsStrings.workHistory}
               </Text>
               <View style={styles.CompleteDetailsbodyContainer}>
-                {Organizer.length >= 1 ? (
-                  <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={styles.FlexOne}>
-                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                        {CompleteDetailsStrings.Attended}
-                      </Text>
-                    </View>
-                    <View style={styles.FlexEnd}>
-                      <Text
-                        style={styles.CompleteDetailsbodyContainerDataTextValue}
-                      >
-                        {Organizer.length}
-                      </Text>
-                    </View>
-                  </View>
-                ) : null}
-
-                {Super.length >= 1 ? (
-                  <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={styles.FlexOne}>
-                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                        {CompleteDetailsStrings.AttendedSuper}
-                      </Text>
-                    </View>
-                    <View style={styles.FlexEnd}>
-                      <Text
-                        style={styles.CompleteDetailsbodyContainerDataTextValue}
-                      >
-                        {Super.length}
-                      </Text>
-                    </View>
-                  </View>
-                ) : null}
-
-                {Organizer.length >= 1 ? (
-                  <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={styles.FlexTwo}>
-                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                        {CompleteDetailsStrings.TotalhoursO}
-                      </Text>
-                    </View>
-                    <View style={styles.FlexEnd}>
-                      <CalHours Values={item.attendances} />
-                    </View>
-                  </View>
-                ) : null}
-
-                {Super.length >= 1 ? (
-                  <View style={styles.CompleteDetailsbodyContainerData}>
-                    <View style={styles.FlexTwo}>
-                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                        {CompleteDetailsStrings.TotalhoursS}
-                      </Text>
-                    </View>
-                    <View style={styles.FlexEnd}>
-                      <CalHoursSuper Values={item.attendances} />
-                    </View>
-                  </View>
-                ) : null}
-
                 <View style={styles.CompleteDetailsbodyContainerData}>
                   <View style={styles.FlexOne}>
                     <Text style={styles.CompleteDetailsbodyContainerDataText}>
@@ -357,7 +304,7 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} Late={true} />
+                    <Paymentdata Values={isData} data={isAtt} Late={true} />
                   </View>
                 </View>
 
@@ -368,7 +315,7 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} absence={true} />
+                    <Paymentdata Values={isData} data={isAtt} absence={true} />
                   </View>
                 </View>
 
@@ -379,28 +326,60 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} incomplete={true} />
+                    <Paymentdata
+                      Values={isData}
+                      data={isAtt}
+                      incomplete={true}
+                    />
                   </View>
                 </View>
 
                 <View style={styles.CompleteDetailsbodyContainerData}>
                   <View style={styles.FlexOne}>
                     <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                      {CompleteDetailsStrings.Total}
+                      {CompleteDetailsStrings.complete}
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <CalSalary
-                      Values={item.attendances}
-                      Rate={item}
-                      Meal={item.event.ProvideAmeal}
-                      MealPlus={item.event.ProvideAnAllowance}
-                      Val="Earning"
+                    <Paymentdata
+                      Values={isData}
+                      data={isAtt}
+                      Completed={true}
                     />
                   </View>
                 </View>
 
-                {!item.event.ProvideAmeal ? (
+                <View style={styles.CompleteDetailsbodyContainerData}>
+                  <View style={styles.FlexOne}>
+                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                      {CompleteDetailsStrings.Totalhours}
+                    </Text>
+                  </View>
+                  <View style={styles.FlexEnd}>
+                    <Paymentdata Values={isData} data={isAtt} Hours={true} />
+                  </View>
+                </View>
+
+                {!items.event.ProvideAmeal ? (
+                  <View style={styles.CompleteDetailsbodyContainerData}>
+                    <View style={styles.FlexOne}>
+                      <Text style={styles.CompleteDetailsbodyContainerDataText}>
+                        {CompleteDetailsStrings.Total}
+                      </Text>
+                    </View>
+                    <View style={styles.FlexEnd}>
+                      <CalSalary
+                        Values={items.attendances}
+                        Rate={items}
+                        Meal={items.event.ProvideAmeal}
+                        MealPlus={items.event.ProvideAnAllowance}
+                        Val="Earning"
+                      />
+                    </View>
+                  </View>
+                ) : null}
+
+                {!items.event.ProvideAmeal ? (
                   <View style={styles.CompleteDetailsbodyContainerData}>
                     <View style={styles.FlexOne}>
                       <Text style={styles.CompleteDetailsbodyContainerDataText}>
@@ -409,10 +388,10 @@ function CompleteDetails({ route, store }) {
                     </View>
                     <View style={styles.FlexEnd}>
                       <CalSalary
-                        Values={item.attendances}
-                        Rate={item}
-                        Meal={item.event.ProvideAmeal}
-                        MealPlus={item.event.ProvideAnAllowance}
+                        Values={items.attendances}
+                        Rate={items}
+                        Meal={items.event.ProvideAmeal}
+                        MealPlus={items.event.ProvideAnAllowance}
                         Val="Meal"
                       />
                     </View>
@@ -427,10 +406,10 @@ function CompleteDetails({ route, store }) {
                   </View>
                   <View style={styles.FlexEnd}>
                     <CalSalary
-                      Values={item.attendances}
-                      Rate={item}
-                      Meal={item.event.ProvideAmeal}
-                      MealPlus={item.event.ProvideAnAllowance}
+                      Values={items.attendances}
+                      Rate={items}
+                      Meal={items.event.ProvideAmeal}
+                      MealPlus={items.event.ProvideAnAllowance}
                       Val="Total"
                     />
                   </View>
@@ -443,7 +422,7 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} Fees={true} />
+                    <Paymentdata Values={isData} data={isAtt} Fees={true} />
                   </View>
                 </View>
 
@@ -454,7 +433,11 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} deduction={true} />
+                    <Paymentdata
+                      Values={isData}
+                      data={isAtt}
+                      deduction={true}
+                    />
                   </View>
                 </View>
 
@@ -465,7 +448,7 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} bonus={true} />
+                    <Paymentdata Values={isData} data={isAtt} bonus={true} />
                   </View>
                 </View>
 
@@ -476,7 +459,7 @@ function CompleteDetails({ route, store }) {
                     </Text>
                   </View>
                   <View style={styles.FlexEnd}>
-                    <Paymentdata Values={isData} paid={true} />
+                    <Paymentdata Values={isData} data={isAtt} paid={true} />
                   </View>
                 </View>
 
@@ -491,20 +474,20 @@ function CompleteDetails({ route, store }) {
                       style={[
                         styles.CompleteDetailStatusBox,
                         {
-                          backgroundColor: getColor(item.PaymentStatus),
-                          borderColor: getColorBorder(item.PaymentStatus),
+                          backgroundColor: getColor(items.PaymentStatus),
+                          borderColor: getColorBorder(items.PaymentStatus),
                         },
                       ]}
                     >
                       <Text
                         style={[
                           styles.CompleteDetailsbodyContainerDataTextValue,
-                          { color: getColorBorder(item.PaymentStatus) },
+                          { color: getColorBorder(items.PaymentStatus) },
                         ]}
                       >
                         {I18nManager.isRTL
-                          ? getArabic(item.PaymentStatus)
-                          : item.PaymentStatus}
+                          ? getArabic(items.PaymentStatus)
+                          : items.PaymentStatus}
                       </Text>
                     </View>
                   </View>
@@ -516,6 +499,88 @@ function CompleteDetails({ route, store }) {
           </View>
         </ScrollView>
       )}
+
+      <Animated.View style={[styles.hiddinList, { height: heightChange }]}>
+        {isData.length >= 1 ? (
+          <FlatList
+            // data={isDays}
+            contentContainerStyle={styles.flatlistitems}
+            data={isAtt}
+            renderItem={({ item, index }) => (
+              <View style={styles.item}>
+                <Text style={styles.time}>
+                  {item.Start
+                    ? WorkScheduleUserString.TakeAttendence +
+                      ':  ' +
+                      moment
+                        .tz(item.Start, 'Asia/Riyadh')
+                        .add(
+                          item.Late >= 0 && item.Late <= 10 ? item.Late : 0,
+                          'minute'
+                        )
+                        .format('hh:mm a')
+                    : WorkScheduleUserString.TakeAttendence +
+                      ':  ' +
+                      WorkScheduleUserString.noInfo}
+                </Text>
+                <Text style={styles.time}>
+                  {item.End
+                    ? WorkScheduleUserString.TakeAttendenceEnd +
+                      ':   ' +
+                      moment.tz(item.End, 'Asia/Riyadh').format('hh:mm a')
+                    : WorkScheduleUserString.TakeAttendenceEnd +
+                      ':   ' +
+                      WorkScheduleUserString.noInfo}
+                </Text>
+                <Text style={styles.time}>
+                  {item.TotalHours
+                    ? WorkScheduleUserString.Totalhours +
+                      ':   ' +
+                      humanizeDuration(item.TotalHours * 60000, {
+                        units: ['h', 'm'],
+                        round: true,
+                        language: I18nManager.isRTL ? 'ar' : 'en',
+                        fallbacks: ['en'],
+                      })
+                    : WorkScheduleUserString.Totalhours +
+                      ':   ' +
+                      WorkScheduleUserString.noInfo}
+                </Text>
+                <Text style={styles.timeJob} numberOfLines={1}>
+                  {item.title_ar || item.title
+                    ? I18nManager.isRTL
+                      ? item.title_ar
+                      : item.title
+                    : WorkScheduleUserString.noInfo}
+                </Text>
+                <View style={styles.StatusAtten}>
+                  <Text
+                    style={[
+                      styles.StatusAttenText,
+                      { color: getBadge(item.Status) },
+                    ]}
+                  >
+                    {I18nManager.isRTL ? getBadgeAr(item.Status) : item.Status}
+                  </Text>
+                </View>
+              </View>
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        ) : (
+          <Text style={styles.noAttendlist}>
+            {WorkScheduleUserString.noAttendInfo}
+          </Text>
+        )}
+      </Animated.View>
+
+      <TouchableOpacity style={styles.InfoHover} onPress={() => Start(!isList)}>
+        {isList ? (
+          <Entypo name="cross" size={24} color="#fff" />
+        ) : (
+          <Entypo name="list" size={24} color="#fff" />
+        )}
+      </TouchableOpacity>
     </View>
   );
 }

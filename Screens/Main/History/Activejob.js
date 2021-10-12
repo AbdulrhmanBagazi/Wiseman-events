@@ -7,6 +7,7 @@ import {
   I18nManager,
   Linking,
   Modal,
+  Image,
 } from 'react-native';
 import styles from './Style';
 import Icon from '../../../Config/Icons';
@@ -39,11 +40,14 @@ function Activejob(props) {
 
   return (
     <View style={styles.AllJobCard}>
-      {/* {isData.length <= 0 ? (
+      {isData.length <= 0 ? (
         <View style={styles.Logo}>
-          <Image style={styles.tinyLogo} source={require('../../../assets/activejobillustrations.png')} />
+          <Image
+            style={styles.tinyLogo}
+            source={require('../../../assets/activejobillustrations.png')}
+          />
         </View>
-      ) : null} */}
+      ) : null}
       <FlatList
         data={isData}
         showsVerticalScrollIndicator={false}
@@ -189,7 +193,11 @@ function Activejob(props) {
                         {I18nManager.isRTL ? 'اليوم الأول' : 'First day'}
                       </Text>
                       <Text style={styles.dataTextActive}>
-                        {moment(item.Start).format('D MMMM, YYYY')}
+                        {I18nManager.isRTL
+                          ? moment(item.Start).format('D MMMM, YYYY')
+                          : moment(item.Start)
+                              .locale('en')
+                              .format('D MMMM, YYYY')}
                       </Text>
                     </View>
                   ) : (
@@ -204,7 +212,11 @@ function Activejob(props) {
                         {I18nManager.isRTL ? 'اليوم الأخير' : 'Last day'}
                       </Text>
                       <Text style={styles.dataTextActive}>
-                        {moment(item.End).format('D MMMM, YYYY')}
+                        {I18nManager.isRTL
+                          ? moment(item.End).format('D MMMM, YYYY')
+                          : moment(item.End)
+                              .locale('en')
+                              .format('D MMMM, YYYY')}
                       </Text>
                     </View>
                   ) : null}

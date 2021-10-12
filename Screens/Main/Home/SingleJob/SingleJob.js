@@ -98,8 +98,11 @@ function SingleJob({ route, store, navigation }) {
           {Number(last)}
           <Text style={styles.SingleSalaryTextData}>
             {I18nManager.isRTL ? 'ريال' : 'SAR'}
+            <Text style={styles.Hour}>
+              /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+            </Text>
           </Text>
-          {Number(first) ? ' - ' : null} {Number(first)}
+          {Number(first) ? ' -' : null} {Number(first)}
           <Text style={styles.SingleSalaryTextData}>
             {I18nManager.isRTL ? 'ريال' : 'SAR'}
             <Text style={styles.Hour}>

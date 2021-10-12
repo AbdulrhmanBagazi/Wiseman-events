@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   I18nManager,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import styles from './Style';
 import Icon from '../../../Config/Icons';
@@ -96,11 +97,13 @@ function CompletedJobs(props) {
 
   return (
     <View style={styles.AllJobCard}>
-      {/* {isData.length <= 0 ? (
-        <View style={styles.Logo}>
-          <Image style={styles.tinyLogo} source={require('../../../assets/completedjobillustration.png')} />
-        </View>
-      ) : null} */}
+      <View style={styles.Logo}>
+        <Image
+          style={styles.tinyLogo}
+          source={require('../../../assets/completedjobillustration.png')}
+        />
+      </View>
+
       <FlatList
         data={isData}
         showsVerticalScrollIndicator={false}
@@ -207,7 +210,7 @@ function CompletedJobs(props) {
 
                   <TouchableOpacity
                     onPress={() =>
-                      props.Details('CompleteDetails', { item: item })
+                      props.Details('CompleteDetails', { items: item })
                     }
                     style={[
                       styles.StatusBox,

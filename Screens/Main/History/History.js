@@ -64,21 +64,21 @@ function History({ store, navigation }) {
     return;
   };
 
-  React.useEffect(() => {
-    const unsubscribe = navigation
-      .dangerouslyGetParent()
-      .addListener('tabPress', (e) => {
-        // Do something
-        if (store.HistoryPage) {
-          RefreshMiddle();
-          return;
-        }
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation
+  //     .dangerouslyGetParent()
+  //     .addListener('tabPress', (e) => {
+  //       // Do something
+  //       if (store.HistoryPage) {
+  //         RefreshMiddle();
+  //         return;
+  //       }
 
-        return;
-      });
+  //       return;
+  //     });
 
-    return unsubscribe;
-  }, [navigation]);
+  //   return unsubscribe;
+  // }, [navigation]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

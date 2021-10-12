@@ -23,16 +23,16 @@ import debounce from 'lodash/debounce';
 import axios from 'axios';
 import { URL } from '../../../Config/Config';
 import CountryUI from './Country';
-import CitiesModal from './CitiesModal';
+// import CitiesModal from './CitiesModal';
 import { Feather } from '@expo/vector-icons';
 import moment from 'moment';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import MapUI from './map';
-import { width, height } from '../../../Config/Layout';
+// import MapUI from './map';
+import { width } from '../../../Config/Layout'; //height
 import RNPickerSelect from 'react-native-picker-select';
-import { SecondaryText, PrimaryColor } from '../../../Config/ColorPalette';
+import { SecondaryText } from '../../../Config/ColorPalette'; // PrimaryColor
 
-const ASPECT_RATIO = width / height;
+// const ASPECT_RATIO = width / height;
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -88,7 +88,7 @@ function CreateProfile({ store }) {
   const [showModal, setShowModal] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [isError, setError] = React.useState(' ');
-  const [isShowMap, setShowMap] = React.useState(false);
+  // const [isShowMap, setShowMap] = React.useState(false);
   //values
   const [Gender, setGender] = React.useState('');
   const [date, setDate] = React.useState(false);
@@ -97,48 +97,48 @@ function CreateProfile({ store }) {
     first_name: '',
     last_name: '',
     Nationality: '',
-    City: ProfileStrings.City,
-    Location: '',
+    // City: ProfileStrings.City,
+    // Location: '',
     Birth: '',
     BirthText: '',
     English: '',
-    Latitude: '',
-    Longitude: '',
-    height: '',
+    // Latitude: '',
+    // Longitude: '',
+    // height: '',
   });
-  const [CityDataEn, setCityDataEn] = React.useState('');
+  // const [CityDataEn, setCityDataEn] = React.useState('');
   //Map
-  const [isSelectMapValue, setSelectMapValue] = React.useState(false);
-  const region = {
-    latitude: 24.774265,
-    longitude: 46.738586,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0922 * ASPECT_RATIO,
-  };
-  const [Cord, setCord] = React.useState(null);
+  // const [isSelectMapValue, setSelectMapValue] = React.useState(false);
+  // const region = {
+  //   latitude: 24.774265,
+  //   longitude: 46.738586,
+  //   latitudeDelta: 0.0922,
+  //   longitudeDelta: 0.0922 * ASPECT_RATIO,
+  // };
+  // const [Cord, setCord] = React.useState(null);
 
-  const onDragMapPress = async (e) => {
-    setCord({
-      latitude: e.nativeEvent.coordinate.latitude,
-      longitude: e.nativeEvent.coordinate.longitude,
-    });
-    setData({
-      ...data,
-      Latitude: e.nativeEvent.coordinate.latitude,
-      Longitude: e.nativeEvent.coordinate.longitude,
-    });
-    // setregion({
-    //   latitude: e.nativeEvent.position.latitude,
-    //   longitude: e.nativeEvent.position.longitude,
-    //   latitudeDelta: e.nativeEvent.position.latitudeDelta,
-    //   longitudeDelta: e.nativeEvent.position.longitudeDelta,
-    // })
-  };
-  const DoneButton = () => {
-    setSelectMapValue(true);
-    setShowMap(false);
-    return;
-  };
+  // const onDragMapPress = async (e) => {
+  //   setCord({
+  //     latitude: e.nativeEvent.coordinate.latitude,
+  //     longitude: e.nativeEvent.coordinate.longitude,
+  //   });
+  //   setData({
+  //     ...data,
+  //     Latitude: e.nativeEvent.coordinate.latitude,
+  //     Longitude: e.nativeEvent.coordinate.longitude,
+  //   });
+  //   // setregion({
+  //   //   latitude: e.nativeEvent.position.latitude,
+  //   //   longitude: e.nativeEvent.position.longitude,
+  //   //   latitudeDelta: e.nativeEvent.position.latitudeDelta,
+  //   //   longitudeDelta: e.nativeEvent.position.longitudeDelta,
+  //   // })
+  // };
+  // const DoneButton = () => {
+  //   setSelectMapValue(true);
+  //   setShowMap(false);
+  //   return;
+  // };
   //
 
   const convertToArabicNumber = async (string) => {
@@ -150,7 +150,8 @@ function CreateProfile({ store }) {
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss();
     setError(' ');
-    var convHight = await convertToArabicNumber(data.height);
+    // var convHight = await convertToArabicNumber(data.height);
+    var Age = await convertToArabicNumber(data.Birth);
 
     if (isLoading) {
       return;
@@ -159,12 +160,12 @@ function CreateProfile({ store }) {
       data.first_name.length < 1 ||
       data.last_name.length < 1 ||
       data.Nationality.length < 1 ||
-      data.City.length < 1 ||
+      // data.City.length < 1 ||
       data.Birth.length < 1 ||
       Gender.length < 1 ||
-      data.English.length < 1 ||
-      data.height.length < 1 ||
-      isSelectMapValue === false
+      data.English.length < 1
+      // data.height.length < 1 ||
+      // isSelectMapValue === false
     ) {
       setError(ErrorsStrings.Required);
       return;
@@ -177,12 +178,12 @@ function CreateProfile({ store }) {
           first_name: data.first_name,
           last_name: data.last_name,
           nationality: data.Nationality,
-          birthdate: data.Birth,
+          birthdate: Age,
           gender: Gender,
-          city: CityDataEn,
-          location: data.Latitude + ',' + data.Longitude,
+          // city: CityDataEn,
+          // location: data.Latitude + ',' + data.Longitude,
           english: data.English,
-          height: convHight,
+          // height: convHight,
         },
         {
           headers: { Authorization: store.token },
@@ -296,25 +297,25 @@ function CreateProfile({ store }) {
     });
   };
   //City
-  const onSelectCity = async (city) => {
-    // await setData({
-    //   ...data,
-    //   City: ProfileStrings.City,
-    // })
-    if (I18nManager.isRTL) {
-      setData({
-        ...data,
-        City: city.name_ar,
-      });
-      setCityDataEn(city.name_en);
-    } else {
-      setData({
-        ...data,
-        City: city.name_en,
-      });
-      setCityDataEn(city.name_en);
-    }
-  };
+  // const onSelectCity = async (city) => {
+  //   // await setData({
+  //   //   ...data,
+  //   //   City: ProfileStrings.City,
+  //   // })
+  //   if (I18nManager.isRTL) {
+  //     setData({
+  //       ...data,
+  //       City: city.name_ar,
+  //     });
+  //     setCityDataEn(city.name_en);
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       City: city.name_en,
+  //     });
+  //     setCityDataEn(city.name_en);
+  //   }
+  // };
 
   // React.useEffect(() => {
   //   console.log(store.data)
@@ -419,7 +420,7 @@ function CreateProfile({ store }) {
           onPressFemale={() => setGender('female')}
         />
 
-        <CitiesModal
+        {/* <CitiesModal
           CityValue={data.City}
           ViewCity={({ item }) => (
             <TouchableOpacity
@@ -432,9 +433,9 @@ function CreateProfile({ store }) {
               </Text>
             </TouchableOpacity>
           )}
-        />
+        /> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.inputDate}
           onPress={() => setShowMap(true)}
         >
@@ -448,9 +449,9 @@ function CreateProfile({ store }) {
             size={24}
             color={isSelectMapValue ? PrimaryColor : '#000'}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder={ProfileStrings.height}
           onChangeText={(text) =>
@@ -460,7 +461,7 @@ function CreateProfile({ store }) {
             })
           }
           keyboardType={'number-pad'}
-        />
+        /> */}
 
         <RNPickerSelect
           onValueChange={(text) =>
@@ -494,14 +495,14 @@ function CreateProfile({ store }) {
         </TouchableOpacity>
       </View>
 
-      <MapUI
+      {/* <MapUI
         onRegionChange={(e) => onDragMapPress(e)}
         region={region}
         coordinate={Cord}
         MapmodalVisible={isShowMap}
         Close={() => setShowMap(false)}
         DoneButton={() => DoneButton()}
-      />
+      /> */}
 
       <View style={styles.ViewSpace} />
     </KeyboardAwareScrollView>

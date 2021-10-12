@@ -397,7 +397,13 @@ function WorkScheduleUser({ route, store }) {
                       {item.Start
                         ? WorkScheduleUserString.TakeAttendence +
                           ':  ' +
-                          moment.tz(item.Start, 'Asia/Riyadh').format('hh:mm a')
+                          moment
+                            .tz(item.Start, 'Asia/Riyadh')
+                            .add(
+                              item.Late >= 0 && item.Late <= 10 ? item.Late : 0,
+                              'minute'
+                            )
+                            .format('hh:mm a')
                         : WorkScheduleUserString.TakeAttendence +
                           ':  ' +
                           WorkScheduleUserString.noInfo}

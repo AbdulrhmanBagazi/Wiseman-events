@@ -21,17 +21,17 @@ import debounce from 'lodash/debounce';
 import axios from 'axios';
 import { URL } from '../../../../../Config/Config';
 import CountryUI from './Country';
-import CitiesModal from './CitiesModal';
+// import CitiesModal from './CitiesModal';
 import { Feather } from '@expo/vector-icons';
 import moment from 'moment';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import MapUI from './map';
-import { width, height } from '../../../../../Config/Layout';
+// import MapUI from './map';
+import { width } from '../../../../../Config/Layout'; //height
 import RNPickerSelect from 'react-native-picker-select';
 import { PrimaryColor } from '../../../../../Config/ColorPalette';
 import { UserTokenRemove } from '../../../../../Config/AsyncStorage';
 
-const ASPECT_RATIO = width / height;
+// const ASPECT_RATIO = width / height;
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -93,7 +93,7 @@ function UpdateProfile({ store, navigation }) {
   const [showModal, setShowModal] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   // const [isError, setError] = React.useState('');
-  const [isShowMap, setShowMap] = React.useState(false);
+  // const [isShowMap, setShowMap] = React.useState(false);
   //values
   const [Gender, setGender] = React.useState(store.data.profile.gender);
   const [date, setDate] = React.useState(true);
@@ -104,42 +104,42 @@ function UpdateProfile({ store, navigation }) {
     first_name: store.data.profile.first_name,
     last_name: store.data.profile.last_name,
     Nationality: store.data.profile.nationality,
-    City: store.data.profile.city,
-    Location: store.data.profile.location,
+    // City: store.data.profile.city,
+    // Location: store.data.profile.location,
     Birth: store.data.profile.birthdate,
     BirthText: store.data.profile.birthdate,
     English: store.data.profile.english,
-    height: store.data.profile.height,
-    Latitude: '',
-    Longitude: '',
+    // height: store.data.profile.height,
+    // Latitude: '',
+    // Longitude: '',
   });
-  const [CityDataEn, setCityDataEn] = React.useState(store.data.profile.city);
+  // const [CityDataEn, setCityDataEn] = React.useState(store.data.profile.city);
   //Map
-  const [isSelectMapValue, setSelectMapValue] = React.useState(true);
-  const [region, setregion] = React.useState({
-    latitude: 24.774265,
-    longitude: 46.738586,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0922 * ASPECT_RATIO,
-  });
-  const [Cord, setCord] = React.useState(null);
+  // const [isSelectMapValue, setSelectMapValue] = React.useState(true);
+  // const [region, setregion] = React.useState({
+  //   latitude: 24.774265,
+  //   longitude: 46.738586,
+  //   latitudeDelta: 0.0922,
+  //   longitudeDelta: 0.0922 * ASPECT_RATIO,
+  // });
+  // const [Cord, setCord] = React.useState(null);
 
-  const onDragMapPress = async (e) => {
-    setCord({
-      latitude: e.nativeEvent.coordinate.latitude,
-      longitude: e.nativeEvent.coordinate.longitude,
-    });
-    setData({
-      ...data,
-      Latitude: e.nativeEvent.coordinate.latitude,
-      Longitude: e.nativeEvent.coordinate.longitude,
-    });
-  };
-  const DoneButton = () => {
-    setSelectMapValue(true);
-    setShowMap(false);
-    return;
-  };
+  // const onDragMapPress = async (e) => {
+  //   setCord({
+  //     latitude: e.nativeEvent.coordinate.latitude,
+  //     longitude: e.nativeEvent.coordinate.longitude,
+  //   });
+  //   setData({
+  //     ...data,
+  //     Latitude: e.nativeEvent.coordinate.latitude,
+  //     Longitude: e.nativeEvent.coordinate.longitude,
+  //   });
+  // };
+  // const DoneButton = () => {
+  //   setSelectMapValue(true);
+  //   setShowMap(false);
+  //   return;
+  // };
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
@@ -150,7 +150,9 @@ function UpdateProfile({ store, navigation }) {
   const HandleCreateProfile = async () => {
     await Keyboard.dismiss();
     // setError('');
-    var convHight = await convertToArabicNumber(data.height);
+    // var convHight = await convertToArabicNumber(data.height);
+
+    var Age = await convertToArabicNumber(data.Birth);
 
     if (isLoading) {
       return;
@@ -159,12 +161,12 @@ function UpdateProfile({ store, navigation }) {
       data.first_name.length < 1 ||
       data.last_name.length < 1 ||
       data.Nationality.length < 1 ||
-      data.City.length < 1 ||
+      // data.City.length < 1 ||
       data.Birth.length < 1 ||
       Gender.length < 1 ||
-      data.English.length < 1 ||
-      data.height.length < 1 ||
-      isSelectMapValue === false
+      data.English.length < 1
+      // data.height.length < 1 ||
+      // isSelectMapValue === false
     ) {
       Alert.alert(
         '',
@@ -185,12 +187,12 @@ function UpdateProfile({ store, navigation }) {
           first_name: data.first_name,
           last_name: data.last_name,
           nationality: data.Nationality,
-          birthdate: data.Birth,
+          birthdate: Age,
           gender: Gender,
-          city: CityDataEn,
-          location: data.Latitude + ',' + data.Longitude,
+          // city: CityDataEn,
+          // location: data.Latitude + ',' + data.Longitude,
           english: data.English,
-          height: convHight,
+          // height: convHight,
         },
         {
           headers: { Authorization: store.token },
@@ -204,10 +206,10 @@ function UpdateProfile({ store, navigation }) {
             nationality: data.Nationality,
             birthdate: data.Birth,
             gender: Gender,
-            city: CityDataEn,
-            location: data.Latitude + ',' + data.Longitude,
+            // city: CityDataEn,
+            // location: data.Latitude + ',' + data.Longitude,
             english: data.English,
-            height: convHight,
+            // height: convHight,
           };
 
           await store.setProfile(store.data, profile);
@@ -347,21 +349,21 @@ function UpdateProfile({ store, navigation }) {
     });
   };
   //City
-  const onSelectCity = async (city) => {
-    if (I18nManager.isRTL) {
-      setData({
-        ...data,
-        City: city.name_ar,
-      });
-      setCityDataEn(city.name_en);
-    } else {
-      setData({
-        ...data,
-        City: city.name_en,
-      });
-      setCityDataEn(city.name_en);
-    }
-  };
+  // const onSelectCity = async (city) => {
+  //   if (I18nManager.isRTL) {
+  //     setData({
+  //       ...data,
+  //       City: city.name_ar,
+  //     });
+  //     setCityDataEn(city.name_en);
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       City: city.name_en,
+  //     });
+  //     setCityDataEn(city.name_en);
+  //   }
+  // };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -378,27 +380,27 @@ function UpdateProfile({ store, navigation }) {
     return unsubscribe;
   }, [navigation, isLoading]);
 
-  React.useEffect(() => {
-    var getlocation = store.data.profile.location;
+  // React.useEffect(() => {
+  //   var getlocation = store.data.profile.location;
 
-    var Loc = getlocation.split(',');
+  //   var Loc = getlocation.split(',');
 
-    setCord({
-      latitude: Number(Loc[0]),
-      longitude: Number(Loc[1]),
-    });
+  //   setCord({
+  //     latitude: Number(Loc[0]),
+  //     longitude: Number(Loc[1]),
+  //   });
 
-    setregion({
-      ...region,
-      latitude: Number(Loc[0]),
-      longitude: Number(Loc[1]),
-    });
-    setData({
-      ...data,
-      Latitude: Loc[0],
-      Longitude: Loc[1],
-    });
-  }, []);
+  //   setregion({
+  //     ...region,
+  //     latitude: Number(Loc[0]),
+  //     longitude: Number(Loc[1]),
+  //   });
+  //   setData({
+  //     ...data,
+  //     Latitude: Loc[0],
+  //     Longitude: Loc[1],
+  //   });
+  // }, []);
 
   return (
     <KeyboardAwareScrollView
@@ -498,7 +500,7 @@ function UpdateProfile({ store, navigation }) {
           value={Gender}
         />
 
-        <CitiesModal
+        {/* <CitiesModal
           CityValue={data.City}
           ViewCity={({ item }) => (
             <TouchableOpacity
@@ -511,9 +513,9 @@ function UpdateProfile({ store, navigation }) {
               </Text>
             </TouchableOpacity>
           )}
-        />
+        /> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.inputDate}
           onPress={() => setShowMap(true)}
         >
@@ -527,8 +529,8 @@ function UpdateProfile({ store, navigation }) {
             size={24}
             color={isSelectMapValue ? PrimaryColor : '#000'}
           />
-        </TouchableOpacity>
-
+        </TouchableOpacity> */}
+        {/*
         <TextInput
           style={styles.inputH}
           placeholder={ProfileStrings.height}
@@ -540,7 +542,7 @@ function UpdateProfile({ store, navigation }) {
           }
           keyboardType={'number-pad'}
           value={data.height}
-        />
+        /> */}
 
         <RNPickerSelect
           onValueChange={(text) =>
@@ -571,16 +573,16 @@ function UpdateProfile({ store, navigation }) {
         </TouchableOpacity>
       </View>
 
-      <MapUI
+      {/* <MapUI
         onRegionChange={(e) => onDragMapPress(e)}
         region={region}
         coordinate={Cord}
         MapmodalVisible={isShowMap}
         Close={() => setShowMap(false)}
         DoneButton={() => DoneButton()}
-      />
+      /> */}
 
-      <View style={{ height: 25 }} />
+      {/* <View style={{ height: 25 }} /> */}
 
       <Modal animationType="fade" transparent={true} visible={isLoading}>
         <View style={styles.modal}>

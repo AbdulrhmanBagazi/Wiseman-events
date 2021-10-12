@@ -349,12 +349,7 @@ const CompleteDetailsStrings = {
   AttendedSuper: I18nManager.isRTL
     ? 'آيام العمل (مشرف)'
     : 'Work days (Supervisor)',
-  TotalhoursO: I18nManager.isRTL
-    ? 'إجمالي الساعات (منظم)'
-    : 'Total Hours (Organizer)',
-  TotalhoursS: I18nManager.isRTL
-    ? 'إجمالي الساعات (مشرف)'
-    : 'Total Hours (Supervisor)',
+  Totalhours: I18nManager.isRTL ? 'إجمالي الساعات' : 'Total Hours',
   Totalmeal: I18nManager.isRTL ? 'بدل وجبة' : 'Meal Allowance',
   Total: I18nManager.isRTL ? 'الآرباح' : 'Earning',
   Totalearning: I18nManager.isRTL ? 'الإجمالي' : 'Total',
@@ -379,6 +374,7 @@ const CompleteDetailsStrings = {
   bonus: I18nManager.isRTL ? 'علاوة' : 'Bonus',
   absence: I18nManager.isRTL ? 'غياب' : 'Absence',
   incomplete: I18nManager.isRTL ? 'غير مكتمل' : 'Incomplete',
+  complete: I18nManager.isRTL ? 'مكتمل' : 'Complete',
   Late: I18nManager.isRTL ? 'التآخير' : 'Late',
   Fees: I18nManager.isRTL ? 'رسوم التحويل' : 'Transfer fee',
 };
@@ -416,6 +412,7 @@ const WorkScheduleUserString = {
   Today: I18nManager.isRTL ? 'اليوم' : 'Today',
   TakeAttendence: I18nManager.isRTL ? 'تسجيل الحضور' : 'Check-in',
   TakeAttendenceEnd: I18nManager.isRTL ? 'تسجيل الإنصراف' : 'Check-out',
+  Totalhours: I18nManager.isRTL ? 'إجمالي الساعات' : 'Total Hours',
   Info: I18nManager.isRTL ? 'معلومات' : 'Info',
   noInfo: I18nManager.isRTL ? 'لايوجد بيانات' : 'No data',
   dayoff: I18nManager.isRTL ? 'يوم عطلة' : 'day off',

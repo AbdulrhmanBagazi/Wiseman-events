@@ -59,23 +59,23 @@ function NotificationMain({ navigation, store }) {
     },
   });
 
-  React.useEffect(() => {
-    const unsubscribe = navigation
-      .dangerouslyGetParent()
-      .addListener('tabPress', (e) => {
-        // Do something
-        if (store.NotificationMainPage) {
-          RefreshMiddle();
-          setLoading(false);
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation
+  //     .dangerouslyGetParent()
+  //     .addListener('tabPress', (e) => {
+  //       // Do something
+  //       if (store.NotificationMainPage) {
+  //         RefreshMiddle();
+  //         setLoading(false);
 
-          return;
-        }
+  //         return;
+  //       }
 
-        return;
-      });
+  //       return;
+  //     });
 
-    return unsubscribe;
-  }, [navigation]);
+  //   return unsubscribe;
+  // }, [navigation]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -714,6 +714,36 @@ function NotificationMain({ navigation, store }) {
                       Linking.openURL(
                         'whatsapp://send?phone=+966' + Number(item.phone)
                       )
+                        .then((data) => {
+                          return null;
+                        })
+                        .catch(() => {
+                          Alert.alert(
+                            '',
+                            I18nManager.isRTL
+                              ? 'تأكد من تثبيت WhatsApp على جهازك!'
+                              : 'Make sure WhatsApp installed on your device',
+                            {
+                              cancelable: false,
+                            }
+                          );
+
+                          return null;
+                        })
+                    }
+                  >
+                    <Ionicons name="logo-whatsapp" size={20} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : item.type === 'whatsApp' ? (
+              <View style={styles.NotificationBoxFirst}>
+                <View style={styles.SpaceViewBody}>
+                  <TouchableOpacity
+                    style={styles.Contact}
+                    disabled={refreshing}
+                    onPress={() =>
+                      Linking.openURL(item.phone)
                         .then((data) => {
                           return null;
                         })
