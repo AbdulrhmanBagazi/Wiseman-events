@@ -15,7 +15,7 @@ const SignInStrings = {
 
 const HeaderTitles = {
   Home: I18nManager.isRTL ? 'الرئيسية' : 'Home',
-  AllJobs: I18nManager.isRTL ? 'جميع الوظائف' : 'All Jobs',
+  AllJobs: I18nManager.isRTL ? 'الوظائف' : 'Jobs',
   SingleJobs: I18nManager.isRTL ? 'تفاصيل' : 'Details',
   WorkSchedule: I18nManager.isRTL
     ? 'الجدول الزمني للفعاليات'
@@ -43,9 +43,7 @@ const HeaderTitles = {
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   Settings: I18nManager.isRTL ? 'الإعدادات' : 'Settings',
   CompleteDetails: I18nManager.isRTL ? 'تفاصيل العمل' : 'Work Details',
-  Contact: I18nManager.isRTL
-    ? 'رقم الاتصال / واتس آب'
-    : 'Contact / Whatsapp number',
+  Contact: I18nManager.isRTL ? 'التواصل' : 'Contacts',
   UpdateProfile: I18nManager.isRTL
     ? 'معلومات الملف الشخصي'
     : 'Profile Information',
@@ -173,6 +171,7 @@ const NotificationStrings = {
 };
 
 const ErrorsStrings = {
+  noInfo: I18nManager.isRTL ? 'لايوجد بيانات' : 'No data',
   MobileUsed: I18nManager.isRTL
     ? 'رقم الجوال مستخدم'
     : 'The mobile number is used',
@@ -276,9 +275,8 @@ const ProfilePageStrings = {
   Invite: I18nManager.isRTL ? 'شارك التطبيق' : 'Share App',
   Support: I18nManager.isRTL ? 'الدعم' : 'Support',
   notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
-  Contact: I18nManager.isRTL
-    ? 'رقم الاتصال / واتس آب'
-    : 'Contact / Whatsapp number',
+  Contact: I18nManager.isRTL ? 'التواصل' : 'Contacts',
+  AppName: I18nManager.isRTL ? 'تطبيق تنظيم: ' : 'Organize App: ',
 };
 
 const SettingsPageStrings = {
@@ -394,6 +392,12 @@ const AnimatedButtonSelectStrings = {
   supervisor: I18nManager.isRTL ? 'مشرف' : 'Supervisor',
 };
 
+const ContactStrings = {
+  call: I18nManager.isRTL ? 'إتصال' : 'Contact',
+  whatsapp: I18nManager.isRTL ? 'واتساب' : 'Whatsapp',
+  Contact: I18nManager.isRTL ? 'التواصل' : 'Contacts',
+};
+
 const AlertStrings = {
   Accept: I18nManager.isRTL ? 'قبول' : 'Accept',
   Decline: I18nManager.isRTL ? 'رفض' : 'Decline',
@@ -469,4 +473,5 @@ export {
   EarningsStrings,
   ProfileImageStrings,
   NonAuthStrings,
+  ContactStrings,
 };

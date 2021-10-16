@@ -15,6 +15,7 @@ import Icon from '../../../Config/Icons';
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad';
 import {
   SingleJobStrings,
+  ErrorsStrings,
   // AnimatedButtonSelectStrings,
 } from '../../../Config/Strings';
 import { PrimaryColor } from '../../../Config/ColorPalette';
@@ -88,6 +89,37 @@ function Card(props) {
     }
   };
 
+  function getTime(val) {
+    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
+    var artimeStart = moment(val.Start).format('Do MMM');
+    var artimeEnd = moment(val.End).format('Do MMM');
+
+    moment.updateLocale('ar', {
+      months: [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ],
+    });
+
+    return (
+      <Text style={styles.BlackColor}>
+        {val.Start && val.End
+          ? artimeStart + ' - ' + artimeEnd
+          : ErrorsStrings.noInfo}
+      </Text>
+    );
+  }
+
   return (
     <View style={styles.AllJobCard}>
       <View style={styles.Logo}>
@@ -111,15 +143,10 @@ function Card(props) {
               Name={I18nManager.isRTL ? item.event.NameAr : item.event.Name}
               EventStatus={item.event.Status}
             />
+
             <View style={styles.AllSSingleJobDetails}>
-              {/* <Text style={styles.SingleJobDetailsTime}>
-                {SingleJobStrings.StartDate}
-                <Text style={{ color: item.Start ? '#2eb85c' : '#e55353' }}>
-                  {item.Start ? item.Start : SingleJobStrings.StartDateString}
-                </Text>
-              </Text> */}
-              <View style={styles.TypeBadge}>
-                {/* {item.jobapplications.map((e) => {
+              {/* <View style={styles.TypeBadge}>
+                {item.jobapplications.map((e) => {
                   if (e.Active === true) {
                     return (
                       <View
@@ -140,8 +167,12 @@ function Card(props) {
                       </View>
                     );
                   }
-                })} */}
-              </View>
+                })}
+              </View> */}
+              <Text style={styles.SingleJobDetailsTime}>
+                {SingleJobStrings.date}
+                <Text style={styles.BlackColor}>{getTime(item)}</Text>
+              </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}
               </Text>

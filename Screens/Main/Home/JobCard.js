@@ -11,7 +11,7 @@ import styles from './Style';
 import Icon from '../../../Config/Icons';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import AnimatedCardImageLoad from './AnimatedComponets/AnimatedCardImageLoad';
-import { SingleJobStrings } from '../../../Config/Strings';
+import { SingleJobStrings, ErrorsStrings } from '../../../Config/Strings';
 import { width } from '../../../Config/Layout';
 import moment from 'moment';
 import 'moment/locale/ar-sa'; // without this line it didn't work
@@ -39,22 +39,41 @@ function JobCard(props) {
   });
 
   function getSalary(val) {
-    var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
-    var last = val.jobs[val.jobs.length - 1].hourly_rate
-      ? val.jobs[val.jobs.length - 1].hourly_rate
-      : null;
-
-    return (
-      <Text style={styles.SingleJobDetailsSectionsValue}>
-        {Number(last)}
-        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-        {Number(first) ? ' - ' : null} {Number(first)}
-        {I18nManager.isRTL ? 'ريال ' : ' SAR'}
-        <Text style={styles.Hour}>
-          /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+    if (val.jobs.length > 1) {
+      var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+      var last = val.jobs[val.jobs.length - 1].hourly_rate
+        ? val.jobs[val.jobs.length - 1].hourly_rate
+        : null;
+      return (
+        <Text style={styles.SingleJobDetailsSectionsValue}>
+          {Number(last)}
+          {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+          {Number(first) ? ' - ' : null} {Number(first)}
+          {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+          <Text style={styles.Hour}>
+            /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+          </Text>
         </Text>
-      </Text>
-    );
+      );
+    } else if (val.jobs.length === 1) {
+      var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+
+      return (
+        <Text style={styles.SingleJobDetailsSectionsValue}>
+          {Number(first)}
+          {I18nManager.isRTL ? 'ريال ' : ' SAR'}
+          <Text style={styles.Hour}>
+            /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+          </Text>
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={styles.SingleJobDetailsSectionsValue}>
+          {ErrorsStrings.noInfo}
+        </Text>
+      );
+    }
   }
 
   function getTime(val) {
@@ -80,7 +99,11 @@ function JobCard(props) {
     });
 
     return (
-      <Text style={styles.BlackColor}>{artimeStart + ' - ' + artimeEnd}</Text>
+      <Text style={styles.BlackColor}>
+        {val.Start && val.End
+          ? artimeStart + ' - ' + artimeEnd
+          : ErrorsStrings.noInfo}
+      </Text>
     );
   }
 

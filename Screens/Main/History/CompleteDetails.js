@@ -262,7 +262,9 @@ function CompleteDetails({ route, store }) {
                   {CompleteDetailsStrings.Start}
                 </Text>
                 <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                  {moment(items.Start).format('D MMMM, YYYY')}
+                  {I18nManager.isRTL
+                    ? moment(items.Start).format('D MMMM, YYYY')
+                    : moment(items.Start).locale('en').format('D MMMM, YYYY')}
                 </Text>
               </View>
               <View style={styles.CompleteDetailsHeaderView}>
@@ -270,7 +272,9 @@ function CompleteDetails({ route, store }) {
                   {CompleteDetailsStrings.Ended}
                 </Text>
                 <Text style={styles.CompleteDetailsHeaderViewTextValue}>
-                  {moment(items.End).format('D MMMM, YYYY')}
+                  {I18nManager.isRTL
+                    ? moment(items.End).format('D MMMM, YYYY')
+                    : moment(items.End).locale('en').format('D MMMM, YYYY')}
                 </Text>
               </View>
             </View>

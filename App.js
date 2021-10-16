@@ -46,7 +46,7 @@ import IBAN from './Screens/Main/Profile/IBAN/IBAN';
 // import Invite from './Screens/Main/Profile/Invite/Invite'
 import Support from './Screens/Main/Profile/Support/Support';
 import Settings from './Screens/Main/Profile/Settings/Settings';
-import Contact from './Screens/Main/Profile/Contact/Contact';
+// import Contact from './Screens/Main/Profile/Contact/Contact';
 import UpdateProfile from './Screens/Main/Profile/Settings/Profileupdate/Updateprofile';
 //
 import LanguageSettings from './Screens/Main/Profile/Settings/LanguageSettings';
@@ -368,7 +368,7 @@ const MainScreens = () => {
         name="Support"
         component={Support}
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         options={{
           title: HeaderTitles.Contact,
           headerTintColor: 'black',
@@ -382,7 +382,7 @@ const MainScreens = () => {
         }}
         name="Contact"
         component={Contact}
-      />
+      /> */}
       <MainStack.Screen
         options={{
           title: HeaderTitles.Settings,

@@ -699,7 +699,7 @@ function NotificationMain({ navigation, store }) {
                 <View style={styles.SpaceViewBody}>
                   <TouchableOpacity
                     disabled={refreshing}
-                    style={styles.Accept}
+                    style={styles.LocationButton}
                     onPress={() => Linking.openURL(item.location)}
                   >
                     <Text style={styles.AcceptDeclinetext}>

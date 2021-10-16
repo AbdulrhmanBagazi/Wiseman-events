@@ -12,7 +12,7 @@ import styles from './Style';
 import Icon from '../../../Config/Icons';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad';
-import { SingleJobStrings } from '../../../Config/Strings';
+import { SingleJobStrings, ErrorsStrings } from '../../../Config/Strings';
 import moment from 'moment';
 
 function CompletedJobs(props) {
@@ -95,6 +95,37 @@ function CompletedJobs(props) {
     }
   };
 
+  function getTime(val) {
+    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
+    var artimeStart = moment(val.Start).format('Do MMM');
+    var artimeEnd = moment(val.End).format('Do MMM');
+
+    moment.updateLocale('ar', {
+      months: [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ],
+    });
+
+    return (
+      <Text style={styles.BlackColor}>
+        {val.Start && val.End
+          ? artimeStart + ' - ' + artimeEnd
+          : ErrorsStrings.noInfo}
+      </Text>
+    );
+  }
+
   return (
     <View style={styles.AllJobCard}>
       <View style={styles.Logo}>
@@ -122,9 +153,7 @@ function CompletedJobs(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={styles.BlackText}>
-                  {I18nManager.isRTL ? item.event.DateAr : item.event.Date}
-                </Text>
+                <Text style={styles.BlackText}>{getTime(item)}</Text>
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}

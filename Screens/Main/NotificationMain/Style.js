@@ -111,6 +111,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  LocationButton: {
+    padding: 5,
+    backgroundColor: '#5bc0de',
+    borderRadius: 5,
+    flex: 1,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   Decline: {
     padding: 5,
     backgroundColor: '#d16767',
@@ -172,6 +181,7 @@ const styles = StyleSheet.create({
     height: height / 5,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
     marginTop: 30,
     zIndex: -99,
     position: 'absolute',

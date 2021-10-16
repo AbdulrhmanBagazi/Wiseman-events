@@ -19,10 +19,12 @@ import { inject, observer } from 'mobx-react';
 import ProfileImage from './ProfileImage/ProfileImage';
 import AnimatedProfileImage from '../../Components/AnimatedImageProfile/AnimatedImageProfile';
 import { PrimaryColor } from '../../../Config/ColorPalette';
+import Contact from './Contact/Contact';
 
 function Profile({ store, navigation }) {
   const [Data, setDataValue] = React.useState(null);
   const [isModal, setModal] = React.useState(false);
+  const [isShow, setShow] = React.useState(false);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -43,16 +45,20 @@ function Profile({ store, navigation }) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'www.google.com',
+        message: ProfilePageStrings.AppName + 'https://wiseman.page.link/TJBU',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
+          return;
         } else {
           // shared
+
+          return;
         }
       } else if (result.action === Share.dismissedAction) {
         // dismissed
+        return;
       }
     } catch (error) {
       Alert.alert(
@@ -164,6 +170,22 @@ function Profile({ store, navigation }) {
                 />
               </View>
             </TouchableOpacity>
+            <Contact OpenModal={isShow} onPressClose={() => setShow(false)} />
+            <TouchableOpacity
+              style={styles.aboutButton}
+              onPress={() => setShow(!isShow)}
+            >
+              <View style={stylesmain.ViewStart}>
+                <Text style={styles.leftText}>
+                  {ProfilePageStrings.Contact}
+                </Text>
+              </View>
+              <View style={stylesmain.ViewEnd}>
+                {/* <Text style={styles.rightText}>2000/sar</Text> */}
+                <Entypo name="popup" size={18} color="#C6C9CD" />
+                {store.EarningsBadge ? <View style={stylesmain.Badge} /> : null}
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.aboutButton}
               onPress={() => navigation.navigate('Earnings')}
@@ -183,6 +205,7 @@ function Profile({ store, navigation }) {
                 {store.EarningsBadge ? <View style={stylesmain.Badge} /> : null}
               </View>
             </TouchableOpacity>
+
             {/* <TouchableOpacity style={styles.aboutButton} onPress={() => navigation.navigate('Levels')}>
               <View
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
@@ -227,7 +250,7 @@ function Profile({ store, navigation }) {
                 <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.aboutButton}
               onPress={() => navigation.navigate('Support')}
             >
@@ -243,7 +266,7 @@ function Profile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </ScrollView>

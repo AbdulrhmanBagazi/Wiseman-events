@@ -29,11 +29,23 @@ function DisabledButton(props) {
 
   return (
     <AnimatedTouchableOpacity
-      style={[styles.Button, { backgroundColor: Background }]}
+      style={
+        props.Contact
+          ? [
+              styles.ButtonContact,
+              { backgroundColor: props.Cancel ? '#df4759' : Background },
+            ]
+          : [styles.Button, { backgroundColor: Background }]
+      }
       onPress={props.onPress}
       disabled={isDisabled}
     >
-      <Animated.Text style={[styles.ButtonText, { color: TextColor }]}>
+      <Animated.Text
+        style={[
+          styles.ButtonText,
+          { color: props.Cancel ? '#fff' : TextColor },
+        ]}
+      >
         {props.TextValue}
       </Animated.Text>
     </AnimatedTouchableOpacity>

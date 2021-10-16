@@ -14,7 +14,7 @@ import { inject, observer } from 'mobx-react';
 import styles from './Style';
 import SingleJobImage from './SingleJobImage';
 import Icon from '../../../../Config/Icons';
-import { SingleJobStrings } from '../../../../Config/Strings';
+import { SingleJobStrings, ErrorsStrings } from '../../../../Config/Strings';
 import Description from './Description';
 import Rules from './Rules';
 import Tranining from './Tranining';
@@ -87,31 +87,56 @@ function SingleJob({ route, store, navigation }) {
   };
 
   function getSalary(val) {
-    var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
-    var last = val.jobs[val.jobs.length - 1].hourly_rate
-      ? val.jobs[val.jobs.length - 1].hourly_rate
-      : null;
+    if (val.jobs.length > 1) {
+      var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
+      var last = val.jobs[val.jobs.length - 1].hourly_rate
+        ? val.jobs[val.jobs.length - 1].hourly_rate
+        : null;
+      return (
+        <View style={{ flex: 1, alignItems: 'flex-start' }}>
+          <Text style={styles.SalarySpace}>
+            {Number(last)}
+            <Text style={styles.SingleSalaryTextData}>
+              {I18nManager.isRTL ? 'ريال' : 'SAR'}
+              <Text style={styles.Hour}>
+                /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+              </Text>
+            </Text>
+            {Number(first) ? ' -' : null} {Number(first)}
+            <Text style={styles.SingleSalaryTextData}>
+              {I18nManager.isRTL ? 'ريال' : 'SAR'}
+              <Text style={styles.Hour}>
+                /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+              </Text>
+            </Text>
+          </Text>
+        </View>
+      );
+    } else if (val.jobs.length === 1) {
+      var first = val.jobs[0].hourly_rate ? val.jobs[0].hourly_rate : '';
 
-    return (
-      <View style={{ flex: 1, alignItems: 'flex-start' }}>
-        <Text style={styles.SalarySpace}>
-          {Number(last)}
-          <Text style={styles.SingleSalaryTextData}>
-            {I18nManager.isRTL ? 'ريال' : 'SAR'}
-            <Text style={styles.Hour}>
-              /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+      return (
+        <View style={{ flex: 1, alignItems: 'flex-start' }}>
+          <Text style={styles.SalarySpace}>
+            {Number(first)}
+            <Text style={styles.SingleSalaryTextData}>
+              {I18nManager.isRTL ? 'ريال' : 'SAR'}
+              <Text style={styles.Hour}>
+                /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
+              </Text>
             </Text>
           </Text>
-          {Number(first) ? ' -' : null} {Number(first)}
-          <Text style={styles.SingleSalaryTextData}>
-            {I18nManager.isRTL ? 'ريال' : 'SAR'}
-            <Text style={styles.Hour}>
-              /{I18nManager.isRTL ? 'الساعة' : 'Hour'}
-            </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flex: 1, alignItems: 'flex-start' }}>
+          <Text style={{ flex: 1, alignItems: 'flex-start' }}>
+            {ErrorsStrings.noInfo}
           </Text>
-        </Text>
-      </View>
-    );
+        </View>
+      );
+    }
   }
 
   return (

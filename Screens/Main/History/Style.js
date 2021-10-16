@@ -639,6 +639,7 @@ const styles = StyleSheet.create({
     bottom: 5,
   },
   BlackText: { color: '#000' },
+  BlackColor: { color: '#000' },
   ViewAlignSelf: { flex: 1, alignSelf: 'center', paddingBottom: 30 },
   FlexEnd: { flex: 1, alignItems: 'flex-end' },
   FlexTwo: { flex: 2 },

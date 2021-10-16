@@ -206,6 +206,16 @@ class Store {
     return;
   };
 
+  setContacts = async (data, contacts) => {
+    var data = data;
+
+    data.call = contacts.call;
+    data.whatsapp = contacts.whatsapp;
+
+    this.data = data;
+    return;
+  };
+
   setresetDate = async () => {
     var date = new Date();
 
@@ -256,6 +266,7 @@ decorate(Store, {
   setCalendarIds: action,
   removeCalendarIds: action,
   setResetData: action,
+  setContacts: action,
 });
 
 const store = new Store();

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { width } from '../../../Config/Layout';
+import { width, height } from '../../../Config/Layout';
 import { PrimaryColor, LightText } from '../../../Config/ColorPalette';
 
 const styles = StyleSheet.create({
@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
   TopCardLayer: {
     backgroundColor: 'rgba(175, 0, 41, 0.4)',
     width: '100%',
-    height: '100%',
+    height: height / 4,
     borderRadius: 5,
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
   },
   TopCardTitle: {
     color: '#fff',
@@ -34,8 +35,8 @@ const styles = StyleSheet.create({
   },
   TopCardTitleStatus: {
     color: '#fff',
-    fontWeight: '600',
-    fontSize: 32,
+    fontWeight: '400',
+    fontSize: 25,
     marginHorizontal: 18,
     textAlign: 'left',
   },

@@ -25,12 +25,14 @@ function TopCard(props) {
             }}
           />
           <View style={styles.TopCardLayer}>
-            <Text style={styles.TopCardTitle}>
-              {I18nManager.isRTL ? item.TitleAr : item.Title}
-            </Text>
-            <Text style={styles.TopCardTitleStatus}>
-              {I18nManager.isRTL ? 'مستمر' : item.Status}
-            </Text>
+            <View>
+              <Text style={styles.TopCardTitle} numberOfLines={1}>
+                {I18nManager.isRTL ? item.TitleAr : item.Title}
+              </Text>
+              <Text style={styles.TopCardTitleStatus} numberOfLines={3}>
+                {I18nManager.isRTL ? item.msgAr : item.msg}
+              </Text>
+            </View>
             <Text style={styles.TopCardTime}>
               {I18nManager.isRTL ? item.DateAr : item.Date}
             </Text>
