@@ -257,7 +257,7 @@ function Settings({ store, navigation }) {
               }}
             >
               <Text style={styles.rightText}>
-                {I18nManager.isRTL ? 'عربي' : 'English'}
+                {I18nManager.isRTL ? 'العربية' : 'English'}
               </Text>
               <Entypo
                 name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}

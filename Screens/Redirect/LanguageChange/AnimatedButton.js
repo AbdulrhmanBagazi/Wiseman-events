@@ -58,7 +58,7 @@ function AnimatedButton(props) {
   }, [props.Language]);
 
   return (
-    <View>
+    <View style={styles.AnimatedButtonView}>
       <TO
         onPress={props.onPressArabic}
         style={[
@@ -69,7 +69,7 @@ function AnimatedButton(props) {
           },
         ]}
       >
-        <Text style={styles.TouchableOpacityText}>عربي</Text>
+        <Text style={styles.TouchableOpacityText}>العربية</Text>
         <Animated.View style={[styles.Circle, { backgroundColor: ArCircle }]} />
       </TO>
       <TO

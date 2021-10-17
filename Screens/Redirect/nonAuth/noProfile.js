@@ -52,7 +52,7 @@ function noProfile({ store, navigation }) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'www.google.com',
+        message: ProfilePageStrings.AppName + 'https://wiseman.page.link/TJBU',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -104,7 +104,7 @@ function noProfile({ store, navigation }) {
             }
           >
             <Text style={styles.leftTextArEn}>
-              {I18nManager.isRTL ? 'English' : 'عربي'}
+              {I18nManager.isRTL ? 'English' : 'العربية'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.Image} disabled={true}>
@@ -158,15 +158,11 @@ function noProfile({ store, navigation }) {
             <TouchableOpacity style={styles.aboutButton} disabled={true}>
               <View style={stylesmain.ViewStart}>
                 <Text style={styles.leftTextDisabled}>
-                  {ProfilePageStrings.IBAN}
+                  {ProfilePageStrings.Contact}
                 </Text>
               </View>
               <View style={stylesmain.ViewEnd}>
-                <Entypo
-                  name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
-                  size={18}
-                  color="#C6C9CD"
-                />
+                <Entypo name="popup" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
 

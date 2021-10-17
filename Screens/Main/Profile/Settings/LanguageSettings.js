@@ -55,7 +55,7 @@ function LanguageSettings({ navigation }) {
                   flexDirection: 'row',
                 }}
               >
-                <Text style={styles.LanguageSettingsText}>عربي</Text>
+                <Text style={styles.LanguageSettingsText}>العربية</Text>
               </View>
               <Animated.View
                 style={{

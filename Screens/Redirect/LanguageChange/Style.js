@@ -6,12 +6,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BackgroundColor,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   PageTitle: {
     marginBottom: 80,
     marginTop: 80,
-    fontSize: 32,
+    // fontSize: 32,
+    alignSelf: 'center',
+  },
+  AnimatedButtonView: {
+    alignSelf: 'center',
   },
   TouchableOpacityContainer: {
     flexDirection: 'row',
@@ -63,6 +67,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     marginTop: 40,
+    alignSelf: 'center',
   },
   ButtonText: {
     color: '#fff',

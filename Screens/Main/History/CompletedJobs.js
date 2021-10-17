@@ -21,8 +21,7 @@ function CompletedJobs(props) {
   React.useEffect(() => {
     var newArray = props.Data.filter((item) => {
       // console.log(item.attendances.length)
-      return item.Status === 'completed';
-      // return item.Status !== 'approved' && item.attendances.length >= 1
+      return item.Status !== 'approved' && item.attendances.length >= 1;
     });
 
     setData(newArray);
@@ -92,6 +91,8 @@ function CompletedJobs(props) {
         return 'ألغيت';
       case 'withdrawal':
         return 'إنسحاب';
+      case 'interview':
+        return 'مقابلة';
     }
   };
 

@@ -86,6 +86,8 @@ function Card(props) {
         return 'ألغيت';
       case 'withdrawal':
         return 'إنسحاب';
+      case 'interview':
+        return 'مقابلة';
     }
   };
 

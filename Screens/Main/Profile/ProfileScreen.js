@@ -183,7 +183,6 @@ function Profile({ store, navigation }) {
               <View style={stylesmain.ViewEnd}>
                 {/* <Text style={styles.rightText}>2000/sar</Text> */}
                 <Entypo name="popup" size={18} color="#C6C9CD" />
-                {store.EarningsBadge ? <View style={stylesmain.Badge} /> : null}
               </View>
             </TouchableOpacity>
             <TouchableOpacity
