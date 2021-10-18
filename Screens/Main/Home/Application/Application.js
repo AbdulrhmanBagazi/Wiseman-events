@@ -66,16 +66,26 @@ function Application({ navigation, route, store }) {
     //
     setShiftIndex(val);
     var Time = I18nManager.isRTL
-      ? moment(items.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+      ? moment(items.eventshifts[val].timeStart, 'hh:mm')
+          .locale('en')
+          .format('hh:mma') +
         ' إلى ' +
-        moment(items.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma')
-      : moment(items.eventshifts[val].timeStart, 'hh:mm').format('hh:mma') +
+        moment(items.eventshifts[val].timeEnd, 'hh:mm')
+          .locale('en')
+          .format('hh:mma')
+      : moment(items.eventshifts[val].timeStart, 'hh:mm')
+          .locale('en')
+          .format('hh:mma') +
         ' To ' +
-        moment(items.eventshifts[val].timeEnd, 'hh:mm').format('hh:mma');
+        moment(items.eventshifts[val].timeEnd, 'hh:mm')
+          .locale('en')
+          .format('hh:mma');
     setselectedShift(items.eventshifts[val].shift);
     setTime(Time);
     setAttendance(
-      moment(items.eventshifts[val].attendance, 'hh:mm').format('hh:mma')
+      moment(items.eventshifts[val].attendance, 'hh:mm')
+        .locale('en')
+        .format('hh:mma')
     );
     setShiftId(items.eventshifts[val].id);
     setHours(items.eventshifts[val].totalhours);
@@ -277,28 +287,28 @@ function Application({ navigation, route, store }) {
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'تآكد من تسجيل الحضور والإنصراف (عبر رمز  QR)'
+                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR)'
                 : 'make sure to check-in and check-out (via QR code)'}
             </Text>
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'الالتزام بالوقت المحدد لتسجيل الحضور'
-                : 'Commitment to the specified time to register attendance'}
+                ? 'الالتزام بوقت الحضور'
+                : 'Commitment to attendance time'}
             </Text>
 
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'في حال التأخير أو عدم الالتزام بوقت العمل المحدد يتم خصم من المستحقات المالية'
-                : 'In the event of delay or non-compliance with the specified working time, the financial dues will be deducted'}
+                ? 'عند التقديم فأنت توافق على شروط العمل (يمكنك التحقق منها في الصفحة السابقة)'
+                : 'when applying you agree to the work Terms (you can check them in the previous page)'}
             </Text>
 
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'في حالة عدم الالتزام بأيام العمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل'
-                : 'In the event of non-compliance with the working days, it may lead to deduction from financial dues or dismissal from work'}
+                ? 'في حالة عدم الالتزام بالعمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل'
+                : 'In the event of non-compliance with the work, it may lead to a deduction from the financial dues or dismissal from work'}
             </Text>
           </View>
         </View>

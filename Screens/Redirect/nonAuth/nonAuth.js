@@ -47,7 +47,17 @@ function NonAuth({ store, navigation }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'success') {
-            if (response.data.data.length === 0) {
+            if (
+              response.data.banner.length >= 1 &&
+              response.data.data.length === 0
+            ) {
+              await store.setBanner(response.data.banner);
+              setTimeout(() => {
+                setError(false);
+                setSoon(true);
+                setLoading(false);
+              }, 500);
+            } else if (response.data.data.length === 0) {
               setTimeout(() => {
                 setError(false);
                 setSoon(true);

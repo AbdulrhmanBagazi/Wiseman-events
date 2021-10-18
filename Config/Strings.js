@@ -58,8 +58,8 @@ const LanguageChangeStrings = {
 const Register = {
   Register: I18nManager.isRTL ? 'تسجيل' : 'Register',
   ResetSlogan: I18nManager.isRTL
-    ? 'مرحبًا بك في تنظيم. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
-    : 'Welcome to "تنظيم". Please provide the information below, set your account.',
+    ? 'مرحبًا بك. قم بإدخال المعلومات التالية ،لإنشاء حسابك.'
+    : 'Welcome. Please provide the information below, set your account.',
   Phone: I18nManager.isRTL
     ? 'رقم الجوال(05XXXXXXXX)'
     : 'Mobile Number (05XXXXXXXX)',
@@ -247,7 +247,7 @@ const SingleJobStrings = {
   Meal: I18nManager.isRTL ? 'وجبة' : 'Meal',
   Note: I18nManager.isRTL ? 'ملاحظة:' : 'Note:',
   Mealallowance: I18nManager.isRTL
-    ? 'بدل وجبة عن كل يوم دوام'
+    ? 'بدل وجبة عن كل يوم عمل'
     : 'Meal allowance for each working day',
   Applyingfor: I18nManager.isRTL ? 'التقديم' : 'Applying',
   Banned: I18nManager.isRTL

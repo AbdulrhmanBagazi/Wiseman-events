@@ -628,16 +628,24 @@ function NotificationMain({ navigation, store }) {
                   {item.type === 'location' ? (
                     <Text style={styles.bodyTextTime}>
                       {I18nManager.isRTL
-                        ? moment(item.end, 'hh:mm').format('hh:mma')
-                        : moment(item.start, 'hh:mm').format('hh:mma')}{' '}
+                        ? moment(item.end, 'hh:mm')
+                            .locale('en')
+                            .format('hh:mma')
+                        : moment(item.start, 'hh:mm')
+                            .locale('en')
+                            .format('hh:mma')}{' '}
                       {I18nManager.isRTL ? (
                         <Icon name="arrow-left" size={14} color="black" />
                       ) : (
                         <Icon name="arrow-right" size={14} color="black" />
                       )}{' '}
                       {I18nManager.isRTL
-                        ? moment(item.start, 'hh:mm').format('hh:mma')
-                        : moment(item.end, 'hh:mm').format('hh:mma')}
+                        ? moment(item.start, 'hh:mm')
+                            .locale('en')
+                            .format('hh:mma')
+                        : moment(item.end, 'hh:mm')
+                            .locale('en')
+                            .format('hh:mma')}
                     </Text>
                   ) : null}
                 </View>

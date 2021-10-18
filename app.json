@@ -3,7 +3,7 @@
     "name": "تنظيم",
     "slug": "organizing",
     "platforms": ["ios", "android"],
-    "version": "1.0.23",
+    "version": "1.0.29",
     "orientation": "portrait",
     "icon": "./assets/appicon.png",
     "userInterfaceStyle": "automatic",
@@ -31,7 +31,7 @@
       "splash": {
         "backgroundColor": "#fff"
       },
-      "buildNumber": "1.0.23",
+      "buildNumber": "1.0.29",
       "config": {
         "googleMapsApiKey": "AIzaSyAoS3co-HB_4Czpvic8V85w2OawMHlesyM"
       }
@@ -44,7 +44,7 @@
       "splash": {
         "backgroundColor": "#fff"
       },
-      "versionCode": 23,
+      "versionCode": 29,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDOxq3STcakscwK5AyY0j_dsNRAcYPTYpo"

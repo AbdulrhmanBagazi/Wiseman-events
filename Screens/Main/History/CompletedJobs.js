@@ -14,6 +14,23 @@ import { PrimaryColor } from '../../../Config/ColorPalette';
 import AnimatedCardImageLoad from '../../Main/Home/AnimatedComponets/AnimatedCardImageLoad';
 import { SingleJobStrings, ErrorsStrings } from '../../../Config/Strings';
 import moment from 'moment';
+import 'moment/locale/ar-sa'; // without this line it didn't work
+moment.updateLocale('ar-sa', {
+  months: [
+    'يناير',
+    'فبراير',
+    'مارس',
+    'أبريل',
+    'مايو',
+    'يونيو',
+    'يوليو',
+    'أغسطس',
+    'سبتمبر',
+    'أكتوبر',
+    'نوفمبر',
+    'ديسمبر',
+  ],
+});
 
 function CompletedJobs(props) {
   const [isData, setData] = React.useState([]);
@@ -96,37 +113,6 @@ function CompletedJobs(props) {
     }
   };
 
-  function getTime(val) {
-    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
-    var artimeStart = moment(val.Start).format('Do MMM');
-    var artimeEnd = moment(val.End).format('Do MMM');
-
-    moment.updateLocale('ar', {
-      months: [
-        'يناير',
-        'فبراير',
-        'مارس',
-        'أبريل',
-        'مايو',
-        'يونيو',
-        'يوليو',
-        'أغسطس',
-        'سبتمبر',
-        'أكتوبر',
-        'نوفمبر',
-        'ديسمبر',
-      ],
-    });
-
-    return (
-      <Text style={styles.BlackColor}>
-        {val.Start && val.End
-          ? artimeStart + ' - ' + artimeEnd
-          : ErrorsStrings.noInfo}
-      </Text>
-    );
-  }
-
   return (
     <View style={styles.AllJobCard}>
       <View style={styles.Logo}>
@@ -154,7 +140,19 @@ function CompletedJobs(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={styles.BlackText}>{getTime(item)}</Text>
+                {item.Start && item.End ? (
+                  <Text style={styles.BlackColor}>
+                    {I18nManager.isRTL
+                      ? moment(item.Start).format('Do MMM') +
+                        ' - ' +
+                        moment(item.End).format('Do MMM')
+                      : moment(item.Start).locale('en').format('Do MMM') +
+                        ' - ' +
+                        moment(item.End).locale('en').format('Do MMM')}
+                  </Text>
+                ) : (
+                  <Text style={styles.BlackColor}>{ErrorsStrings.noInfo}</Text>
+                )}
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.event.TitleAr : item.event.Title}
@@ -182,24 +180,24 @@ function CompletedJobs(props) {
                   </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
                     {I18nManager.isRTL
-                      ? moment(item.eventshift.timeEnd, 'hh:mm').format(
-                          'hh:mma'
-                        )
-                      : moment(item.eventshift.timeStart, 'hh:mm').format(
-                          'hh:mma'
-                        )}{' '}
+                      ? moment(item.eventshift.timeEnd, 'hh:mm')
+                          .locale('en')
+                          .format('hh:mma')
+                      : moment(item.eventshift.timeStart, 'hh:mm')
+                          .locale('en')
+                          .format('hh:mma')}{' '}
                     {I18nManager.isRTL ? (
                       <Icon name="arrow-left" size={14} color="black" />
                     ) : (
                       <Icon name="arrow-right" size={14} color="black" />
                     )}{' '}
                     {I18nManager.isRTL
-                      ? moment(item.eventshift.timeStart, 'hh:mm').format(
-                          'hh:mma'
-                        )
-                      : moment(item.eventshift.timeEnd, 'hh:mm').format(
-                          'hh:mma'
-                        )}
+                      ? moment(item.eventshift.timeStart, 'hh:mm')
+                          .locale('en')
+                          .format('hh:mma')
+                      : moment(item.eventshift.timeEnd, 'hh:mm')
+                          .locale('en')
+                          .format('hh:mma')}
                   </Text>
                 </View>
                 <View style={styles.DataSectionsAta}>
@@ -207,9 +205,9 @@ function CompletedJobs(props) {
                     {SingleJobStrings.Attendance}
                   </Text>
                   <Text style={styles.SingleJobDetailsSectionsValue}>
-                    {moment(item.eventshift.attendance, 'hh:mm').format(
-                      'hh:mma'
-                    )}
+                    {moment(item.eventshift.attendance, 'hh:mm')
+                      .locale('en')
+                      .format('hh:mma')}
                   </Text>
                 </View>
               </View>

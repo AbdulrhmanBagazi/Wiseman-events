@@ -158,9 +158,9 @@ function Activejob(props) {
                       {I18nManager.isRTL ? 'وقت الحضور' : 'Attendance Time'}
                     </Text>
                     <Text style={styles.dataTextActive}>
-                      {moment(item.eventshift.attendance, 'hh:mm').format(
-                        'hh:mma'
-                      )}
+                      {moment(item.eventshift.attendance, 'hh:mm')
+                        .locale('en')
+                        .format('hh:mma')}
                     </Text>
                   </View>
                 </View>

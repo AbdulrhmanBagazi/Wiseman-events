@@ -12,7 +12,22 @@ import AnimatedCardImageLoad from '../AnimatedComponets/AnimatedCardImageLoad';
 import { SingleJobStrings, ErrorsStrings } from '../../../../Config/Strings';
 import moment from 'moment';
 import 'moment/locale/ar-sa'; // without this line it didn't work
-
+moment.updateLocale('ar-sa', {
+  months: [
+    'يناير',
+    'فبراير',
+    'مارس',
+    'أبريل',
+    'مايو',
+    'يونيو',
+    'يوليو',
+    'أغسطس',
+    'سبتمبر',
+    'أكتوبر',
+    'نوفمبر',
+    'ديسمبر',
+  ],
+});
 function Card(props) {
   function getSalary(val) {
     if (val.jobs.length > 1) {
@@ -52,37 +67,6 @@ function Card(props) {
     }
   }
 
-  function getTime(val) {
-    moment.locale(I18nManager.isRTL ? 'ar-sa' : 'en');
-    var artimeStart = moment(val.Start).format('Do MMM');
-    var artimeEnd = moment(val.End).format('Do MMM');
-
-    moment.updateLocale('ar', {
-      months: [
-        'يناير',
-        'فبراير',
-        'مارس',
-        'أبريل',
-        'مايو',
-        'يونيو',
-        'يوليو',
-        'أغسطس',
-        'سبتمبر',
-        'أكتوبر',
-        'نوفمبر',
-        'ديسمبر',
-      ],
-    });
-
-    return (
-      <Text style={styles.BlackColor}>
-        {val.Start && val.End
-          ? artimeStart + ' - ' + artimeEnd
-          : ErrorsStrings.noInfo}
-      </Text>
-    );
-  }
-
   return (
     <View style={styles.AllJobCard}>
       <FlatList
@@ -104,7 +88,19 @@ function Card(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                <Text style={styles.BlackColor}>{getTime(item)}</Text>
+                {item.Start && item.End ? (
+                  <Text style={styles.BlackColor}>
+                    {I18nManager.isRTL
+                      ? moment(item.Start).format('Do MMM') +
+                        ' - ' +
+                        moment(item.End).format('Do MMM')
+                      : moment(item.Start).locale('en').format('Do MMM') +
+                        ' - ' +
+                        moment(item.End).locale('en').format('Do MMM')}
+                  </Text>
+                ) : (
+                  <Text style={styles.BlackColor}>{ErrorsStrings.noInfo}</Text>
+                )}
               </Text>
               <Text style={styles.SingleJobDetailsTitle} numberOfLines={1}>
                 {I18nManager.isRTL ? item.TitleAr : item.Title}
