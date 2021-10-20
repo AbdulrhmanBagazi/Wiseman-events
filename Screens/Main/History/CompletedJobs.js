@@ -140,15 +140,15 @@ function CompletedJobs(props) {
             <View style={styles.AllSSingleJobDetails}>
               <Text style={styles.SingleJobDetailsTime}>
                 {SingleJobStrings.date}
-                {item.Start && item.End ? (
+                {item.event.Start && item.event.End ? (
                   <Text style={styles.BlackColor}>
                     {I18nManager.isRTL
-                      ? moment(item.Start).format('Do MMM') +
+                      ? moment(item.event.Start).format('Do MMM') +
                         ' - ' +
-                        moment(item.End).format('Do MMM')
-                      : moment(item.Start).locale('en').format('Do MMM') +
+                        moment(item.event.End).format('Do MMM')
+                      : moment(item.event.Start).locale('en').format('Do MMM') +
                         ' - ' +
-                        moment(item.End).locale('en').format('Do MMM')}
+                        moment(item.event.End).locale('en').format('Do MMM')}
                   </Text>
                 ) : (
                   <Text style={styles.BlackColor}>{ErrorsStrings.noInfo}</Text>

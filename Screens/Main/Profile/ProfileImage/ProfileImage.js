@@ -18,6 +18,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 import { inject, observer } from 'mobx-react';
 import { ProfileImageStrings } from '../../../../Config/Strings';
+// import * as FileSystem from 'expo-file-system';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 function ProfileImage(props) {
   const { signOut } = React.useContext(AuthContext);
@@ -52,12 +54,22 @@ function ProfileImage(props) {
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      quality: 0.5,
+      aspect: [4, 3],
+      quality: 0.25,
     });
 
     if (!pickerResult.cancelled) {
-      setImage(pickerResult);
-      // console.log(pickerResult)
+      let manipResult = await ImageManipulator.manipulateAsync(
+        pickerResult.uri,
+        [{ resize: { width: 500, height: 500 } }],
+        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+      );
+
+      // console.log(manipResult);
+      setImage(manipResult);
+
+      // const dirInfo = await FileSystem.getInfoAsync(manipResult.uri);
+      // console.log(dirInfo);
     }
   };
 
