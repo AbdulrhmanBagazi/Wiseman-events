@@ -546,7 +546,7 @@ function NotificationMain({ navigation, store }) {
         srtyle={{
           flex: 1,
         }}
-        keyExtractor={(item, index) => item.id.toString() + index.toString()}
+        keyExtractor={(item, index) => 'key' + index}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -595,7 +595,7 @@ function NotificationMain({ navigation, store }) {
                 ) : item.type === 'warning' ? (
                   <Icon name="alert-triangle" size={30} color="#9CA2B0" />
                 ) : item.type === 'promote' ? (
-                  <Icon name="chevrons-up" size={30} color={'#9CA2B0'} />
+                  <Icon name="briefcase" size={30} color={'#9CA2B0'} />
                 ) : item.type === 'demote' ? (
                   <Icon name="chevrons-down" size={30} color="#9CA2B0" />
                 ) : item.type === 'completed' ? (
@@ -603,6 +603,8 @@ function NotificationMain({ navigation, store }) {
                 ) : item.type === 'calendar' ? (
                   <Icon name="calendar" size={30} color="#9CA2B0" />
                 ) : item.type === 'clock' ? (
+                  <Icon name="clock" size={30} color="#9CA2B0" />
+                ) : item.type === 'transfer' ? (
                   <Icon name="clock" size={30} color="#9CA2B0" />
                 ) : (
                   <Icon name="map-pin" size={30} color="#9CA2B0" />

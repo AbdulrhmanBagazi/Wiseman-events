@@ -166,6 +166,17 @@ function noProfile({ store, navigation }) {
               </View>
             </TouchableOpacity>
 
+            {/* <TouchableOpacity style={styles.aboutButton} disabled={true}>
+              <View style={stylesmain.ViewStartMa}>
+                <Text style={styles.leftTextDisabled}>
+                  {ProfilePageStrings.matloob}
+                </Text>
+              </View>
+              <View style={stylesmain.ViewEnd}>
+                <Entypo name="popup" size={18} color="#C6C9CD" />
+              </View>
+            </TouchableOpacity> */}
+
             <TouchableOpacity
               style={styles.aboutButton}
               onPress={() => onShare()}
@@ -177,7 +188,7 @@ function noProfile({ store, navigation }) {
                 <Icon name="share-2" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.aboutButton} disabled={true}>
+            {/* <TouchableOpacity style={styles.aboutButton} disabled={true}>
               <View style={stylesmain.ViewStart}>
                 <Text style={styles.leftTextDisabled}>
                   {ProfilePageStrings.Support}
@@ -190,7 +201,7 @@ function noProfile({ store, navigation }) {
                   color="#C6C9CD"
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </ScrollView>

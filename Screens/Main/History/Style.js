@@ -572,7 +572,7 @@ const styles = StyleSheet.create({
   calendarButton: {
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     borderRadius: 5,
     padding: 5,
   },
@@ -620,6 +620,7 @@ const styles = StyleSheet.create({
   FlexOne: { flex: 1 },
   WorkSchedule: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   PaddingTopBottom: { paddingBottom: 30, paddingTop: 0 },
+  PaddingTopBottomScroll: { paddingBottom: 100, paddingTop: 0 },
   ViewRowCenter: { flexDirection: 'row', alignItems: 'center' },
   AbsoluteView: {
     position: 'absolute',
@@ -682,6 +683,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
     color: PrimaryColor,
+    marginVertical: 7,
+  },
+  timeSalary: {
+    fontWeight: '400',
+    fontSize: 12,
+    color: SecondaryText,
     marginVertical: 7,
   },
   StatusAttenText: {

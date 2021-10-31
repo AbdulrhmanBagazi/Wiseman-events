@@ -399,11 +399,12 @@ function WorkScheduleUser({ route, store }) {
                           ':  ' +
                           moment
                             .tz(item.Start, 'Asia/Riyadh')
+                            .locale('en')
                             .add(
                               item.Late >= 0 && item.Late <= 10 ? item.Late : 0,
                               'minute'
                             )
-                            .format('hh:mm a')
+                            .format('hh:mma')
                         : WorkScheduleUserString.TakeAttendence +
                           ':  ' +
                           WorkScheduleUserString.noInfo}
@@ -412,7 +413,10 @@ function WorkScheduleUser({ route, store }) {
                       {item.End
                         ? WorkScheduleUserString.TakeAttendenceEnd +
                           ':   ' +
-                          moment.tz(item.End, 'Asia/Riyadh').format('hh:mm a')
+                          moment
+                            .tz(item.End, 'Asia/Riyadh')
+                            .locale('en')
+                            .format('hh:mma')
                         : WorkScheduleUserString.TakeAttendenceEnd +
                           ':   ' +
                           WorkScheduleUserString.noInfo}

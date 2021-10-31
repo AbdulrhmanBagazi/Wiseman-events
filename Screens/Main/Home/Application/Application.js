@@ -8,6 +8,7 @@ import {
   FlatList,
   I18nManager,
   Platform,
+  // TouchableOpacity,
 } from 'react-native';
 import styles from './Style';
 import { SingleJobStrings } from '../../../../Config/Strings';
@@ -23,6 +24,10 @@ import { inject, observer } from 'mobx-react';
 import { AuthContext } from '../../../../Hooks/Context';
 import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 import moment from 'moment';
+//
+// import Icon from '../../../../Config/Icons';
+//
+// import Matloob from '../../Profile/Matloob/Matloob';
 
 function Application({ navigation, route, store }) {
   const [selectedShift, setselectedShift] = React.useState(null);
@@ -35,6 +40,7 @@ function Application({ navigation, route, store }) {
   const [isHours, setHours] = React.useState(0);
   const [isShiftIndex, setShiftIndex] = React.useState(-1);
   //
+  // const [isShowMatloob, setShowMatloob] = React.useState(false);
 
   const [istoggle, settoggle] = React.useState([]);
   const toggle = (index) => {
@@ -102,6 +108,7 @@ function Application({ navigation, route, store }) {
           eventshiftId: isShiftId,
           eventId: items.id,
           jobs: istoggle,
+          matloob_request_number: 'not_provided',
         },
         {
           headers: {
@@ -112,7 +119,7 @@ function Application({ navigation, route, store }) {
       .then(async (response) => {
         if (response.status === 200) {
           if (response.data.check === 'exists') {
-            setLoading(false);
+            // setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL
@@ -138,7 +145,7 @@ function Application({ navigation, route, store }) {
           } else if (response.data.check === 'fail') {
             // Analytics.logEvent('Apply fail');
 
-            setLoading(false);
+            // setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -151,7 +158,7 @@ function Application({ navigation, route, store }) {
             return;
           } else {
             // Analytics.logEvent('Apply fail');
-            setLoading(false);
+            // setLoading(false);
             Alert.alert(
               '',
               I18nManager.isRTL ? 'حدث خطأ!' : 'An error occurred!',
@@ -251,6 +258,9 @@ function Application({ navigation, route, store }) {
             <Text style={styles.titleS}>
               {SingleJobStrings.Applyingfor + ' (' + istoggle.length + ')'}
             </Text>
+            <Text style={styles.titleSmall}>
+              {SingleJobStrings.ApplyforMulti}
+            </Text>
             {isShiftIndex >= 0 ? (
               <FlatList
                 showsHorizontalScrollIndicator={false}
@@ -287,28 +297,28 @@ function Application({ navigation, route, store }) {
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR)'
-                : 'make sure to check-in and check-out (via QR code)'}
+                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR).'
+                : 'make sure to check-in and check-out (via QR code).'}
             </Text>
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'الالتزام بوقت الحضور'
-                : 'Commitment to attendance time'}
-            </Text>
-
-            <Text style={styles.TextSelect}>
-              {'\u2022' + ' '}
-              {I18nManager.isRTL
-                ? 'عند التقديم فأنت توافق على شروط العمل (يمكنك التحقق منها في الصفحة السابقة)'
-                : 'when applying you agree to the work Terms (you can check them in the previous page)'}
+                ? 'الالتزام بوقت الحضور.'
+                : 'Commitment to attendance time.'}
             </Text>
 
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'في حالة عدم الالتزام بالعمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل'
-                : 'In the event of non-compliance with the work, it may lead to a deduction from the financial dues or dismissal from work'}
+                ? 'عند التقديم فأنت توافق على شروط العمل (يمكنك التحقق منها في الصفحة السابقة).'
+                : 'when applying you agree to the work Terms (you can check them in the previous page).'}
+            </Text>
+
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'في حالة عدم الالتزام بالعمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل.'
+                : 'In the event of non-compliance with the work, it may lead to a deduction from the financial dues or dismissal from work.'}
             </Text>
           </View>
         </View>
@@ -323,10 +333,45 @@ function Application({ navigation, route, store }) {
         />
         <LoadingModal Loading={isLoading} />
       </ScrollView>
+
+      {/* <Matloob
+        OpenModal={isShowMatloob}
+        onPressClose={() => setShowMatloob(false)}
+      /> */}
       <View style={styles.ButtonView}>
-        {/* <TouchableOpacity style={styles.Button} onPress={() => setShow(true)} disabled={true}>
-          <Text style={styles.ButtonText}>{SingleJobStrings.Apply}</Text>
-        </TouchableOpacity> */}
+        {/* {store.data.profile.matloob_request_number ? (
+          <TouchableOpacity
+            style={styles.SuccView}
+            onPress={() => setShowMatloob(true)}
+          >
+            <View style={styles.MainWarrningView}>
+              <Text style={styles.WarrningText}>
+                {SingleJobStrings.Matloobrequestnumber +
+                  ' ' +
+                  store.data.profile.matloob_request_number}
+              </Text>
+            </View>
+
+            <View>
+              <Icon name="edit" size={20} color={'#fff'} />
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.WarrningView}
+            onPress={() => setShowMatloob(true)}
+          >
+            <View style={styles.MainWarrningView}>
+              <Text style={styles.WarrningText}>
+                {SingleJobStrings.Matloob}
+              </Text>
+            </View>
+
+            <View>
+              <Icon name="edit" size={20} color={'#fff'} />
+            </View>
+          </TouchableOpacity>
+        )} */}
 
         <DisabledButton
           TextValue={SingleJobStrings.Apply}

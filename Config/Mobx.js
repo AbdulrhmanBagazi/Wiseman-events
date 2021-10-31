@@ -216,10 +216,28 @@ class Store {
     return;
   };
 
+  setMatloop = async (data, val) => {
+    var data = data;
+    data.profile.matloob_request_number = val;
+
+    this.data = data;
+    return;
+  };
+
   setresetDate = async () => {
     var date = new Date();
 
     this.resetDate = date;
+
+    return;
+  };
+
+  setUserStatus = async (data, status) => {
+    var date = data;
+
+    data.status = status;
+
+    this.data = date;
 
     return;
   };
@@ -267,6 +285,8 @@ decorate(Store, {
   removeCalendarIds: action,
   setResetData: action,
   setContacts: action,
+  setMatloop: action,
+  setUserStatus: action,
 });
 
 const store = new Store();

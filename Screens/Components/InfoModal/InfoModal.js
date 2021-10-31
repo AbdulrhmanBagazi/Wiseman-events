@@ -16,7 +16,7 @@ function InfoModal(props) {
 
     if (S) {
       var Sdate = moment(S);
-      var start = moment.tz(Sdate, 'Asia/Riyadh').format('hh:mm a');
+      var start = moment.tz(Sdate, 'Asia/Riyadh').locale('en').format('hh:mma');
       setStart(start);
     } else {
       setStart(WorkScheduleUserString.noInfo);
@@ -24,7 +24,7 @@ function InfoModal(props) {
 
     if (E) {
       var Edate = moment(E);
-      var end = moment.tz(Edate, 'Asia/Riyadh').format('hh:mm a');
+      var end = moment.tz(Edate, 'Asia/Riyadh').locale('en').format('hh:mma');
       setEnd(end);
     } else {
       setEnd(WorkScheduleUserString.noInfo);

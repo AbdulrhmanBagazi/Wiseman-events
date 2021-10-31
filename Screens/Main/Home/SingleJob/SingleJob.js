@@ -20,6 +20,7 @@ import Rules from './Rules';
 import Tranining from './Tranining';
 import { PrimaryColor } from '../../../../Config/ColorPalette';
 import { width } from '../../../../Config/Layout';
+import moment from 'moment';
 
 function SingleJob({ route, store, navigation }) {
   const [isSelected, setSelected] = React.useState(0);
@@ -157,7 +158,19 @@ function SingleJob({ route, store, navigation }) {
           <Text style={styles.SingleJobDetailsTime}>
             {SingleJobStrings.date}
             <Text style={{ color: '#000' }}>
-              {I18nManager.isRTL ? items.DateAr : items.Date}
+              {items.Start && items.End ? (
+                <Text style={styles.BlackColor}>
+                  {I18nManager.isRTL
+                    ? moment(items.Start).format('Do MMM') +
+                      ' - ' +
+                      moment(items.End).format('Do MMM')
+                    : moment(items.Start).locale('en').format('Do MMM') +
+                      ' - ' +
+                      moment(items.End).locale('en').format('Do MMM')}
+                </Text>
+              ) : (
+                <Text style={styles.BlackColor}>{ErrorsStrings.noInfo}</Text>
+              )}
             </Text>
           </Text>
           <Text style={styles.SingleJobDetailsTitle}>

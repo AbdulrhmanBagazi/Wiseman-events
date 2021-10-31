@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Keyboard,
   I18nManager,
+  Alert,
 } from 'react-native';
 import styles from './Style';
 import { Register, ErrorsStrings } from '../../../Config/Strings';
@@ -188,65 +189,82 @@ function SignUp({ navigation }) {
       isAgreeCheck === true &&
       isnIdheck === 'Success'
     ) {
-      axios
-        .post(URL + '/user/signup', {
-          phone: val.Phone,
-          password: val.Password,
-          nID: val.nId,
-        })
-        .then(async (response) => {
-          if (response.data.error === 'exists') {
-            // console.log(response.data.error)
-            setError(ErrorsStrings.MobileUsed);
-            setLoading(false);
-            return;
-          } else if (response.data.error === 'existsID') {
-            // console.log(response.data.error)
-            setError(ErrorsStrings.nIDUsed);
-            setLoading(false);
-            return;
-          } else if (response.data.error === 'error') {
-            setError(ErrorsStrings.ErrorOccurred);
-            setLoading(false);
-            return;
-          } else if (response.data.check === 'success') {
-            setError(' ');
-            store.setDataSignup(response.data.user);
-            store.setToken(response.data.token);
-            await Analytics.logEvent('sign_up', {
-              screen: 'SignUp',
-            });
-
-            setTimeout(() => {
-              Verify();
-            }, 1000);
-            return;
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            if (error.response.status) {
-              if (error.response.status === 401) {
-                setError(ErrorsStrings.LoginError);
-                setLoading(false);
-                return;
-              } else {
-                setError(ErrorsStrings.ErrorOccurred);
-                setLoading(false);
-                return;
-              }
-            }
-          } else {
-            setError(ErrorsStrings.ErrorOccurred);
-            setLoading(false);
-            return;
-          }
-        });
+      Alert.alert(
+        Register.CreateWarrning,
+        I18nManager.isRTL
+          ? `الجوال: ${val.Phone} \n الهوية: ${val.nId} \n لا يمكنك تعديلها لاحقًا!`
+          : `Mobile: ${val.Phone} \n ID: ${val.nId} \n You connot edit them later!`,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => setLoading(false),
+            style: 'cancel',
+          },
+          { text: 'OK', onPress: () => CreateAccount(val) },
+        ]
+      );
     } else {
       setLoading(false);
     }
 
     return;
+  };
+
+  const CreateAccount = async (val) => {
+    axios
+      .post(URL + '/user/signup', {
+        phone: val.Phone,
+        password: val.Password,
+        nID: val.nId,
+      })
+      .then(async (response) => {
+        if (response.data.error === 'exists') {
+          // console.log(response.data.error)
+          setError(ErrorsStrings.MobileUsed);
+          setLoading(false);
+          return;
+        } else if (response.data.error === 'existsID') {
+          // console.log(response.data.error)
+          setError(ErrorsStrings.nIDUsed);
+          setLoading(false);
+          return;
+        } else if (response.data.error === 'error') {
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
+        } else if (response.data.check === 'success') {
+          setError(' ');
+          store.setDataSignup(response.data.user);
+          store.setToken(response.data.token);
+          await Analytics.logEvent('sign_up', {
+            screen: 'SignUp',
+          });
+
+          setTimeout(() => {
+            Verify();
+          }, 1000);
+          return;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status) {
+            if (error.response.status === 401) {
+              setError(ErrorsStrings.LoginError);
+              setLoading(false);
+              return;
+            } else {
+              setError(ErrorsStrings.ErrorOccurred);
+              setLoading(false);
+              return;
+            }
+          }
+        } else {
+          setError(ErrorsStrings.ErrorOccurred);
+          setLoading(false);
+          return;
+        }
+      });
   };
 
   const openweb = async (val) => {

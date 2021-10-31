@@ -229,7 +229,7 @@ function Home({ store, navigation }) {
         return;
       } else {
         store.setresetDate();
-        store.setResetPages();
+        // store.setResetPages();
         return;
       }
     }

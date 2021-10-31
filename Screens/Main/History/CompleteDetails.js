@@ -31,6 +31,7 @@ import { Entypo } from '@expo/vector-icons';
 import { height } from '../../../Config/Layout';
 import { useHeaderHeight } from '@react-navigation/stack';
 import humanizeDuration from 'humanize-duration';
+import PaymentStatus from './Details/PaymentStatus';
 
 function CompleteDetails({ route, store }) {
   const { signOut } = React.useContext(AuthContext);
@@ -142,59 +143,6 @@ function CompleteDetails({ route, store }) {
 
   //   values: ['pending', 'paid', 'not-paid'],
 
-  const getColor = (status) => {
-    switch (status) {
-      case 'paid':
-        return 'rgba(46, 184, 92, 0.25)';
-      case 'pending':
-        return 'rgba(249, 177, 21, 0.25)';
-      case 'not-paid':
-        return 'rgba(229, 83, 83, 0.25)';
-      case 'partially-paid':
-        return 'rgba(249, 177, 21, 0.25)';
-    }
-  };
-
-  const getColorBorder = (status) => {
-    switch (status) {
-      case 'paid':
-        return '#2eb85c';
-      case 'wait-list':
-        return '#321fdb';
-      case 'pending':
-        return '#f9b115';
-      case 'inactive':
-        return '#e55353';
-      case 'declined':
-        return '#e55353';
-      case 'canceled':
-        return '#e55353';
-      case 'completed':
-        return '#2eb85c';
-      case 'terminated':
-        return '#e55353';
-      case 'withdrawal':
-        return '#e55353';
-    }
-  };
-
-  const getArabic = (status) => {
-    switch (status) {
-      case 'pending':
-        return 'قيد الانتظار';
-      case 'bank':
-        return 'تحويل';
-      case 'cash':
-        return 'نقد';
-      case 'paid':
-        return 'مدفوع';
-      case 'not-paid':
-        return 'غير مدفوع';
-      case 'partially-paid':
-        return 'مدفوعة جزئيا';
-    }
-  };
-
   const [heightChange] = React.useState(new Animated.Value(0));
   const headerHeight = useHeaderHeight();
 
@@ -254,7 +202,10 @@ function CompleteDetails({ route, store }) {
           <ActivityIndicator size="large" color={PrimaryColor} />
         </View>
       ) : (
-        <ScrollView style={styles.CompleteDetailsView}>
+        <ScrollView
+          style={styles.CompleteDetailsView}
+          contentContainerStyle={styles.PaddingTopBottomScroll}
+        >
           <View style={styles.ViewAlignSelf}>
             <View style={styles.CompleteDetailsHeader}>
               <View style={styles.CompleteDetailsHeaderView}>
@@ -467,37 +418,13 @@ function CompleteDetails({ route, store }) {
                   </View>
                 </View>
 
-                <View style={styles.CompleteDetailsbodyContainerData}>
-                  <View style={styles.FlexOne}>
-                    <Text style={styles.CompleteDetailsbodyContainerDataText}>
-                      {CompleteDetailsStrings.Paymentstatus}
-                    </Text>
-                  </View>
-                  <View style={styles.FlexEnd}>
-                    <View
-                      style={[
-                        styles.CompleteDetailStatusBox,
-                        {
-                          backgroundColor: getColor(items.PaymentStatus),
-                          borderColor: getColorBorder(items.PaymentStatus),
-                        },
-                      ]}
-                    >
-                      <Text
-                        style={[
-                          styles.CompleteDetailsbodyContainerDataTextValue,
-                          { color: getColorBorder(items.PaymentStatus) },
-                        ]}
-                      >
-                        {I18nManager.isRTL
-                          ? getArabic(items.PaymentStatus)
-                          : items.PaymentStatus}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                <Text style={styles.msg}>{CompleteDetailsStrings.msg}</Text>
+                <PaymentStatus
+                  PaymentStatus={items.PaymentStatus}
+                  Values={items.attendances}
+                  Rate={items}
+                  Meal={items.event.ProvideAmeal}
+                  MealPlus={items.event.ProvideAnAllowance}
+                />
               </View>
             </View>
           </View>
@@ -505,7 +432,7 @@ function CompleteDetails({ route, store }) {
       )}
 
       <Animated.View style={[styles.hiddinList, { height: heightChange }]}>
-        {isData.length >= 1 ? (
+        {isAtt.length >= 1 ? (
           <FlatList
             // data={isDays}
             contentContainerStyle={styles.flatlistitems}
@@ -522,7 +449,8 @@ function CompleteDetails({ route, store }) {
                           item.Late >= 0 && item.Late <= 10 ? item.Late : 0,
                           'minute'
                         )
-                        .format('hh:mm a')
+                        .locale('en')
+                        .format('hh:mma')
                     : WorkScheduleUserString.TakeAttendence +
                       ':  ' +
                       WorkScheduleUserString.noInfo}
@@ -531,7 +459,10 @@ function CompleteDetails({ route, store }) {
                   {item.End
                     ? WorkScheduleUserString.TakeAttendenceEnd +
                       ':   ' +
-                      moment.tz(item.End, 'Asia/Riyadh').format('hh:mm a')
+                      moment
+                        .tz(item.End, 'Asia/Riyadh')
+                        .locale('en')
+                        .format('hh:mma')
                     : WorkScheduleUserString.TakeAttendenceEnd +
                       ':   ' +
                       WorkScheduleUserString.noInfo}
@@ -545,7 +476,8 @@ function CompleteDetails({ route, store }) {
                         round: true,
                         language: I18nManager.isRTL ? 'ar' : 'en',
                         fallbacks: ['en'],
-                      })
+                      }) +
+                      ' '
                     : WorkScheduleUserString.Totalhours +
                       ':   ' +
                       WorkScheduleUserString.noInfo}
@@ -556,6 +488,14 @@ function CompleteDetails({ route, store }) {
                       ? item.title_ar
                       : item.title
                     : WorkScheduleUserString.noInfo}
+                  {'  '}
+                  <Text style={styles.timeSalary} numberOfLines={1}>
+                    {item.hourly_rate
+                      ? I18nManager.isRTL
+                        ? item.hourly_rate + 'ريال/الساعة'
+                        : item.hourly_rate + 'SAR/hour'
+                      : null}
+                  </Text>
                 </Text>
                 <View style={styles.StatusAtten}>
                   <Text

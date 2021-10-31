@@ -106,7 +106,7 @@ function StatusPicker(props) {
 
   const onChange = async (event, selectedTime) => {
     if (Platform.OS === 'ios') {
-      var Time = await moment(selectedTime).format('hh:mm a');
+      var Time = await moment(selectedTime).locale('en').format('hh:mm a');
       if (Check === 1) {
         setTimeFrom(selectedTime);
         setFrom(Time);
@@ -121,7 +121,7 @@ function StatusPicker(props) {
         return;
       }
     } else {
-      var Time = await moment(selectedTime).format('hh:mm a');
+      var Time = await moment(selectedTime).locale('en').format('hh:mm a');
       if (event.type === 'dismissed') {
         setShow(false);
         setShowModal(false);
@@ -152,13 +152,13 @@ function StatusPicker(props) {
     setShowModal(false);
     setCheck(null);
     if (Check === 1) {
-      var Time = await moment(TimeFrom).format('hh:mm a');
+      var Time = await moment(TimeFrom).locale('en').format('hh:mm a');
       setTimeFrom(TimeFrom);
       setFrom(Time);
       props.getTimeStart(Time);
       return;
     } else {
-      var Time = await moment(TimeTo).format('hh:mm a');
+      var Time = await moment(TimeTo).locale('en').format('hh:mm a');
       setTimeTo(TimeTo);
       setTo(Time);
       props.getTimeEnd(Time);
@@ -308,8 +308,9 @@ function StatusPicker(props) {
                       value={TimeFrom}
                       mode="time"
                       is24Hour={false}
-                      display="default"
+                      display="spinner"
                       onChange={onChange}
+                      textColor="#000"
                     />
                   ) : (
                     <DateTimePicker
@@ -318,8 +319,9 @@ function StatusPicker(props) {
                       value={TimeTo}
                       mode="time"
                       is24Hour={false}
-                      display="default"
+                      display="spinner"
                       onChange={onChange}
+                      textColor="#000"
                     />
                   )}
 

@@ -36,10 +36,14 @@ function CompletedJobs(props) {
   const [isData, setData] = React.useState([]);
 
   React.useEffect(() => {
-    var newArray = props.Data.filter((item) => {
-      // console.log(item.attendances.length)
-      return item.Status !== 'approved' && item.attendances.length >= 1;
-    });
+    // var newArray = props.Data.filter((item) => {
+    //   // console.log(item.attendances.length)
+    //   return item.Status !== 'approved' && item.attendances.length >= 1;
+    // });
+
+    var newArray = props.Data.filter(
+      (x) => x.Status !== 'approved' && x.attendances.length > 0
+    );
 
     setData(newArray);
   }, [props.Data]);
@@ -105,7 +109,7 @@ function CompletedJobs(props) {
       case 'declined':
         return 'مرفوض';
       case 'terminated':
-        return 'ألغيت';
+        return 'تم إنهاء العقد';
       case 'withdrawal':
         return 'إنسحاب';
       case 'interview':

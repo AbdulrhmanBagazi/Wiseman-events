@@ -186,13 +186,13 @@ function Status({ store }) {
           if (response.status === 200) {
             if (response.data.check === 'success') {
               if (response.data.status[0] === 1) {
-                store.data.status = {
+                store.setUserStatus(store.data, {
                   status: Stat,
-                  time: TimeStart + ' - ' + TimeEnd,
-                  days: Day.Start + ' - ' + Day.End,
-                };
+                  time: TimeStart + ' to ' + TimeEnd,
+                  days: Day.Start + ' to ' + Day.End,
+                });
               } else {
-                store.data.status = response.data.status;
+                store.setUserStatus(store.data, response.data.status);
               }
               setTimeout(() => {
                 setLoading(false);
@@ -282,6 +282,7 @@ function Status({ store }) {
         var String = store.data.status.time;
         var str = store.data.status.days;
         var res = str.split('to');
+
         var arone = getArabic(res[0].trim());
         var artwo = getArabic(res[1].trim());
         setTextAr(arone + ' إلى ' + artwo);

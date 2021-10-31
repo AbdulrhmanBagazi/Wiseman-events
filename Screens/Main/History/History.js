@@ -116,7 +116,9 @@ function History({ store, navigation }) {
 
             var newArray = response.data.application.filter((item) => {
               // console.log(item)
-              return item.Status !== 'completed';
+              return (
+                item.Status !== 'completed' || item.attendances.length === 0
+              );
             });
 
             setData(newArray);

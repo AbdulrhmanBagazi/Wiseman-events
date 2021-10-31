@@ -20,7 +20,7 @@ const HeaderTitles = {
   WorkSchedule: I18nManager.isRTL
     ? 'الجدول الزمني للفعاليات'
     : 'Event Schedule',
-  WorkScheduleUser: I18nManager.isRTL ? 'جدول عملك' : 'Your work schedule',
+  WorkScheduleUser: I18nManager.isRTL ? 'جدول العمل' : 'Work schedule',
   Profile: I18nManager.isRTL ? 'الملف الشخصي' : 'Profile',
   History: I18nManager.isRTL ? 'سجل العمل' : 'Work record',
   Notifications: I18nManager.isRTL ? 'التنبيهات' : 'Alerts',
@@ -75,13 +75,16 @@ const Register = {
   Terms: I18nManager.isRTL ? 'شروط الاستخدام' : 'Terms of Use',
   Privacy: I18nManager.isRTL ? 'سياسة الخصوصية' : 'Privacy Policy',
   Iagreeto: I18nManager.isRTL ? 'أوافق على' : 'I agree to ',
+  CreateWarrning: I18nManager.isRTL
+    ? 'هل أنت متأكد من صحة المعلومات التي أدخلتها؟'
+    : 'Are you sure the informations you entered correct?',
 };
 
 const ResetPasswordString = {
   title: I18nManager.isRTL ? 'إستعادة كلمة المرور' : 'Recover Password',
   ResetSlogan: I18nManager.isRTL
-    ? 'قم بإدخل رقم الجوال الخاص بحسابك لإستعادة كلمة المرور الخاصة بك. ستحصل على رمز OTP.'
-    : 'Enter your Mobile number to recover your password. You will get an OTP code.',
+    ? 'قم بإدخل رقم الجوال الخاص بحسابك لإستعادة كلمة المرور الخاصة بك. سيصلك رمز OTP.'
+    : 'Enter your Mobile number to recover your password. You will receive OTP code.',
   Phone: I18nManager.isRTL
     ? 'رقم الجوال(05XXXXXXXX)'
     : 'Mobile Number (05XXXXXXXX)',
@@ -95,8 +98,8 @@ const ResetPasswordString = {
     : 'An OTP code has been sent',
   Resend: I18nManager.isRTL ? 'إعادة إرسال الرمز' : 'Resend code',
   Resendmessage: I18nManager.isRTL
-    ? 'لم تحصل على الرمز؟'
-    : "Didn't get the code?",
+    ? 'لم يصلك الرمز؟'
+    : "Didn't receive the code?",
   Log: I18nManager.isRTL ? 'تسجيل دخول' : 'LogIn',
   ResetSuccessful: I18nManager.isRTL
     ? 'تمت إعادة التعيين بنجاح'
@@ -207,6 +210,9 @@ const SingleJobStrings = {
   Rules: I18nManager.isRTL ? 'شروط' : 'Terms',
   Tranining: I18nManager.isRTL ? 'تدريب' : 'Training',
   date: I18nManager.isRTL ? 'تاريخ الفعالية: ' : 'Event Date: ',
+  MatloobRN: I18nManager.isRTL
+    ? 'رقم الطلب مطلوب: '
+    : 'Matloob Request Number: ',
   StartDate: I18nManager.isRTL ? 'تاريخ المباشرة: ' : 'Start Date: ',
   StartDateString: I18nManager.isRTL
     ? 'في حال قبولك، سيتم تحديد تاريخ المباشرة'
@@ -226,8 +232,8 @@ const SingleJobStrings = {
   Impor: I18nManager.isRTL ? 'مهم' : 'Important',
   successful: I18nManager.isRTL ? 'تم التقديم بنجاح' : 'submission successful',
   submitted: I18nManager.isRTL
-    ? 'تم تقديم طلبك إلى العميل. سوف تحصل على إشعار لمزيد من المعلومات. شكرا.'
-    : 'Your request has been submitted to the customer. You will get a notification for more information. Thank you.',
+    ? 'تم تقديم طلبك بنجاح. سوف يصلك إشعار بخصوص آي تحديث على طلبك. شكرا.'
+    : 'Your request has been submitted successfully. You will receive a notification regarding any update on your request. Thanks.',
   Done: I18nManager.isRTL ? 'تم' : 'Done',
   Apply: I18nManager.isRTL ? 'تقديم' : 'Apply',
   Full: I18nManager.isRTL ? 'مكتمل' : 'Full',
@@ -250,11 +256,20 @@ const SingleJobStrings = {
     ? 'بدل وجبة عن كل يوم عمل'
     : 'Meal allowance for each working day',
   Applyingfor: I18nManager.isRTL ? 'التقديم' : 'Applying',
+  ApplyforMulti: I18nManager.isRTL
+    ? 'يمكنك اختيار أكثر من وظيفة واحدة (ملاحظة: لا يمكنك التقديم لكل وظيفة على حدة ، يمكنك التقديم لكل وردية مرة واحدة)'
+    : "you can select more than one job (note: you can't apply for each job separate, you can apply for each shift once)",
   Banned: I18nManager.isRTL
     ? 'تم تعليق حسابك بسبب انتهاك شروط الاستخدام! قد يؤثر هذا على عملك الحالي ، يمكنك الاستمرار في استخدام التطبيق لتلقي المستحقات السابقة.'
     : 'Your account has been suspended due to violation of term of use! this may affect your current work, you can continue using the app to receive past dues.',
   GoHome: I18nManager.isRTL ? 'الصفحة الرئيسية' : 'Home',
   Goto: I18nManager.isRTL ? 'تسجيل دخول/تسجيل' : 'LogIn/Register',
+  Matloob: I18nManager.isRTL
+    ? 'لم تقم بإضافة رقم الطلب (منصة مطلوب) في ملفك الشخصي!'
+    : 'You did not add request number (Matloob platform) in your profile!',
+  Matloobrequestnumber: I18nManager.isRTL
+    ? 'رقم الطلب (منصة مطلوب): '
+    : 'Request number (Matloob platform):',
 };
 
 const HomePageStrings = {
@@ -277,6 +292,9 @@ const ProfilePageStrings = {
   notspecifiedyet: I18nManager.isRTL ? 'غير محدد' : 'Not specified',
   Contact: I18nManager.isRTL ? 'التواصل' : 'Contacts',
   AppName: I18nManager.isRTL ? 'تطبيق تنظيم: ' : 'Organize App: ',
+  matloob: I18nManager.isRTL
+    ? 'منصة مطلوب (رقم الطلب)'
+    : 'Matloob Platform (request number)',
 };
 
 const SettingsPageStrings = {
@@ -382,8 +400,8 @@ const HistoryPageStrings = {
     ? 'للتحديث اسحب للأسفل'
     : 'Pull down to refresh',
   Soon: I18nManager.isRTL
-    ? 'قريبا سوف تحصل على جدول عملك'
-    : 'Soon you will get your work schedule',
+    ? 'سيتم إشعارك في حال تم إضافة/تعديل جدول العمل الخاص بك'
+    : 'You will be notified if your work schedule is added/modified',
   WorkSchedule: I18nManager.isRTL ? 'جدول العمل' : 'Work Schedule',
 };
 
@@ -396,6 +414,11 @@ const ContactStrings = {
   call: I18nManager.isRTL ? 'إتصال' : 'Contact',
   whatsapp: I18nManager.isRTL ? 'واتساب' : 'Whatsapp',
   Contact: I18nManager.isRTL ? 'التواصل' : 'Contacts',
+};
+
+const MatloobStrings = {
+  Matloob: I18nManager.isRTL ? 'منصة مطلوب' : 'Matloob platform',
+  RequestNumber: I18nManager.isRTL ? 'رقم الطلب' : 'Request Number',
 };
 
 const AlertStrings = {
@@ -474,4 +497,5 @@ export {
   ProfileImageStrings,
   NonAuthStrings,
   ContactStrings,
+  MatloobStrings,
 };

@@ -20,27 +20,12 @@ import ProfileImage from './ProfileImage/ProfileImage';
 import AnimatedProfileImage from '../../Components/AnimatedImageProfile/AnimatedImageProfile';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 import Contact from './Contact/Contact';
+// import Matloob from './Matloob/Matloob';
 
 function Profile({ store, navigation }) {
-  const [Data, setDataValue] = React.useState(null);
   const [isModal, setModal] = React.useState(false);
   const [isShow, setShow] = React.useState(false);
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setValue();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  const setValue = async () => {
-    if (store.data.status !== null) {
-      setDataValue(store.data.status.status);
-    }
-
-    return;
-  };
+  // const [isShowMatloob, setShowMatloob] = React.useState(false);
 
   const onShare = async () => {
     try {
@@ -108,7 +93,10 @@ function Profile({ store, navigation }) {
           </Text>
         </Text> */}
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.about}>
           <View style={styles.aboutE}>
             <Text style={styles.aboutT}>
@@ -140,29 +128,26 @@ function Profile({ store, navigation }) {
                 <Text style={styles.leftText}>{ProfilePageStrings.status}</Text>
               </View>
               <View style={stylesmain.ViewEnd}>
-                {I18nManager.isRTL ? (
-                  <Text
-                    style={
-                      Data === null ? styles.rightTextNull : styles.rightText
-                    }
-                  >
-                    {Data === null
+                <Text
+                  style={
+                    store.data.status === null
+                      ? styles.rightTextNull
+                      : styles.rightText
+                  }
+                >
+                  {I18nManager.isRTL
+                    ? store.data.status === null
                       ? ProfilePageStrings.notspecifiedyet
-                      : Data === 'Full-Time'
+                      : store.data.status.status === 'Full-Time'
                       ? 'متفرغ'
-                      : Data === 'Student'
+                      : store.data.status.status === 'Student'
                       ? 'طالب'
-                      : 'موظف'}
-                  </Text>
-                ) : (
-                  <Text
-                    style={
-                      Data === null ? styles.rightTextNull : styles.rightText
-                    }
-                  >
-                    {Data === null ? ProfilePageStrings.notspecifiedyet : Data}
-                  </Text>
-                )}
+                      : 'موظف'
+                    : store.data.status === null
+                    ? ProfilePageStrings.notspecifiedyet
+                    : store.data.status.status}
+                </Text>
+
                 <Entypo
                   name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'}
                   size={18}
@@ -173,7 +158,7 @@ function Profile({ store, navigation }) {
             <Contact OpenModal={isShow} onPressClose={() => setShow(false)} />
             <TouchableOpacity
               style={styles.aboutButton}
-              onPress={() => setShow(!isShow)}
+              onPress={() => setShow(true)}
             >
               <View style={stylesmain.ViewStart}>
                 <Text style={styles.leftText}>
@@ -185,6 +170,25 @@ function Profile({ store, navigation }) {
                 <Entypo name="popup" size={18} color="#C6C9CD" />
               </View>
             </TouchableOpacity>
+
+            {/* <Matloob
+              OpenModal={isShowMatloob}
+              onPressClose={() => setShowMatloob(false)}
+            />
+            <TouchableOpacity
+              style={styles.aboutButton}
+              onPress={() => setShowMatloob(true)}
+            >
+              <View style={stylesmain.ViewStartMa}>
+                <Text style={styles.leftText}>
+                  {ProfilePageStrings.matloob}
+                </Text>
+              </View>
+              <View style={stylesmain.ViewEnd}>
+                <Entypo name="popup" size={18} color="#C6C9CD" />
+              </View>
+            </TouchableOpacity> */}
+
             <TouchableOpacity
               style={styles.aboutButton}
               onPress={() => navigation.navigate('Earnings')}
@@ -278,6 +282,12 @@ export default inject('store')(observer(Profile));
 const stylesmain = StyleSheet.create({
   ViewStart: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  ViewStartMa: {
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexDirection: 'row',

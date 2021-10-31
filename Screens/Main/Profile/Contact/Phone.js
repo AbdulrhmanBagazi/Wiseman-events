@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     height: 45,
     marginBottom: 10,
     justifyContent: 'center',
-    width: width - 30,
+    width: width - 40,
   },
 });

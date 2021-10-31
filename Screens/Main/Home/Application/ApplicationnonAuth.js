@@ -156,28 +156,29 @@ function ApplicationnonAuth({ navigation, route }) {
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR)'
-                : 'make sure to check-in and check-out (via QR code)'}
-            </Text>
-            <Text style={styles.TextSelect}>
-              {'\u2022' + ' '}
-              {I18nManager.isRTL
-                ? 'الالتزام بوقت الحضور'
-                : 'Commitment to attendance time'}
+                ? 'تآكد من تسجيل الحضور الإنصراف (عبر رمز  QR).'
+                : 'make sure to check-in and check-out (via QR code).'}
             </Text>
 
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'عند التقديم فأنت توافق على شروط العمل (يمكنك التحقق منها في الصفحة السابقة)'
-                : 'when applying you agree to the work Terms (you can check them in the previous page)'}
+                ? 'الالتزام بوقت الحضور.'
+                : 'Commitment to attendance time.'}
             </Text>
 
             <Text style={styles.TextSelect}>
               {'\u2022' + ' '}
               {I18nManager.isRTL
-                ? 'في حالة عدم الالتزام بالعمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل'
-                : 'In the event of non-compliance with the work, it may lead to a deduction from the financial dues or dismissal from work'}
+                ? 'عند التقديم فأنت توافق على شروط العمل (يمكنك التحقق منها في الصفحة السابقة).'
+                : 'when applying you agree to the work Terms (you can check them in the previous page).'}
+            </Text>
+
+            <Text style={styles.TextSelect}>
+              {'\u2022' + ' '}
+              {I18nManager.isRTL
+                ? 'في حالة عدم الالتزام بالعمل قد يؤدي إلى خصم من المستحقات المالية أو الفصل من العمل.'
+                : 'In the event of non-compliance with the work, it may lead to a deduction from the financial dues or dismissal from work.'}
             </Text>
           </View>
         </View>

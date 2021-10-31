@@ -109,7 +109,7 @@ function Activejob(props) {
                   <Icon
                     name="calendar"
                     size={40}
-                    color={PrimaryColor}
+                    color={item.Start && item.End ? PrimaryColor : '#cccccc'}
                     style={
                       {
                         // shadowColor: '#000',

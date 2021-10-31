@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, TouchableOpacity } from 'react-native';
+import { Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './Style';
 import { PrimaryColor } from '../../../Config/ColorPalette';
 
@@ -40,14 +40,18 @@ function DisabledButton(props) {
       onPress={props.onPress}
       disabled={isDisabled}
     >
-      <Animated.Text
-        style={[
-          styles.ButtonText,
-          { color: props.Cancel ? '#fff' : TextColor },
-        ]}
-      >
-        {props.TextValue}
-      </Animated.Text>
+      {props.Loading ? (
+        <ActivityIndicator size="small" color="#fff" />
+      ) : (
+        <Animated.Text
+          style={[
+            styles.ButtonText,
+            { color: props.Cancel ? '#fff' : TextColor },
+          ]}
+        >
+          {props.TextValue}
+        </Animated.Text>
+      )}
     </AnimatedTouchableOpacity>
   );
 }

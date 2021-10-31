@@ -57,6 +57,8 @@ function Card(props) {
         return 'rgba(46, 184, 92, 0.25)';
       case 'withdrawal':
         return 'rgba(229, 83, 83, 0.25)';
+      case 'interview':
+        return 'rgba(249, 177, 21, 0.25)';
     }
   };
 
@@ -80,6 +82,8 @@ function Card(props) {
         return '#e55353';
       case 'withdrawal':
         return '#e55353';
+      case 'interview':
+        return '#f9b115';
     }
   };
 
@@ -100,7 +104,7 @@ function Card(props) {
       case 'declined':
         return 'مرفوض';
       case 'terminated':
-        return 'ألغيت';
+        return 'تم إنهاء العقد';
       case 'withdrawal':
         return 'إنسحاب';
       case 'interview':
@@ -268,7 +272,8 @@ function Card(props) {
                       onPress={() =>
                         Alert.alert(
                           '',
-                          item.Status === 'pending'
+                          item.Status === 'pending' ||
+                            item.Status === 'interview'
                             ? I18nManager.isRTL
                               ? 'هل أنت متأكد أنك تريد إلغاء التقديم؟'
                               : 'Are you sure you want to cancel the submission?'
@@ -296,7 +301,8 @@ function Card(props) {
                       style={styles.StatusBoxWithdrawBorderColor}
                     >
                       <Text style={styles.StatuTextWhite}>
-                        {item.Status === 'pending'
+                        {item.Status === 'pending' ||
+                        item.Status === 'interview'
                           ? SingleJobStrings.Cancel
                           : SingleJobStrings.withdrawal}
                       </Text>

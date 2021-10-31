@@ -1,8 +1,16 @@
 import React from 'react';
-import { View, Modal, Text, I18nManager, Keyboard, Alert } from 'react-native';
+import {
+  View,
+  Modal,
+  Text,
+  I18nManager,
+  Keyboard,
+  Alert,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 import styles from './Style';
-import InputPhone from './Phone';
-import { ContactStrings } from '../../../../Config/Strings';
+import { MatloobStrings } from '../../../../Config/Strings';
 import { inject, observer } from 'mobx-react';
 import { LightText } from '../../../../Config/ColorPalette';
 import axios from 'axios';
@@ -10,85 +18,28 @@ import DisabledButton from '../../../Components/DisabledButton/DisabledButton';
 import { AuthContext } from '../../../../Hooks/Context';
 import { UserTokenRemove } from '../../../../Config/AsyncStorage';
 import { URL } from '../../../../Config/Config';
+import { width } from '../../../../Config/Layout';
 
-function Contact(props) {
+function Matloob(props) {
   const { signOut } = React.useContext(AuthContext);
-  const [isPhoneCheck, setPhoneCheck] = React.useState('');
-  const [isWhatsappCheck, setWhatsappCheck] = React.useState('');
+  const [isMatloobNumberCheck, setMatloobNumberCheck] = React.useState('');
   const [isLoading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState({
-    call: '',
-    whatsapp: '',
-  });
+  const [data, setData] = React.useState('');
 
   const convertToArabicNumber = async (string) => {
     return string.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
       return d.charCodeAt(0) - 1632;
     });
   };
-  const PhoneInput = async (val) => {
-    var phone = await convertToArabicNumber(val);
-    setData({
-      ...data,
-      call: phone.trim(),
-    });
-    if (phone === '') {
-      setPhoneCheck('');
-      return;
-    }
-    if (isNaN(phone) === true && phone.length < 10) {
-      setPhoneCheck('Error');
-      return;
-    }
-    if (phone.length > 10 || phone.length < 10) {
-      setPhoneCheck('Error');
-      return;
-    }
-    if (isNaN(phone) === false && phone.length === 10) {
-      setPhoneCheck('Success');
-      return;
-    }
-    return;
-  };
-
-  const WhatsappInput = async (val) => {
-    var phone = await convertToArabicNumber(val);
-    setData({
-      ...data,
-      whatsapp: phone.trim(),
-    });
-    if (phone === '') {
-      setWhatsappCheck('');
-      return;
-    }
-    if (isNaN(phone) === true && phone.length < 10) {
-      setWhatsappCheck('Error');
-      return;
-    }
-    if (phone.length > 10 || phone.length < 10) {
-      setWhatsappCheck('Error');
-      return;
-    }
-    if (isNaN(phone) === false && phone.length === 10) {
-      setWhatsappCheck('Success');
-      return;
-    }
-    return;
-  };
 
   const HandleUpdate = async () => {
     await Keyboard.dismiss();
-
     setLoading(true);
     axios
       .post(
-        URL + '/user/updatecontacts',
+        URL + '/user/updateMatloop',
         {
-          call: data.call.length > 1 ? data.call : props.store.data.call,
-          whatsapp:
-            data.whatsapp.length > 1
-              ? data.whatsapp
-              : props.store.data.whatsapp,
+          request_number: data,
         },
         {
           headers: { Authorization: props.store.token },
@@ -96,27 +47,20 @@ function Contact(props) {
       )
       .then(async (response) => {
         if (response.data === 'success') {
-          var contacts = {
-            call: data.call.length > 1 ? data.call : props.store.data.call,
-            whatsapp:
-              data.whatsapp.length > 1
-                ? data.whatsapp
-                : props.store.data.whatsapp,
-          };
+          var matloob_request_number = data;
 
-          await props.store.setContacts(props.store.data, contacts);
-          setPhoneCheck('');
-          setWhatsappCheck('');
-          setData({
-            call: '',
-            whatsapp: '',
-          });
+          await props.store.setMatloop(
+            props.store.data,
+            matloob_request_number
+          );
+          setMatloobNumberCheck('');
+          setData('');
           setLoading(false);
           Alert.alert(
             '',
             I18nManager.isRTL
-              ? 'تم تحديث بيانات التواصل'
-              : 'Contact information has been updated',
+              ? 'تم تحديث رقم الطلب'
+              : 'Request number has been updated',
             [{ text: 'OK', onPress: props.onPressClose }],
             {
               cancelable: false,
@@ -179,6 +123,21 @@ function Contact(props) {
       });
   };
 
+  const MatloobNumberInput = async (val) => {
+    var MatloobNumber = await convertToArabicNumber(val);
+    setData(MatloobNumber);
+    if (MatloobNumber === '') {
+      setMatloobNumberCheck(false);
+      return;
+    }
+    if (MatloobNumber.length > 0) {
+      setMatloobNumberCheck(true);
+      return;
+    }
+
+    return;
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -189,34 +148,21 @@ function Contact(props) {
       <View style={styles.modal}>
         <View style={styles.Container}>
           <View style={styles.Header}>
-            <Text style={styles.HeaderText}>{ContactStrings.Contact}</Text>
+            <Text style={styles.HeaderText}>{MatloobStrings.Matloob}</Text>
           </View>
           <View style={styles.Col}>
-            <Text style={styles.title}>{ContactStrings.call}</Text>
-            <InputPhone
-              placeholder={props.store.data.call}
-              style={styles.input}
-              onChangeText={(text) => PhoneInput(text)}
-              keyboardType={'number-pad'}
-              CheckPhone={isPhoneCheck}
-              editable={!isLoading}
-              placeholderTextColor={LightText}
-              value={data.call}
-            />
-          </View>
-
-          <View style={styles.Col}>
-            <Text style={styles.title}>{ContactStrings.whatsapp}</Text>
-            <InputPhone
-              placeholder={props.store.data.whatsapp}
-              style={styles.input}
-              onChangeText={(text) => WhatsappInput(text)}
-              keyboardType={'number-pad'}
-              CheckPhone={isWhatsappCheck}
-              editable={!isLoading}
-              placeholderTextColor={LightText}
-              value={data.whatsapp}
-            />
+            <Text style={styles.title}>{MatloobStrings.RequestNumber}</Text>
+            <View style={stylesmain.ViewStyle}>
+              <TextInput
+                placeholder={props.store.data.profile.matloob_request_number}
+                style={styles.input}
+                onChangeText={(text) => MatloobNumberInput(text)}
+                keyboardType={'number-pad'}
+                editable={!isLoading}
+                placeholderTextColor={LightText}
+                value={data}
+              />
+            </View>
           </View>
 
           <View style={styles.Row}>
@@ -226,11 +172,9 @@ function Contact(props) {
               Check={
                 isLoading
                   ? false
-                  : isPhoneCheck === 'Success' && isWhatsappCheck === 'Success'
-                  ? true
-                  : isPhoneCheck === 'Success' && isWhatsappCheck === ''
-                  ? true
-                  : isPhoneCheck === '' && isWhatsappCheck === 'Success'
+                  : isMatloobNumberCheck === false
+                  ? false
+                  : isMatloobNumberCheck === true
                   ? true
                   : false
               }
@@ -251,4 +195,15 @@ function Contact(props) {
   );
 }
 
-export default inject('store')(observer(Contact));
+export default inject('store')(observer(Matloob));
+
+const stylesmain = StyleSheet.create({
+  ViewStyle: {
+    backgroundColor: '#fff',
+    borderBottomWidth: 2,
+    height: 45,
+    marginBottom: 10,
+    justifyContent: 'center',
+    width: width - 40,
+  },
+});
