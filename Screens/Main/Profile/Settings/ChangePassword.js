@@ -90,8 +90,10 @@ function ChangePassword({ store, navigation }) {
             headers: { Authorization: store.token },
           }
         )
-        .then((response) => {
-          if (response.data === 'success') {
+        .then(async (response) => {
+          if (response.data.check === 'success') {
+            await store.setToken(response.data.token);
+
             Alert.alert(
               '',
               I18nManager.isRTL
